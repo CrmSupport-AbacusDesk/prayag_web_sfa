@@ -1,0 +1,50 @@
+        
+        <div class="edit-modal" *ngIf ="stored_data.type == 'user'">
+            <p class="heading">Update Admin Login Details</p>
+            <div mat-dialog-content >
+                <div class="cs-form">
+                    <div class="row">
+                        <div class="col s6">
+                            <mat-form-field class="cs-input" appearance="outline">
+                                <mat-label>User Name</mat-label>
+                                <input type="text" name="crm_user_name" matInput placeholder="Type Here ..." #crm_user_name="ngModel" [(ngModel)]="data.crm_user_name" >
+                            </mat-form-field>
+                        </div>
+                        
+                        <div class="col s6">
+                            <mat-form-field class="cs-input" appearance="outline">
+                                <mat-label>Password</mat-label>
+                                <input type="text" name="crm_password" matInput placeholder="Type Here ..." #crm_password="ngModel" [(ngModel)]="data.crm_password"  required>
+                            </mat-form-field>
+                        </div>
+                    </div>
+                </div>
+                
+            </div>
+            <div mat-dialog-actions>
+                <button mat-button color="warn" [mat-dialog-close]="false">Cancel</button>
+                <button mat-button color="accent" [disabled]="!data.crm_password || !data.crm_user_name || !data.loyalty_username || !data.loyalty_password" (click)="update()">Save</button>
+            </div>
+        </div>
+        
+        <div class="edit-modal" *ngIf ="stored_data.type == 'category'">
+            <p class="heading">Add Category</p>
+            <div mat-dialog-content>
+                <div class="cs-form">
+                    <div class="row">
+                        <div class="col s12">
+                            <mat-form-field class="cs-input" appearance="outline">
+                                <mat-label>Category</mat-label>
+                                <input type="text" name="category" matInput placeholder="Type Here ..." #category="ngModel" [(ngModel)]="data.category" >
+                            </mat-form-field>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div mat-dialog-actions>
+                <button mat-button color="warn" [mat-dialog-close]="false">Cancel</button>
+                <button mat-button  color="accent" [disabled]="!data.category" (click)="addCategory()">Save</button>
+            </div>
+        </div>
+        
+        

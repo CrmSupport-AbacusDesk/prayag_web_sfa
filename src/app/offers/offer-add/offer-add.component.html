@@ -1,0 +1,357 @@
+<form #f="ngForm" (ngSubmit)=" f.valid && offer_add() ">
+	
+	<div class="main-container" >
+		<div class="middle-container mb0">
+			<div class="page-heading w250">
+				<img src="assets/img/leads_icon.svg" class="h-icon">
+				<div class="heading-text">
+					<h2>Offer</h2>
+				</div>
+			</div>
+		</div>
+		<div class="container-outer">
+			
+			<app-master-tab-list></app-master-tab-list>
+			<div *ngIf="loader">
+				<mat-spinner class="loader">
+					<div><p>Loading....</p></div>
+				</mat-spinner>
+			</div>
+			<div class="container tab-container">
+				
+				<div class="row">
+					<div class="col s12 padding0">
+						<div class="sprate-box ">
+							<div class="full-offer">
+								<div class="top-heading">
+									<h2>OFFER ADD</h2>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col s12 padding0">
+									<div class="option-field">
+										<div class="row">
+											<div class="col s4">
+												<div class="from-fields">	
+													<div class="control-field">
+														<mat-form-field class="cs-input">
+															<input matInput placeholder="Offer Title"  name="offer_title" #offer_title="ngModel" [(ngModel)]="data.offer_title" [ngClass]="{'has-error' : offer_title.invalid } " required>
+														</mat-form-field>
+														<div class="alert alert-danger" *ngIf="!offer_title.valid && f.submitted">
+															Offer Title is required...
+														</div>
+													</div>
+												</div>
+											</div>
+											<div class="col s4">
+												<div class="from-fields">	
+													<div class="control-field">
+														<mat-form-field class="cs-input">
+															<input matInput placeholder="Offer Code"  name="offer_code" #offer_code="ngModel" [(ngModel)]="data.offer_code" [ngClass]="{'has-error' : offer_code.invalid } " required>
+														</mat-form-field>
+														<div class="alert alert-danger" *ngIf="!offer_code.valid && f.submitted">
+															Offer Code is required...
+														</div>
+													</div>
+												</div>
+											</div>
+											<div class="col s4">
+												<div class="from-fields">	
+													<div class="control-field">
+														<mat-form-field class="cs-input">
+															<input type="date" matInput placeholder="Start Date"  name="start_date" #start_date="ngModel" [(ngModel)]="data.start_date" [ngClass]="{'has-error' : start_date.invalid } " required>
+														</mat-form-field>
+														<div class="alert alert-danger" *ngIf="!start_date.valid && f.submitted">
+															Start Date  is required...
+														</div>
+													</div>
+												</div>
+											</div>
+											
+										</div>
+										
+										<div class="row">
+											<div class="col s4">
+												<div class="from-fields">	
+													<div class="control-field">
+														<mat-form-field class="cs-input">
+															<input type="date" matInput placeholder="End Date"  name="end_date" #end_date="ngModel" [(ngModel)]="data.end_date" [ngClass]="{'has-error' : end_date.invalid } " required>
+														</mat-form-field>
+														<div class="alert alert-danger" *ngIf="!end_date.valid && f.submitted">
+															End date is required...
+														</div>
+													</div>
+												</div>
+											</div>
+											
+											<div class="col s4">
+												<div class="from-fields">	
+													<div class="control-field">
+														<mat-form-field class="cs-input">
+															<input matInput placeholder="Status"  name="status" #status="ngModel" [(ngModel)]="data.status" [ngClass]="{'has-error' : status.invalid }" required>
+														</mat-form-field>
+														<div class="alert alert-danger" *ngIf="!status.valid && f.submitted">
+															Status is required...
+														</div>
+													</div>
+												</div>
+											</div>
+											<div class="col s4">
+												<div class="from-fields">	
+													<div class="control-field">
+														<!-- <mat-form-field class="cs-input">
+															<input type="file" matInput placeholder="Status"  name="banner">
+														</mat-form-field> -->
+														<input type="file">
+													</div>
+												</div>
+											</div>
+										</div>
+										
+										<div class="row">
+											<div class="col s6">
+												<div class="from-fields">	
+													<div class="control-field">
+														<mat-form-field class="cs-input">
+															<textarea style="height: 100px;" matInput placeholder="Description" name="description" #description="ngModel" [(ngModel)]="data.description" [ngClass]="{'has-error' : description.invalid } " required></textarea>
+														</mat-form-field>
+														<div class="alert alert-danger" *ngIf="!description.valid && f.submitted">
+															Description is required.
+														</div>
+													</div>
+												</div>
+											</div>
+											<div class="col s6">
+												<div class="from-fields">	
+													<div class="control-field">
+														<mat-form-field class="cs-input">
+															<textarea style="height: 100px;" matInput placeholder="Terms & Condition" name="terms_and_condition" #terms_and_condition="ngModel" [(ngModel)]="data.terms_and_condition" [ngClass]="{'has-error' : terms_and_condition.invalid } " required></textarea>
+														</mat-form-field>
+														<div class="alert alert-danger" *ngIf="!terms_and_condition.valid && f.submitted">
+															Terms And Condition Required...
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>
+										
+										
+									</div>
+								</div>
+								
+							</div>
+						</div>
+					</div>
+				</div>
+				
+				<div class="row">
+					<div class="col s12 ">
+						<div class="sprate-box ">
+							<div class="full-offer">
+								<div class="top-heading">
+									<h2>AREA WISE SELECTION</h2>
+									<p>Indicates required fields ( * )</p>
+								</div>
+							</div>
+							
+							<div class="row">
+								<div class="col s3 padding15">
+									<div class="territory-info">
+										<div class="head">
+											<h2>STATE</h2>
+											<mat-checkbox class="fix-check">&nbsp;</mat-checkbox>
+											<i class="material-icons search-icon" matRipple>search</i>
+											<input type="text" placeholder="search..." class="fix-search">
+											<i class="material-icons close-icon" matRipple>clear</i>
+										</div>
+										<div class="cs-checkbox">
+											<div class="checkbox-outer">
+												<section class="checkbox-inner" >
+													<mat-checkbox class="check-list" *ngFor="let row of state_list" (change)="districts(row)" value="{{row}}">{{row}}</mat-checkbox>
+													
+												</section>
+											</div>
+										</div>
+										
+										<!-- <div class="add-file">
+											<button mat-button>ADD NEW</button>
+										</div> -->
+									</div>
+								</div>
+								
+								<div class="col s3 padding15">
+									<div class="territory-info">
+										<div class="head">
+											<h2>DISTRICTS</h2>
+											<mat-checkbox class="fix-check">&nbsp;</mat-checkbox>
+											<i class="material-icons search-icon" matRipple>search</i>
+											<input type="text" placeholder="search..." class="fix-search">
+											<i class="material-icons close-icon" matRipple>clear</i>
+										</div>
+										<div class="cs-checkbox">
+											<div class="checkbox-outer">
+												<section class="checkbox-inner">
+													<mat-checkbox class="check-list" value="true">{{district_name}}</mat-checkbox>
+												</section>
+											</div>
+										</div>
+										<!-- <div class="add-file">
+											<button mat-button>ADD NEW</button>
+										</div> -->
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col s12 padding0">
+						<div class="sprate-box ">
+							<div class="full-offer">
+								<div class="top-heading">
+									<h2>AREA WISE SELECTION</h2>
+								</div>
+							</div>
+							
+							<div class="row">
+								<div class="col s12">
+									<div class="option-field">
+										<div class="row">
+											<div class="col s2">
+												<div class="from-fields">	
+													<div class="control-field">
+														<mat-form-field class="cs-input">
+															<input matInput placeholder="Points"  name="productcode">
+														</mat-form-field>
+													</div>
+												</div>
+											</div>
+											<div class="col s4">
+												<div class="from-fields">	
+													<div class="control-field">
+														<mat-form-field class="cs-input">
+															<input matInput placeholder="Gift name"  name="productcode">
+														</mat-form-field>
+													</div>
+												</div>
+											</div>
+											<div class="col s4">
+												<div class="from-fields">	
+													<div class="control-field">
+														<mat-form-field class="cs-input">
+															<input matInput placeholder="Description"  name="productcode">
+														</mat-form-field>
+													</div>
+												</div>
+											</div>
+											<div class="col s2 mt19 bdr">
+												<div class="links">
+													<label class="h43 pr15">
+														<input type="file">
+														<!-- <i class="material-icons">cloud_upload</i> -->
+														<p>Import Coupan Code</p>
+													</label>
+												</div>
+											</div>
+										</div> 
+									</div>
+								</div>
+							</div>
+							
+							<div class="row">
+								<div class="col s12">
+									<div class="css-table left-right-15">
+										<div class="sticky-header">
+											<div class="header">
+												<table> 
+													<tr>
+														<th class="w50" >&nbsp;</th>
+														<th class="w150" style="border-left: 1px solid #D2D2D2;">Gift</th>
+														<th class="w100">Points</th>
+														<th >Description</th>
+													</tr>
+												</table>
+											</div>
+										</div>
+										
+										<div class="table-container">
+											<div class="table-body">
+												<table>
+													<tr>
+														<td class="w50" style="border-right: 1px solid #D2D2D2;">
+															<div class="image-thum"><img src="assets/img/pen.jpg"></div>
+														</td>
+														<td class="w150">Lorem Ipsum</td>
+														<td class="w100">100</td>
+														<td>Lorem ipsum dolor sit amet,</td>
+														<td class="w60">
+															<mat-slide-toggle></mat-slide-toggle>
+														</td>
+														<td class="w80 active">
+															<div class="action-btns mt4">
+																<button mat-raised-button class="delete" ><i class="material-icons">delete_sweep</i></button>
+															</div>
+														</td>
+													</tr>
+													<tr>
+														<td class="w50" style="border-right: 1px solid #D2D2D2;"> 
+															<div class="image-thum"><img src="assets/img/pen.jpg"></div>
+														</td>
+														<td class="w150">Lorem Ipsum</td>
+														<td class="w100">100</td>
+														<td>Lorem ipsum dolor sit amet,</td>
+														<td class="w60">
+															<mat-slide-toggle></mat-slide-toggle>
+														</td>
+														<td class="w80 active">
+															<div class="action-btns mt4">
+																<button mat-raised-button class="delete" ><i class="material-icons">delete_sweep</i></button>
+															</div>
+														</td>
+													</tr>
+													<tr>
+														<td class="w50" style="border-right: 1px solid #D2D2D2;"> 
+															<div class="image-thum"><img src="assets/img/pen.jpg"></div>
+														</td>
+														<td class="w150">Lorem Ipsum</td>
+														<td class="w100">100</td>
+														<td>Lorem ipsum dolor sit amet,</td>
+														<td class="w60">
+															<mat-slide-toggle></mat-slide-toggle>
+														</td>
+														<td class="w80 active" >
+															<div class="action-btns mt4">
+																<button mat-raised-button class="delete" ><i class="material-icons">delete_sweep</i></button>
+															</div>
+														</td>
+													</tr>
+												</table>
+											</div>
+										</div>
+									</div>               
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="save mt30">
+					<button mat-button>SAVE</button>
+				</div>
+				
+				
+				<div class="no-data" *ngIf="data_not_found==true">
+					<img src="assets/img/no-data.gif" alt="">
+					<p>Data not <span>available !</span></p>
+				</div>
+			</div>
+		</div>
+		<!-- <div>
+			<div class="fix-btn">
+				<a class="bottom-btn" mat-raised-button routerLink="/add-product"><i class="material-icons">add</i></a>
+			</div>
+			<pagination-controls class="myPagination" (pageChange)=" p = $event "></pagination-controls>
+		</div> -->
+	</div>
+</form>
+
+

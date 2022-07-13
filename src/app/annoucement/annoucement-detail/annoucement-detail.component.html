@@ -1,0 +1,113 @@
+<div class="main-container" >
+  <!-- <div *ngIf="loader">
+    <mat-spinner class="loader">
+      <div><p>Loading....</p></div>
+    </mat-spinner>
+  </div> -->
+  <div class="middle-container">
+    <div class="page-heading">
+      <div class="heading-text bc-space">
+        <div class="back-btn">
+          <a mat-button routerLink="/announcement-list" routerLinkActive="active"><i class="material-icons">west</i></a>
+        </div>
+        <h2>Annoucement Detail</h2>
+      </div>
+    </div>
+  </div>
+  
+  <div class="container-outer">
+    <div class="container" >
+      <div class="row">
+        <div class="col s8">
+          <div class="details-info">
+            <div class="basic-details">
+              <div class="cs-heading">
+                <h2>Basic Detail</h2>
+              </div>
+              <div class="details-thumbnail padding0">
+                <div class="grid-col-item col-3">
+                  <div class="">
+                    <div class="detail-field">
+                      <span>Announcement Date</span>
+                      <p>{{noticeDetail.date_created |date : 'd MMM y'}}</p>
+                    </div>
+                  </div>
+                  <div class="">
+                    <div class="detail-field">
+                      <span>Created By</span>
+                      <p>{{noticeDetail.created_by_name}}</p>
+                    </div>
+                  </div>
+                  <div class="">
+                    <div class="detail-field">
+                      <span>Subject</span>
+                      <p>{{noticeDetail.subject}}</p>
+                    </div>
+                  </div>
+                </div>
+                
+                
+                <div class="col-4 mt10">
+                  <div class="detail-field">
+                    <span>Message</span>
+                    <p>{{noticeDetail.msg}}</p>
+                  </div>
+                </div>
+                
+                <div class="grid-col-item col-2 mt10">
+                  <div class="detail-field">
+                    <span>To Sales Executives</span>
+                    <div class="cs-chips" >
+                      <span *ngFor="let val of noticeDetail.users; let i = index" >{{val.name}}</span>
+                    </div>
+                    <span *ngIf="!noticeDetail.users">N/A</span>
+                  </div>
+
+                  <div class="detail-field">
+                    <span>Read By Sales Executives</span>
+                    <div class="cs-chips" >
+                      <span *ngFor="let val of noticeDetail.read_by; let i = index" >{{val.name}}</span>
+                    </div>
+                    <span *ngIf="!noticeDetail.users">N/A</span>
+                  </div>
+                </div>
+
+                
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col s4" *ngIf="noticeDetail.doc && noticeDetail.doc.length > 0">
+          <div class="details-info pb0">
+            <div class="basic-details">
+              <div class="cs-heading">
+                <h2>Attachment File</h2>
+              </div>
+              <div class="cs-file" >
+                <ul class="product-images">
+                  <li class="multi-images">
+                    <label class="cs-file-img" *ngFor="let val of noticeDetail.doc; let i = index">
+                      <a target="blank" href="{{serve.myimgurl}}api/uploads/notices/{{val.image}}">
+                        <img *ngIf ="val.tittle == 'jpg'" height="75" width="75" src="{{serve.myimgurl}}api/uploads/notices/{{val.image}}"  alt="">
+                        <img *ngIf ="val.tittle == 'pdf'" height="75" width="75" src="assets/img/pdf1.svg">
+                        <img *ngIf ="val.tittle == 'docx'" height="75" width="75" src="assets/img/doc.png">
+                      
+                      </a>
+                        <!-- <span  class="cancel-icon">
+                          <a class="close"><i class="material-icons dp48">clear</i></a>
+                        </span>  -->
+                      </label>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+      </div>
+    </div>
+  </div>
+  
+  
+  

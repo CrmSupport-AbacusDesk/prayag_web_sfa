@@ -1,0 +1,539 @@
+
+<div class="main-container dashboard">
+    <div class="container-outer hp100">
+        <div class="container">
+            <div class="top-info ds-conter">
+                <figure>
+
+                    <div class="custom-dashboad">
+                        <div class="dash-counter">
+                            <ul>
+                                <li class="green">
+                                    <div class="upper">
+                                        <div class="circle">
+                                            <img src="assets/img/group.svg">
+                                        </div>
+                                        <div class="dash-value">
+                                            <div class="tags">
+                                                <a  href="#/attendance">
+                                                    <h1>{{top_cards.today_attendance_count}}</h1>
+                                                </a>
+                                            </div>
+                                            <!-- <div class="tags">
+                                                <a href="#/attendance">
+                                                    <h1>{{top_cards.dr_count}}</h1>
+                                                </a>
+                                            </div> -->
+                                        </div>
+                                    </div>
+                                    <div class="lower">
+                                        <p>Today Attendence</p>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </figure>
+
+
+                <figure>
+
+                    <div class="custom-dashboad">
+                        <div class="dash-counter">
+                            <ul>
+                                <li class="yellow">
+                                    <div class="upper">
+                                        <div class="circle">
+                                            <img src="assets/img/leads.svg">
+                                        </div>
+                                        <div class="dash-value">
+                                            <div class="tags">
+                                                 <a  href="#/checkin">
+                                                    <h1>{{top_cards.checkin}}</h1>
+                                                 </a>
+                                            </div>
+                                           
+                                        </div>
+                                    </div>
+                                    <div class="lower">
+                                        <p>Today Checkins</p>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </figure>
+
+
+                <figure>
+
+
+                    <div class="custom-dashboad">
+                        <div class="dash-counter">
+                            <ul>
+                                <li class="blue">
+                                    <div class="upper">
+                                        <div class="circle">
+                                            <img src="assets/img/order.png">
+                                        </div>
+                                        <div class="dash-value">
+                                            <div class="tags">
+                                                 <!-- <a (click)="oporder()"> -->
+                                                    <h1>{{top_cards.primary_order_count}}</h1>
+                                                <!-- </a> -->
+                                            </div>
+                                            <div class="tags">
+                                                 <a href="#/order-list">
+                                                    <h1>&#x20B9; {{top_cards.primary_order_amount?top_cards.primary_order_amount:0}}</h1>
+                                                 </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="lower">
+                                        <p> Today Primary Order</p>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </figure>
+
+                <figure>
+                    <div class="custom-dashboad">
+                        <div class="dash-counter">
+                            <ul>
+                                <li class="purple">
+                                    <div class="upper">
+                                        <div class="circle">
+                                            <img src="assets/img/order.png">
+                                        </div>
+                                        <div class="dash-value">
+                                            <div class="tags">
+                                                 <a  href="#/secondary-order-list">
+                                                    <h1>{{top_cards.secondary_order_count}}</h1>
+                                                 </a>
+                                            </div>
+                                            <div class="tags">
+                                                 <!-- <a (click)="opsecorder()"> -->
+                                                    <h1>&#x20B9; {{top_cards.secondary_order_amount?top_cards.secondary_order_amount:0}}</h1>
+                                                <!-- </a> -->
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="lower">
+                                        <p> Today Secondary Order</p>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </figure>
+            </div>
+
+
+
+
+
+
+            <!-- <div class="row mt-15 graph-info"> -->
+                <!-- <div class="col s12 figure"> -->
+
+                    <!-- <div id="chartContainer" style="height: 370px; width: 100%;"></div> -->
+
+
+                    <!-- <div class="graph">
+                        <canvas baseChart
+                        [datasets]="barChartData"
+                        [labels]="barChartLabels"
+                        [options]="barChartOptions"
+                        [plugins]="barChartPlugins"
+                        [legend]="barChartLegend"
+                        [chartType]="barChartType">
+                    </canvas>
+
+                </div> -->
+                <!-- <div style="display: block">
+                    <canvas baseChart
+                    [datasets]="barChartData"
+                    [labels]="barChartLabels"
+                    [options]="barChartOptions"
+                    [legend]="barChartLegend"
+                    [chartType]="barChartType">
+                </canvas>
+            </div> -->
+            <!-- </div> -->
+            <!-- </div>   -->
+
+            <!-- <div class="row" *ngIf="counter_Info">
+                <div class="col s12">
+                    <div class="listing">
+                            <div class="repeat col s4">
+                        <a (click)="opentravel()">
+
+                                <div class="list-both">
+                                    <div class="img">
+                                        <img src="assets/img/travel.svg">
+                                    </div>
+                                    <div class="ds-cont">
+                                        <h1>{{counter_Info.pending_travel_plan}}</h1>
+                                        <p>Pending Travel Plan</p>
+                                    </div>
+                                </div>
+                         </a>
+
+
+                            </div>
+                            <div class="repeat col s4">
+                              <div (click)="openexpense()">
+
+                                <div class="list-both">
+                                    <div class="img">
+                                        <img src="assets/img/expense.svg">
+                                    </div>
+                                    <div class="ds-cont">
+                                        <h1>{{counter_Info.pending_expense}}</h1>
+                                        <p>Pending Expense</p>
+                                    </div>
+                                </div>
+                        </div>
+
+
+                            </div>
+                            <div class="repeat col s4">
+                        <a (click)="openleaves()">
+
+                                <div class="list-both">
+                                    <div class="img">
+                                        <img src="assets/img/alarm-clock.png">
+                                    </div>
+                                    <div class="ds-cont">
+                                        <h1>{{counter_Info.pending_leave}}</h1>
+                                        <p>Pending Leaves</p>
+                                    </div>
+                                </div>
+                         </a>
+
+
+                            </div>
+                             <div class="repeat col s2">
+                             <a  (click)="openevents()">
+
+                                <div class="list-both">
+                                    <div class="img">
+                                        <img src="assets/img/meeting.svg">
+                                    </div>
+                                    <div class="ds-cont">
+                                        <h1>{{counter_Info.pending_event}}</h1>
+                                        <p>Pending Events</p>
+                                    </div>
+                                </div>
+                            </a>
+
+
+                            </div> 
+                            <div class="repeat col s2">
+                         <a (click)="openquatation()">
+
+                                <div class="list-both">
+                                    <div class="img">
+                                        <img src="assets/img/quation.svg">
+                                    </div>
+                                    <div class="ds-cont">
+                                        <h1>{{counter_Info.pending_lead_quotation}}</h1>
+                                        <p>Pending Quotation</p>
+                                    </div>
+                                </div>
+                            </a>
+
+
+                            </div>
+                         <div class="repeat col s4"> 
+                              <a (click)="openorder()">
+
+                                <div class="list-both">
+                                    <div class="img">
+                                        <img src="assets/img/order.png">
+                                    </div>
+                                    <div class="ds-cont">
+                                        <h1>{{counter_Info.pending_order}}</h1>
+                                        <p>Pending Orders</p>
+                                    </div>
+                                </div>
+                            </a>
+
+
+                            </div> 
+                            <div class="repeat col s4">
+                              <a (click)="openfollowup()">
+
+
+                              <div class="list-both">
+                                  <div class="img">
+                                      <img src="assets/img/alarm-clock.png">
+                                  </div>
+                                  <div class="ds-cont">
+                                      <h1>{{counter_Info.pending_followup}}</h1>
+                                      <p>Pending Follow up</p>
+                                  </div>
+                              </div>
+                        </a>
+
+
+
+                          </div>
+
+
+                    </div>
+                </div>
+            </div> -->
+
+
+
+            <div class="row">
+                <div class="col s6">
+                    <div class="ds-box pink" style=" border: 1px solid #55a9e4;">
+                        <div class="ds-head" style="background:#55a9e4">Customer Network</div>
+                        <div class="ds-body">
+                            <div class="cs-table  horizontal-scroll">
+                                <div class="table-head">
+                                    <table>
+                                        <tr>
+                                            <th class="w40">S No</th>
+                                            <th class="w150">Type</th>
+                                            <th class="w80">Total</th>
+                                             <th class="w80">Existing</th> 
+                                             <th class="w80">New</th> 
+                                           
+                                        </tr>
+                                    </table>
+                                </div>
+
+                                <div class="table-container">
+                                    <div class="table-content">
+                                        <table>
+                                            <tr *ngFor="let details of customer_Info;let i=index">
+                                                <td class="w40 text-center">{{i+1}}</td>
+                                                <td class="w150">{{details.module_name}}</td>
+                                                <td class="w80">{{details.total}}</td>
+                                                 <td class="w80">{{details.active}}</td> 
+                                                 <td class="w80">{{details.not_active}}</td> 
+
+
+                                              
+                                            </tr>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+
+                          
+                        </div>
+                    </div>
+                </div>
+                <div class="col s6">
+                    <div class="ds-box green" style=" border: 1px solid #55a9e4;">
+                        <div class="ds-head"  style="background:#55a9e4">Lead Network</div>
+                        <div class="ds-body">
+                            <div class="cs-table  horizontal-scroll">
+                                <div class="table-head">
+                                    <table>
+                                        <tr>
+                                            <th class="w40">S No</th>
+                                            <th class="w100">Type</th>
+                                            <th class="w60">Total</th>
+                                        
+                                            <th class="w70">Lead Bank</th>
+                                            <th class="w60">Qualified</th> 
+                                            <th class="w70">Disqualified</th>
+                                            <th class="w60">Win</th>
+                                            <th class="w60">Lost</th>
+
+                                            
+                                        </tr>
+                                    </table>
+                                </div>
+
+                                <div class="table-container">
+                                    <div class="table-content">
+                                        <table>
+                                            <tr *ngFor="let details of lead_network;let i=index">
+                                                <td class="w40 text-center">{{i+1}}</td>
+                                                <td class="w100">{{details.module_name}}</td>
+                                                <td class="w60">{{details.total}}</td>
+                                                <td class="w70">{{details.leadbank}}</td>
+                                                <td class="w60">{{details.qualified}}</td>
+                                                <td class="w70">{{details.disqualified}}</td>
+                                                <td class="w60">{{details.win}}</td>
+                                                <td class="w60">{{details.lost}}</td>
+
+
+
+                                               
+                                            </tr>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+
+                           
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col s6">
+                    <div class="ds-box pink" style=" border: 1px solid #55a9e4;">
+                        <div class="ds-head"  style="background:#55a9e4">Latest Check In</div>
+                        <div class="ds-body">
+                            <div class="cs-table  horizontal-scroll">
+                                <div class="table-head">
+                                    <table>
+                                        <tr>
+                                            <th class="w40">S No</th>
+                                            <th class="w150">Created By</th>
+                                            <th class="w150">Company Name</th>
+                                             <th class="w100">Start Check In</th> 
+                                             <th class="w100">Stop Check In</th> 
+                                             <th class="w150">Remarks</th> 
+
+                                        </tr>
+                                    </table>
+                                </div>
+
+                                <div class="table-container">
+                                    <div class="table-content">
+                                        <table>
+                                            <tr *ngFor="let details of checkin_network;let i=index">
+                                                <td class="w40 text-center">{{i+1}}</td>
+                                                <td class="w150">{{details.created_by_name?details.created_by_name:'--'}}</td>
+                                                <td class="w150">{{details.company_name}}</td>
+                                                 <td class="w100">{{details.visit_start| date : 'h:mm a'}}</td> 
+                                                 <td class="w100">{{details.visit_end | date : 'h:mm a'}}</td> 
+                                                 <td class="w150">{{details.description}}</td> 
+                                              
+                                            </tr>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- <div class="no-data" *ngIf="data_not_found==true">
+                                <img src="assets/img/no-data.gif" alt="">
+                                <p>Data not <span>available !</span></p>
+                            </div> -->
+                        </div>
+                    </div>
+                </div>
+                <div class="col s6">
+                    <div class="ds-box green" style=" border: 1px solid #55a9e4;">
+                        <div class="ds-head"  style="background:#55a9e4">
+                            Latest Travel Plan
+                        </div>
+                        <div class="ds-body">
+                            <div class="cs-table  horizontal-scroll">
+                                <div class="table-head">
+                                    <table>
+                                        <tr>
+                                            <th class="w40">S No</th>
+                                            <th class="w150">Name</th>
+                                            <th class="w80">Month</th>
+                                        
+                                            <th class="w80">Year</th>
+                                            <th class="w100">Status</th> 
+                                          
+                                        </tr>
+                                    </table>
+                                </div>
+
+                                <div class="table-container">
+                                    <div class="table-content">
+                                        <table>
+                                            <tr *ngFor="let details of travel_network;let i=index">
+                                                <td class="w40 text-center">{{i+1}}</td>
+                                                <td class="w150">{{details.assign_to_name}}</td>
+                                                <td class="w80">{{details.date_from | date :'MMMM'}}</td>
+                                                <td class="w80">{{details.date_from | date :'y'}}</td>
+                                                <td class="w100">{{details.status}}</td>
+                                               
+                                            </tr>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- <div class="row">
+                <div class="col s6" *ngIf="latest_checkin">
+                    <div class="ds-box pink">
+                        <div class="ds-head">
+                            Latest Checkin
+                        </div>
+                        <div class="ds-body">
+                            <div class="cs-information">
+                                -------------loop start--------
+                                <div class="cs-border" *ngFor="let details of latest_checkin.checkinginfo">
+                                    <div class="top-srip">
+                                        <ul>
+                                            <li><p><span>Date :</span> {{details.activity_date | date : 'd MMM y'}}</p></li>
+                                            <li><p><span>Start :</span>{{details.visit_start }}</p></li>
+                                            <li><p><span>End :</span>{{details.visit_end }}</p></li>
+                                        </ul>
+                                    </div>
+                                    <div class="flex-content">
+                                        <div class="alfa-digit">{{details.company_name.charAt(0).toUpperCase()}}</div>
+                                        <div class="content">
+                                            <p>{{details.company_name}}</p>
+                                            <span>Executive : {{details.exec_name}}</span>
+                                        </div>
+                                    </div>
+                                    <div class="remark">
+                                        <strong>Remark : </strong>{{details.remark?details.remark:'--'}}
+                                    </div>
+                                </div>
+                                -------------loop End--------
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col s6" *ngIf="latest_orders">
+                    <div class="ds-box green">
+                        <div class="ds-head">
+                            Latest Travel Plan
+                        </div>
+                        <div class="ds-body">
+                             <div class="heighligt-order">
+                                <p><span class="primary"></span> Primary</p>
+                                <p><span class="secondary"></span>Secondary</p>
+                            </div> 
+                            <div class="cs-information">
+                                -------------loop start--------
+
+                                <div class="cs-border" *ngFor="let details of latest_orders.orderInfo">
+                                    <div class="top-srip">
+                                        <ul>
+                                            <li><p><span>Date :</span>{{details.date_created | date : 'd MMM y'}}</p></li>
+                                            <li class="amount"><p><span>Amount :</span> &#x20B9; {{details.order_grand_total}}</p></li>
+                                        </ul>
+                                    </div>
+                                    <div class="flex-content" style="margin-bottom: 0px;">
+                                        <div class="alfa-digit" [ngClass]="details.delivery_from=='paraflex' ? 'primary' : 'secondary'">{{details.company_name.charAt(0).toUpperCase()}}</div>
+                                        <div class="content">
+                                            <p>{{details.company_name}}</p>
+                                            <p *ngIf="details.delivery_from!='paraflex'"> Distributor : {{details.delivery_from_company_name}}</p>
+                                            <a style="color: #2f00ec;">{{details.order_no}}</a>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                -------------loop End--------
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>  -->
+        </div>
+    </div>

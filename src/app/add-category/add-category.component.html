@@ -1,0 +1,184 @@
+<!-- <p>
+  add-category works!
+  <input type="text"  [(ngModel)]="category">
+  <input type="text"  [(ngModel)]="Sub_category">
+  <button (click)=addcategory(category)>Save</button>
+</p>
+-->
+
+<div class="edit-modal"  *ngIf="data =='category'">
+  <p class="heading">Add New {{data}}</p>
+  <form validate #update_basic="ngForm" (ngSubmit)="(update_basic.valid && update_basic.submitted)?addcategory(data2.cat):''">
+    <div mat-dialog-content>
+      <div class="cs-form">
+        <div class="row">
+          <div class="col s12">
+            <mat-form-field class="cs-input"  appearance="outline">
+              <mat-label>Category</mat-label>
+              <input matInput placeholder="Type Here ..." name="cat"  #cat="ngModel" [(ngModel)]="data2.cat"  [ngClass]="{'has-error' : cat.invalid } " required >
+            </mat-form-field>
+            <div class="alert alert-danger" *ngIf="!cat.valid && update_basic.submitted">
+              Category is required....
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div mat-dialog-actions>
+      <button mat-button color="warn" >Cancel</button>
+      <button mat-button color="accent" style="color: #fff;"type="submit" >Save</button>
+    </div>
+  </form>
+  <!-- <div mat-dialog-content>
+    <div class="cs-form">
+      <div class="row">
+        <div class="col s6">
+          <div class="control-field">
+            <mat-form-field class="cs-input"  appearance="outline">
+              <input matInput placeholder="Category" [(ngModel)]="category">
+            </mat-form-field>
+          </div>
+        </div>
+        
+      </div>
+    </div>
+  </div> -->
+  <!-- <div mat-dialog-actions>
+    <button mat-button color="warn" >Cancel</button>
+    <button mat-button color="accent" style="color: #fff;" >Save</button>
+  </div> -->
+</div>
+
+
+
+
+<div class="edit-modal" *ngIf="data !='category' && data.role !='edit_category' && data.role !='edit_subcategory'">
+  <p class="heading">Add New {{data}}</p>
+  <form validate #update_basic="ngForm" (ngSubmit)="(update_basic.valid && update_basic.submitted)?subcategory(data,data2.sub_cat):''">
+    <div mat-dialog-content>
+      <div class="cs-form">
+        <div class="row">
+          <div class="col s12">
+            <mat-form-field class="cs-input"  appearance="outline">
+              <mat-label>Sub Category</mat-label>
+              <input matInput placeholder="Type Here ..." name="sub_cat"  #sub_cat="ngModel" [(ngModel)]="data2.sub_cat"  [ngClass]="{'has-error' : sub_cat.invalid } " required >
+            </mat-form-field>
+            <div class="alert alert-danger" *ngIf="!sub_cat.valid && update_basic.submitted">
+              Sub-category is required....
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div mat-dialog-actions>
+      <button mat-button color="warn" >Cancel</button>
+      <button mat-button color="accent" style="color: #fff;"type="submit" >Save</button>
+    </div>
+  </form>
+  <!-- <div mat-dialog-content>
+    <div class="cs-form">
+      <div class="row">
+        
+        <div class="col s6">
+          <div class="control-field">
+            <mat-form-field class="cs-input"  appearance="outline">
+              <input matInput placeholder="Sub Category" [(ngModel)]="Sub_category">
+            </mat-form-field>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div mat-dialog-actions>
+    <button mat-button color="warn" >Cancel</button>
+    <button mat-button color="accent" style="color: #fff;">Save</button>
+  </div> -->
+</div>
+
+
+<div class="edit-modal"  *ngIf="data.role =='edit_category'">
+  <p class="heading">Edit category</p>
+  <!-- <form #update_basic="ngForm" name="update_basic" (ngSubmit)="(update_basic.valid && update_basic.submitted)?update_address(data):''" validate></form> -->
+  
+  <form validate #update_basic="ngForm" (ngSubmit)="(update_basic.valid && update_basic.submitted)?edit_category(data1.cat):''">
+    <div mat-dialog-content>
+      <div class="cs-form">
+        <div class="row">
+          <div class="col s12">
+            <mat-form-field class="cs-input"  appearance="outline">
+              <mat-label>Category</mat-label>
+              <input matInput placeholder="Type Here ..." name="cat"  #cat="ngModel" [(ngModel)]="data1.cat"  [ngClass]="{'has-error' : cat.invalid } " required >
+            </mat-form-field>
+            <div class="alert alert-danger" *ngIf="!cat.valid && update_basic.submitted">
+              Category is required....
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div mat-dialog-actions>
+      <button mat-button color="warn" >Cancel</button>
+      <button mat-button color="accent" style="color: #fff;"type="submit" >Save</button>
+    </div>
+  </form>
+</div>
+
+
+<div class="edit-modal"  *ngIf="data.role =='edit_subcategory'">
+  <p class="heading">Edit Sub Category</p>
+  <!-- <form #update_basic="ngForm" name="update_basic" (ngSubmit)="(update_basic.valid && update_basic.submitted)?update_address(data):''" validate></form> -->
+  
+  <form validate #update_basic="ngForm" (ngSubmit)="(update_basic.valid && update_basic.submitted)?edit_subcategory(data1.cat):''">
+    <div mat-dialog-content>
+      <div class="cs-form">
+        <div class="row">
+          <div class="col s12">
+            <mat-form-field class="cs-input"  appearance="outline">
+              <mat-label>Sub Category</mat-label>
+              <input matInput placeholder="Type Here ..." name="cat"  #cat="ngModel" [(ngModel)]="data1.cat"  [ngClass]="{'has-error' : cat.invalid } " required >
+            </mat-form-field>
+            <div class="alert alert-danger" *ngIf="!cat.valid && update_basic.submitted">
+              Sub Category is required....
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div mat-dialog-actions>
+      <button mat-button color="warn" >Cancel</button>
+      <button mat-button color="accent" style="color: #fff;"type="submit" >Save</button>
+    </div>
+  </form>
+</div>
+
+
+<!-- <div class="edit-modal"  *ngIf="data.role =='edit_subcategory'">
+  <p class="heading">Edit category</p>
+  <!-- <form #update_basic="ngForm" name="update_basic" (ngSubmit)="(update_basic.valid && update_basic.submitted)?update_address(data):''" validate></form> --
+    
+    <form validate #update_basic="ngForm" (ngSubmit)="(update_basic.valid && update_basic.submitted)?edit_subcategory(data1.cat):''">
+      <div mat-dialog-content>
+        <div class="cs-form">
+          <div class="row">
+            <div class="col s6">
+              <div class="control-field">
+                <mat-form-field class="cs-input"  appearance="outline">
+                  <input matInput placeholder="Subcategory" name="sub_cat"  #sub_cat="ngModel" [(ngModel)]="data1.sub_cat"  [ngClass]="{'has-error' : sub_cat.invalid } " required >
+                  <div class="alert alert-danger" *ngIf="!sub_cat.valid && update_basic.submitted">
+                    Subcategory is required....
+                  </div>
+                </mat-form-field>
+              </div>
+            </div>
+            
+          </div>
+        </div>
+      </div>
+      <div mat-dialog-actions>
+        <button mat-button color="warn" >Cancel</button>
+        <button mat-button color="accent" style="color: #fff;"type="submit" >Save</button>
+      </div>
+    </form>
+  </div> -->
+  
+  

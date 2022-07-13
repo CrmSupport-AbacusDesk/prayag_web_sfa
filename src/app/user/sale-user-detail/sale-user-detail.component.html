@@ -1,0 +1,1144 @@
+<div class="main-container" >
+  <div *ngIf="loader">
+    <mat-spinner class="loader">
+      <div><p>Loading....</p></div>
+    </mat-spinner>
+  </div>
+  <div class="middle-container">
+    <div class="page-heading">
+      <div class="heading-text bc-space">
+        <div class="back-btn">
+          <a mat-button routerLink="/sale-user-list" routerLinkActive="active"><i class="material-icons">west</i></a>
+        </div>
+        <h2>User Detail</h2>
+
+        </div>
+
+
+      </div>
+
+      <div class="left-auto">
+      
+      </div>
+
+    </div>
+
+
+    <div class="container-outer">
+      <div class="container" >
+        <div *ngIf="view_tab=='profile'">
+          <div class="row">
+            <div class="col s12">
+              <div class="details-info">
+                <div class="basic-details">
+                  <div class="cs-heading">
+                    <h2>Basic Detail</h2>
+                  </div>
+                  <div class="profile-info">
+                    <ul class="ais">
+                      <li class="col s4">
+                        <div class="cs-box">
+                          <img src="assets/img/people.svg" class="fix-img">
+                          <span>Name</span>
+                          <p class="link-clr">{{detail.name?detail.name:'--'}}</p>
+                          <a  class="edit-icon" color="accent" matRipple matTooltip="EDIT" (click)="openEditDialog(detail.name,'name')"><i class="material-icons">create</i></a>
+                        </div>
+                      </li>
+                      <li class="col s4">
+                        <div class="cs-box">
+                          <img src="assets/img/company.svg" class="fix-img">
+                          <span>Type</span>
+                          <p >{{detail.user_type?detail.user_type:'--'}}</p>
+                          <a  class="edit-icon" color="accent" matRipple matTooltip="EDIT" (click)="openEditDialog(detail.user_type,'user_type')"><i class="material-icons">create</i></a>
+                        </div>
+                      </li>
+                      <li class="col s4">
+                        <div class="cs-box">
+                          <img src="assets/img/designation.svg" class="fix-img">
+                          <span>Designation</span>
+                          <p>{{detail.designation?detail.designation:'--'}}</p>
+                          <a  class="edit-icon" color="accent" matRipple matTooltip="EDIT" (click)="openEditDialog(detail.access_level,'access_level')"><i class="material-icons">create</i></a>
+                        </div>
+                      </li>
+                      <li  class="col s3">
+                        <div class="cs-box">
+                          <img src="assets/img/phone.svg" class="fix-img">
+                          <span>Mobile no</span>
+                          <p>{{detail.contact_01?detail.contact_01:'--'}}</p>
+                          <a  class="edit-icon" color="accent" matRipple matTooltip="EDIT" (click)="openEditDialog(detail.contact_01,'contact_01')"><i class="material-icons">create</i></a>
+                        </div>
+                      </li>
+                      </ul>
+                    <ul class="ais">
+
+                      <li class="col s4">
+                        <div class="cs-box">
+                          <img src="assets/img/gmail.svg" class="fix-img">
+                          <span>Email</span>
+                          <p>{{detail.email?detail.email:'--'}}</p>
+                          <a  class="edit-icon" color="accent" matRipple matTooltip="EDIT" (click)="openEditDialog(detail.email,'email')"><i class="material-icons">create</i></a>
+                        </div>
+                      </li>
+                      <li  class="col s2">
+                        <div class="cs-box">
+                          <img src="assets/img/building.svg" class="fix-img">
+                          <span>Sales Type</span>
+                          <p>{{detail.department && detail.department!=null  ?detail.department:'--'}}</p>
+                          <a  class="edit-icon" color="accent" matRipple matTooltip="EDIT" (click)="openEditDialog(detail.department,'department')"><i class="material-icons">create</i></a>
+                        </div>
+                      </li>
+                      <li  class="col s2">
+                        <div class="cs-box">
+                          <img src="assets/img/building.svg" class="fix-img">
+                          <span>Employee Code</span>
+                          <p>{{detail.employee_id && detail.employee_id!=null  ?detail.employee_id:'--'}}</p>
+                          <a  class="edit-icon" color="accent" matRipple matTooltip="EDIT" (click)="openEditDialog(detail.employee_id,'employee_id')"><i class="material-icons">create</i></a>
+                        </div>
+                      </li>
+                      <li  class="col s2" >
+                        <div class="cs-box">
+                          <img src="assets/img/building.svg" class="fix-img">
+                          <span>Team State</span>
+                          <p>{{detail.team_state?detail.team_state:'--'}}</p>
+                          <a  class="edit-icon" color="accent" matRipple matTooltip="EDIT"
+                          (click)="openEditDialog(detail.team_state,'team_state')"><i class="material-icons">edit</i></a>
+
+                        </div>
+                      </li>
+                      </ul>
+                   
+
+                    <ul class="ais">
+                      <li  class="col s2" >
+                        <div class="cs-box">
+                          <img src="assets/img/building.svg" class="fix-img">
+                          <span>Team Name</span>
+                          <p>{{detail.team_name?detail.team_name:'--'}}</p>
+                          <a  class="edit-icon" color="accent" matRipple matTooltip="EDIT"
+                          (click)="openEditDialog(detail.team_name,'team_name')"><i class="material-icons">edit</i></a>
+
+                        </div>
+                      </li>
+                      <li  class="col s3">
+                        <div class="cs-box">
+                          <img src="assets/img/building.svg" class="fix-img">
+                          <span>Team Code</span>
+                          <p>{{detail.team_code?detail.team_code:'--'}}</p>
+                          <a  class="edit-icon" color="accent" matRipple matTooltip="EDIT" (click)="openEditDialog(detail.team_code,'team_code')"><i class="material-icons">create</i></a>
+                        </div>
+                      </li>
+                    
+                    
+
+                      <li  class="col s3" >
+                        <div class="cs-box">
+                          <img src="assets/img/building.svg" class="fix-img">
+                          <span>User Name</span>
+                          <p>{{detail.username?detail.username:'--'}}</p>
+                          <a  class="edit-icon" color="accent" matRipple matTooltip="EDIT"
+                          (click)="openEditDialog(detail.username,'username')"><i class="material-icons">edit</i></a>
+
+                        </div>
+                      </li>
+
+                      <li  class="col s3">
+                        <div class="cs-box">
+                          <img src="assets/img/building.svg" class="fix-img">
+                          <span>Password</span>
+                          <p>{{detail.password?detail.password:'--'}}</p>
+                          <a  class="edit-icon" color="accent" matRipple matTooltip="EDIT"
+                          (click)=" openEditDialog(detail.password,'password')"><i class="material-icons">edit</i></a>
+
+                        </div>
+                      </li>
+                      </ul>
+                      <ul class="ais">
+                        <li class="col s4">
+                          <div class="cs-box">
+                            <img src="../assets/img/birthday.svg" class="fix-img">
+                            <span>Date of joining</span>
+                            <p>{{detail.date_joining?detail.date_joining:'N/A'}}</p>
+                            <a  class="edit-icon" color="accent" matRipple matTooltip="EDIT" (click)="openEditDialog(detail.date_joining,'date_joining')"><i class="material-icons">create</i></a>
+                          </div>
+                        </li>
+                        <li  class="col s4">
+                          <div class="cs-box">
+                            <img src="../assets/img/birthday.svg" class="fix-img">
+                            <span>Date of leaving</span>
+                            <p>{{detail.date_leaving?detail.date_leaving:'N/A'}}</p>
+                            <a  class="edit-icon" color="accent" matRipple matTooltip="EDIT" (click)="openEditDialog(detail.date_leaving,'date_leaving')"><i class="material-icons">create</i></a>
+                          </div>
+                        </li>
+                      <li  class="col s3"   *ngIf="detail.user_type == 'Sales User' || detail.user_type == 'Sales User'">
+                        <div class="cs-box">
+                          <img src="assets/img/calendars.svg" class="fix-img">
+                          <span>Weekly Off</span>
+                          <p>{{detail.weekly_off?detail.weekly_off:'--'}}</p>
+                          <a  class="edit-icon" color="accent" matRipple matTooltip="EDIT" (click)="openEditDialog(detail.weekly_off,'weekly_off')"><i class="material-icons">create</i></a>
+                        </div>
+                      </li>
+                      <li  class="col s3"   >
+                        <div class="cs-box">
+                          <img src="assets/img/building.svg" class="fix-img">
+                          <span>Region</span>
+                          <p>{{detail.region?detail.region:'--'}}</p>
+                          <a  class="edit-icon" color="accent" matRipple matTooltip="EDIT" (click)="openEditDialog(detail.region,'region')"><i class="material-icons">create</i></a>
+                        </div>
+                      </li>
+                      <li  class="col s3"   *ngIf="detail.user_type == 'Sales User' || detail.user_type == 'Sales User'">
+                        <div class="cs-box">
+                          <img src="assets/img/building.svg" class="fix-img">
+                          <span>Distance Office to Home(IN KM)</span>
+                          <p>{{detail.distance?detail.distance:'--'}}</p>
+                          <a  class="edit-icon" color="accent" matRipple matTooltip="EDIT" (click)="openEditDialog(detail.distance,'distance')"><i class="material-icons">create</i></a>
+                        </div>
+                      </li>
+                    </ul>
+
+                
+                  </div>
+
+                  <div class="col s6 cs-figure">
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="row">
+            <form (ngSubmit)="updateDetail()">
+              <div class="col s8">
+                <div class="details-info">
+                  <div class="basic-details">
+                    <div class="cs-heading">
+                      <h2>Address </h2>
+                      <a  class="edit-item" matTooltip="EDIT" color="accent" (click)="editaddress()"><i class="material-icons">edit</i></a>
+                    </div>
+                    <div class="cs-figure">
+                      <ul class="minus-top">
+                        <li>
+                          <div class="outer">
+                            <div class="inner">
+                              <span>State</span>
+                              <p>{{detail.permanent_address_state}}</p>
+                            </div>
+                          </div>
+                        </li>
+                        <li>
+                          <div class="outer">
+                            <div class="inner">
+                              <span>District</span>
+                              <p>{{detail.district_name}}</p>
+                            </div>
+                          </div>
+                        </li>
+                        <li>
+                          <div class="outer">
+                            <div class="inner">
+                              <span>City</span>
+                              <p>{{detail.city}}</p>
+                            </div>
+                          </div>
+                        </li>
+                      </ul>
+                      <ul class="minus-top">
+
+                        <li class="w427">
+                          <div class="outer">
+                            <div class="inner">
+                              <span>Pin Code</span>
+                              <p>{{detail.pincode}}</p>
+                            </div>
+                          </div>
+                        </li>
+
+                        <li>
+                          <div class="outer">
+                            <div class="inner">
+                              <span>address</span>
+                              <p>{{detail.street}}</p>
+                            </div>
+                          </div>
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </form>
+
+
+            <div class="col s4" *ngIf="detail.user_type == 'Sales User'">
+              <div class="details-info" *ngIf="team_update==true">
+                <div class="basic-details">
+                  <div class="cs-heading" [ngClass]="{'active':active.user==true}">
+                    <h2>Reporting Manager</h2>
+                    <i class="material-icons search-icon right20" (click)="toggleterritory('user','open')"  matRipple>search</i>
+                    <input type="text" placeholder="search..." name="sales_executive" class="fix-search" (input)="getItemsList(search.sales_executive)" #sales_executive="ngModel" [(ngModel)]="search.sales_executive">
+                    <i class="material-icons close-icon" (click)="toggleterritory('user','close')" matRipple>clear</i>
+                  </div>
+                  <div class="cs-checkbox padding0">
+                    <div class="checkbox-outer">
+                      <section class="checkbox-inner"   >
+                        <ng-container *ngFor="let list of rsm_list;let index=index" aria-required="true">
+                          <mat-checkbox class="check-list" [checked]="list.check" (change)="product_Brand(list.id,index,$event)" value="{{list.name}}">{{list.name}} | {{list.role_name}}</mat-checkbox>
+                        </ng-container>
+                      </section>
+                    </div>
+                  </div>
+                  <div class="cs-btn  text-right mt10">
+                    <div class="in-btn">
+                      <button mat-raised-button color="accent" (click)="update_assignusers()">Update</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="details-info padding0" *ngIf="team_update==false" style="background: #fff;">
+                <div class="basic-details">
+                  <div class="cs-heading margin0">
+                    <h2>Reporting Manager</h2>
+                    <a class="edit-item" matTooltip="EDIT" color="accent" (click)="edit_assigned_team()"><i class="material-icons">edit</i></a>
+                  </div>
+                  <div class="cs-table">
+                    <div class="table-head">
+                      <table>
+                        <tr>
+                          <th>Name</th>
+                          <th class="w100">Designation  </th>
+                        </tr>
+                      </table>
+                    </div>
+                    <div class="table-container">
+                      <div class="table-content">
+                        <table>
+                          <tr *ngFor="let team of detail['assign_user']">
+                            <td>{{team.name}}</td>
+                            <td class="w100">{{team.role_name}}</td>
+                          </tr>
+                        </table>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+
+          <div class="row"    >
+            <div class="col s6"*ngIf= "detail['user_pop_gift'] !=''">
+              <div class="territory-info" style="background: #f7f7f7;">
+                <div class="head" style="background: #efefef;" [ngClass]="{'active':active.user==true}">
+
+
+                  <h2>Pop & Gift Details</h2>
+                </div>
+                <div class="cs-table">
+                  <div class="table-head border-bottom">
+                    <table>
+                      <tr>
+                        <th class ="w50">S.no.</th>
+                        <th>Item Name</th>
+                        <th>Gift Stock</th>
+
+                      </tr>
+                    </table>
+                  </div>
+
+                  <div class="table-container">
+                    <div class="table-content table-scroll">
+                      <table class="sno-border">
+                        <tr *ngFor="let gift of detail['user_pop_gift'];let i = index" >
+                          <td class="w50">{{i+1}}</td>
+                          <td>{{gift.item_name}}</td>
+                          <td>{{gift.stock_qty}}</td>
+
+                        </tr>
+                        <!-- <ng-container *ngFor="let lead of skelton">
+                          <tr class="sk-loading" *ngIf="loader">
+                            <td class="w50" >
+                              <div>&nbsp;</div>
+                            </td>
+                            <td>
+                              <div>&nbsp;</div>
+                            </td>
+                            <td >
+                              <div>&nbsp;</div>
+                            </td>
+
+                          </tr>
+                        </ng-container> -->
+                      </table>
+                    </div>
+
+                    <!-- <div class="no-data" *ngIf="data_not_found==true">
+                      <img src="assets/img/no-data.gif" alt="" class="h270 mb30">
+                      <p>Data not <span>available !</span></p>
+                    </div> -->
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- <div class="col s6">
+              <div class="territory-info" style="background: #f7f7f7;">
+                <div class="head" style="background: #efefef;" [ngClass]="{'active':active.user==true}">
+
+
+                  <h2>Outgoing Gift Details</h2>
+                </div>
+                <div class="cs-table">
+                  <div class="table-head border-bottom">
+                    <table>
+                      <tr>
+                        <th class ="w50">S.no.</th>
+                        <th>Date Created</th>
+                        <th>Item Name</th>
+                        <th>Qty</th>
+
+                      </tr>
+                    </table>
+                  </div>
+
+                  <div class="table-container">
+                    <div class="table-content table-scroll">
+                      <table class="sno-border">
+                        <tr *ngFor="let row of detail['outgoing_user_pop_gift'];let i = index" >
+                          <td class="w50">{{i+1}}</td>
+                          <td>{{row.date_created |date : 'd MMM y'}}</td>
+
+                          <td>{{row.item_name}}</td>
+                          <td>{{row.qty}}</td>
+
+                        </tr>
+                        <ng-container *ngFor="let lead of skelton">
+                          <tr class="sk-loading" *ngIf="loader">
+                            <td class="w50" >
+                              <div>&nbsp;</div>
+                            </td>
+                            <td>
+                              <div>&nbsp;</div>
+                            </td>
+                            <td >
+                              <div>&nbsp;</div>
+                            </td>
+
+                          </tr>
+                        </ng-container>
+                      </table>
+                    </div>
+
+                    <div class="no-data" *ngIf="data_not_found==true">
+                      <img src="assets/img/no-data.gif" alt="" class="h270 mb30">
+                      <p>Data not <span>available !</span></p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div> -->
+          </div>
+
+
+          <div class="row" *ngIf="detail.user_type == 'System User'">
+
+            <div class="left-right-15">
+              <div class="cs-table">
+                <div class="stickyHead">
+
+                  <div class="table-head">
+                    <table>
+                      <tr>
+                        <th class="w50">S.No.</th>
+                        <th >Module Name</th>
+                        <th class="w120 text-center" >View</th>
+                        <th class="w120 text-center">Edit</th>
+                        <th  class="w120 text-center">Delete</th>
+                        <th class="w120 text-center">Add</th>
+                      </tr>
+                    </table>
+                  </div>
+                </div>
+
+                <div class="table-container">
+                  <div class="table-content">
+                    <table>
+                      <tr *ngFor="let data of assign_module_data; let i = index">
+                        <td class="w50">{{i+1}}</td>
+                        <td >{{data.module_name}}</td>
+                        <td class="w120 text-center">
+                          <mat-checkbox *ngIf="data.view!= '' &&  data.view  == false || data.view  == 'false' || data.view  == 'true' || data.view  == true" [checked]="data.view== 'true'" (change)="assign_module('view',$event,i)"></mat-checkbox>
+                          <mat-checkbox *ngIf="data.view== ''" [disabled]=true></mat-checkbox>
+
+                        </td>
+                        <td class="w120 text-center">
+                          <mat-checkbox *ngIf="data.edit!= '' &&  data.edit  == false || data.edit  == 'false' || data.edit  == 'true' || data.edit  == true"  [checked]="data.edit== 'true'" (change)="assign_module('edit',$event,i)"></mat-checkbox>
+                          <mat-checkbox *ngIf="data.edit== ''" [disabled]=true [indeterminate]=true></mat-checkbox>
+
+                        </td>
+
+
+                        <td class="w120 text-center">
+                          <mat-checkbox *ngIf="data.delete!= '' &&  data.delete  == false || data.delete  == 'false' || data.delete  == 'true' || data.delete  == true" [checked]="data.delete== 'true'" (change)="assign_module('delete',$event,i)"></mat-checkbox>
+                          <mat-checkbox *ngIf="data.delete== ''" [disabled]=true [indeterminate]=true></mat-checkbox>
+
+                        </td>
+                        <td class="w120 text-center">
+                          <mat-checkbox *ngIf="data.add!= '' &&  data.add  == false || data.add  == 'false' || data.add  == 'true' || data.add  == true" [checked]="data.add== 'true'" (change)="assign_module('add',$event,i)"></mat-checkbox>
+                          <mat-checkbox *ngIf="data.add== ''" [disabled]=true [indeterminate]=true></mat-checkbox>
+
+                        </td>
+
+
+                      </tr>
+                    </table>
+
+                  </div>
+                </div>
+
+              </div>
+            </div>
+            <!-- <div class="col s6" *ngIf="data.userrole!=''">
+              <div class="territory-info">
+                <div class="head" [ngClass]="{'active':active.user==true}">
+                  <h2>Reporting Manager</h2>
+                  <i class="material-icons search-icon right20" (click)="toggleterritory('user','open')"  matRipple>search</i>
+                  <div class="item-input">
+                    <input type="text" placeholder="search..." name="sales_executive" class="fix-search" (input)="getItemsList(search.sales_executive)" #sales_executive="ngModel" [(ngModel)]="search.sales_executive">
+                    <i class="material-icons close-icon" (click)="toggleterritory('user','close')" matRipple>clear</i>
+                  </div>
+                </div>
+
+                <div class="cs-logs">
+                  <div class="cs-checkbox">
+                    <div class="checkbox-outer">
+                      <section class="checkbox-inner"   >
+                        <ng-container *ngFor="let list of rsm_list;let index=index" aria-required="true">
+                          <mat-checkbox class="check-list" [checked]="list.check" (change)="product_Brand(list.id,index,$event)" value="{{list.name}}">{{list.name}} | {{list.role_name}}</mat-checkbox>
+                        </ng-container>
+                      </section>
+                    </div>
+                  </div>
+                </div>
+                <div class="col s12">
+                  <div class="cs-btn  text-right pb15">
+                    <div class="in-btn">
+                      <button mat-raised-button color="accent">Update</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div> -->
+
+
+          </div>
+        </div>
+
+        <div class="row" *ngIf="view_tab=='Checkin'">
+          <div class="cs-table left-right-10">
+            <div class="sticky-head">
+              <div class="table-head">
+                <table class="sno-border">
+                  <tr>
+                    <th class="w40">S. No.</th>
+                    <th class="w120">Date</th>
+                    <th class="w300">Company Name</th>
+                    <th>Check in </th>
+                    <th>Check out</th>
+                    <th>Remark</th>
+                  </tr>
+                </table>
+              </div>
+            </div>
+
+            <div class="table-container">
+              <div class="table-content">
+                <table class="sno-border">
+                  <tr *ngFor="let row of checkin_data ; let i=index">
+                    <td class="w40">{{i+1}}</td>
+                    <td class="w120">{{row.date_created | date : 'MMMM d, y'}}</td>
+                    <td class="w300">{{row.company_name?row.company_name:'--'}}</td>
+                    <td class="one-line" matTooltip=" {{row.visit_start }} {{row.start_address}}" matTooltipPosition="above"><span style="font-weight: 500;">{{row.visit_start }}</span>
+                      {{row.start_address?row.start_address:'--'}}
+                    </td>
+                    <td class="one-line" matTooltip=" {{row.visit_end }} {{row.address}}" matTooltipPosition="above"><span style="font-weight: 500;">{{row.visit_end }}</span>
+                      {{row.address}}
+                    </td>
+                    <td>{{row.description}}
+
+                    </td>
+                  </tr>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="pt10" *ngIf="view_tab=='pOrder' || view_tab=='sOrder' ">
+          <div class="dflex1 space-btw mb10 mt10">
+            <div class="cube-bx">
+              <div class="detail-bx">
+                <ng-container *ngIf="view_tab=='pOrder'">
+                  <p>Total Primary Sale :</p>
+                  <p>{{totalOrders.count}}</p>
+                </ng-container>
+                <ng-container *ngIf="view_tab=='sOrder'">
+                  <p>Total Secondary Sale :</p>
+                  <p>{{totalOrders.count}}</p>
+                </ng-container>
+
+              </div>
+              <div class="detail-bx">
+                <p>Amount :</p>
+                <p>₹ {{totalOrders.sum}} /-</p>
+              </div>
+            </div>
+
+          </div>
+
+          <div class="row">
+            <div class="col s12">
+
+              <div class="cs-table left-right-15" *ngIf="view_tab=='sOrder' ">
+                <div class="sticky-head">
+                  <div class="table-head border-top">
+                    <table class="sno-border">
+                      <tr>
+                        <th class="w50">S. No</th>
+                        <th class="w80">Date</th>
+                        <th  class="w200">Retailer</th>
+                        <th class="w120">Order No</th>
+                        <th class="w100 text-center">Total Item</th>
+                        <th class="w130 text-right">Order Value</th>
+                      </tr>
+                    </table>
+                  </div>
+                  <div class="table-head bdrt">
+                  </div>
+                </div>
+
+                <div class="table-container">
+                  <div class="table-content">
+                    <table class="sno-border">
+                      <tr *ngFor="let list of order_data;let i = index">
+                        <td class="w50">{{i+1}}</td>
+                        <td class="w80">{{list.date_created | date : 'd MMM y'}}</td>
+
+                        <td  class="w200">{{list.company_name}}</td>
+                        <td class="w120"><a class="link-btn" mat-button
+                          routerLink="/order-detail/{{list.id}}"
+                          routerLinkActive="active">{{list.order_no}}</a>
+                        </td>
+                        <td class="w100 text-center">{{list.order_item}}
+
+                        </td>
+                        <td class="w130 text-right">&#8377; {{list.order_grand_total}}</td>
+
+
+                      </tr>
+                    </table>
+                  </div>
+                </div>
+                <div class="no-data" *ngIf="order_data.length==0">
+                  <img src="assets/img/no-data.gif" alt="">
+                  <p>Data not <span>available !</span></p>
+                </div>
+              </div>
+
+              <div class="cs-table left-right-15" *ngIf="view_tab=='pOrder' ">
+                <div class="sticky-head">
+                  <div class="table-head">
+                    <table class="sno-border">
+                      <tr>
+                        <th class="w50">S. No</th>
+                        <th class="w80">Date</th>
+                        <!-- <th class="w220">Created By</th> -->
+                        <th  class="w200">Company Name</th>
+                        <th class="w120">Order No</th>
+                        <th class="w100 text-center">Total Item</th>
+                        <th class="w130 text-right">Order Value</th>
+                      </tr>
+                    </table>
+                  </div>
+
+                </div>
+
+                <div class="table-container">
+                  <div class="table-content">
+                    <table class="sno-border">
+                      <tr *ngFor="let list of order_data;let i = index">
+                        <td class="w50">{{i+1}}</td>
+                        <td class="w80">{{list.date_created | date : 'd MMM y'}}</td>
+                        <!-- <td class="w220">
+                          {{list.created_by_name ? list.created_by_name : list.ord_create_by}}
+                        </td> -->
+                        <td class="w200">{{list.company_name}}</td>
+                        <td class="w120"><a class="link-btn" mat-button
+                          routerLink="/order-detail/{{list.id}}"
+                          routerLinkActive="active">{{list.order_no}}</a></td>
+                          <td class="w100 text-center">{{list.order_item}}</td>
+                          <td class="w130 text-right">&#8377; {{list.order_grand_total}}
+
+                              </td>
+                            </tr>
+                          </table>
+                        </div>
+                      </div>
+
+                    </div>
+
+
+
+                  </div>
+                </div>
+              </div>
+
+              <div class="container-outer padding0" *ngIf="view_tab=='quotation'" >
+                <div class="container">
+                  <div class="cs-table">
+                    <div class="sticky-head">
+                      <div class="table-head">
+                        <table>
+                          <tr>
+                            <th class="w50">S.No</th>
+                            <th class="w90">Date Created</th>
+                            <th class="w150">Quotation ID</th>
+                            <!-- <th class="w150">Created By</th> -->
+                            <th >Company Name</th>
+                            <th class="w150">Type</th>
+                            <th class="w80 text-center">Total QTY.</th>
+                            <th class="w170 text-right">Total Amount</th>
+                            <th class="w80">Status</th>
+                            <!-- <th class="w60"*ngIf="quotationType=='All' ||quotationType=='Pending'">Action</th> -->
+                          </tr>
+                        </table>
+                      </div>
+
+                    </div>
+
+                    <div class="table-container">
+                      <div class="table-content " *ngIf=" quotation_list != 0">
+                        <table>
+                          <tr *ngFor="let row of quotation_list; let i=index">
+                            <td class="w50">{{i+1}}</td>
+                            <td class="w90">{{row.date_created | date : 'd MMM y'}}</td>
+                            <td class="w150"><a class="link-btn" mat-button routerLink="/quotation-detail/{{row.id}}" routerLinkActive="active">#QUOT ID-{{row.id? row.id:'N/A'}}</a></td>
+                            <!-- <td class="w150">{{row.created_by_name? row.created_by_name:'N/A'}}</td> -->
+                            <td >{{row.dr_name? row.dr_name:'N/A'}}</td>
+                            <td *ngIf="row.type=='Distributor' || row.type=='1' || row.type=='Distributor' " class="w150">Distributor</td>
+                            <td *ngIf="row.type=='Dealer' || row.type=='3'" class="w150">Retailer</td>
+                            <td *ngIf="row.type=='Direct Dealer' || row.type=='7'" class="w150">Direct Dealer</td>
+                            <td *ngIf="row.type=='Project' || row.type=='9'" class="w150">Project</td>
+                            <td *ngIf="row.type=='End user' || row.type=='5'" class="w150">End user</td>
+                            <td *ngIf="row.type=='Others' || row.type=='6'" class="w150">Others</td>
+                            <td *ngIf="row.type==null" class="w150">N/A</td>
+                            <td class="w80 text-center">{{row.item_count? row.item_count:'N/A'}}</td>
+                            <td class="w170 text-right">₹ {{row.item_total? row.item_total:'N/A'}}</td>
+                            <td class="w80"><strong [ngClass]="{'yellow-clr': row.quotation_status=='Pending','green-clr': row.quotation_status=='Approved','red-clr': row.quotation_status=='Reject'}" >{{row.quotation_status? row.quotation_status:'N/A'}}</strong></td>
+                            <!-- <td class="w60 text-center"*ngIf=" quotationType=='All' ||quotationType=='Pending'">
+                              <button *ngIf="row.quotation_status=='Pending'&& quotationType=='All' ||quotationType=='Pending'" mat-button class="delete-mat"><i class="material-icons red-clr" (click)="deleteQuotation(row.id)" >delete_sweep</i></button>
+                            </td>  -->
+                          </tr>
+
+
+                        </table>
+                      </div>
+                    </div>
+                  </div>
+
+
+
+
+                </div>
+              </div>
+
+              <div class="container-outer padding0" *ngIf="view_tab=='attendence'" >
+
+
+                <div class="container mb60">
+                  <div class="cs-table horizontal-scroll">
+                    <div class="sticky-head">
+                      <div class="table-head">
+                        <table>
+                          <tr>
+                            <th class="w90 text-center" >Date</th>
+                            <th class="w100 text-center">Work Type</th>
+                            <th class="w90 text-center">Start Time</th>
+                            <th class="w150 text-center">Start Location</th>
+                            <th class="w90 text-center">Stop Time</th>
+                            <th class="w150 text-center">Stop Location</th>
+
+
+                          </tr>
+                        </table>
+                      </div>
+
+
+                    </div>
+                    <div class="table-container">
+                      <div class="table-content">
+                        <table>
+                          <tr *ngFor="let p of attendancelist">
+                            <td  class="w90 text-center">{{(p.date_created?p.date_created :'--') | date : 'd MMM y' }}</td>
+
+
+                            <td *ngIf="!p.work_type" class="w100 text-center">--</td>
+
+                            <td *ngIf="p.work_type=='Working In Territory'" class="w100 text-center">{{p.work_type ? p.work_type : '--'}}</td>
+
+                            <td *ngIf="p.work_type=='Working Out Of Territory'" class="w100 text-center"
+                            matTooltip="{{p.travel_place ? p.travel_place : '--'}}" matTooltipPosition="above">{{p.work_type ?
+                              p.work_type : '--'}}</td>
+
+                              <td class="w90 text-center">{{p.start_time?p.start_time:'--'}}</td>
+
+                              <td class="w150 text-center" matTooltip="{{p.start_address && p.start_address!=''?p.start_address:'--'}}"
+                              matTooltipPosition="above">
+                              <div class="one-line">{{p.start_address && p.start_address!=''?p.start_address:'--'}}</div>
+                            </td>
+                            <td class="w90 text-center" > {{p.stop_time && p.stop_time!='12:00 AM'?p.stop_time:'--'}}</td>
+
+                            <td class="w150 text-center" matTooltip="{{p.stop_address && p.stop_address != ''?p.stop_address:'--'}}"
+                            matTooltipPosition="above">
+                            <div class="one-line">{{p.stop_address && p.stop_address != ''?p.stop_address:'--'}}</div>
+
+                          </td>
+
+                        </tr>
+
+                      </table>
+
+                    </div>
+                  </div>
+                </div>
+
+
+              </div>
+
+
+
+            </div>
+
+            <div class="container-outer padding0" *ngIf="view_tab=='leaves'">
+
+              <div class="container">
+                <div class="cs-table">
+                  <div class="sticky-head">
+                    <div class="table-head">
+                      <table>
+                        <tr>
+                          <th class="w50">S NO</th>
+                          <th class="w110">Date Created</th>
+                          <!-- <th class="w110">Created By</th> -->
+                          <th>Subject</th>
+                          <th class="w90">Start Date</th>
+                          <th class="w90">End Date</th>
+                          <th class="w80 text-center">Total Days</th>
+                          <th>Description</th>
+                          <th class="w120">Status</th>
+                        </tr>
+                      </table>
+                    </div>
+
+
+                  </div>
+
+                  <div class="table-container">
+                    <div class="table-content">
+                      <table>
+                        <tr *ngFor="let leave of leave_list;let i=index;">
+                          <td class="w50">{{i+1}}</td>
+                          <td class="w110">{{leave.date_created | date :' d MMM, y'}}</td>
+                          <!-- <td class="w110" >{{leave.created_by_name}}</td> -->
+                          <td >{{leave.subject}}</td>
+                          <td class="w90">{{leave.leave_start_date | date :' d MMM, y'}}</td>
+                          <td class="w90">{{leave.leave_end_date | date :' d MMM, y'}}</td>
+                          <td class="w80 text-center">{{leave.total_days}}</td>
+                          <td >{{leave.description}}</td>
+                          <td class="w120" [ngClass]="{'yellow-clr':leave.status=='Pending','red-clr':leave.status=='Reject','green-clr':leave.status=='Approved'}" matTooltip="({{leave.status=='Reject' ? leave.reject_remark : ''}})">
+                            <strong>{{leave.status | uppercase}}</strong>
+                            <div class="one-line">
+                              <span *ngIf="leave.reject_remark !=''"> ({{leave.reject_remark}})</span>
+                            </div>
+                          </td>
+
+                        </tr>
+
+                      </table>
+                    </div>
+                  </div>
+                </div>
+
+
+              </div>
+            </div>
+
+
+            <div class="container-outer padding0" *ngIf="view_tab=='travelplan'">
+              <div class="container" >
+                <div class="cs-table">
+                  <div class="sticky-head">
+                    <div class="table-head">
+                      <table>
+                        <tr>
+                          <th class="w50">S No</th>
+                          <!-- <th class="w110">Created By</th> -->
+                          <th class="w90">Date From</th>
+                          <th class="w90">Date To</th>
+                          <th class="">Travel type</th>
+                          <th class="w100">Status</th>
+                        </tr>
+                      </table>
+                    </div>
+
+                  </div>
+
+                  <div class="table-container">
+                    <div class="table-content">
+                      <table>
+                        <tr *ngFor="let list of travel_list; let i = index;">
+                          <td class="w50 text-center">{{i+1}}</td>
+                          <!-- <td class="w110">{{list.name | titlecase}} </td> -->
+                          <td class="w90">{{list.date_from| date : 'd MMM y'}} </td>
+                          <td class="w90">{{list.date_to| date : 'd MMM y'}} </td>
+                          <td >
+                            <b>{{list.travel_type}}</b>
+                            <mat-chip-list>
+                              <ng-container *ngFor="let row of list.travel_plan">
+                                <mat-chip *ngIf="list.travel_type =='Distributor Visit'">{{row.company_name}}</mat-chip>
+                                <mat-chip *ngIf="list.travel_type !='Distributor Visit'">{{row.state}}-{{row.district}}-{{row.area}}</mat-chip>
+                              </ng-container>
+                            </mat-chip-list>
+
+                          </td>
+                          <td class="w100">
+                            <strong class="yellow-clr"  *ngIf="list.status=='Pending'">{{list.status}}</strong>
+                            <strong class="green-clr" *ngIf="list.status=='Approved'">{{list.status}}</strong>
+                            <strong class="red-clr" *ngIf="list.status=='Reject'">{{list.status}}</strong>
+                          </td>
+                        </tr>
+
+
+                      </table>
+
+
+                    </div>
+                  </div>
+                </div>
+
+
+              </div>
+
+            </div>
+
+            <div class="container-outer padding0" *ngIf="view_tab=='followup'">
+              <div class="container">
+                <div class="cs-table">
+                  <div class="sticky-head">
+                    <div class="table-head">
+                      <table>
+                        <tr>
+                          <th class="w100">Date Created</th>
+                          <!-- <th class="w150">Created By</th> -->
+                          <th class="w200">Company Name</th>
+                          <th class="w120">Company Type</th>
+                          <th class="w150">Follow up Type</th>
+                          <th class="w100">Followup Date</th>
+                          <th class="w150">Assign To</th>
+                          <th >Description</th>
+
+                        </tr>
+                      </table>
+
+
+                      <div class="table-container">
+                        <div class="table-content">
+                          <table>
+                            <tr *ngFor="let list of followup_list;let i=index">
+                              <td class="w100">{{list.date_created |date : 'd MMM y'}}</td>
+                              <!-- <td class="w150">{{list.name!=''?list.name:'--'}}</td> -->
+                              <td class="w200" >{{list.company_name | titlecase}}
+                              </td>
+                              <td class="w120">
+                                <span style="font-weight: 500;" *ngIf="list.type == '1'">Distributor/Dealer</span>
+                                <span style="font-weight: 500;" *ngIf="list.type == '3'">Retailer</span>
+                                <span style="font-weight: 500;" *ngIf="list.type == '7'">Direct Dealer</span>
+                                <span style="font-weight: 500;" *ngIf="list.type == '9'">Project</span>
+                                <span style="font-weight: 500;" *ngIf="list.type == '5'">End User</span>
+                                <span style="font-weight: 500;" *ngIf="list.type == '10'">Contractor</span>
+                                <span style="font-weight: 500;" *ngIf="list.type == '11'">Architect</span>
+                                <span style="font-weight: 500;" *ngIf="list.type == '15'">Customer</span>
+                                <span style="font-weight: 500;" *ngIf="list.type == '13'">Builder</span>
+                                <span style="font-weight: 500;" *ngIf="list.type == '14'">Cement Dealer</span>
+                                <span style="font-weight: 500;" *ngIf="list.type == '12'">Online Enquiry</span>
+                                <span style="font-weight: 500;" *ngIf="list.type == '' || list.type != '12' && list.type != '15' && list.type != '13' && list.type != '14' && list.type != '9' && list.type != '5' && list.type != '10' && list.type != '11' && list.type != '7' && list.type != '1' && list.type != '3'">Other</span>
+                              </td>
+
+                              <td class="w150">{{list.next_follow_type!=''?list.next_follow_type:'--'}}</td>
+
+                              <td class="w100">{{list.next_follow_date!=''?(list.next_follow_date | date : 'd MMM y'):'--'}}</td>
+
+                              <td class="w150">{{list.assigned_to_name!=''?(list.assigned_to_name | titlecase):'--' | date : 'd MMM y'}}</td>
+                              <td  matTooltip="{{list.description!=''?list.description:'--'}}" matTooltipPosition="above">
+                                <p class="one-line">{{list.description}}</p>
+                              </td>
+
+                            </tr>
+
+                          </table>
+
+
+                        </div>
+                      </div>
+
+                    </div>
+
+
+                  </div>
+
+                </div>
+
+
+              </div>
+            </div>
+
+            <div class="container-outer padding0" *ngIf="view_tab=='contractor-meet'">
+
+              <div class="container">
+                <div class="cs-table">
+                  <div class="sticky-head">
+                    <div class="table-head">
+                      <table>
+                        <tr>
+                          <th class="w90">Date Created</th>
+                                <!-- <th class="w130">Created By</th> -->
+                                <th class="w90">Type</th>
+                                <th class="w150">Company Name</th>
+                                <th class="w140">Contact Person</th>
+                                <!-- <th class="w100">Email</th> -->
+                                <th class="w90">Meeting Date</th>
+                                <th class="w90">Last Meeting</th>
+                                <th class="w90">Total Member</th>
+                                <th class="w90 text-right">Total Budget</th>
+                                <th class="w140">Description</th>
+                                <!-- <th class="w90">Last Meeting</th> -->
+                                <th class="w90">Status</th>
+                        </tr>
+                      </table>
+                    </div>
+
+
+                  </div>
+
+                  <div class="table-container">
+                    <div class="table-content">
+                      <table>
+                        <tr *ngFor="let detail of contractorMeetListDetail ; let i = index">
+                          <!-- <td class="w40 text-center"><strong>{{ ((pageNumber - 1) * pageLimit) + (i+1)}} </strong></td> -->
+                          <td class="w90">{{detail.date_created | date:'dd-MMM-yyyy'}}</td>
+                          <!-- <td class="w130">
+                              <a class="link-btn" routerLink="/sale-user-detail/{{detail.created_by}}" routerLinkActive="active" mat-button>{{detail.created_by_user |titlecase }}</a>
+                          </td> -->
+                          <td *ngIf="detail.type==1" class="w90" matTooltip=" Click here to View Detail " matTooltipPosition="above">
+                              <a class="link-btn" mat-button routerLink="/contractor-detail/{{detail.id}}" routerLinkActive="active">Distributor/Dealer</a>
+                          </td>
+                          <td *ngIf="detail.type==7" class="w90" matTooltip=" Click here to View Detail " matTooltipPosition="above">
+                              <a class="link-btn" mat-button routerLink="/contractor-detail/{{detail.id}}" routerLinkActive="active">Direct Dealer</a>
+                          </td>
+                          <td *ngIf="detail.type==3" class="w90" matTooltip=" Click here to View Detail " matTooltipPosition="above">
+                              <a class="link-btn" mat-button routerLink="/contractor-detail/{{detail.id}}" routerLinkActive="active">Retailer</a>
+                          </td>
+                          <td class="w150">
+                              <a class="link-btn" mat-button routerLink="/distribution-detail/{{detail.dealer_id}}" routerLinkActive="active">{{detail.company_name | titlecase}}</a>
+                          </td>
+                          <td class="w140">{{detail.name}}, {{detail.mobile}}</td>
+                          <!-- <td class="w150">{{detail.created_by_user_email}}</td> -->
+                          <!-- , hh:mm aa -->
+                          <td class="w90">{{detail.date_of_meeting | date:'dd-MMM-yyyy'}}</td>
+                          <td class="w90">
+                              {{detail.last_meeting == null? "First Meeting" :detail.last_meeting | date:'dd-MMM-yyyy'}}
+                          </td>
+                          <td class="w90 text-center"><strong>{{detail.total_member}}</strong></td>
+                          <td class="w90 text-right">&#x20B9; {{detail.total_budget}}</td>
+                          <td class="w140" matTooltip="{{detail.description}}" matTooltipPosition="above">
+                              <p class="one-line">{{detail.description}}</p>
+                          </td>
+                          <td class="w90 text-right"> {{detail.status}}</td>
+
+                          <!-- <td class="w90">60 days ago</td> -->
+
+                          <!-- <td class="w100"><a class="link-btn" mat-button routerLink="/contractor-detail/{{detail.id}}" routerLinkActive="active">view </a></td> -->
+                      </tr>
+
+                      </table>
+                    </div>
+                  </div>
+                </div>
+
+
+              </div>
+            </div>
+
+
+            <div class="container-outer padding0" *ngIf="view_tab=='expense'">
+              <div class="container tab-container" >
+                <div class="cs-table">
+                  <div class="sticky-head">
+                    <div class="table-head">
+                      <table>
+                        <tr>
+                          <!-- <th class="w180">Category</th> -->
+                          <th class="w110">Date</th>
+
+                          <!-- <th class="w100">Ref. Travel ID</th>  -->
+                          <th class="w130">Designation</th>
+                          <th class="w130">Expense Type</th>
+                          <th class="w100 text-right">Amount</th>
+                          <th class="w100">Senior Status</th>
+                          <th class="w100">A/C Status</th>
+                          <!-- <th class="w100">Ref ID</th> -->
+                        </tr>
+                      </table>
+                    </div>
+
+
+                  </div>
+
+                  <div class="table-container">
+                    <div class="table-content">
+                      <table>
+                        <tr *ngFor="let list of expense_list;let i=index">
+                          <td class="w110">{{list.dateCreated |date : 'd MMM y'}}</td>
+                          <td class="w130">{{list.userType}}</td>
+                          <td class="w130">{{list.expenseType}}</td>
+                          <td class="w100 text-right">&#x20B9; {{list.totalAmt}}</td>
+                          <td class="w100">
+                            <!-- <strong class="yellow-clr">{{list.acStatus}}</strong> -->
+                            <strong class="yellow-clr" *ngIf="list.seniorStatus=='Pending'">{{list.seniorStatus}}</strong>
+                            <strong class="green-clr" *ngIf="list.seniorStatus=='Approved'">{{list.seniorStatus}}</strong>
+                            <strong class="red-clr" *ngIf="list.seniorStatus=='Reject'">{{list.seniorStatus}}</strong>
+
+
+                          </td>
+
+                          <td class="w100">
+                            <strong class="yellow-clr" *ngIf="list.acStatus=='Pending'">{{list.acStatus}}</strong>
+                            <strong class="green-clr" *ngIf="list.acStatus=='Approved'">{{list.acStatus}}</strong>
+                            <strong class="red-clr" *ngIf="list.acStatus=='Reject'">{{list.acStatus}}</strong>
+                          </td>
+                          <!-- <td class="w100">---</td> -->
+                        </tr>
+
+                      </table>
+                    </div>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+
+

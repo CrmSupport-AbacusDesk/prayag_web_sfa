@@ -1,0 +1,144 @@
+<div class="main-container">
+  <div *ngIf="loader">
+    <mat-spinner class="loader">
+      <div>
+        <p>Loading....</p>
+      </div>
+    </mat-spinner>
+  </div>
+  <div class="middle-container mb0">
+    <div class="page-heading">
+      <div class="heading-text bc-space">
+        <div class="back-btn" >
+          <a mat-button routerLink="/followup-list"><i class="material-icons">west</i></a>
+        </div>
+        <h2>Followup Detail</h2>
+      </div>
+    </div>
+    
+  </div>
+  
+  <div class="container-outer pt0">
+    <div class="container">
+      <div class="row mt15">
+        <div class="col s12">
+          <div class="details-info">
+            <div class="basic-details">
+              <div class="cs-heading">
+                <h2>Basic Detail</h2>
+                <button class="edit-item" mat-raised-button *ngIf="followup_detail.status == 'pending'"
+                color="accent" (click)="edit_followup_modal()">
+                <i class="material-icons">create</i>
+              </button>
+            </div>
+            <div class="cs-figure">
+              <ul class="minus-top">
+                <li>
+                  <div class="outer">
+                    <div class="inner">
+                      <span>Date Created</span>
+                      <p>{{followup_detail.date_created && followup_detail.date_created!=''?(followup_detail.date_created |date : 'd MMM y'):'--'}}</p>
+                    </div>
+                  </div>
+                </li>
+                <li>
+                  <div class="outer">
+                    <div class="inner">
+                      <span>Created By</span>
+                      <p>{{followup_detail.name && followup_detail.name!=''?(followup_detail.name | titlecase):'--'}}</p>
+                    </div>
+                  </div>
+                </li>
+                <li>
+                  <div class="outer">
+                    <div class="inner">
+                      <span>Company Name / Type</span>
+                      <p>{{followup_detail.company_name && followup_detail.company_name!=''?(followup_detail.company_name | titlecase):'--'}} ( 
+                        <span *ngIf="followup_detail.type == '1'">Distributor/Dealer</span>
+                        <span *ngIf="followup_detail.type == '3'">Retailer</span>
+                        <span *ngIf="followup_detail.type == '7'">Direct Dealer</span>
+                        <span *ngIf="followup_detail.type == '9'">Project</span>
+                        <span *ngIf="followup_detail.type == '5'">End User</span>
+                        <span *ngIf="followup_detail.type == '10'">Contractor</span>
+                        <span *ngIf="followup_detail.type == '11'">Architect</span>
+                        <span *ngIf="followup_detail.type == '15'">Customer</span>
+                        <span *ngIf="followup_detail.type == '13'">Builder</span>
+                        <span *ngIf="followup_detail.type == '14'">Cement Dealer</span>
+                        <span *ngIf="followup_detail.type == '12'">Online Enquiry</span>
+                        <span *ngIf="followup_detail.type == '' || followup_detail.type != '12' && followup_detail.type != '15' && followup_detail.type != '13' && followup_detail.type != '14' && followup_detail.type != '9' && followup_detail.type != '5' && followup_detail.type != '10' && followup_detail.type != '11' && followup_detail.type != '7' && followup_detail.type != '1' && followup_detail.type != '3'">Other</span>
+                      )
+                      </p>
+                    </div>
+                  </div>
+                </li>
+              </ul>
+              <ul class="minus-top">
+                <li>
+                  <div class="outer">
+                    <div class="inner">
+                      <span>Followup Type</span>
+                      <p>{{followup_detail.next_follow_type && followup_detail.next_follow_type!=''?followup_detail.next_follow_type:'--'}}</p>
+                    </div>
+                  </div>
+                </li>
+                <li>
+                  <div class="outer">
+                    <div class="inner">
+                      <span>Contact Person Name</span>
+                      <p>{{followup_detail.dr_name && followup_detail.dr_name!=''?(followup_detail.dr_name | titlecase):'--'}}</p>
+                    </div>
+                  </div>
+                </li>
+                <li>
+                  <div class="outer">
+                    <div class="inner">
+                      <span>Mobile</span>
+                      <p>{{followup_detail.mobile && followup_detail.mobile!=''?followup_detail.mobile:'--'}}</p>
+                    </div>
+                  </div>
+                </li>
+              </ul>
+              <ul class="minus-top">
+                <li>
+                  <div class="outer">
+                    <div class="inner">
+                      <span>Followup Date</span>
+                      <p>{{followup_detail.next_follow_date && followup_detail.next_follow_date!=''?(followup_detail.next_follow_date |date : 'd MMM y'):'--'}}</p>
+                    </div>
+                  </div>
+                </li>
+                <li>
+                  <div class="outer">
+                    <div class="inner">
+                      <span>Assign To</span>
+                      <p>{{followup_detail.assigned_to_name && followup_detail.assigned_to_name!=''?(followup_detail.assigned_to_name | titlecase):'--'}}</p>
+                    </div>
+                  </div>
+                </li>
+                <li class="" [ngClass]="followup_detail.status == 'pending' ? 'pending' : 'green-bg'">
+                  <div class="outer">
+                    <div class="inner">
+                      <span>Status</span>
+                      <p>{{followup_detail.status && followup_detail.status!=''?(followup_detail.status | titlecase) :'--'}}</p>
+                    </div>
+                  </div>
+                </li>
+              </ul>
+              <ul class="minus-top">
+                <li>
+                  <div class="outer">
+                    <div class="inner">
+                      <span>Description</span>
+                      <p>{{followup_detail.description && followup_detail.description!=''?followup_detail.description:'--'}}</p>
+                    </div>
+                  </div>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</div>

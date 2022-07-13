@@ -1,0 +1,179 @@
+<div class="main-container" [@routerTransition]>
+  <div class="middle-container">
+    <div class="page-heading">
+      <img src="assets/img/leads_icon.svg" class="h-icon">
+      <div class="heading-text">
+        <h2>Postal / Territory Master</h2>
+        <p>Add New Location</p>
+      </div>
+    </div>
+  </div>
+  
+  
+  
+  <div class="container-outer">
+    <app-master-tab></app-master-tab>
+    <div class="container tab-container" >
+      <div class="row">
+        <div class="col s12">
+          <div class="sprate-box">
+            <div class="cs-heading">
+              <h2>TERRITORY INFORMATION</h2>
+              <span class="required">Indicates required fields ( <sup>*</sup> )</span>
+            </div>
+            
+            <mat-divider class="left-right-15 mt10"></mat-divider>
+            
+            <div class="from-fields">
+              
+              <div class="row">
+                <div class="col s6 pr0">
+                  <div class="control-field">
+                    <mat-form-field class="cs-input">
+                      <input matInput placeholder="Territory Name">
+                    </mat-form-field>
+                  </div>
+                </div>
+                <div class="col s4 empty"></div>
+              </div>
+            </div>
+            
+            <div class="row mt15">
+              <div class="col s4">
+                <div class="territory-info">
+                  <div class="head" [ngClass]="{'active':active.state==true}">
+                    <h2>STATE</h2>
+                    <mat-checkbox class="fix-check">&nbsp;</mat-checkbox>
+                    <i class="material-icons search-icon" (click)="toggleterritory('state','open')"  matRipple>search</i>
+                    <input type="text" placeholder="search..." class="fix-search">
+                    <i class="material-icons close-icon" (click)="toggleterritory('state','close')" matRipple>clear</i>
+                  </div>
+                  <div class="cs-checkbox">
+                    <div class="checkbox-outer">
+                      <section class="checkbox-inner">
+                        <mat-checkbox class="check-list" value="1">Rajasthan</mat-checkbox>
+                        <mat-checkbox class="check-list" value="2">Haryana</mat-checkbox>
+                        <mat-checkbox class="check-list" value="3">Punjab</mat-checkbox>
+                        <mat-checkbox class="check-list" value="4">Maharashtra</mat-checkbox>
+                        <mat-checkbox class="check-list" value="5">Assam</mat-checkbox>
+                        <mat-checkbox class="check-list" value="6">Kerela</mat-checkbox>
+                        <mat-checkbox class="check-list" value="7">Rajasthan</mat-checkbox>
+                        <mat-checkbox class="check-list" value="8">Haryana</mat-checkbox>
+                        <mat-checkbox class="check-list" value="9">Punjab</mat-checkbox>
+                        <mat-checkbox class="check-list" value="10">Maharashtra</mat-checkbox>
+                        <mat-checkbox class="check-list" value="11">Assam</mat-checkbox>
+                        <mat-checkbox class="check-list" value="12">Kerela</mat-checkbox>
+                      </section>
+                    </div>
+                    <div class="botm-pdr">
+                      <div class="botm-content" [ngClass]="{'active':active.addone==true}">
+                        <a mat-button (click)="toggleterritory('addone','open')">add new</a>
+                        <input type="text" placeholder="Enter Pincode" class="botm-input">
+                        <a class="add-input" matRipple >save</a>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              
+              <div class="col s4">
+                <div class="territory-info">
+                  <div class="head" [ngClass]="{'active':active.districts==true}">
+                    <h2>DISTRICTS</h2>
+                    <mat-checkbox class="fix-check">&nbsp;</mat-checkbox>
+                    <i class="material-icons search-icon" (click)="toggleterritory('districts','open')"  matRipple>search</i>
+                    <input type="text" placeholder="search..." class="fix-search">
+                    <i class="material-icons close-icon" (click)="toggleterritory('districts','close')" matRipple>clear</i>
+                  </div>
+                  <div class="cs-checkbox">
+                    <div class="checkbox-outer">
+                      <section class="checkbox-inner">
+                        <mat-checkbox class="check-list" value="1">Ambala</mat-checkbox>
+                        <mat-checkbox class="check-list" value="2">Bhiwani</mat-checkbox>
+                        <mat-checkbox class="check-list" value="3">Faridabad</mat-checkbox>
+                        <mat-checkbox class="check-list" value="4">Jind</mat-checkbox>
+                        <mat-checkbox class="check-list" value="5">Rohtak</mat-checkbox>
+                        <mat-checkbox class="check-list" value="6">Gurugram</mat-checkbox>
+                        <mat-checkbox class="check-list" value="7">Ambala</mat-checkbox>
+                        <mat-checkbox class="check-list" value="8">Bhiwani</mat-checkbox>
+                        <mat-checkbox class="check-list" value="9">Faridabad</mat-checkbox>
+                        <mat-checkbox class="check-list" value="10">Jind</mat-checkbox>
+                        <mat-checkbox class="check-list" value="11">Rohtak</mat-checkbox>
+                        <mat-checkbox class="check-list" value="12">Gurugram</mat-checkbox>
+                      </section>
+                    </div>
+                    
+                    <div class="botm-pdr">
+                      <div class="botm-content" [ngClass]="{'active':active.addtwo==true}">
+                        <a mat-button (click)="toggleterritory('addtwo','open')">add new</a>
+                        <input type="text" placeholder="Enter Pincode" class="botm-input">
+                        <a class="add-input" matRipple >save</a>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div> 
+              
+              
+              <div class="col s4">
+                <div class="territory-info">
+                  <div class="head" [ngClass]="{'active':active.pincode==true}">
+                    <h2>AREA PINCODES</h2>
+                    <mat-checkbox class="fix-check">&nbsp;</mat-checkbox>
+                    <i class="material-icons search-icon" (click)="toggleterritory('pincode','open')"  matRipple>search</i>
+                    <input type="text" placeholder="search..." class="fix-search">
+                    <i class="material-icons close-icon" (click)="toggleterritory('pincode','close')" matRipple>clear</i>
+                  </div>
+                  <div class="cs-checkbox">
+                    <div class="checkbox-outer">
+                      <section class="checkbox-inner">
+                        <mat-checkbox class="check-list bg-list" value="1">Faridabad</mat-checkbox>
+                        <mat-checkbox class="check-list" value="2">121004</mat-checkbox>
+                        <mat-checkbox class="check-list" value="3">121003</mat-checkbox>
+                        <mat-checkbox class="check-list" value="4">121002</mat-checkbox>
+                        <mat-checkbox class="check-list" value="5">121001</mat-checkbox>
+                        <mat-checkbox class="check-list bg-list" value="6">Gurugram</mat-checkbox>
+                        <mat-checkbox class="check-list" value="7">121005</mat-checkbox>
+                        <mat-checkbox class="check-list" value="8">121006</mat-checkbox>
+                        <mat-checkbox class="check-list" value="9">121007</mat-checkbox>
+                        <mat-checkbox class="check-list bg-list" value="10">Jind</mat-checkbox>
+                        <mat-checkbox class="check-list" value="11">121008</mat-checkbox>
+                        <mat-checkbox class="check-list" value="12">121009</mat-checkbox>
+                      </section>
+                    </div>
+                    <div class="botm-pdr">
+                      <div class="botm-content" [ngClass]="{'active':active.addthree==true}">
+                        <a mat-button (click)="toggleterritory('addthree','open')">add new</a>
+                        <input type="text" placeholder="Enter Pincode" class="botm-input">
+                        <a class="add-input" matRipple >save</a>
+                        
+                        <mat-form-field class="botm-select">
+                          <select matNativeControl required>
+                            <option value="volvo">Faridabad</option>
+                            <option value="saab">Gurugram</option>
+                            <option value="mercedes">Rewari</option>
+                            <option value="audi">Panipat</option>
+                          </select>
+                        </mat-form-field>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div> 
+            </div>
+          </div>
+        </div>
+        
+        <div class="col s12">
+          <div class="cs-btn fixedd mt32 text-right">
+            <div class="in-btn">
+              <button mat-raised-button color="accent">Save</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+    </div>
+  </div>
+</div>
+

@@ -1,0 +1,102 @@
+<div class="main-container">
+    <div class="middle-container">
+        <div class="page-heading">
+            <div class="heading-text">
+                <h2>Pop Gift</h2>
+                <!-- <p>Total Announcement " 25 "</p> -->
+            </div>
+        </div>
+
+        <div class="left-auto">
+            <div class="cs-btn">
+                <div class="in-btn" *ngIf="PopData.length">
+                    <button *ngIf="view_edit" mat-raised-button color="accent" (click)="popModal('issue_pop','','user_id')">Pop Issue</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container-outer padding0">
+        <div class="container mb60">
+            <div class="cs-table">
+                <div class="sticky-head">
+                    <div class="table-head">
+                        <table class="sno-border">
+                            <tr>
+                                <th class="w10">Sr No.</th>
+                                <th class="w60 text-center">Image</th>
+                                <th class="w180">Item Name</th>
+                                <th class="w100 text-center">Qty Stock</th>
+                                <th class="w100 text-center">Executive Stock</th>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="table-container" *ngIf="data_not_found==false">
+                    <div class="table-content">
+                        <table class="sno-border">
+                            <tr *ngFor=" let pop of PopData, let i = index;">
+                                <td class="w10">{{i+1}}</td>
+                                <td class="w60 text-center">
+                                    <a class="img-avtar" href="{{serve.myurl}}api/uploads/pop_gift/{{pop.pop_image}}" target="blank">
+                                        <img src="{{serve.myurl}}api/uploads/pop_gift/{{pop.pop_image}}"></a>
+                                </td>
+                                <td class="w180"><a *ngIf="view_edit" class="link-btn" mat-button routerLink="/pop-gift-detail/{{pop.id}}" routerLinkActive="active">{{pop.item_name | titlecase}}</a></td>
+                                <td class="w100 text-center">{{pop.qty_stock}}</td>
+                                <td class="w100 text-center">{{pop.assigned_stock?pop.assigned_stock:''}}
+                                    <div class="action-btns">
+                                        <a *ngIf="view_edit" mat-button class="edit" (click)="popModal('Update_stock',pop.id)"><i class="material-icons">add</i> Add Stock</a>
+                                        <a *ngIf="view_edit" mat-button class="view" (click)="edit(pop.id)"><i class="material-icons" >remove_red_eye</i> Edit</a>
+                                        <button *ngIf="view_delete" mat-button class="delete" (click)="deleteGift(pop.id)"><i class="material-icons" >delete_sweep</i> Delete</button>
+                                    </div>
+                                </td>
+
+                                <!-- <td>{{pop.description}}
+                                </td> -->
+                            </tr>
+
+
+                            <ng-container *ngFor="let lead of skelton">
+                                <tr class="sk-loading" *ngIf="loader">
+                                    <td class="w10">
+                                        <div>&nbsp;</div>
+                                    </td>
+                                    <td class="w60">
+                                        <div>&nbsp;</div>
+                                    </td>
+                                    <td class="w180">
+                                        <div>&nbsp;</div>
+                                    </td>
+                                    <td class="w100">
+                                        <div>&nbsp;</div>
+                                    </td>
+                                    <td class="w100">
+                                        <div>&nbsp;</div>
+                                    </td>
+
+                                </tr>
+                            </ng-container>
+                        </table>
+                    </div>
+                </div>
+
+
+                <div class="no-data" *ngIf="data_not_found==true">
+                    <img src="assets/img/no-data.gif" alt="">
+                    <p>Data not <span>available !</span></p>
+                </div>
+            </div>
+        </div>
+        <!-- <div class="no-data" *ngIf="data_not_found==true">
+            <img src="assets/img/no-data.gif" alt="">
+            <p>Data not <span>available !</span></p>
+        </div> -->
+
+    </div>
+</div>
+
+<div class="fix-btn">
+
+    <a *ngIf="view_add" class="bottom-btn" matTooltip="Add New" matTooltipPosition="above" mat-raised-button routerLink="/pop-gift-add/0" routerLinkActive="active"><i class="material-icons">add</i></a>
+</div>

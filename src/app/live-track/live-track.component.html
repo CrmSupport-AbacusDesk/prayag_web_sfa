@@ -1,0 +1,78 @@
+<div class="main-container" >
+  <div class="middle-container mb0">
+    <div class="page-heading w250">
+      <img src="assets/img/location.svg" class="h-icon h20">
+      <div class="heading-text">
+        <h2>User Location</h2>
+      </div>
+    </div>
+    <div class="left-auto">
+      <div class="from-fields cs-flex">
+        <select class="select-filter" name="user_id" [(ngModel)]="data.user_id">
+          <option selected disabled value="">Select User Name</option>
+          <option *ngFor="let val of user_data" value="{{val.id}}">{{val.name}}</option>
+        </select>
+        
+        <div class="control-field mr15">
+          <mat-form-field class="cs-input date-column infix-bodr">
+            <input matInput [matDatepicker]="pickers" placeholder="From" name="start_date" [(ngModel)]="data.start_date">
+            <mat-datepicker-toggle matSuffix [for]="pickers"></mat-datepicker-toggle>
+            <mat-datepicker #pickers></mat-datepicker>
+          </mat-form-field>
+        </div>
+        
+        <div class="control-field mr15">
+          <mat-form-field class="cs-input date-column infix-bodr">
+            <input matInput [matDatepicker]="picker" placeholder="To" name="end_date" [(ngModel)]="data.end_date" readonly>
+            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="cs-btn mt5">
+        <div class="in-btn">
+          <button mat-raised-button color="accent" (click)="attendance_list()">Go</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="container-outer">
+    <div class="container tab-container" >
+      <div class="row">
+        <div class="col s12">
+          <div class="cs-table left-right-20">
+            <div class="sticky-head" style="top: 134px;">
+              <div class="table-head">
+                <table>
+                  <tr>
+                    <th class="w180">Date</th>
+                    <th >Location</th> 
+                  </tr>
+                </table>
+              </div>
+            </div>
+            <div class="table-container">
+              <div class="table-content">
+                <table>
+                  <tr *ngFor="let p of attendancelist">
+                    <td class="w180">{{p.date_created | date : 'MMM d, y HH:mm a' }}</td>
+                    <td>{{p.address}}</td>   
+                  </tr>
+                  
+                  <ng-container *ngFor="let lead of skelton">
+                    <tr class="sk-loading"  *ngIf="loader">
+                      <td class="w180"><div>&nbsp;</div></td>
+                      <td><div>&nbsp;</div></td>
+                    </tr>
+                  </ng-container>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div>
+  </div>
+</div>

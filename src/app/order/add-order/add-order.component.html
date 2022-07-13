@@ -1,0 +1,259 @@
+<div class="{{login_data.access_level?'main-container':'main-container pl0'}}">
+  <div *ngIf="loader">
+    <mat-spinner class="loader">
+      <div><p>Loading....</p></div>
+    </mat-spinner>
+  </div>
+  <div class="middle-container">
+    <div class="page-heading">
+      <img src="assets/img/leads_icon.svg" class="h-icon">
+      <div class="heading-text">
+        <h2>Order</h2>
+        <p>Add New Order</p>
+      </div>
+    </div>
+  </div>
+  
+  <div class="container-outer">
+    <div class="container" >
+      <div class="row">
+        <div class="col s12">
+          <div class="sprate-box mb20" style="overflow: inherit;">
+            <div class="from-fields">
+              <div class="row">
+                <div class="col s2">
+                  <div class="control-field">
+                    <div class="ng-autocomplete">
+                      <ng-autocomplete
+                      [data]="product_code"
+                      [searchKeyword]="keyword"
+                      placeHolder="Select the Category Name"
+                      (selected)='selectEvent($event)'
+                      (inputChanged)='onChangeSearch($event)'
+                      (inputFocused)='onFocused($event)'
+                      [itemTemplate]="itemTemplate"
+                      [notFoundTemplate]="notFoundTemplate">
+                    </ng-autocomplete>
+                    
+                    <ng-template #itemTemplate let-item>
+                      <a [innerHTML]="item.cat_no"></a>
+                    </ng-template>
+                    
+                    <ng-template #notFoundTemplate let-notFound>
+                      <div [innerHTML]="notFound"></div>
+                    </ng-template>
+                  </div>
+                </div>
+              </div>
+              
+              <div class="col s2" *ngIf="brands.length && data.product_id">
+                <div class="control-field">
+                  <mat-form-field class="cs-input infix-bodr">
+                    <mat-select placeholder="Brand" name="brand" [(ngModel)]="data.brand">
+                      <mat-option *ngFor="let row of brands" [value]=" row.brand_name">{{row.brand_name}}</mat-option>
+                    </mat-select>
+                  </mat-form-field>
+                </div>
+              </div>
+              
+              <div class="col s2" *ngIf="colors.length && data.brand">
+                <div class="control-field ">
+                  <mat-form-field class="cs-input infix-bodr" >
+                    <mat-select placeholder="Color" name="color" [(ngModel)]="data.color" >
+                      <mat-option *ngFor="let row of colors" [value]="row.color_name">{{row.color_name}}</mat-option>
+                    </mat-select>
+                  </mat-form-field>
+                </div>
+              </div>
+              
+              <div class="cs-head" *ngIf="(data.brand && colors.length==0) || data.color">
+                <div class="box">
+                  <div class="compare-part">
+                    <div class="one">
+                      <h1>Master Packing</h1>
+                      <p>{{item.master_packing}}</p>
+                    </div>
+                    <div class="one">
+                      <h1>Small Packing</h1>
+                      <p>{{item.secondary_packing}}</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              
+              
+            </div>
+          </div>
+          
+        </div>
+      </div>
+      
+      <div>
+        <!-- *ngIf="data.product_id && (data.brand || data.color)" -->
+        <div >
+          <form name="orderForm" (ngSubmit)="f.form.valid && AddItem(f)" #f="ngForm" novalidate>
+            <div class="row" >
+              
+              <div class="col s12 padding0">
+                <div class="heading-bg left-right-15">
+                  <h2>PRODUCT INFORMATION</h2>
+                </div>
+                <div class="cs-table left-right-15">
+                  <div class="table-head">
+                    <table>
+                      <tr>
+                        <th>Product Detail</th>
+                        <th class="w90 text-right">Rate</th>
+                        <th class="w80">QTY</th>
+                        <th class="w100 text-right">Sub Total</th>
+                        <th class="w120 text-right">Dis. Amount (%)</th>
+                        <th class="w120 text-right">Gst Amount (%)</th>
+                        <th class="w150 text-right">Total Amount</th>
+                      </tr>
+                    </table>
+                  </div>
+                  
+                  <div class="table-container" *ngIf="(data.brand && colors.length==0) || data.color">
+                    <div class="table-content">
+                      <table>
+                        <tr >
+                          <td >{{item.category}}, {{data.brand}}, {{item.product_name}}, {{item.cat_no}}, {{data.color}} </td>
+                          <td class="w90 text-right">&#8377; {{item.price}}</td>
+                          <td class="w80">
+                            <div class="td-input">
+                              <input type="text" id="productInform" name="qty" [(ngModel)]="item.qty" (input)="cal_item()"  (keypress)="numeric_Number($event)">
+                            </div>
+                          </td>
+                          <td class="w100 text-right">&#8377; {{item.sub_total}}</td>
+                          <td class="w120 text-right">&#8377; {{item.discount_amount}} ( {{item.discount}} %)</td>
+                          <td class="w120 text-right">&#8377; {{item.gst_amount}} ( {{item.gst}} %)</td>
+                          <td class="w150 text-right"> &#8377; {{item.total_amount}}</td>
+                        </tr>
+                      </table>
+                    </div>
+                  </div>
+                  
+                </div>
+              </div>
+            </div>
+            
+            
+            <div class="row" *ngIf="(data.brand && colors.length==0) || data.color">
+              <div class="col s12">
+                <div class="cs-btn mt15 text-right">
+                  <div class="in-btn">
+                    <button mat-raised-button color="accent">Add To Cart</button>
+                  </div>
+                </div>
+              </div>
+              
+            </div>
+          </form>
+        </div>
+        
+        <div class="row" *ngIf="orderItemList.length">
+          
+          <div class="col s12 padding0">
+            <div class="heading-bg left-right-15">
+              <h2>CART ITEM INFORMATION</h2>
+            </div>
+            <div class="cs-table left-right-15">
+              <div class="table-head">
+                <table>
+                  <tr>
+                    <th>Product Detail</th>
+                    <th class="w90 text-right">Rate</th>
+                    <th class="w80">QTY</th>
+                    <th class="w100 text-right">Sub Total</th>
+                    <th class="w120 text-right">Dis. Amount (%)</th>
+                    <th class="w120 text-right" >Gst Amount</th>
+                    <th class="w150 text-right" >Total Amount</th>
+                  </tr>
+                </table>
+              </div>
+              
+              <div class="table-container" >
+                <div class="table-content">
+                  <table>
+                    <tr *ngFor="let row of orderItemList; let d = index">
+                      <td>{{row.category}}, {{row.brand}}, {{row.product_name}}, {{row.cat_no}}, {{row.color}}</td>
+                      <td  class="w90 text-right">&#8377; {{row.price}}</td>
+                      <td  class="w80">
+                        <div class="td-input">
+                          <input type="text" [name]="'qty'+row.id"  [(ngModel)]="row.qty"   (keypress)="numeric_Number($event)" (input)="update_qty(d,row.qty,row.price)">
+                        </div>
+                      </td>
+                      <td class="w100 text-right">&#8377;  {{row.sub_total}}</td>
+                      <td class="w120 text-right">&#8377; {{row.temp_discount_amount}} ( {{row.discount}} %)</td>
+                      <td class="w120 text-right">&#8377; {{row.temp_gst_amount}} ( {{row.gst}} % )</td>
+                      <td class="w150 text-right">&#8377; {{row.temp_total_amount}}
+                        <div class="action-btns">
+                          <button mat-button class="delete" (click)="RemoveItem(d,row.total_amount)"><i class="material-icons">delete_sweep</i> Delete</button>
+                        </div>                            
+                      </td>
+                    </tr>
+                  </table>
+                </div>
+              </div>
+              
+            </div>
+          </div>
+        </div>
+        
+        
+        
+        <div class="row" *ngIf="orderItemList.length">
+          <div class="col s8 empty"></div>
+          <div class="col s4">
+            <div class="invoice-table">
+              <table class="">  
+                <tr>
+                  <td class="w200 td">Sub total</td>
+                  <td class="td">&#8377; {{Order_form.sub_total}}</td>
+                </tr>    
+                
+                <tr>
+                  <td class="w200 td">Discount Amount	</td>
+                  <td class="td">&#8377; {{Order_form.discount_amount}}</td>
+                </tr>                        
+                <tr >
+                  <td class="w200 td">GST Amount	</td>
+                  <td class="td"> {{Order_form.gst_amount}}</td>
+                </tr> 
+                
+                <tr>
+                  <td class="w200 td">Total Amount	</td>
+                  <td class="td">&#8377; {{Order_form.total_amount}}</td>
+                </tr> 
+                <tr>
+                  <td class="w200 td">Remark</td>
+                  <td class="td">
+                    <textarea class="h100 wp100" style="padding: 10px; outline: none;" type="text" name="remark"  [(ngModel)]="Order_form.remark"></textarea>
+                  </td>
+                </tr>  
+              </table>
+            </div>
+          </div>
+        </div>
+        
+      </div>
+      <div class="row" *ngIf="orderItemList.length" [ngClass]="{loading: savingData}">
+        <div class="col s12">
+          <div class="cs-btn mt15 text-right">
+            <div class="in-btn">
+              <button mat-raised-button color="accent" (click)="submitOrder()">Save</button>
+            </div>
+          </div>
+        </div>
+        
+      </div>
+      
+    </div>
+    
+    
+    
+    
+  </div>
+</div>
+</div>
+

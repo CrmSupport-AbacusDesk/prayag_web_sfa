@@ -1,0 +1,256 @@
+import { Component, OnInit, Renderer2 } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+import { DatabaseService } from 'src/_services/DatabaseService';
+import { MatDialog } from '@angular/material';
+import { sessionStorage } from '../localstorage.service';
+
+@Component({
+  selector: 'app-navigation',
+  templateUrl: './navigation.component.html',
+})
+export class NavigationComponent implements OnInit {
+  count:any=[];
+  distactive: boolean=false;
+  ordersactive: boolean=false;
+  masteractive: boolean=false;
+  reportactive: boolean=false;
+  leadactive: boolean=false;
+  targetactive:boolean=false;
+  login_data:any={};
+  networkType :any = [];
+  networkType1 :any = [];
+
+  constructor(public session: sessionStorage, public route: ActivatedRoute, public serve:DatabaseService,public dialog: MatDialog ,private renderer: Renderer2) {
+    this.login_data = this.session.getSession();
+    this.login_data = this.login_data.value;
+    this.login_data = this.login_data.data;
+    console.log(this.login_data);
+    // this.serve.count_list();
+    this.serve.dr_list();
+    this.serve.lead_list();
+
+
+
+  }
+  ngOnInit() {
+    // this.count_data();
+    // this.getNetworkType();
+    // this.getNetworkType1();
+
+    console.log("Navigation Counter: ",this.serve.counterArray);
+
+
+
+  }
+
+  getNetworkType(){
+    this.serve.fetchData('', "Dashboard/distributionNetworkModule").subscribe((result => {
+      console.log(result);
+      this.networkType = result['modules'];
+    }))
+  }
+  getNetworkType1(){
+    this.serve.fetchData('', "Dashboard/leadNetworkModule").subscribe((result => {
+      console.log(result);
+      this.networkType1 = result['modules'];
+    }))
+  }
+
+  status:boolean = false;
+
+  toggleDropdown(value)
+  {
+    console.log(value);
+    if(value==1)
+    {
+
+      if(this.distactive==false){
+        this.distactive=true;
+        this.ordersactive=false;
+        this.leadactive=false;
+        this.masteractive=false;
+        this.reportactive=false;
+      }else{
+        this.distactive=false;
+        this.ordersactive=false;
+        this.leadactive=false;
+        this.reportactive=false;
+
+      }
+
+      // this.renderer.removeClass(event.target, 'active');
+      // this.renderer.removeClass(document.body, 'active');
+    }
+    else if(value==4)
+    {
+
+      if(this.leadactive==false){
+        this.leadactive=true;
+        this.ordersactive=false;
+        this.distactive=false;
+        this.masteractive=false;
+        this.reportactive=false;
+
+      }else{
+        this.leadactive=false;
+        this.ordersactive=false;
+        this.distactive=false;
+        this.masteractive=false;
+        this.reportactive=false;
+
+      }
+
+      // this.renderer.removeClass(event.target, 'active');
+      // this.renderer.removeClass(document.body, 'active');
+    }
+    else if(value==2)
+    {
+      if(this.ordersactive==false){
+        this.distactive=false;
+        this.ordersactive=true;
+        this.leadactive=false;
+        this.masteractive=false;
+        this.reportactive=false;
+
+      }else{
+        this.leadactive=false;
+        this.ordersactive=false;
+        this.distactive=false;
+        this.masteractive=false;
+        this.reportactive=false;
+
+      }
+      // this.renderer.removeClass(event.target, 'active');
+      // this.renderer.removeClass(document.body, 'active');
+    }
+    else if(value==3)
+    {
+      if(this.masteractive==false){
+        this.distactive=false;
+        this.ordersactive=false;
+        this.leadactive=false;
+        this.masteractive=true;
+        this.reportactive=false;
+
+      }else{
+        this.leadactive=false;
+        this.ordersactive=false;
+        this.distactive=false;
+        this.masteractive=false;
+        this.reportactive=false;
+
+      }
+      // this.renderer.removeClass(event.target, 'active');
+      // this.renderer.removeClass(document.body, 'active');
+    }
+    else if(value==9)
+    {
+      if(this.targetactive==false){
+        this.distactive=false;
+        this.ordersactive=false;
+        this.leadactive=false;
+        this.masteractive=false;
+        this.reportactive=false;
+        this.targetactive=true;
+
+      }else{
+        this.leadactive=false;
+        this.ordersactive=false;
+        this.distactive=false;
+        this.masteractive=false;
+        this.reportactive=false;
+        this.targetactive=false;
+
+      }
+      // this.renderer.removeClass(event.target, 'active');
+      // this.renderer.removeClass(document.body, 'active');
+    }
+    else if(value==0)
+    {
+
+      this.distactive=false;
+      this.ordersactive=false;
+      this.leadactive=false;
+      this.targetactive=false;
+      this.reportactive=false;
+      this.masteractive=false;
+
+
+    }
+    // this.renderer.removeClass(event.target, 'active');
+    // this.renderer.removeClass(document.body, 'active');
+
+    else if(value==5)
+    {
+      if(this.reportactive==false){
+        this.reportactive=true;
+        this.distactive=false;
+        this.ordersactive=false;
+        this.leadactive=false;
+        this.masteractive=false;
+
+      }else{
+        this.reportactive=false;
+        this.leadactive=false;
+        this.ordersactive=false;
+        this.distactive=false;
+        this.masteractive=false;
+
+      }
+      // this.renderer.removeClass(event.target, 'active');
+      // this.renderer.removeClass(document.body, 'active');
+    }
+    else{
+      this.distactive=false;
+      this.ordersactive=false;
+      this.masteractive=false;
+      this.leadactive=false;
+      this.reportactive=false;
+      this.targetactive=true;
+
+
+    }
+    // this.status = !this.status;
+
+    // if(this.status) {
+    //   this.renderer.addClass(event.target, 'active');
+    //   this.renderer.removeClass(document.body, 'active');
+    // }
+    // else {
+    //   this.renderer.removeClass(event.target, 'active');
+    //   // this.renderer.removeClass(document.body, 'active');
+    // }
+  }
+
+
+  toggleHeader() {
+    console.log(this.status);
+    this.status = !this.status;
+    if(!this.status) {
+      this.renderer.addClass(document.body, 'nav-active');
+    }
+    else {
+      this.renderer.removeClass(document.body, 'nav-active');
+    }
+  }
+
+  status1:boolean = false;
+  toggleNav() {
+    this.status1 = !this.status1;
+    if(this.status1) {
+      this.renderer.addClass(document.body, 'active');
+    }
+    else {
+      this.renderer.removeClass(document.body, 'active');
+    }
+  }
+  // count_data(){
+  //   console.log(this.login_data.id);
+  //   this.serve.fetchData({'user_id':this.login_data.id,'user_type':this.login_data.type},"Attendance/count_data").subscribe((result=>{
+  //     console.log(result);
+  //     this.count=result;
+  //   }))
+  // }
+
+
+}

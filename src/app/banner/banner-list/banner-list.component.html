@@ -1,0 +1,79 @@
+<div class="main-container">
+	<div class="middle-container mb0">
+		<div class="page-heading">
+			<img src="assets/img/banner.svg" class="h-icon h14">
+			<div class="heading-text">
+				<h2>Banner List</h2>
+				<p>Total Banner: {{count}}</p>
+			</div>
+		</div>
+		<!-- <div class="click-btn">
+			<button mat-button (click)="exportAsXLSX()">Click Here To Download Excel</button>
+		</div> -->
+		
+		<!-- <div class="left-auto">
+			<div class="top-search">
+				<input type="text" placeholder="SEARCH. . ."  (input)="leadList()" #search="ngModel" [(ngModel)]="data.search">
+				<i class="material-icons">search</i>
+			</div>
+		</div> -->
+		
+	</div>
+	
+	<div class="container-outer">
+		<div *ngIf="loader">
+			<mat-spinner class="loader">
+				<div><p>Loading....</p></div>
+			</mat-spinner>
+		</div>
+		<div class="container" >
+			<div class="img-list">
+				<ul>
+					<li *ngFor="let row of banner_list;let i=index">
+						<img src="http://crm.pproducts.in/api/uploads/banner/{{row.banner_name}}">
+						<div class="hvr-btns">
+							<a (click)=delete_banner(row.id,i)>Delete</a>
+							<a (click)=edit_banner(row.id)>Edit</a>
+						</div>
+						
+						<!-- <div class="select-banner">
+							<div class="in-drop">
+								<mat-form-field class="wp100">
+									<mat-select multiple [disabled]="active[i]?.discount != '1'" >
+										<mat-option value='Channel Partner' selected="true">Channel Partner</mat-option>
+										<mat-option value='Dealer'>Dealer</mat-option>
+										<mat-option value='Plumbing Man'>Plumbing Man</mat-option>
+										<mat-option value='Consumer'>Consumer</mat-option>
+										<mat-option value='Employee Login'>Employee Login</mat-option>
+									</mat-select>
+								</mat-form-field>
+							</div>
+							<div class="act-btn"  [ngClass]="{'active':active[i]?.discount == '1'}">
+								<a class="show" >
+									<i class="material-icons" (click)="edit_discount(i)">create</i>
+								</a>
+								<a class="hide" >
+									<i class="material-icons" >save</i>
+								</a>
+							</div>
+						</div> -->
+						<!-- <div>
+							<mat-checkbox>hhh</mat-checkbox>
+							<mat-checkbox>Check me!</mat-checkbox>
+							<mat-checkbox>Check me!</mat-checkbox>
+							<mat-checkbox>Check me!</mat-checkbox>
+							<mat-checkbox>Check me!</mat-checkbox>
+							
+						</div> -->
+					</li>
+				</ul>
+			</div>
+		</div>
+		<!-- <div class="fix-btn">
+			<a class="bottom-btn" mat-raised-button routerLink="/add-lead" routerLinkActive="active"><i class="material-icons">add</i></a>
+		</div> -->
+	</div>
+	<div class="fix-btn">
+		<a class="bottom-btn"  matTooltip="Add New" matTooltipPosition="above" mat-raised-button routerLink="/banner-banner-add"><i class="material-icons">add</i></a>
+	</div>
+	

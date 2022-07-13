@@ -1,0 +1,236 @@
+<mat-dialog-content class="md-modal">
+	<div class="md-header">
+		<p>QR CODE INFORMATION</p>
+		<button mat-button mat-dialog-close style="padding: 0px; min-width: 0px;"><i class="material-icons">clear</i></button>
+	</div>
+	<div class="content">
+		<div class="content-head">
+			<h1>PRODUCT DETAIL</h1>
+		</div>
+		<div class="content-body">
+			<ul>
+				<li>
+					<p>Category</p>
+					<h1>{{data2.category}}</h1>
+				</li>
+				<li>
+					<p>Sub Category</p>
+					<h1>{{data2.sub_category}}</h1>
+				</li>
+				<li>
+					<p>Product Code</p>
+					<h1>{{data2.cat_no}}</h1>
+				</li>
+				<li>
+					<p>Product Name</p>
+					<h1>{{data2.product_name}}</h1>
+				</li>
+			</ul>
+
+			<div class="cf-flex mt15">
+				<div class="btn-align">
+					<button class="tb-tabs" [ngClass]="{'active' : data2.active!='true'}" (click)="data2.active='true'">USED<span>{{data2.used_coupon.length}}</span></button>
+					<button class="tb-tabs tb-tabs2 " [ngClass]="{'active' : data2.active=='true'}" (click)="data2.active='false'">AVAILABLE<span>{{data2.available_coupon.length}}</span></button>
+				</div>
+				<div class="links">
+					<label>
+						<input type="file">
+						<i class="material-icons">cloud_upload</i>
+						<p>Import Coupon Code</p>
+					</label>
+					<a>Download Sample File</a>
+				</div>
+			</div>
+
+			<div class="row">
+				<div class="col s12 padding0">
+					<div class="cs-table" *ngIf="data2.active=='true'">
+						<div class="">
+							<div class="table-head">
+								<table>
+									<tr>
+										<!-- <th class="w110">Brand</th> -->
+										<th class="w200">Date Created</th>
+										<th class="">Coupon Code</th> 
+										<th class="w170">Used By</th>
+										<th class="w140">Mobile</th>
+										<th class="w240">Date</th>
+										<!-- <th class="w130">Unit of Mes.</th> -->
+									</tr>
+								</table>
+							</div>
+							<div class="table-head bdrt" >
+								<table>
+									<tr>
+										<th class="w200">
+											<!-- <div class="th-search-acmt">
+												<mat-form-field class="example-full-width cs-input select-input">
+													<input matInput placeholder="Enter Date ...." [matAutocomplete]="category" (keyup)="getSubCategoryList() || getProductList()" (input)="category_array_filter(data.category,tmp_category)" name="category" #category="ngModel" [(ngModel)]="data.category">
+													<mat-autocomplete #category="matAutocomplete">
+														<mat-option *ngFor="let category of category_list" (click)="getSubCategoryList() || getProductList()" value="{{category}}">
+															<small>{{category}}</small>
+														</mat-option>
+													</mat-autocomplete>
+												</mat-form-field>
+											</div> -->
+										</th>
+										<th >
+											<div class="th-search-acmt">
+												<mat-form-field class="example-full-width cs-input select-input">
+													<input matInput placeholder="Enter Sub Coupon Code..." [matAutocomplete]="subCategory"  (keyup)="getProductList()" (input)="sub_categoryy_array_filter(data.sub_category,tmp_subcategory)" name="subCategory" #subCategory="ngModel" [(ngModel)]="data.sub_category" >
+													<mat-autocomplete #subCategory="matAutocomplete">
+														<mat-option *ngFor="let subCategory of subCategory_list" (click)="getProductList()" value="{{subCategory}}">
+															<small>{{subCategory}}</small>
+														</mat-option>
+													</mat-autocomplete>
+												</mat-form-field>
+											</div>
+										</th>    
+										<th class="w170">
+											<div class="th-search-acmt">
+												<mat-form-field>
+													<input type="text"  matInput placeholder="Enter Used By...." name="type" (input)="getProductList()" #type="ngModel" [(ngModel)]="data.product_name" >
+													<mat-autocomplete #search="matAutocomplete" >
+														<mat-option >
+														</mat-option>
+													</mat-autocomplete>
+												</mat-form-field>
+											</div>
+										</th> 
+										<th class="w140"></th> 
+										<th class="w240">
+											<div class="th-search-acmt">
+												<mat-form-field>
+													<input type="text"  matInput placeholder="Enter Date...." name="cattype" (input)="getProductList()" #cattype="ngModel" [(ngModel)]="data.cat_no" >
+													<mat-autocomplete #search="matAutocomplete" >
+														<mat-option >
+														</mat-option>
+													</mat-autocomplete>
+												</mat-form-field>
+											</div>
+										</th>                    
+									</tr>
+								</table>
+							</div>
+						</div>
+						<div class="table-container">
+							<div class="table-content">
+								<table>
+									<tr *ngFor=" let row of data2.used_coupon">
+										<!-- <td class="w110">{{p.brand}}</td>  -->
+										<td class="w200">{{row.date_created   | date :' dd/MM/yyyy'}} </td>
+										<td>{{row.coupon_code}}</td>    
+										<td class="w170"><a class="link-btn" mat-button routerLink="/product-detail/" routerLinkActive="active">{{row.used_by_name}}</a></td>
+										<td class="w140">{{row.used_by_mobile}}</td>
+										<td class="w240">{{row.scan_date}}
+											<!-- <td class="w130">{{p.unit_type}} -->
+											<div class="action-btns">
+												<a mat-button class="view" (click)="detailProduct(p.id)"><i class="material-icons">remove_red_eye</i> View</a>
+												<button mat-button class="delete" (click)="deleteProduct(p.id)"><i class="material-icons">delete_sweep</i> Delete</button>
+											</div>
+										</td>
+									</tr>
+								</table>
+							</div>
+						</div>
+					</div>
+					<div class="cs-table"  *ngIf="data2.active!='true'">
+						<div class="">
+							<div class="table-head">
+								<table>
+									<tr>
+										<!-- <th class="w110">Brand</th> -->
+										<th class="w200">Date</th>
+										<th class="">Coupon Code</th> 
+										<!-- <th class="w170">Used By</th>
+										<th class="w140">Mobile</th>
+										<th class="w240">Date</th> -->
+										<!-- <th class="w130">Unit of Mes.</th> -->
+									</tr>
+								</table>
+							</div>
+							<div class="table-head bdrt" >
+								<table>
+									<tr>
+										<th class="w200">
+											<!-- <div class="th-search-acmt">
+												<mat-form-field class="example-full-width cs-input select-input">
+													<input matInput placeholder="Enter Date / Created By...." [matAutocomplete]="category" (keyup)="getSubCategoryList() || getProductList()" (input)="category_array_filter(data.category,tmp_category)" name="category" #category="ngModel" [(ngModel)]="data.category">
+													<mat-autocomplete #category="matAutocomplete">
+														<mat-option *ngFor="let category of category_list" (click)="getSubCategoryList() || getProductList()" value="{{category}}">
+															<small>{{category}}</small>
+														</mat-option>
+													</mat-autocomplete>
+												</mat-form-field>
+											</div> -->
+										</th>
+										<th >
+											<div class="th-search-acmt">
+												<mat-form-field class="example-full-width cs-input select-input">
+													<input matInput placeholder="Enter Sub Coupon Code..." [matAutocomplete]="subCategory"  (keyup)="getProductList()" (input)="sub_categoryy_array_filter(data.sub_category,tmp_subcategory)" name="subCategory" #subCategory="ngModel" [(ngModel)]="data.sub_category" >
+													<mat-autocomplete #subCategory="matAutocomplete">
+														<mat-option *ngFor="let subCategory of subCategory_list" (click)="getProductList()" value="{{subCategory}}">
+															<small>{{subCategory}}</small>
+														</mat-option>
+													</mat-autocomplete>
+												</mat-form-field>
+											</div>
+										</th>    
+										<!-- <th class="w170">
+											<div class="th-search-acmt">
+												<mat-form-field>
+													<input type="text"  matInput placeholder="Enter Used By...." name="type" (input)="getProductList()" #type="ngModel" [(ngModel)]="data.product_name" >
+													<mat-autocomplete #search="matAutocomplete" >
+														<mat-option >
+														</mat-option>
+													</mat-autocomplete>
+												</mat-form-field>
+											</div>
+										</th> 
+										<th class="w140"></th> 
+										<th class="w240">
+											<div class="th-search-acmt">
+												<mat-form-field>
+													<input type="text"  matInput placeholder="Enter Date...." name="cattype" (input)="getProductList()" #cattype="ngModel" [(ngModel)]="data.cat_no" >
+													<mat-autocomplete #search="matAutocomplete" >
+														<mat-option >
+														</mat-option>
+													</mat-autocomplete>
+												</mat-form-field>
+											</div>
+										</th>                     -->
+									</tr>
+								</table>
+							</div>
+						</div>
+						<div class="table-container">
+							<div class="table-content">
+								<table>
+									<tr  *ngFor="let  row of data2.available_coupon">
+										<!-- <td class="w110">{{p.brand}}</td>  -->
+										<td class="w200">{{row.date_created   | date :' dd/MM/yyyy'}} </td>
+										<td>{{row.coupon_code}}
+											<div class="action-btns">
+												<a mat-button class="view" (click)="detailProduct(p.id)"><i class="material-icons">remove_red_eye</i> View</a>
+												<button mat-button class="delete" (click)="deleteProduct(p.id)"><i class="material-icons">delete_sweep</i> Delete</button>
+											</div>
+										</td>    
+										<!-- <td class="w170"><a class="link-btn" mat-button routerLink="/product-detail/" routerLinkActive="active">Suresh</a></td>
+										<td class="w140">9876543210</td>
+										<td class="w240">12 Sep 2018
+											<td class="w130">{{p.unit_type}}
+											
+										</td> -->
+									</tr>
+								</table>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</mat-dialog-content>
+<!-- <mat-dialog-actions align="end">
+	<button mat-button mat-dialog-close>Cancel</button>
+</mat-dialog-actions> -->

@@ -1,0 +1,363 @@
+<div class="main-container" >
+	<div class="middle-container mb0">
+		<div class="page-heading">
+			<div class="heading-text bc-space">
+				<div class="back-btn">
+					<a mat-button routerLink="/offer-list" routerLinkActive="active"><i class="material-icons">west</i></a>
+				</div>
+				<h2>Offer</h2>
+			</div>
+		</div>
+		
+	</div>
+	<div class="container-outer">
+		
+		<app-master-tab-list></app-master-tab-list>
+		<div *ngIf="loader">
+			<mat-spinner class="loader">
+				<div><p>Loading....</p></div>
+			</mat-spinner>
+		</div>
+		<div class="container tab-container">
+			
+			<div class="row mt15">
+				<div class="col s8 padding0">
+					<div class="sprate-box padding0">
+						<div class="full-offer">
+							<div class="top-heading">
+								<h2>OFFER DETAIL</h2>
+							</div>
+						</div>
+						<div class="row mb0">
+							<div class="off pt15">
+								<div class="col s4 padding0">
+									<div class="option-field">
+										<div class="territory-infos">
+											<div class="cs-checkboxs h120 padding15">
+												<div class="checkbox-outers">
+													<img src="assets/img/specia.jpg">
+												</div>
+											</div>  
+										</div>
+									</div>
+								</div>
+								<div class="col s8 padding0">
+									<div class="option-field">
+										<div class="row">
+											<div class="col s6 pl10">
+												<div class="detail-field none-bg bdr-dash">
+													<h1>Title</h1>
+													<p>{{offerdetail.title}}</p>
+												</div>
+											</div>
+											<div class="col s6 pr0">
+												<div class="detail-field none-bg bdr-dash">
+													<h1>Offer Code</h1>
+													<p>{{offerdetail.offer_code}}</p>
+												</div>
+											</div>
+										</div>
+										
+										<div class="row">
+											<div class="col s4 pl10">
+												<div class="detail-field none-bg bdr-dash">
+													<h1>Start Date</h1>
+													<p>{{offerdetail.start_date  | date :' dd/MM/yyyy'}}</p>
+												</div>
+											</div>
+											
+											<div class="col s4 pr5">
+												<div class="detail-field none-bg bdr-dash">
+													<h1>End Date</h1>
+													<p>{{offerdetail.end_date  | date :' dd/MM/yyyy'}}</p>
+												</div>
+											</div>
+											
+											<div class="col s4 pr0">
+												<div class="detail-field none-bg bdr-dash">
+													<h1>Status</h1>
+													<p>{{offerdetail.offer_status | titlecase}}</p>
+													
+												</div>
+											</div>
+										</div>
+										
+										<div class="row">
+											<div class="col s6">
+												<div class="option-field">
+													<div class="col s6">
+														<div class="control-field"></div>
+													</div>
+												</div>
+											</div>
+										</div>
+										
+									</div>
+								</div>
+								
+								
+							</div>
+						</div>
+						
+						<div class="row mb15">
+							<div class="col s6 pl15">
+								<div class="option-field">
+									<div class="territory-infos">
+										<div class="heads">
+											<h2>TERMS & CONDITION</h2>
+										</div>
+										
+										<div class="condition-list padding15">
+											<ul>
+												<li *ngIf="offerdetail.terms_and_conditions"><p>{{offerdetail.terms_and_conditions}}</p></li>
+												<li *ngIf="!offerdetail.terms_and_conditions"><p>Not Updated</p></li>
+												<!-- <li><p>1. Lorem Ipsum is simply dummy text.</p></li>
+													<li><p>1. Lorem Ipsum is simply dummy text.</p></li> -->
+													
+												</ul>
+											</div>
+										</div>
+									</div>
+								</div>
+								
+								<div class="col s6">
+									<div class="option-field">
+										<div class="territory-infos">
+											<div class="heads">
+												<h2>DESCRIPTION</h2>
+											</div>
+											
+											<div class="condition-list padding15">
+												<ul>
+													<li><p>{{offerdetail.description}}</p></li>
+													
+													
+												</ul>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="col s4 pl15">
+						<div class="territory-infos">
+							<div class="head">
+								<h2>OFFER SUMMARY</h2>
+							</div>
+							
+							<div class="offer-summery" style="height: 358px; overflow: auto;">
+								<ul>
+									<li *ngFor="let row of offerdetail.summary">
+										<div class="offer-list">
+											<div class="odder-cradet">
+												<p># {{row.log}}</p>
+												<span>{{row.created_by_name}}</span>
+											</div>
+											
+											<div class="time-info">
+												<i class="material-icons">watch_later</i>
+												<p> {{row.date_created}}</p>
+											</div>
+										</div>
+									</li>
+									
+									
+								</ul>
+							</div>
+						</div>
+					</div>
+				</div>
+				
+				<div class="row mt15">
+					<div class="col s8 padding0">
+						<div class="sprate-box padding0">
+							<div class="full-offer">
+								<div class="top-heading">
+									<h2>GIFT DETAIL</h2>
+								</div>
+								
+								<div class="css-table">
+									<div class="sticky-header">
+										<div class="header">
+											<table> 
+												<tr>
+													<th class="w50">S.no</th>
+													<th >Title</th>
+													<th class="w100">Points</th>
+													<!-- <th class="w165" >Gift Redeem Request</th> -->
+													<th class="w80">Image</th>
+													<th class="w100"></th>
+												</tr>
+											</table>
+										</div>
+									</div>
+									
+									<div class="table-container">
+										<div class="table-body">
+											<table>
+												<tr>
+													<td class="w50">1</td>
+													<td >Lorem Ipsum</td>
+													<td class="w100">100</td>
+													<!-- <td class="w165">
+														<div class="request">
+															<button mat-button (click)="openDialog()" >
+																<p>50</p>
+																<i class="material-icons">keyboard_arrow_right </i>
+															</button>
+														</div>
+													</td> -->
+													<td class="w80">
+														<div class="image-thum">
+															<img src="assets/img/pen.jpg">
+														</div>
+													</td>
+													<td class="w100 active">
+														<div class="action-btns mt9 left-btn">
+															<button mat-raised-button class="delete" >
+																<i class="material-icons">delete_sweep</i>
+																<p>Delete</p>
+															</button>
+														</div>
+													</td>
+												</tr>
+												<tr>
+													<td class="w50">1</td>
+													<td >Lorem Ipsum</td>
+													<td class="w100">100</td>
+													<td class="w165">
+														<div class="request">
+															<button mat-button >
+																<p>50</p>
+																<i class="material-icons">keyboard_arrow_right </i>
+															</button>
+														</div>
+													</td>
+													<td class="w80">
+														<div class="image-thum">
+															<img src="assets/img/pen.jpg">
+														</div>
+													</td>
+													<td class="w100 active">
+														<div class="action-btns mt9 left-btn">
+															<button mat-raised-button class="delete"  >
+																<i class="material-icons">delete_sweep</i>
+																<p>Delete</p>
+															</button>
+														</div>
+													</td>
+												</tr>
+												
+												<tr>
+													<td class="w50">1</td>
+													<td >Lorem Ipsum</td>
+													<td class="w100">100</td>
+													<td class="w165">
+														<div class="request">
+															<button mat-button >
+																<p>50</p>
+																<i class="material-icons">keyboard_arrow_right </i>
+															</button>
+														</div>
+													</td>
+													<td class="w80">
+														<div class="image-thum">
+															<img src="assets/img/pen.jpg">
+														</div>
+													</td>
+													<td class="w100 active">
+														<div class="action-btns mt9 left-btn">
+															<button mat-raised-button class="delete" >
+																<i class="material-icons">delete_sweep</i>
+																<p>Delete</p>
+															</button>
+														</div>
+													</td>
+												</tr>
+												
+												<tr>
+													<td class="w50">1</td>
+													<td >Lorem Ipsum</td>
+													<td class="w100">100</td>
+													<td class="w165">
+														<div class="request">
+															<button mat-button>
+																<p>50</p>
+																<i class="material-icons">keyboard_arrow_right </i>
+															</button>
+														</div>
+													</td>
+													<td class="w80">
+														<div class="image-thum">
+															<img src="assets/img/pen.jpg">
+														</div>
+													</td>
+													<td class="w100 active">
+														<div class="action-btns mt9 left-btn">
+															<button mat-raised-button class="delete" >
+																<i class="material-icons">delete_sweep</i>
+																<p>Delete</p>
+															</button>
+														</div>
+													</td>
+												</tr>
+												
+												
+											</table>
+										</div>
+									</div>
+								</div>   
+							</div>
+						</div>
+					</div>
+					
+					<div class="col s4 pl15">
+						<div class="sprate-box padding0">
+							
+							<div class="state-tabs">
+								<button mat-button class="cs-state">STATE</button>
+								<button mat-button class="cs-state">DISTRICT</button>
+							</div>
+							
+							<div class="row">
+								<div class="padding-area">
+									<div class="col s12 padding15">
+										<div class="territory-info">
+											<div class="head">
+												<h2>STATE</h2>
+												<mat-checkbox class="fix-check">&nbsp;</mat-checkbox>
+												<i class="material-icons search-icon" matRipple>search</i>
+												<input type="text" placeholder="search..." class="fix-search">
+												<i class="material-icons close-icon" matRipple>clear</i>
+											</div>
+											<div class="cs-checkbox">
+												<div class="checkbox-outer h165">
+													<section class="checkbox-inner">
+														<mat-checkbox class="check-list" value="1">Rajasthan</mat-checkbox>
+														
+													</section>
+												</div>
+											</div>
+											
+											
+										</div>
+									</div>
+									
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				
+				
+				<div class="no-data" *ngIf="data_not_found==true">
+					<img src="assets/img/no-data.gif" alt="">
+					<p>Data not <span>available !</span></p>
+				</div>
+			</div>
+		</div>
+	</div>
+	
+	
+	

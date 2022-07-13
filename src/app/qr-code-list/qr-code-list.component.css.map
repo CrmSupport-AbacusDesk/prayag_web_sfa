@@ -1,0 +1,9 @@
+{
+    "version": 3,
+    "mappings": "",
+    "sources": [
+        "qr-code-list.component.scss"
+    ],
+    "names": [],
+    "file": "qr-code-list.component.css"
+}

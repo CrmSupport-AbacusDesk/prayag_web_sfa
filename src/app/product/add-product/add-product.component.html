@@ -1,0 +1,319 @@
+
+<div class="main-container" >
+  <div *ngIf="loader" class="cs-loader">
+    <mat-spinner class="loader">
+      <div><p>Loading....</p></div>
+    </mat-spinner>
+  </div>
+  
+  
+  <div class="middle-container">
+    <div class="page-heading">
+      <div class="heading-text bc-space">
+        <div class="back-btn" (click)="back()">
+            <a mat-button ><i class="material-icons">west</i></a>
+        </div>
+        <h2>Product</h2>
+        <p>Add New Product</p>
+      </div>
+    </div>
+  </div>
+  
+  
+  <div class="container-outer">
+    <form #f="ngForm" (ngSubmit)="f.valid && check_product_code()  ">
+      <div class="container" >
+        <div class="sprate-box pb0">
+          <div class="cs-heading">
+            <h2>BASIC INFORMATION</h2>
+            <span class="required">Indicates required fields ( <sup>*</sup> )</span>
+          </div>
+          <mat-divider class="left-right-15 mt10"></mat-divider>
+          <div class="cs-form mt10">
+            
+            <div class="row mb0">
+             
+                <div class="row">
+                  
+                  <div class="col s4">
+                    <mat-form-field class="cs-input" appearance="outline">
+                      <mat-label>Category</mat-label>
+                      <mat-select name="category" #category="ngModel" [(ngModel)]="data.category" [ngClass]="{'has-error' : category.invalid } " required >
+                        <mat-option *ngFor="let productData of category_list" value="{{productData.category}}">{{productData.category}}</mat-option>
+                      </mat-select>
+                    </mat-form-field>
+                 </div> 
+
+                  <div class="col s4">
+                    <mat-form-field appearance="outline" class="cs-input" [ngClass]="{'has-error' : product_name.invalid } ">
+                      <mat-label>Product Name</mat-label>
+                      <input matInput placeholder="Type Here ..." name="product_name" #product_name="ngModel" [(ngModel)]="data.product_name" required>
+                    </mat-form-field>
+                        <div class="alert alert-danger" *ngIf="!product_name.valid && product_name.touched">
+                          Product name is required...
+                        </div>
+                  </div>
+                  
+                  <div class="col s4">
+                    <mat-form-field appearance="outline" class="cs-input"  [ngClass]="{'has-error' : productcode.invalid } ">
+                      <mat-label>Product Code</mat-label>
+                      <input matInput placeholder="Type Here ..."  name="productcode" #productcode="ngModel" [(ngModel)]="data.cat_no" required>
+                      
+                    </mat-form-field>
+                    <div class="alert alert-danger" *ngIf="!productcode.valid && productcode.touched">
+                      product code is required...
+                    </div>
+                  </div>
+                  
+             
+                </div>
+
+                <div class="row">
+                  
+                  <div class="col s4">
+                    <mat-form-field appearance="outline" class="cs-input"  [ngClass]="{'has-error' : hsn.invalid } ">
+                      <mat-label>HSN Code</mat-label>
+                      <input matInput placeholder="Type Here ..."  name="hsn" #hsn="ngModel" [(ngModel)]="data.hsn" required>
+                      
+                    </mat-form-field>
+                    <div class="alert alert-danger" *ngIf="!hsn.valid && hsn.touched">
+                      HSN code is required...
+                    </div>
+                  </div>
+
+                  <div class="col s4">
+                    <mat-form-field appearance="outline" class="cs-input" [ngClass]="{'has-error' : gst.invalid } ">
+                      <mat-label>Product GST</mat-label>
+                      <input matInput onkeypress="return event.charCode>=48 && event.charCode<=57" placeholder="Type Here ..." name="gst" #gst="ngModel" [(ngModel)]="data.gst" required>
+                    </mat-form-field>
+                        <div class="alert alert-danger" *ngIf="!gst.valid && gst.touched">
+                          GST is required...
+                        </div>
+                  </div>
+
+                  <div class="col s4">
+                    <mat-form-field appearance="outline" class="cs-input" [ngClass]="{'has-error' : product_name.invalid } ">
+                      <mat-label>Unit</mat-label>
+                      <input matInput name="unit" #unit="ngModel" [(ngModel)]="data.unit" required>
+                    </mat-form-field>
+                  </div>
+                </div>
+                  <div class="row">
+                  
+  
+                   
+
+                    <div class="col s4">
+                      <mat-form-field appearance="outline" class="cs-input" [ngClass]="{'has-error' : product_name.invalid } ">
+                        <mat-label>MRP</mat-label>
+                        <input matInput name="mrp" #mrp="ngModel" [(ngModel)]="data.mrp" required>
+                      </mat-form-field>
+                    </div>
+                  </div>
+                 
+               
+                
+                <div class="row">
+                  <div class="col s12">
+                    <mat-form-field appearance="outline" class="cs-input" [ngClass]="{'has-error' : description.invalid } ">
+                      <mat-label>Product Description</mat-label>
+                      <textarea matInput placeholder="Type Here ..." name="description" #description="ngModel" class="h100" [(ngModel)]="data.description"></textarea>
+                      <div class="alert alert-danger" *ngIf="!description.valid && description.touched">
+                        Product Description is required...
+                      </div>
+                    </mat-form-field>
+                  </div>
+                </div>
+              
+              
+              <!-- <div class="col s6">
+                <div class="row">
+                  <div class="col s8">
+                    <div class="radio-bodr">
+                      <p>Size <sup>*</sup></p>
+                      <mat-radio-group name="packSize" aria-label="Select an option" class="wp100" #sizeRadio="ngModel" [(ngModel)]="data.sizeRadio">
+                        <mat-radio-button value="2" class="wp50" (click)="emptyProductArray()">Multiple </mat-radio-button>
+                        <mat-radio-button value="1" class="wp50" (click)="emptyProductArray()" >Single</mat-radio-button>
+                      </mat-radio-group>
+                    </div>
+
+
+                 
+                    <div class="alert alert-danger" *ngIf="showSizeRadioButton">
+                      This Field is required...
+                    </div>
+                  </div>
+                 
+                </div>
+               
+                
+                <div class="row" *ngIf="(data.sizeRadio=='1')||(data.sizeRadio=='2')">
+                  <div class="col s12">
+                    <div class="sprate-box  pb0">
+                      <div class="row" *ngIf="radiohide" >
+                        <div class="col s6">
+                          <mat-form-field class="cs-input"  appearance="outline">
+                            <mat-label>Size</mat-label>
+                            <input matInput type="text" placeholder="Type Here ..." name="multiple_product_size" #multiple_product_size="ngModel" [(ngModel)]="data.multiple_product_size"> 
+                          </mat-form-field>
+                        </div>
+                        
+                        <div class="col s6">
+                          <div class="df">
+                            <mat-form-field class="cs-input"  appearance="outline">
+                              <mat-label>MRP</mat-label>
+                              <input matInput type="text" onkeypress="return event.charCode>=48 && event.charCode<=57" placeholder="Type Here ..." name="multiple_product_price" #multiple_product_price="ngModel" [(ngModel)]="data.multiple_product_price"> 
+                            </mat-form-field>
+                            
+                        
+                            
+                            <a id="add_button" class="add-item ml15" mat-raised-button (click)="(data.multiple_product_size && data.multiple_product_price) ? add_data() : '' "><i class="material-icons" >add</i></a>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="alert alert-danger" *ngIf="triggerError">
+                        Add at least one value
+                      </div>
+                      
+                      <div class="cs-table left-right-10">
+                        <div class="sticky-head border-top">
+                          <div class="table-head">
+                            <table>
+                              <tr>
+                                <th class="w30 text-center"></th>
+                                <th>Size</th>
+                                <th class="w110 text-center">MRP</th>
+                                <th class="w50">Action</th>
+                              </tr>
+                            </table>
+                          </div>
+                        </div>
+                        
+                        <div class="table-container">
+                          <div class="table-content none-shadow">
+                            <table>
+                              <tr *ngFor="let data of multipleProductPriceDetail; let i = index">
+                                <td class="w30 text-center">{{i+1}}</td>
+                                <td>{{data.product_size}}</td>
+                                <td class="w110"> &#x20B9; {{data.product_mrp}}</td>
+                                <td class="w50 text-center" >
+                                  <button mat-button class="delete-mat"><i class="material-icons red-clr"(click)="deleteProductDetail(i)">delete_sweep</i></button>
+                                </td>
+                              </tr>  
+                            </table>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+            </div> -->
+          </div>
+        </div>
+        
+        <!-- <form>
+          <div class="row">
+            <div class="col s12">
+              <div class="cs-file" >
+                <p>Upload Image</p>
+                <ul class="product-images" style="display:flex;">
+                  <li style="display:flex;" *ngFor="let val of urls; let i = index" >
+                    <label class="cs-file-img">
+                      <img height="75" width="75" [src]=" val || 'http://placehold.it/180'" alt="your image">
+                      <span (click)="delete_img(i)" class="cancel-icon">
+                        <a class="close"><i class="material-icons dp48">clear</i></a>
+                      </span>
+                    </label>
+                  </li> -->
+                  
+                  <!-- <li>
+                    <div class="field-control mrt0">
+                      <label class="cs-file-img default">
+                        <i class="material-icons">cloud_upload</i>
+                        <input type="file" (change)="insertImage($event)" name="image" placeholder="Upload file" accept=".png,.jpg,.jpeg" multiple style="display: none;" required>
+                      </label>
+                    </div> 
+                  </li> -->
+                <!-- </ul>
+                
+              </div>
+            </div>
+          </div>
+        </form>
+         -->
+        
+        <!-- <mat-divider class="left-right-15 mt10 mb10"></mat-divider>
+          <div class="row mt15"> -->
+            <!-- <div class="col s4">
+              <div class="territory-info">
+                <div class="head" [ngClass]="{'active':active.branch==true}">
+                  <h2>BRANDS</h2>
+                  
+                </div>
+                <div class="cs-checkbox">
+                  <div class="checkbox-outer">
+                    <section class="checkbox-inner"  *ngFor="let list of brand_list;let index=index" aria-required="true" >
+                      <mat-checkbox class="check-list" (change)="product_Brand(list.brand_name,index,$event)" value="{{list.brand_name}}">{{list.brand_name}}</mat-checkbox>
+                    </section>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            <div class="col s4">
+              <div class="territory-info">
+                <div class="head" [ngClass]="{'active':active.color==true}">
+                  <h2>COLORS</h2>
+                  
+                </div>
+                <div class="cs-checkbox">
+                  <div class="checkbox-outer">
+                    <section class="checkbox-inner" *ngFor="let list of color_list;let index=index" aria-required="true">
+                      <mat-checkbox class="check-list" (change)="product_Color(list,index,$event)" value="{{list.color_name}}">{{list.color_name}}</mat-checkbox>
+                    </section>
+                  </div>
+                </div>
+              </div>
+            </div>  -->
+            
+            
+            <!-- <div class="col s4">
+              <div class="territory-info">
+                <div class="head" [ngClass]="{'active':active.extrafield==true}">
+                  <h2>EXTRA FIELDS</h2>
+                  
+                </div>
+
+                <div class="cs-checkbox">
+                  <div class="checkbox-outer">
+                    <section class="checkbox-inner" *ngFor="let list of extra_field_list;let i=index">
+                      <mat-checkbox class="check-list bg-list" (change)="product_ExtraField(list,i,$event)" value="1">{{list.label}}</mat-checkbox>
+                    </section>
+                  </div>
+                </div>
+              </div>
+            </div>  -->
+            
+            
+            
+            <!-- </div> -->
+            <!-- <div>
+              <mat-checkbox name="flag" #flag="ngModel" [(ngModel)]="data.flag" value="1" >Check for show in new Arrival</mat-checkbox>
+            </div> -->
+          </div>
+          <div class="row">
+            <div class="col s12">
+              <div class="cs-btn fixedd mt32 text-right">
+                <div class="in-btn">
+                  <button mat-raised-button color="accent" type="save">Save</button>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+        </div>
+      </form>
+    </div>
+  </div>
+  
+  

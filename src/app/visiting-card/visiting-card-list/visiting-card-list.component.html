@@ -1,0 +1,292 @@
+<div class="main-container">
+  <div class="middle-container mb0">
+    <div class="page-heading">
+      <div class="heading-text">
+        <h2>Visiting Card</h2>
+      </div>
+    </div>
+    <div class="left-auto">
+      <div style="margin-right: 140px;">
+        <div class="uppr-one m-right-data" >
+          <div class="cs-form date-filter" >
+            <mat-form-field appearance="outline" class="cs-input w150" >
+              <mat-label>Date From</mat-label>
+              <input matInput [matDatepicker]="date_from" placeholder="From Date"  [max]="today_date" [(ngModel)]="data.date_from" readonly>
+              <mat-datepicker-toggle matSuffix [for]="date_from"></mat-datepicker-toggle>
+              <mat-datepicker #date_from></mat-datepicker>
+            </mat-form-field>
+            
+            <div class="df">
+              <mat-form-field appearance="outline" class="cs-input w150">
+                <mat-label>Date To</mat-label>
+                <input matInput [matDatepicker]="date_to" placeholder="To Date" [min]="data.date_from"  [max]="today_date" [(ngModel)]="data.date_to" readonly>
+                <mat-datepicker-toggle matSuffix [for]="date_to"></mat-datepicker-toggle>
+                <mat-datepicker #date_to></mat-datepicker>
+              </mat-form-field>
+              <a class="add-item ml10" mat-raised-button  (click)="(data.date_from && data.date_to)?getVisitingCardList():''" [disabled]="!(data.date_from && data.date_to)" >Go</a>
+              
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <div class="uppr-one m-right-data">
+        <ul>
+          <li class="refresh-area mr0 after-none">
+            <a class="refresh-btn" mat-raised-button (click)="refresh() "  matTooltip="Refresh" ><i class="material-icons"> refresh</i></a>
+            <!-- <a class="refresh-btn" mat-raised-button  matTooltip="Refresh" ><i class="material-icons"> refresh</i></a> -->
+          </li>
+        </ul>
+      </div> 
+      
+      <div class="tabs">
+        <ul *ngFor="let count of allCount; let i = index">
+          <li>
+            <a (click)="tabActive('tab0')" [ngClass]="{'active' : tabActiveType['tab0'] == true}">
+              All
+              <span class="counter">{{count.all_cnt}}</span>
+            </a>
+          </li>
+          <li>
+            <a (click)="tabActive('tab1')" [ngClass]="{'active' : tabActiveType['tab1'] == true}">
+              Pending
+              <span *ngIf="(count.pend_cnt==null)"  class="counter">0</span>
+              <span *ngIf="(count.pend_cnt!=null)"  class="counter">{{count.pend_cnt}}</span>
+              
+            </a>
+          </li>
+          <li>
+            <a (click)="tabActive('tab2')" [ngClass]="{'active' : tabActiveType['tab2'] == true}">Inprocess
+              <span *ngIf="(count.running_cnt==null)"  class="counter">0</span>
+              <span *ngIf="(count.running_cnt!=null)"  class="counter">{{count.running_cnt}}</span>
+              
+            </a>
+          </li>
+          <li>
+            <a (click)="tabActive('tab3')" [ngClass]="{'active' : tabActiveType['tab3'] == true}">
+              Delivered
+              <span *ngIf="(count.delivered_cnt==null)"  class="counter">0</span>
+              <span *ngIf="(count.delivered_cnt!=null)"  class="counter">{{count.delivered_cnt}}</span>
+              
+            </a>
+          </li>
+          <li>
+            <a (click)="tabActive('tab4')" [ngClass]="{'active' : tabActiveType['tab4'] == true}">Received
+              <span *ngIf="(count.received_cnt==null)"  class="counter">0</span>
+              <span *ngIf="(count.received_cnt!=null)"  class="counter">{{count.received_cnt}}</span>
+              
+            </a>
+          </li>
+          <li>
+            <a (click)="tabActive('tab5')" [ngClass]="{'active' : tabActiveType['tab5'] == true}">Reject
+              <span *ngIf="(count.reject_cnt==null)"  class="counter">0</span>
+              <span *ngIf="(count.reject_cnt!=null)"  class="counter">{{count.reject_cnt}}</span>
+              
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  
+  <div class="container-outer padding0">
+    <div class="container mb60">
+      
+      <!--*** All tab table start ***-->
+      <div class="cs-table horizontal-scroll" >
+        <div class="sticky-head">
+          <div class="table-head">
+            <table>
+              <tr>
+                <th class="w90">Date Created</th>
+                <th class="w130">Created By</th>
+                <th class="w120">Type</th>
+                <th class="w180">Company Name</th>
+                <th class="w180">Contact Person</th>
+                <th class="w230">Address</th>
+                <th class="w230">Description</th>
+                <th class="w90">Last Request</th>
+                <th class="w80  text-center"
+                *ngIf="tabActiveType['tab0'] || tabActiveType['tab1'] || tabActiveType['tab2']">No. of Days</th>
+                <th class="w80 text-center">Total Card</th>
+                <th class="w100"
+                *ngIf="tabActiveType['tab0'] || tabActiveType['tab3'] || tabActiveType['tab4'] || tabActiveType['tab5']">
+                <span *ngIf="tabActiveType['tab3']">Delivery Date</span>
+                <span *ngIf="tabActiveType['tab4']">Received Date</span>
+                <span *ngIf="tabActiveType['tab5']">Reject Date</span>
+                <span *ngIf="tabActiveType['tab0']">Last Updated</span>
+              </th>
+              <th *ngIf="tabActiveType['tab5']" class="w230">Reject Reason</th>
+              <th *ngIf="tabActiveType['tab0']" class="w100">Status</th>
+              <th *ngIf="tabActiveType['tab0'] || tabActiveType['tab1'] || tabActiveType['tab2']" class="w100">Action
+              </th>
+            </tr>
+          </table>
+        </div>
+        
+        <!-- filters -->
+        
+        <div class="table-head bdrt">
+          <table class="sno-border">
+            <tr>
+              <th class="w90"></th>
+              
+              <th class="w130">
+                <div class="th-search-acmt">
+                  <mat-form-field class="example-full-width cs-input select-input">
+                    <input matInput placeholder="Created By. . ." type="text" name="created_by"
+                    [(ngModel)]="data.created_by" (keyup.enter)="getVisitingCardList()">
+                  </mat-form-field>
+                </div>
+              </th>
+              <th class="w120">
+                <div class="th-search-acmt">
+                  <mat-form-field class="cs-input select-input">
+                    <mat-select placeholder="Type">
+                      <mat-option (click)="selectType('all')" value="All">All</mat-option>
+                      <mat-option (click)="selectType('1')" value="Distributor">Distributor/Dealer</mat-option>
+                      <mat-option (click)="selectType('3')" value="Dealer">Retailer</mat-option>
+                      <mat-option (click)="selectType('7')" value="Direct Dealer ">Direct Dealer </mat-option>
+                    </mat-select>
+                  </mat-form-field>
+                </div>
+              </th>
+              <th class="w180">
+                <div class="th-search-acmt">
+                  <mat-form-field class="example-full-width cs-input select-input">
+                    <input matInput placeholder="Company Name. . ." name="company_name"
+                    (keyup.enter)="getVisitingCardList()" [(ngModel)]="data.company_name">
+                  </mat-form-field>
+                </div>
+              </th>
+              <th class="w180">
+                <div class="th-search-acmt">
+                  <mat-form-field class="example-full-width cs-input select-input">
+                    <input matInput placeholder="Contact Person.. . ." name="Contact Person"
+                    (keyup.enter)="getVisitingCardList()" [(ngModel)]="data.contact_person">
+                  </mat-form-field>
+                </div>
+              </th>
+              <th class="w230">&nbsp;</th>
+              <th class="w230">&nbsp;</th>
+              <th class="w90">&nbsp;</th>
+              <th class="w80" *ngIf="tabActiveType['tab0'] || tabActiveType['tab1'] || tabActiveType['tab2']">&nbsp;</th>
+              <th class="w80">&nbsp;</th>
+              <th
+              *ngIf="tabActiveType['tab0'] || tabActiveType['tab3'] || tabActiveType['tab4'] || tabActiveType['tab5']"
+              class="w100">&nbsp;</th>
+              <th *ngIf="tabActiveType['tab5']" class="w230">&nbsp;</th>
+              <th *ngIf="tabActiveType['tab0']" class="w100">&nbsp;</th>
+              <th *ngIf="tabActiveType['tab0'] || tabActiveType['tab1'] || tabActiveType['tab2']" class="w100">&nbsp;
+              </th>
+            </tr>
+          </table>
+        </div>
+      </div>
+      
+      <div class="table-container">
+        <div class="table-content">
+          <table>
+            <ng-container *ngIf="!loader">
+              <tr *ngFor="let detail of visitingCardDetail ; let i = index">
+                <td class="w90">{{detail.created_at | date:'dd-MMM-yyyy'}}</td>
+                <td class="w130">
+                  {{detail.created_by_user | titlecase}}
+                </td>
+                <td class="w120">
+                  <span *ngIf="detail.type==1">Distributer/Dealer</span>
+                  <span *ngIf="detail.type==7">Direct Dealer</span>
+                  <span *ngIf="detail.type==3">Retailer</span>
+                </td>
+                <td class="w180">
+                  <a class="link-btn" mat-button routerLink="/distribution-detail/{{detail.create_card_user_id}}" routerLinkActive="active">{{detail.company_name | titlecase}}</a>
+                </td>
+                <td class="w180">{{detail.name | titlecase}} - {{detail.mobile}}</td>
+                <td class="w230 one-line"  matTooltip="{{detail.address}}, {{detail.district}}, {{detail.state}}, {{detail.pincode}}" matTooltipPosition="above"*ngIf="detail.address ||detail.district   ||detail.state|| detail.pincode ">
+                  {{detail.address}}, {{detail.district}}, {{detail.state}}, {{detail.pincode}}
+                </td>
+                <td class="w230 one-line" *ngIf="!detail.address &&!detail.district &&!detail.state  &&!detail.pincode" >
+                  <div class="one-line">
+                    N/A
+                  </div>
+                  <td class="w230 one-line" matTooltip="{{detail.description}}" matTooltipPosition="above">
+                    {{detail.description}}
+                  </td>
+                  <td class="w90 one-line" >{{detail.last_request_date | date:'dd-MMM-yyyy'}}</td>
+                  <td class="w80  text-center" *ngIf="tabActiveType['tab0'] || tabActiveType['tab1'] || tabActiveType['tab2']">
+                    {{detail.day_diff}}</td>
+                    <td class="w80 text-center"><strong>{{detail.total_cards}}</strong></td>
+                    <!-- , hh:mm aa -->
+                    <td
+                    *ngIf="tabActiveType['tab0'] || tabActiveType['tab3'] || tabActiveType['tab4'] || tabActiveType['tab5']"
+                    class="w100">{{detail.updated_at | date:'dd-MMM-yyyy'}}</td>
+                    <td *ngIf="tabActiveType['tab5']" class="w230">{{detail.remarks}}</td>
+                    <td *ngIf="tabActiveType['tab0']" class="w100">
+                      <strong *ngIf="detail.status!='running'"
+                      [ngClass]="{'yellow-clr':detail.status=='pending','red-clr':detail.status=='reject','blue-clr':detail.status=='delivered','green-clr':detail.status=='received','orange-clr':detail.status=='running'}">
+                      {{detail.status | uppercase}}</strong>
+                      <strong *ngIf="detail.status=='running'"
+                      [ngClass]="{'yellow-clr':detail.status=='pending','red-clr':detail.status=='reject','blue-clr':detail.status=='delivered','green-clr':detail.status=='received','orange-clr':detail.status=='running'}">
+                      IN PROCESS</strong>
+                    </td>
+                    <td *ngIf="tabActiveType['tab0'] || tabActiveType['tab1'] || tabActiveType['tab2']" class="w100">
+                      <div class="df"
+                      *ngIf="((detail.status!='reject' && detail.status!='received') && (detail.status!='delivered'))">
+                      <button mat-button class="delete-mat" matTooltip="Edit" matTooltipPosition="above"
+                      (click)="statusModal(detail)"><i class="material-icons green-clr">create</i></button>
+                      <button mat-button class="delete-mat" matTooltip="Delete" matTooltipPosition="above"
+                      (click)="deleteVistingCard(detail.id)"><i class="material-icons red-clr">delete_sweep</i></button>
+                    </div>
+                  </td>
+                </tr>
+              </ng-container>
+              
+              <ng-container  *ngIf="loader">
+                <tr *ngFor="let row of skelton;"  class="sk-loading">
+                  <td class="w90"><div>&nbsp;</div></td>
+                  <td class="w130"><div>&nbsp;</div></td>
+                  <td class="w120"><div>&nbsp;</div></td>
+                  <td class="w180"><div>&nbsp;</div> </td>
+                  <td class="w180"><div>&nbsp;</div></td>
+                  <td class="w230"><div>&nbsp;</div></td>
+                  <td class="w230"><div>&nbsp;</div></td>
+                  <td class="w230"><div>&nbsp;</div></td>
+                  <td class="w90" ><div>&nbsp;</div></td>
+                  <td class="w80  text-center" *ngIf="tabActiveType['tab0'] || tabActiveType['tab1'] || tabActiveType['tab2']"><div>&nbsp;</div></td>
+                  <td class="w80 text-center"><div>&nbsp;</div></td>
+                  <!-- , hh:mm aa -->
+                  <td class="w100" *ngIf="tabActiveType['tab0'] || tabActiveType['tab3'] || tabActiveType['tab4'] || tabActiveType['tab5']">
+                    <div>&nbsp;</div>
+                  </td>
+                  <td *ngIf="tabActiveType['tab5']" class="w230"><div>&nbsp;</div></td>
+                  <td *ngIf="tabActiveType['tab0']" class="w100"><div>&nbsp;</div></td>
+                  <td *ngIf="tabActiveType['tab0'] || tabActiveType['tab1'] || tabActiveType['tab2']" class="w100"><div>&nbsp;</div></td>
+                </tr>
+              </ng-container>
+            </table>
+          </div>
+        </div>
+      </div>
+      
+      
+      <!--*** All tab table end ***-->
+      
+      <!-- *** pagination **** -->
+      <!-- <mat-paginator [length]="length" [pageSize]="pageSize"
+        (page)="pageEvent = getServerData($event)">
+      </mat-paginator> -->
+      
+      
+      
+      <div class="no-data" *ngIf="loader==false && visitingCardDetail.length==0">
+        <img src="assets/img/no-data.gif" alt="">
+        <p>Data not <span>available !</span></p>
+      </div>
+    </div>
+  </div>
+  
+  <div class="fix-btn">
+    <a class="bottom-btn ecxel-btn" matTooltip="Download Excel" (click)="exportAsXLSX()" matTooltipPosition="above"
+    mat-raised-button><img src="assets/img/excel.svg"></a>
+  </div>
+</div>

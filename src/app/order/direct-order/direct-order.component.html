@@ -1,0 +1,173 @@
+<div class="main-container" >
+  <div class="middle-container mb0">
+    <div class="page-heading">
+      <img src="assets/img/order_icon.svg" class="h-icon">
+      <div class="heading-text">
+        <h2>Direct Order</h2>
+        <p>Total Direct Order - {{count}}</p>
+      </div>
+    </div>
+
+
+    <div class="left-auto">
+
+
+      <!-- <a mat-raised-button color="primary" class="delete-action mr30" >Delete <span class="count"></span></a> -->
+
+      <div class="tabs">
+        <ul>
+          <li><a class="all" [ngClass]="{'active': view_tab=='all'}" (click)="filter_order_data('all')">All</a></li>
+          <li><a class="pending" [ngClass]="{'active': view_tab=='Pending'}" (click)="filter_order_data('Pending')">Pending</a></li>
+          <li><a class="approved" [ngClass]="{'active': view_tab=='Approved'}" (click)="filter_order_data('Approved')">Approved</a></li>
+          <li><a class="reject" [ngClass]="{'active': view_tab=='Reject'}" (click)="filter_order_data('Reject')">Reject</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="container-outer padding0">
+    <div class="container mb60" >
+      <div class="cs-table">
+        <div class="sticky-head">
+          <div class="table-head">
+            <table class="sno-border">
+              <tr>
+                <!-- <th class="w30"><mat-checkbox color="accent" [(ngModel)]="search_val.allStates"  name="allStates"  value="true"></mat-checkbox></th> -->
+                <th class="w120">Date</th>
+                <th class="w160">Created By</th>
+                <th class="w120">Order No.</th>
+                <th class="w130">Type</th>
+                <th>Company Name</th>
+                <th class="w90 text-center">Total Item</th>
+                <th class="w120 text-right">Order Value</th>
+                <th text-center *ngIf="view_tab=='all'" class="w110">Status</th>
+                <th text-center *ngIf="view_tab=='Approved'" class="w110">Approved By</th>
+              </tr>
+            </table>
+          </div>
+          <div class="table-head bdrt" >
+            <table class="sno-border">
+              <tr>
+                <!-- <th class="w30"></th> -->
+                <th class="w120">
+                  <div class="th-search-acmt">
+                    <mat-form-field class="cs-input date-column infix-bodr">
+                      <input matInput [matDatepicker]="picker" placeholder="Date" name="date_created" [(ngModel)]="search_val.date_created" readonly>
+                      <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                      <mat-datepicker #picker></mat-datepicker>
+                    </mat-form-field>
+                  </div>
+                </th>
+                <th class="w160">
+                  <div class="th-search-acmt">
+                    <mat-form-field class="example-full-width cs-input select-input">
+                      <input matInput placeholder="Created By. . ." name="created_by" [(ngModel)]="search_val.created_by" (keyup.enter)="orderList()">
+                    </mat-form-field>
+                  </div>
+                </th>
+                <th class="w120">
+                  <div class="th-search-acmt">
+                    <mat-form-field class="example-full-width cs-input select-input">
+                      <input matInput placeholder="Order No. . ." (keyup.enter)="orderList()" [(ngModel)]="search_val.order_id" >
+                    </mat-form-field>
+                  </div>
+                </th>
+                <th class="w130">
+                </th>
+                <th>
+                  <div class="th-search-acmt">
+                    <mat-form-field>
+                      <input type="text"  matInput placeholder="Company Name. . ." (keyup.enter)="orderList()" [(ngModel)]="search_val.company_name">
+
+                    </mat-form-field>
+                  </div>
+                </th>
+                <th class="w90">
+                </th>
+                <th class="w120" ></th>
+                <th  *ngIf="view_tab=='all'" class="w110"></th>
+                <th  *ngIf="view_tab=='Approved'" class="w110"></th>
+              </tr>
+            </table>
+          </div>
+        </div>
+
+        <div class="table-container">
+          <div class="table-content">
+            <table class="sno-border">
+              <tr *ngFor="let list of orderlist;let i=index">
+                <!-- <td class="w30"><mat-checkbox color="accent" [(ngModel)]="list.selected_order" (change)="countSelected()"  [name]="'id'+i" value="true"></mat-checkbox></td> -->
+                <td class="w120">{{list.date_created | date :' dd/MM/yyyy'}}</td>
+                <td class="w160">{{list.created_by_name ? list.created_by_name : list.ord_created_by}}</td>
+                <td class="w120"><a class="link-btn" mat-button routerLink="/order-detail/{{list.id}}" routerLinkActive="active">{{list.order_no}}</a></td>
+                <td class="w130" *ngIf="list.type==7">Direct Dealer</td>
+                <td class="w130" *ngIf="list.type==1">Distributor</td>
+                <td>{{list.company_name}}</td>
+                <td class="w90 text-center">{{list.order_item}}</td>
+                <td class="w120 text-right">&#8377; {{list.order_grand_total}}
+                  <div *ngIf="view_tab!='all' && view_tab!='Approved'" class="action-btns">
+                    <a mat-button class="view" (click)="detailOrder(list.id)"><i class="material-icons">remove_red_eye</i> View</a>
+                    <button mat-button class="delete" (click)="deleteOrder(list.id)"><i class="material-icons">delete_sweep</i> Delete</button>
+                  </div>
+
+                </td>
+                <td *ngIf="view_tab=='all'" class="w110 green-clr">{{list.order_status}}
+                  <div class="action-btns">
+                    <a mat-button class="view" (click)="detailOrder(list.id)"><i class="material-icons">remove_red_eye</i> View</a>
+                    <button mat-button class="delete" (click)="deleteOrder(list.id)"><i class="material-icons">delete_sweep</i> Delete</button>
+                  </div>
+                </td>
+                <td *ngIf="view_tab=='Approved'" class="w110 green-clr">{{list.approved_by_name}}
+                  <div class="action-btns">
+                    <a mat-button class="view" (click)="detailOrder(list.id)"><i class="material-icons">remove_red_eye</i> View</a>
+                    <button mat-button class="delete" *ngIf="!login_dr_id" (click)="deleteOrder(list.id)"><i class="material-icons">delete_sweep</i> Delete</button>
+                  </div>
+                </td>
+              </tr>
+
+              <ng-container *ngFor="let lead of skelton">
+                <tr class="sk-loading"  *ngIf="loader">
+                  <td class="w30"><div>&nbsp;</div></td>
+                  <td class="w90"><div>&nbsp;</div></td>
+                  <td class="w160"><div>&nbsp;</div></td>
+                  <td class="w120"><div>&nbsp;</div></td>
+                  <td class="w130"><div>&nbsp;</div></td>
+                  <td><div>&nbsp;</div></td>
+                  <td class="w90"><div>&nbsp;</div></td>
+                  <td class="w120"><div>&nbsp;</div></td>
+                  <td class="w110"><div>&nbsp;</div></td>
+                </tr>
+              </ng-container>
+            </table>
+            <div
+            class="search-results"
+            data-infinite-scroll
+            debounce
+            [infiniteScrollDistance]="1"
+            [infiniteScrollUpDistance]="2"
+            [infiniteScrollThrottle]="10"
+            (scrolled)="orderList()"
+            >
+          </div>
+          <div *ngIf="loader" class="lazy-loading" >
+            <img src="../../../paraflex/assets/img/lazy_loader.gif" alt="">
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="no-data" *ngIf="data_not_found==true">
+      <img src="assets/img/no-data.gif" alt="">
+      <p>Data not <span>available !</span></p>
+    </div>
+  </div>
+</div>
+
+
+
+<div class="fix-btn">
+  <a class="bottom-btn ecxel-btn" matTooltip="Download Excel" matTooltipPosition="above" mat-raised-button (click)="exportAsXLSX()"><img src="assets/img/excel.svg"></a>
+</div>
+</div>
+
+

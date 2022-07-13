@@ -1,0 +1,828 @@
+<div class="main-container">
+    <div *ngIf="loader">
+        <mat-spinner class="loader">
+            <div>
+                <p>Loading....</p>
+            </div>
+        </mat-spinner>
+    </div>
+    <div class="middle-container">
+        <div class="page-heading">
+            <div class="heading-text bc-space">
+                <div class="back-btn">
+                    <a mat-button routerLink="/product-list" routerLinkActive="active"><i
+                        class="material-icons">west</i></a>
+                    </div>
+                    <h2>Product Detail</h2>
+                    <!-- <p class="light">{{productDetail.sub_category}}</p> -->
+                </div>
+            </div>
+        </div>
+
+            <div class="container-outer">
+            <div class="container">
+                <div class="row">
+                    <div class="col s8 pr10">
+                        <div class="details-info">
+                            <div class="basic-details">
+                                <div class="cs-heading">
+                                    <h2>Basic Detail</h2>
+                                    <a class="edit-item" (click)="editCategoryDialog('category')">
+                                        <i class="material-icons">create</i></a>
+                                    </div>
+                                    
+                                    <div class="details-thumbnail padding0">
+                                        <div class="row">
+                                            <div class="col s3">
+                                                <div class="detail-field">
+                                                    <span>Category</span>
+                                                    <p>{{productDetail.product_info.category?productDetail.product_info.category:'--' }}</p>
+                                                </div>
+                                            </div>  
+                                            <div class="col s3">
+                                                <div class="detail-field">
+                                                    <span>Product Name</span>
+                                                    <p>{{productDetail.product_info.product_name}}</p>
+                                                </div>
+                                            </div>
+                                            <div class="col s3">
+                                                <div class="detail-field">
+                                                    <span>Product Code</span>
+                                                    <p>{{productDetail.product_info.product_code!=''?productDetail.product_info.product_code:'N/A'}}
+                                                    </p>
+                                                </div>
+                                            </div>
+                                            <div class="col s3">
+                                                <div class="detail-field">
+                                                    <span>HSN Code</span>
+                                                    <p>{{productDetail.product_info.hsn && productDetail.product_info.hsn!= '' ?productDetail.product_info.hsn:'--'   }}</p>
+                                                </div>
+                                            </div>
+                                            
+                                         </div>
+                                         <div class="row">
+                                            <div class="col s3">
+                                                <div class="detail-field">
+                                                    <span>GST Percent</span>
+                                                    <p>{{productDetail.product_info.gst && productDetail.product_info.gst!= '' && productDetail.product_info.gst != '0' ?productDetail.product_info.gst:'--' }}</p>
+                                                </div>
+                                            </div>  
+                                         
+
+                                            <div class="col s3">
+                                                <div class="detail-field">
+                                                    <span>Unit</span>
+                                                    <p>{{productDetail.product_info.unit ? productDetail.product_info.unit:'--' }}</p>
+                                                </div>
+                                            </div>  
+
+                                            <div class="col s3">
+                                                <div class="detail-field">
+                                                    <span>MRP</span>
+                                                    <p>{{productDetail.product_info.mrp ? productDetail.product_info.mrp:'--' }}</p>
+                                                </div>
+                                            </div>  
+                                        </div>
+                                        
+                                        <div class="row mb0">
+                                            <div class="col s12">
+                                                <div class="detail-field">
+                                                    <span>Description</span>
+                                                    <p>{{productDetail.product_info.description !=''?productDetail.product_info.description:'--'}}
+                                                    </p>
+                                                </div>
+                                            </div>
+                                         
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            </div>
+
+                            <div class="col s4">
+                                <div class="sprate-box">
+                                  <div class="cs-logs">
+                                    <div class="cs-heading">
+                                      <h2>PRODUCT IMAGES  </h2>
+                                      <label>
+                                        <input type="file" (change)="insertImage($event)" style="display: none;">
+                                        Add New
+                                      </label>
+                                    </div>
+                                    <mat-divider class="left-right-15 mt10"></mat-divider>
+                                    <div class="logs-outer padding0">
+                                      <div class="cs-image">
+                                        <div class="vertical-img" *ngIf="productDetail?.imageData?.length==1">
+                                          <div class="sm-img">
+                                            <ul>
+                                              <li class="overlay-content" *ngFor="let img of productDetail?.imageData;let i=index">
+                                                <img src="{{serve.imgurl+'Products/'+img.image}}">
+                                                <!-- <p>{{img.image}}</p> -->
+                                                <a class="close" matRipple matTooltip="Delete" (click)="deleteImage(img.id,i)"><i class="material-icons">delete_sweep</i></a>
+                                                <div class="overlay">
+                                                </div>
+                                              </li>
+                                            </ul>
+                                          </div>
+                                        </div>
+                                        <div class="vertical-img double-img" *ngIf="productDetail?.imageData?.length==2">
+                                          <div class="sm-img">
+                                            <ul>
+                                              <li class="overlay-content" *ngFor="let img of productDetail.imageData;let i=index">
+                                                <img src="{{serve.imgurl+'Products/'+img.image}}">
+                                                <!-- <p>{{img.image}}</p> -->
+                                                <a class="close" matRipple matTooltip="Delete" (click)="deleteImage(img.id,i)"><i class="material-icons">delete_sweep</i></a>
+                                                <div class="overlay">
+                                                </div>
+                                              </li>
+                                            </ul>
+                                          </div>
+                                        </div>
+                                        <div class="vertical-img multiple-img" *ngIf="productDetail?.imageData?.length > 2">
+                                          <div class="sm-img">
+                                            <ul>
+                                              <li class="overlay-content" *ngFor="let img of productDetail.imageData;let i=index">
+                                                <img src="{{serve.imgurl+'Products/'+img.image}}">
+                                                <!-- <p>{{img.image}}</p> -->
+                                                <a class="close" matRipple matTooltip="Delete" (click)="deleteImage(img.id,i)"><i class="material-icons">delete_sweep</i></a>
+                                                <div class="overlay">
+                                                </div>
+                                              </li>
+                                            </ul>
+                                          </div>
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                            </div>
+                            <!-- <div class="col s4">
+                                <div class="sprate-box">
+                                  <div class="cs-logs">
+                                    <div class="cs-heading">
+                                      <h2>PRODUCT IMAGES  </h2>
+                                      <label>
+                                        <input type="file" (change)="insertImage($event)" style="display: none;">
+                                        Add New
+                                      </label>
+                                    </div>
+                                    <mat-divider class="left-right-15 mt10"></mat-divider>
+                                    <div class="logs-outer padding0">
+                                      <div class="cs-image">
+                                        <div class="vertical-img" *ngIf="productDetail?.image_array?.length==1">
+                                          <div class="sm-img">
+                                            <ul>
+                                              <li class="overlay-content" *ngFor="let img of productDetail?.image_array;let i=index">
+                                                <img src="{{img.image}}">
+                                                <p>{{img.image}}</p>
+                                                <a class="close" matRipple matTooltip="Delete" (click)="deleteImage(img.id,i)"><i class="material-icons">delete_sweep</i></a>
+                                                <div class="overlay">
+                                                </div>
+                                              </li>
+                                            </ul>
+                                          </div>
+                                        </div>
+                                        <div class="vertical-img double-img" *ngIf="productDetail?.image_array?.length==2">
+                                          <div class="sm-img">
+                                            <ul>
+                                              <li class="overlay-content" *ngFor="let img of productDetail.image_array;let i=index">
+                                                <img src="{{img.image}}">
+                                                <p>{{img.image}}</p>
+                                                <a class="close" matRipple matTooltip="Delete" (click)="deleteImage(img.id,i)"><i class="material-icons">delete_sweep</i></a>
+                                                <div class="overlay">
+                                                </div>
+                                              </li>
+                                            </ul>
+                                          </div>
+                                        </div>
+                                        <div class="vertical-img multiple-img" *ngIf="productDetail?.image_array?.length > 2">
+                                          <div class="sm-img">
+                                            <ul>
+                                              <li class="overlay-content" *ngFor="let img of productDetail.image_array;let i=index">
+                                                <img src="{{img.image}}">
+                                                <p>{{img.image}}</p>
+                                                <a class="close" matRipple matTooltip="Delete" (click)="deleteImage(img.id,i)"><i class="material-icons">delete_sweep</i></a>
+                                                <div class="overlay">
+                                                </div>
+                                              </li>
+                                            </ul>
+                                          </div>
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div> -->
+                              <!-- <form>
+                                <div class="row">
+                                  <div class="col s12">
+                                    <div class="cs-file" >
+                                      <p>Upload Image</p>
+                                      <ul class="product-images" style="display:flex;">
+                                        <li style="display:flex;" *ngFor="let val of urls; let i = index" >
+                                          <label class="cs-file-img">
+                                            <img height="75" width="75" [src]=" val || 'http://placehold.it/180'" alt="your image">
+                                            <span (click)="deleteImage(img.id,i)" class="cancel-icon">
+                                              <a class="close"><i class="material-icons dp48">clear</i></a>
+                                            </span>
+                                          </label>
+                                        </li> 
+                                        
+                                         <li>
+                                          <div class="field-control mrt0">
+                                            <label class="cs-file-img default">
+                                              <i class="material-icons">cloud_upload</i>
+                                              <input type="file" (change)="insertImage($event)" name="image" placeholder="Upload file" accept=".png,.jpg,.jpeg" multiple style="display: none;" required>
+                                            </label>
+                                          </div> 
+                                        </li> 
+                                      </ul>
+                                      
+                                    </div>
+                                  </div>
+                                </div>
+                              </form> -->
+                           
+                            </div>
+                            
+                            <!-- <div class="cs-form mt10">
+                                <div class="row mb0">
+                                    <div class="col s12">
+                                        
+                                        <div class="sprate-box  pb0">
+                                             -->
+                                            <!-- <div class="row">
+                                                <div class="col s6">
+                                                    <div class="radio-bodr">
+                                                        <p>Size <sup>*</sup></p>
+                                                        <mat-radio-group aria-label="Select an option" class="wp100">
+                                                            <mat-radio-button value="1" class="wp50">Multiple </mat-radio-button>
+                                                            <mat-radio-button value="2" class="wp50">Single</mat-radio-button>
+                                                        </mat-radio-group>
+                                                    </div>
+                                                </div>
+                                                <div class="col s6">
+                                                    <mat-form-field class="cs-input" appearance="outline">
+                                                        <mat-label>MRP</mat-label>
+                                                        <input matInput type="number" placeholder="Type Here ..." name="value">
+                                                    </mat-form-field>
+                                                </div>
+                                            </div> -->
+                                            
+                                            
+                                            <!-- <div class="row">
+                                                <div class="col s6">
+                                                    <mat-form-field class="cs-input" appearance="outline">
+                                                        <input matInput type="text" placeholder="Enter Size"
+                                                        name="multiple_product_size" #multiple_product_size="ngModel"
+                                                        [(ngModel)]="data.add_multiple_product_size">
+                                                        
+                                                    </mat-form-field>
+                                                </div>
+                                                
+                                                <div class="col s6">
+                                                    <div class="df">
+                                                        <mat-form-field class="cs-input" appearance="outline">
+                                                            <mat-label>MRP</mat-label>
+                                                            <input matInput type="text"
+                                                            onkeypress="return event.charCode>=48 && event.charCode<=57"
+                                                            placeholder="Enter Price ..." name="multiple_product_price"
+                                                            #multiple_product_price="ngModel"
+                                                            [(ngModel)]="data.add_multiple_product_price">
+                                                        </mat-form-field>
+                                                        
+                                                        <a class="add-item ml15" mat-raised-button><i class="material-icons"
+                                                            (click)="(data.add_multiple_product_size && data.add_multiple_product_price) ? add_data() : '' ">add</i></a>
+                                                            
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                
+                                                <div class="cs-table left-right-10">
+                                                    <div class="sticky-head">
+                                                        <div class="table-head border-top">
+                                                            <table>
+                                                                <tr>
+                                                                    <th class="w50 text-center"></th>
+                                                                    <th>Size</th>
+                                                                    <th class="w100 text-center">MRP</th>
+                                                                    <th class="w100 text-center">Image</th>
+                                                                    <th class="w100 text-center">Action</th>
+                                                                </tr>
+                                                            </table>
+                                                        </div>
+                                                    </div>
+                                                    
+                                                    <div class="table-container">
+                                                        <div class="table-content none-shadow">
+                                                            <table *ngIf="productDetail.sizemrp!=='undefined'">
+                                                                <tr *ngFor="let SM of productDetail.sizemrp;let i=index;">
+                                                                    <td class="w50 text-center">{{i+1}}</td>
+                                                                    <td>
+                                                                        <div *ngIf="!(SM.id==mode && disableInput)">
+                                                                            {{SM?SM.product_size:'N/A'}}</div>
+                                                                            <div class="place-input active">
+                                                                                <input *ngIf="SM.id==mode && enableInput" type="text"
+                                                                                name="size{{i}}" placeholder="Enter product size"
+                                                                                #multiple_product_size="ngModel"
+                                                                                [(ngModel)]="SM.product_size">
+                                                                            </div>
+                                                                            <div class="alert alert-danger"
+                                                                            *ngIf="(SM.id==mode && disableInput) && (SM.product_size=='')">
+                                                                            Enter some value...</div>
+                                                                        </td>
+                                                                        <td class="w100 text-center">
+                                                                            <p *ngIf="!(SM.id==mode && disableInput)">&#x20B9;
+                                                                                {{SM?SM.product_mrp:0}}</p>
+                                                                                <div class="place-input active">
+                                                                                    <input *ngIf="SM.id==mode && enableInput"
+                                                                                    onkeypress="return event.charCode>=48 && event.charCode<=57"
+                                                                                    placeholder="Enter price" name="mrp{{i}}"
+                                                                                    #multiple_product_price="ngModel"
+                                                                                    [(ngModel)]="SM.product_mrp">
+                                                                                </div>
+                                                                                <div class="alert alert-danger"
+                                                                                *ngIf="(SM.id==mode && disableInput) && (SM.product_mrp=='')">
+                                                                                Enter some value...</div>
+                                                                            </td>
+                                                                            
+                                                                            <td class="w100 text-center">
+                                                                                <label class="cs-file-img default" *ngIf="!(SM.image)">
+                                                                                    <i class="material-icons blue-clr">cloud_upload</i>
+                                                                                    <input type="file" name="image"
+                                                                                    placeholder="Upload file" accept=".png,.jpg,.jpeg"
+                                                                                    multiple style="display: none;"
+                                                                                    (change)="insertImage($event,SM.id)">
+                                                                                </label>
+                                                                                <div class="dflex1">
+                                                                                    <a class="img-avtar relative after-border pr3"
+                                                                                    target="blank"
+                                                                                    href="{{serve.myurl}}api/uploads/Products/{{SM.image}}"
+                                                                                    *ngIf="(SM.image)">
+                                                                                    <img
+                                                                                    src="{{serve.myurl}}api/uploads/Products/{{SM.image}}">
+                                                                                </a>
+                                                                                <button mat-button class="delete-mat pl15 pr0" matRipple
+                                                                                matTooltip="Delete"
+                                                                                (click)="deleteImage(SM.image_id,i)"
+                                                                                *ngIf="(SM.image)">
+                                                                                <i class="material-icons red-clr">delete_sweep</i>
+                                                                            </button>
+                                                                        </div>
+                                                                    </td>
+                                                                    
+                                                                    <td class="w100 text-center">
+                                                                        <div class="list-btn">
+                                                                            <button *ngIf="SM.id==mode && showSave" mat-button
+                                                                            class="delete-mat"
+                                                                            (click)="updateProductDetail(SM.product_size,SM.product_mrp)">
+                                                                            <i class="material-icons green-clr" mat-button
+                                                                            matTooltip="Save">save</i>
+                                                                        </button>
+                                                                        <button *ngIf="!(SM.id==mode && showEdit)" mat-button
+                                                                        class="delete-mat" (click)="editProduct(SM.id)">
+                                                                        <i class="material-icons green-clr" mat-button
+                                                                        matTooltip="Edit">create</i>
+                                                                    </button>
+                                                                    <button mat-button class="delete-mat"
+                                                                    (click)="deleteProductDetail(SM.id)">
+                                                                    <i class="material-icons red-clr" mat-button
+                                                                    matTooltip="Delete">delete_sweep</i>
+                                                                </button>
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div> -->
+
+                    <!-- <div class="col s4">
+                        <div class="details-info pb0">
+                            <div class="basic-details">
+                                <div class="cs-heading">
+                                    <h2>Product Images </h2>
+                                    <label>
+                                        <i class="material-icons">cloud_upload</i>
+                                        <input type="file" (change)="insertImage($event)" style="display: none;">
+                                        Add New
+                                    </label>
+                                </div>
+                                <div class="cs-image">
+                                    <div class="vertical-img" *ngIf="productDetail?.imageData?.length==1">
+                                        <div class="sm-img">
+                                            <ul>
+                                                <li class="overlay-content" *ngFor="let img of productDetail?.imageData;let i=index">
+                                                    <img src="{{serve.myurl}}api/uploads/Products/{{img.image}}">
+                                                    <p>{{img.image}}</p>
+                                                    <a class="close" matRipple matTooltip="Delete" (click)="deleteImage(img.id,i)"><i
+
+                </div>
+                <!-- <div class="col s4">
+                    <div class="details-info pb0">
+                        <div class="basic-details">
+                            <div class="cs-heading">
+                                <h2>Product Images </h2>
+                                <label>
+                                    <i class="material-icons">cloud_upload</i>
+                                    <input type="file" (change)="insertImage($event)" style="display: none;">
+                                    Add New
+                                </label>
+                            </div>
+                            <div class="cs-image">
+                                <div class="vertical-img" *ngIf="productDetail?.imageData?.length==1">
+                                    <div class="sm-img">
+                                        <ul>
+                                            <li class="overlay-content"
+
+                                            *ngFor="let img of productDetail?.imageData;let i=index">
+                                            <img src="{{serve.myurl}}api/uploads/Products/{{img.image}}">
+                                            <p>{{img.image}}</p>
+                                            <a class="close" matRipple matTooltip="Delete"
+                                            (click)="deleteImage(img.id,i)"><i
+                                            class="material-icons">delete_sweep</i></a>
+                                            <div class="overlay">
+                                            </div>
+                                        </li>
+                                    </ul>
+
+                                                *ngFor="let img of productDetail?.imageData;let i=index">
+                                                <img src="{{serve.myurl}}api/uploads/Products/{{img.image}}">
+                                                <p>{{img.image}}</p>
+                                                <a class="close" matRipple matTooltip="Delete"
+                                                    (click)="deleteImage(img.id,i)"><i
+
+                                                        class="material-icons">delete_sweep</i></a>
+                                                <div class="overlay">
+                                                </div>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div class="vertical-img double-img" *ngIf="productDetail?.imageData?.length==2">
+                                    <div class="sm-img">
+                                        <ul>
+                                            <li class="overlay-content"
+                                                *ngFor="let img of productDetail.imageData;let i=index">
+                                                <img src="{{serve.myurl}}api/uploads/Products/{{img.image}}">
+                                                <p>{{img.image}}</p>
+                                                <a class="close" matRipple matTooltip="Delete"
+                                                    (click)="deleteImage(img.id,i)"><i
+                                                        class="material-icons">delete_sweep</i></a>
+                                                <div class="overlay">
+                                                </div>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div class="vertical-img multiple-img" *ngIf="productDetail?.imageData?.length > 2">
+                                    <div class="sm-img">
+                                        <ul>
+                                            <li class="overlay-content"
+                                                *ngFor="let img of productDetail.imageData;let i=index">
+                                                <img src="{{serve.myurl}}api/uploads/Products/{{img.image}}">
+                                                <p>{{img.image}}</p>
+                                                <a class="close" matRipple matTooltip="Delete"
+                                                    (click)="deleteImage(img.id,i)"><i
+                                                        class="material-icons">delete_sweep</i></a>
+                                                <div class="overlay">
+                                                </div>
+                                            </li>
+                                        </ul>
+                                    </div>
+
+                                </div> -->
+
+                               
+
+                            <!-- </div>
+                            <div class="vertical-img double-img" *ngIf="productDetail?.imageData?.length==2">
+                                <div class="sm-img">
+                                    <ul>
+                                        <li class="overlay-content"
+                                        *ngFor="let img of productDetail.imageData;let i=index">
+                                        <img src="{{serve.myurl}}api/uploads/Products/{{img.image}}">
+                                        <p>{{img.image}}</p>
+                                        <a class="close" matRipple matTooltip="Delete"
+                                        (click)="deleteImage(img.id,i)"><i
+                                        class="material-icons">delete_sweep</i></a>
+                                        <div class="overlay">
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="vertical-img multiple-img" *ngIf="productDetail?.imageData?.length > 2">
+                            <div class="sm-img">
+                                <ul>
+                                    <li class="overlay-content"
+                                    *ngFor="let img of productDetail.imageData;let i=index">
+                                    <img src="{{serve.myurl}}api/uploads/Products/{{img.image}}">
+                                    <p>{{img.image}}</p>
+                                    <a class="close" matRipple matTooltip="Delete"
+                                    (click)="deleteImage(img.id,i)"><i
+                                    class="material-icons">delete_sweep</i></a>
+                                    <div class="overlay">
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="default-product" *ngIf="productDetail?.imageData?.length==0">
+                        <i class="material-icons">image</i>
+                        <p>Product images not available</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>  -->
+<!-- </div> -->
+<!-- <div class="row">
+    <div class="col s12">
+        <div class="details-info mt10 flat">
+            <div class="basic-details">
+                <div class="cs-heading mb0">
+                    <h2> Sate Wise Price List</h2>
+                </div>
+                
+                <div class="cs-table left-right-10">
+                    <div class="sticky-head" style="top: -10px;">
+                        <div class="table-head">
+                            <table>
+                                <tr>
+                                    <th>State Name</th>
+                                    <th class="padding0">
+                                        <table>
+                                            <tr>
+                                                <th class="w150">Size</th>
+                                                <th class="w150">Distributor Price</th>
+                                                <th class="w150">Direct Dealer Price</th>
+                                                <th class="w150">Retailer Price</th>
+                                                
+                                                <th class="w50">Action</th>
+                                            </tr>
+                                        </table>
+                                    </th>
+                                </tr>
+                            </table>
+                        </div>
+                        <div class="table-head bdrt">
+                            <table>
+                                <tr>
+                                    <th>&nbsp;</th>
+                                    <th class="padding0">
+                                        <table>
+                                            <tr>
+                                                <th class="w150">
+                                                    <div class="place-input active">
+                                                        <mat-select name="product_size" id="Select Size"
+                                                        placeholder="Select Size"
+                                                        [(ngModel)]="state_data.product_size">
+                                                        <mat-option disabled>Select Size</mat-option>
+                                                        <mat-option value="{{size.product_size}}"
+                                                        *ngFor="let size of productDetail.sizemrp;let i=index;">
+                                                        {{size.product_size}}</mat-option>
+                                                    </mat-select>
+                                                </div>
+                                            </th>
+                                            <th class="w150">
+                                                <div class="place-input active">
+                                                    <input type="text"
+                                                    onkeypress="return event.charCode>=48 && event.charCode<=57"
+                                                    placeholder="Enter Price"
+                                                    name="distributor_price"
+                                                    [(ngModel)]="state_data.distributor_price">
+                                                </div>
+                                            </th>
+                                            <th class="w150">
+                                                <div class="place-input active">
+                                                    <input type="text"
+                                                    onkeypress="return event.charCode>=48 && event.charCode<=57"
+                                                    placeholder="Enter Price"
+                                                    name="direct_dealer_price"
+                                                    [(ngModel)]="state_data.direct_dealer_price"
+                                                    #direct_dealer_price="ngModel">
+                                                </div>
+                                            </th>
+                                            <th class="w150">
+                                                <div class="place-input active">
+                                                    <input type="text"
+                                                    onkeypress="return event.charCode>=48 && event.charCode<=57"
+                                                    placeholder="Enter Price"
+                                                    name="retailer_price"
+                                                    [(ngModel)]="state_data.retailer_price"
+                                                    #direct_dealer_price="ngModel">
+                                                </div>
+                                            </th>
+                                            <th class="w50">
+                                                <div class="df">
+                                                    <!-- <button mat-button class="delete-mat" (click)="savedata('all','','')">
+                                                        <i class="material-icons" mat-button matTooltip="Edit">create</i>
+                                                    </button> -->
+                                                    <!-- <button mat-button class="delete-mat"
+                                                    [disabled]="!state_data.product_size"
+                                                    (click)="savedata('all','','')">
+                                                    <i class="material-icons green-clr" mat-button
+                                                    matTooltip="Save">save</i>
+                                                </button>
+                                            </div>
+                                        </th>
+                                    </tr>
+                                </table>
+                            </th>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+            <div class="table-container">
+                <div class="table-content none-shadow">
+                    <table>
+                        <tr *ngFor="let state of stateDetail;let i=index;">
+                            <td>{{state.state_name}}</td>
+                            <td class="padding0">
+                                <table>
+                                    <tr *ngFor="let size of state.sizeList;let j=index;">
+                                        <td class="w150">
+                                            {{size?size.product_size:'N/A'}}
+                                        </td>
+                                        <td class="w150">
+                                            <div class="place-input active">
+                                                <input type="text"
+                                                onkeypress="return event.charCode>=48 && event.charCode<=57"
+                                                placeholder="Enter price"
+                                                name="distributor_price{{i}}{{j}}"
+                                                #distributor_price="ngModel"
+                                                [(ngModel)]="size.distributor_price">
+                                            </div>
+                                        </td>
+                                        <td class="w150">
+                                            <div class="place-input active">
+                                                <input type="text"
+                                                onkeypress="return event.charCode>=48 && event.charCode<=57"
+                                                placeholder="Enter price"
+                                                name="direct_dealer_price{{i}}{{j}}"
+                                                #directdealerprice="ngModel"
+                                                [(ngModel)]="size.direct_dealer_price">
+                                            </div>
+                                        </td>
+                                        <td class="w150">
+                                            <div class="place-input active">
+                                                <input type="text"
+                                                onkeypress="return event.charCode>=48 && event.charCode<=57"
+                                                placeholder="Enter price"
+                                                name="retailer_price{{i}}{{j}}"
+                                                #directdealerprice="ngModel"
+                                                [(ngModel)]="size.retailer_price">
+                                            </div>
+                                        </td>
+                                        <td class="w50 text-center">
+                                            <div class="df">
+                                                <button mat-button class="delete-mat"
+                                                (click)="savedata('single',i,j)"><i
+                                                class="material-icons green-clr" mat-button
+                                                matTooltip="Save">save</i></button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </td> -->
+                            
+                            
+                            <!-- <div *ngIf="state.state_Price.length>0">
+                                <span *ngFor="let detail of state.state_Price">
+                                    <td class="w150">
+                                        <div class="place-input">
+                                            <input type="number" placeholder="Enter size" value="{{detail.product_size?detail.product_size:0}}" name="productSize">
+                                        </div>
+                                    </td>
+                                    <td class="w150">
+                                        <div class="place-input">
+                                            
+                                            <input type="number" placeholder="Enter..." value="{{detail.distributor_price?detail.distributor_price:0}}" name="distributorPrice">
+                                            
+                                        </div>
+                                    </td>
+                                    <td class="w150">
+                                        <div class="place-input">
+                                            
+                                            <input type="number" placeholder="Enter..." value="{{detail.direct_dealer_price?detail.direct_dealer_price:0}}" name="dealerPrice">
+                                            
+                                        </div>
+                                    </td>
+                                    <td class="w200">
+                                        <ul class="action-save" >
+                                            <a class="edit" (click)="editStatePrice(detail.id)">
+                                                <i class="material-icons" >create</i>
+                                            </a>
+                                            <li><a><i class="material-icons icon-2x green-clr">save</i></a></li>
+                                        </ul>
+                                    </td>
+                                </span>
+                            </div>
+                            <div *ngIf="state.state_name.length <=0 ">
+                                <td class="w150">
+                                    <div class="place-input">
+                                        
+                                        <input type="number" placeholder="Enter size" value="0" name="productSize">
+                                        
+                                    </div>
+                                </td>
+                                <td class="w150">
+                                    <div class="place-input">
+                                        
+                                        <input type="number" placeholder="Enter..." value="0" name="distributorPrice">
+                                        
+                                    </div>
+                                </td>
+                                <td class="w150">
+                                    <div class="place-input">
+                                        
+                                        <input type="number" placeholder="Enter..." value="0" name="dealerPrice">
+                                        
+                                    </div>
+                                </td>
+                                <td>
+                                    <ul class="action-save">
+                                        <a class="edit">
+                                            <i class="material-icons">create</i>
+                                        </a>
+                                        <li><a><i class="material-icons icon-2x green-clr">save</i></a></li>
+                                    </ul>
+                                </td>
+                            </div> -->
+                        <!-- </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+</div> --> 
+
+<!-- <div class="row">
+    <div class="col s12">
+        <div class="cs-btn fixedd mt32 text-right">
+            <div class="in-btn">
+                <button mat-raised-button color="accent" type="save">Save</button>
+            </div>
+        </div>
+    </div>
+</div> -->
+
+<!-- <div class="row"> -->
+    <!-- <div class="col s8" >
+        <div class="collaps">
+            <div class="collaps-area">
+                <mat-accordion>
+                    <mat-expansion-panel *ngFor="let reg of product_state_price">
+                        <mat-expansion-panel-header >
+                            <mat-panel-title>
+                                {{reg.region_name}}
+                                <span class="counter">{{reg.region_data.length}}</span>
+                            </mat-panel-title>
+                        </mat-expansion-panel-header>
+                        <div class="cs-table left-right-20">
+                            <div class="table-head">
+                                <table>
+                                    <tr>
+                                        <th>State Name</th>
+                                        <th class="w200">Price
+                                            <div class="place-input" [ngClass]="{'active': reg.isActive}">
+                                                <a class="edit" ><i class="material-icons" (click)="reg.isActive=true">create</i></a>
+                                                <input type="text" class="fill-value" placeholder="Region Price"(keyup.enter)="update_region_value(reg.region_name,reg.region_price);reg.isActive=false" (keypress)="MobileNumber($event)" value="{{reg.region_price}}" name="region_price" #region_price [(ngModel)]="reg.region_price">
+                                                <ul class="action-save">
+                                                    <li><a><i class="material-icons green-clr" (click)="update_region_value(reg.region_name,reg.region_price);reg.isActive=false">save</i></a></li>
+                                                    <li><a><i class="material-icons red-clr" (click)="reg.isActive=false">close</i></a></li>
+                                                </ul>
+                                            </div>
+                                        </th>
+                                    </tr>
+                                </table>
+                            </div>
+                            <div class="table-container">
+                                <div class="table-content">
+                                    <table>
+                                        <tr *ngFor="let data5 of reg.region_data;let i=index">
+                                            <td>{{i+1}} - {{data5.state_name}}</td>
+                                            <td class="w200">{{data5.price}}
+                                                <div class="place-input" [ngClass]="{'active': data5.isActive}">
+                                                    <a class="edit" ><i class="material-icons" (click)="data5.isActive=true">create</i></a>
+                                                    <input type="text" class="fill-value" placeholder="Enter Value"(keyup.enter)="update_product_value(i,data5.state_name,data5.price);data5.isActive=false" (keypress)="MobileNumber($event)" value="{{data5.price}}" name="price" #price [(ngModel)]="data5.price">
+                                                    <ul class="action-save">
+                                                        <li><a><i class="material-icons green-clr" (click)="update_product_value(i,data5.state_name,data5.price);data5.isActive=false">save</i></a></li>
+                                                        <li><a><i class="material-icons red-clr" (click)="data5.isActive=false">close</i></a></li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                </div> -->
+      

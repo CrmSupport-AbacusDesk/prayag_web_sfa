@@ -1,0 +1,208 @@
+<div class="main-container">
+  <div class="middle-container mb0">
+    <div class="page-heading">
+      <div class="heading-text">
+        <h2>Quotation List</h2>
+      </div>
+    </div>
+    
+    <!-- <div class="left-auto">
+      <div class="tabs">
+        <ul>
+          <li><a (click)="tabActive('tab1')" [ngClass]="{'active' : tabActiveType['tab1'] == true}">All</a></li>
+          
+          <li><a (click)="tabActive('tab2'); approvedList()"
+            [ngClass]="{'active' : tabActiveType['tab2'] == true}">Approved</a></li>
+            <li><a (click)="tabActive('tab3'); pendingList()"
+              [ngClass]="{'active' : tabActiveType['tab3'] == true}">Pending</a></li>
+              <li><a (click)="tabActive('tab4'); rejectList()"
+                [ngClass]="{'active' : tabActiveType['tab4'] == true}">Reject</a></li>
+              </ul>
+            </div>
+          </div> -->
+          
+          <div class="left-auto">
+            <div class="tabs">
+              <ul>
+                <li><a [ngClass]="{'active' :quotationType=='All'}" (click)="quotationList('');quotationType='All'">All</a>
+                </li>
+                
+                <li><a [ngClass]="{'active' :quotationType=='Pending'}" (click)="quotationList('Pending');quotationType='Pending'">Pending</a>
+                </li>
+                
+                <li><a [ngClass]="{'active' :quotationType=='Approved'}" (click)="quotationList('Approved');quotationType='Approved'">Approved</a>
+                </li>
+                
+                <li><a [ngClass]="{'active' :quotationType=='Hold'}" (click)="quotationList('Hold');quotationType='Hold'">Hold</a>
+                </li>
+                <li><a [ngClass]="{'active' :quotationType=='Reject'}" (click)="quotationList('Reject');quotationType='Reject'">Reject</a>
+                </li>
+              </ul>
+            </div>
+          </div>
+          
+        </div>
+        <div class="container-outer padding0">
+          <div class="container">
+            <div class="cs-table">
+              <div class="sticky-head">
+                <div class="table-head">
+                  <table>
+                    <tr>
+                      <th class="w50">S.No</th>
+                      <th class="w90">Date Created</th> 
+                      <th class="w150">Quotation ID</th>
+                      <th class="w150">Created By</th>
+                      <th >Company Name</th>
+                      <th class="w150">Type</th>
+                      <th class="w80 text-center">Total QTY.</th>
+                      <th class="w100 text-right">Total Amount</th>
+                      <th class="w170">Status</th>
+                      <th class="w60"*ngIf="quotationType=='All' ||quotationType=='Pending'">Action</th>
+                    </tr>
+                  </table>
+                </div>
+                <div class="table-head bdrt">
+                  <table>
+                      <tr>
+                          <th class="w50">
+                             
+                          </th>
+                          <!-- <th class="w150">
+                              <div class="th-search-acmt">
+                                  <mat-form-field class="example-full-width cs-input select-input">
+                                      <input matInput placeholder="Enter Name...."
+                                      (keyup.enter)="show_today? attendance_list('getattendance_today',1) : attendance_list('getAttendance',2)"
+                                      [(ngModel)]="data.name">
+                                  </mat-form-field>
+                              </div>
+                          </th> -->
+                          <th class="w90">&nbsp;</th>
+                          <!-- <th class="w90">&nbsp;</th> -->
+                          <th class="w150">
+                            <!-- <div class="th-search-acmt">
+                              <mat-form-field class="example-full-width cs-input select-input">
+                                <input matInput placeholder="Quotation Id. . ." (keyup.enter)="quotationList()" #quotation_id="ngModel" [(ngModel)]="search_val.quotation_id" >
+                              </mat-form-field>
+                            </div> -->
+                          </th>
+                          <th class="w150">
+                            <div class="th-search-acmt">
+                              <mat-form-field class="example-full-width cs-input select-input">
+                                <input matInput placeholder="Created By. . ." name="created_by" #created_by="ngModel" [(ngModel)]="search_val.created_by" (keyup.enter)="quotationList( '')">
+                              </mat-form-field>
+                            </div>
+                          </th>
+                          <th>
+                            <div class="th-search-acmt">
+                              <mat-form-field>
+                                <input type="text"  matInput placeholder="Company Name. . ." (keyup.enter)="quotationList('' )" #company_name="ngModel" [(ngModel)]="search_val.company_name">
+                              </mat-form-field>
+                            </div>
+                          </th>
+                          <th class="w150">&nbsp;</th>
+                          <th class="w80">&nbsp;</th>
+                          <th class="w100">&nbsp;</th>
+                          <th class="w170">
+                            <!-- <div class="th-search-acmt"*ngIf="quotationType=='All' ">
+                              <mat-form-field>
+                                <input type="text"  matInput placeholder="Status. . ." (keyup.enter)="quotationList()" #status="ngModel" [(ngModel)]="search_val.status">
+                              </mat-form-field>
+                            </div> -->
+                          </th>
+                          <th class="w60"*ngIf="quotationType=='All' ||quotationType=='Pending'">&nbsp;</th>
+                          <!-- <th class="w90">&nbsp;</th>
+                          <th class="w90">&nbsp;</th>
+                          <th class="w100">&nbsp;</th> -->
+                      </tr>
+                  </table>
+              </div>
+              </div>
+              
+              <div class="table-container">
+                <div class="table-content " *ngIf=" quotation_list != 0">
+                  <table>
+                    <tr *ngFor="let row of quotation_list; let i=index">
+                      <td class="w50">{{i+1}}</td>
+                      <td class="w90">{{row.date_created | date : 'd MMM y'}}</td>
+                      <td class="w150"><a class="link-btn" mat-button routerLink="/quotation-detail/{{row.id}}" routerLinkActive="active">#QUOT ID-{{row.id? row.id:'N/A'}}</a></td>                      
+                      <td class="w150">{{row.created_by_name? row.created_by_name:'N/A'}}</td>
+                      <td >{{row.dr_name? row.dr_name:'N/A'}}</td>
+                      <td *ngIf="row.type=='Distributor' || row.type=='1' || row.type=='Distributor' " class="w150">Distributor</td>
+                      <td *ngIf="row.type=='Dealer' || row.type=='3'" class="w150">Retailer</td>
+                      <td *ngIf="row.type=='Direct Dealer' || row.type=='7'" class="w150">Direct Dealer</td>
+                      <td *ngIf="row.type=='Project' || row.type=='9'" class="w150">Project</td>
+                      <td *ngIf="row.type=='End user' || row.type=='5'" class="w150">End user</td>
+                      <td *ngIf="row.type=='Others' || row.type=='6'" class="w150">Others</td>
+                      <td *ngIf="row.type==null" class="w150">N/A</td>
+                      <td class="w80 text-center">{{row.item_count? row.item_count:'N/A'}}</td>
+                      <td class="w100 text-right">₹ {{row.item_total? row.item_total:'N/A'}}</td>
+                      <td class="w170"><strong [ngClass]="{'yellow-clr': row.quotation_status=='Pending','green-clr': row.quotation_status=='Approved','red-clr': row.quotation_status=='Reject'}" >{{row.quotation_status? row.quotation_status:'N/A'}}</strong></td>
+                      <td class="w60 text-center"*ngIf=" quotationType=='All' ||quotationType=='Pending'">
+                        <button *ngIf="row.quotation_status=='Pending'&& quotationType=='All' ||quotationType=='Pending'" mat-button class="delete-mat"><i class="material-icons red-clr" (click)="deleteQuotation(row.id)" >delete_sweep</i></button>
+                      </td> 
+                    </tr>
+                    
+                    <ng-container *ngFor="let lead of skelton">
+                      <tr class="sk-loading" *ngIf="loader">
+                        <td class="w50">
+                          <div>&nbsp;</div>
+                        </td>
+                        <td class="w90">
+                          <div>&nbsp;</div>
+                        </td>
+                        <td class="w150">
+                          <div>&nbsp;</div>
+                        </td>
+                        <td class="w150">
+                          <div>&nbsp;</div>
+                        </td>
+                        <td>
+                          <div>&nbsp;</div>
+                        </td>
+                        <td class="w150">
+                          <div>&nbsp;</div>
+                        </td>
+                        <td class="w100">
+                          <div>&nbsp;</div>
+                        </td>
+                        <td class="w170">
+                          <div>&nbsp;</div>
+                        </td>
+                        <td class="w100">
+                          <div>&nbsp;</div>
+                        </td>
+                        <td class="w60">
+                          <div>&nbsp;</div>
+                        </td>
+                      </tr>
+                    </ng-container>
+                  </table>
+                </div>
+              </div>
+            </div>
+            
+            
+            
+            <div class="no-data" *ngIf="data_not_found==true">
+              <img src="assets/img/no-data.gif" alt="">
+              <p>Data not <span>available !</span></p>
+            </div>
+          </div>
+        </div>
+        <div>
+        </div>
+      </div>
+      <div class="fix-btn">
+
+        <!-- <a class="bottom-btn" matTooltip="Add New" matTooltipPosition="above" mat-raised-button (click)="addQuotation()"><i class="material-icons">add</i></a> -->
+        <a class="bottom-btn" matTooltip="Add New" matTooltipPosition="above" mat-raised-button routerLink="/quotation-add" routerLinkActive="active"><i class="material-icons">add</i></a>
+
+      </div>
+      
+
+
+
+
+
+

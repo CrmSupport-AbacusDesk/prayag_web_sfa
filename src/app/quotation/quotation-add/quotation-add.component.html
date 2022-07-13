@@ -1,0 +1,354 @@
+<div class="main-container" >
+  <div class="middle-container">
+    <div class="page-heading" >
+      <div class="heading-text bc-space">
+        <div class="back-btn" (click)="back()">
+          <a mat-button ><i class="material-icons">west</i></a>
+        </div>
+        <h2>Quotation</h2>
+        <p>Add New Quotation</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="container-outer">
+    <form #add_quotation="ngForm" name="add_quotation" (ngSubmit)="(add_quotation.valid && add_quotation.submitted && data.qty>0 && data.price>0 ?addToList():'')" validate>
+      <div class="container" >
+        <div class="sprate-box pb0">
+          <div class="cs-heading">
+            <h2>BASIC INFORMATION</h2>
+            <span class="required">Indicates required fields ( <sup>*</sup> )</span>
+          </div>
+          <mat-divider class="left-right-15 mt10"></mat-divider>
+          <div class="cs-form mt10">
+            <div class="row">
+
+
+              <div class="col s6">
+                <mat-form-field class="cs-input" appearance="outline">
+                  <mat-label>Lead Type</mat-label>
+                  <mat-select name="type" #type="ngModel" [(ngModel)]="selected_dr_type_id" (ngModelChange)="getLeadList() ; getparaflexBillingAddress()" [ngClass]="{'has-error' : type.invalid } " required>
+                    <mat-option disabled="">Select Lead Type</mat-option>
+                    <mat-option value="1">Distributor</mat-option>
+                    <mat-option value="7">Direct Dealer</mat-option>
+                    <mat-option value="9">Project</mat-option>
+                    <mat-option value="5">End User</mat-option>
+                    <mat-option value="11">Electrician</mat-option>
+                    <mat-option value="12">Sub-dealer</mat-option>
+                    <mat-option value="13">Private Contractor</mat-option>
+                    <mat-option value="14">Government Contractor</mat-option>
+                    <mat-option value="15">Builder</mat-option>
+                    <mat-option value="16">Architect</mat-option>
+
+                    <mat-option value="6">Other</mat-option>
+                  </mat-select>
+                </mat-form-field>
+              </div>
+
+              <div class="col s6">
+                <mat-form-field class="cs-input" appearance="outline" >
+                  <mat-label>Lead</mat-label>
+                  <mat-select name="lead_name" placeholder="lead_name" #lead_name="ngModel"  [(ngModel)]="dr_lead_name" [ngClass]="{'has-error' : lead_name.invalid } " required>
+                    <mat-option *ngIf='!noLead' disabled="">Select Lead</mat-option>
+                    <mat-option *ngIf='noLead' disabled="">No data Found</mat-option>
+                    <mat-option *ngFor="let leadData of lead_List" (click)="drId=leadData.id; getProducts()" value="{{leadData.company_name}}">{{leadData.company_name}}</mat-option>
+                  </mat-select>
+                </mat-form-field>
+
+              </div>
+
+
+            </div>
+
+            <div class="row">
+              <div class="col s6">
+                <mat-form-field class="cs-input"  appearance="outline">
+                  <mat-label>Customer Shipping Address Detail</mat-label>
+                  <textarea matInput placeholder="Type Here ..." class="h80" name="CSAD" [(ngModel)]="c_shipping_addr" required></textarea>
+                </mat-form-field>
+              </div>
+              <div class="col s6">
+                <mat-form-field class="cs-input"  appearance="outline">
+                  <mat-label>Customer Biling Address Detail</mat-label>
+                  <textarea matInput placeholder="Type Here ..." class="h80" name="CBAD" [(ngModel)]="c_billing_addr" required></textarea>
+                </mat-form-field>
+              </div>
+            </div>
+          </div>
+        </div>
+
+
+
+        <div class="sprate-box pb0 mt10">
+          <div class="cs-heading">
+            <h2>PRODUCT INFORMATION</h2>
+            <span class="required">Indicates required fields ( <sup>*</sup> )</span>
+          </div>
+          <mat-divider class="left-right-15 mt10"></mat-divider>
+          <div class="cs-form mt10">
+            <div class="row">
+
+              <div class="col s2">
+                <mat-form-field class="cs-input" appearance="outline">
+                  <mat-label>Category</mat-label>
+                  <mat-select name="category" #category="ngModel" [(ngModel)]="data.category" [ngClass]="{'has-error' : category.invalid } " >
+                    <mat-option *ngFor="let productData of category_list" (click)="getProducts()"value="{{productData.category}}">{{productData.category}}</mat-option>
+                  </mat-select>
+                </mat-form-field>
+             </div>
+
+              <div class="col s3">
+                <mat-form-field class="cs-input" appearance="outline">
+                  <mat-label>Product Name</mat-label>
+                  <mat-select name="Product" #Product="ngModel" [(ngModel)]="data.Product"   [ngClass]="{'has-error' : Product.invalid } "required>
+                    <!-- <mat-option *ngIf='!noProduct' disabled="">Select Product</mat-option> -->
+                    <div class="drop-down-search">
+                      <input type="text" placeholder="search..." name="product_name" class="fix-search" (keyup)="getItemsList(search.product_name)" #product_name="ngModel" [(ngModel)]="search.product_name">
+                    </div>
+                    <mat-option *ngIf='noProduct' disabled="">No data Found</mat-option>
+                    <mat-option *ngFor="let productData of productlist" (click)="productName=productData.product_name;productCode=productData.product_code; data.gstPercentage = conInt(productData.gst) ;data.qty = '0';data.price= productData.mrp ; " value="{{productData.id}}">{{productData.product_name}}</mat-option>
+                  </mat-select>
+                </mat-form-field>
+                <div class="alert alert-danger" *ngIf="!Product.valid && add_quotation.submitted">
+                  Product is required...
+                </div>
+              </div>
+              <div class="col s2">
+                <mat-form-field class="cs-input" appearance="outline">
+                  <mat-label>Type</mat-label>
+                  <mat-select name="Product" #product_type="ngModel" [(ngModel)]="data.product_type"  required>
+                    <!-- <mat-option *ngIf='!noProduct' disabled="">Select Product</mat-option> -->
+
+                    <mat-option  value="cartoon">CARTOON</mat-option>
+            <mat-option  value="coil">COIL</mat-option>
+            <mat-option  value="mtr">MTR</mat-option>
+            <mat-option  value="drum">DRUM</mat-option>
+            <mat-option  value="drumlength">DRUM LENGTH</mat-option>
+                  </mat-select>
+                </mat-form-field>
+
+              </div>
+              <!-- <div class="col s3">
+                <mat-form-field class="cs-input" appearance="outline" >
+                  <mat-label>{{productName?productName:''}} Size</mat-label>
+                  <mat-select name="productSize" placeholder="Lead Name" #productSize="ngModel"  [(ngModel)]="data.productSize" [ngClass]="{'has-error' : productSize.invalid } " required>
+                    <mat-option *ngIf='!noSize' disabled="">Select Size</mat-option>
+                    <mat-option *ngIf='noSize' disabled="">No data Found</mat-option>
+                    <mat-option *ngFor="let sizeData of size_List" (click)="data.qty = '0';data.price =sizeData.product_mrp;(data.amount=conInt(data.qty)*conInt(data.price)) " value="{{sizeData.product_size}}">{{sizeData.product_size}}</mat-option>
+                  </mat-select>
+                </mat-form-field>
+                <div class="alert alert-danger" *ngIf="!productSize.valid && add_quotation.submitted">
+                  Size is required...
+                </div>
+              </div> -->
+
+              <div class="col s1">
+                <mat-form-field class="cs-input"  appearance="outline">
+                  <mat-label>Quantity</mat-label>
+                  <input matInput type="text"  placeholder="Type Here ..." name="qty" #qty="ngModel" [(ngModel)]="data.qty" (ngModelChange)="data.amount=(data.qty)*(data.price)" >
+                </mat-form-field>
+                <div class="alert alert-danger" *ngIf="data.qty!='0' && !qty.valid && add_quotation.submitted">
+                  Quantity is required and is greater than 0...
+                </div>
+              </div>
+
+              <div class="col s1">
+                <mat-form-field class="cs-input"  appearance="outline">
+                  <mat-label>Price</mat-label>
+                  <input matInput type="text"  placeholder="Type Here ..." name="price" #price="ngModel" [(ngModel)]="data.price" (ngModelChange)="data.amount=(data.qty)*(data.price); ">
+                </mat-form-field>
+                <div class="alert alert-danger" *ngIf="data.price!='0' && !price.valid && add_quotation.submitted">
+                  Price is required and is greater than 0...
+                </div>
+              </div>
+
+              <div class="col s1">
+                <div class="df">
+                  <div class="wp100">
+                    <mat-form-field class="cs-input"  appearance="outline">
+                      <mat-label>Amount</mat-label>
+                      <input matInput type="text" onkeypress="return event.charCode>=48 && event.charCode<=57 " placeholder="Type Here ..." name="amount" #amount="ngModel" [(ngModel)]="data.amount" readonly>
+                    </mat-form-field>
+                    <div class="alert alert-danger" *ngIf="data.amount==0 && !price.valid && add_quotation.submitted">
+                      Amount is required and is greater than 0...
+                    </div>
+                  </div>
+                </div>
+              </div>
+              </div>
+              <div class="row">
+                <div class="col s2">
+                  <div class="df">
+                    <div class="wp100">
+                      <mat-form-field class="cs-input"  appearance="outline">
+                        <mat-label> Basic Discount Percent</mat-label>
+                        <input matInput type="text" placeholder="Type Here ..." name="basic_discount_percent" #basic_discount_percent="ngModel" [(ngModel)]="data.basic_discount_percent">
+                      </mat-form-field>
+
+                    </div>
+                  </div>
+                </div>
+                <div class="col s2">
+                  <div class="df">
+                    <div class="wp100">
+                      <mat-form-field class="cs-input"  appearance="outline">
+                        <mat-label> Sd Discount Percent</mat-label>
+                        <input matInput type="text" placeholder="Type Here ..." name="sd_discount_percent" #sd_discount_percent="ngModel" [(ngModel)]="data.sd_discount_percent" >
+                      </mat-form-field>
+
+                    </div>
+                  </div>
+                </div>
+                <div class="col s2">
+                  <div class="df">
+                    <div class="wp100">
+                      <mat-form-field class="cs-input"  appearance="outline">
+                        <mat-label> Cd Discount Percent</mat-label>
+                        <input matInput type="text" placeholder="Type Here ..." name="cd_discount_percent" #cd_discount_percent="ngModel" [(ngModel)]="data.cd_discount_percent" >
+                      </mat-form-field>
+
+                    </div>
+                  </div>
+                </div>
+              <div class="col s2">
+                <div class="df">
+                  <div class="wp100">
+                    <mat-form-field class="cs-input"  appearance="outline">
+                      <mat-label> Other Discount Percent</mat-label>
+                      <input matInput type="text" placeholder="Type Here ..." name="other_discount_percent" #other_discount_percent="ngModel" [(ngModel)]="data.other_discount_percent" >
+                    </mat-form-field>
+
+                  </div>
+                  <button mat-raised-button class="add-item ml10" type="submit"><i class="material-icons">add</i></button>
+                </div>
+              </div>
+
+            </div>
+
+            <div class="cs-table left-right-10" *ngIf="quotationData.length>0">
+              <div class="sticky-head">
+                <div class="table-head border-top">
+                  <table>
+                    <tr>
+                      <th class="w50 text-center">S. No</th>
+                      <th class="">Product Name</th>
+                      <th class="w100 text-right">Type</th>
+
+                      <th class="w50 text-center">Qty</th>
+                      <th class="w100 text-right">Price</th>
+                      <th class="w100 text-right">Amount</th>
+                      <th class="w100 text-right">Discount Amount</th>
+                      <th class="w100 text-right">Gst Amount</th>
+                      <th class="w100 text-right">Total Amount</th>
+                      <th class="w50 text-center"></th>
+                    </tr>
+                  </table>
+                </div>
+              </div>
+
+              <div class="table-container">
+                <div class="table-content">
+                  <table>
+                    <tr *ngFor="let QData of quotationData ; let i = index">
+                      <td class="w50 text-center">{{i+1}}</td>
+                      <td class="">{{QData.productName}}</td>
+                      <td class="w100 text-center" >{{QData.product_type}}</td>
+
+                      <td class="w50 text-center" >{{QData.qty}}</td>
+                      <td class="w100 text-right">&#x20B9; {{QData.price}} /-</td>
+                      <td class="w100 text-right">&#x20B9; {{QData.amount}} /-</td>
+                      <td class="w100 text-right">&#x20B9; {{QData.discount_amount}}({{QData.discount_percent+' %' }}) </td>
+                      <td class="w100 text-right">&#x20B9; {{QData.gst}}({{QData.gstPercentage+' %' }}) </td>
+                      <td class="w100 text-right">&#x20B9; {{QData.total_amount}} /-</td>
+                      <td class="w50 text-center">
+                        <button mat-button class="delete-mat"><i class="material-icons red-clr"
+                          (click)="deleteQuotationDetail(i)">delete_sweep</i></button>
+                        </td>
+                      </tr>
+                    </table>
+                  </div>
+                </div>
+              </div>
+
+              <div class="alert alert-danger" *ngIf="((quotationDataErr) && (quotationData.length<1))">
+                Add at least one Quoatation Data...
+              </div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col s8">
+              <div class="heading-bg left-right-15 mb0">
+                <h2>Terms & Condition</h2>
+              </div>
+              <app-ngx-editor height="100px" minHeight="50px" [config]="editorConfig" [placeholder]="'Type Here'" [spellcheck]="true" name="termsNcondition" [(ngModel)]="termsNcondition"></app-ngx-editor>
+            </div>
+            <div class="col s4">
+              <div class="summary summary mt35 pl45">
+                <table>
+                  <tr>
+                    <td>Total Qty</td>
+                    <td class="text-center"><strong>:</strong></td>
+                    <td class="text-right"><strong>{{totalQty}}</strong></td>
+                  </tr>
+                  <tr>
+                    <td>Total Discount Amount</td>
+                    <td class="text-center"><strong>:</strong></td>
+                    <td class="text-right"><strong>&#x20B9; {{totaldiscount_amount}}/-</strong></td>
+                  </tr>
+                  <tr>
+                    <td>Total Gst Amount</td>
+                    <td class="text-center"><strong>:</strong></td>
+                    <td class="text-right"><strong>&#x20B9; {{totalGST_total}}/-</strong></td>
+                  </tr>
+                  <tr>
+                    <td>Sub Total</td>
+                    <td class="text-center"><strong>:</strong></td>
+                    <td class="text-right"><strong>&#x20B9; {{totalSub_total}}/-</strong></td>
+                  </tr>
+
+                  <tr>
+                    <td>Grand Total</td>
+                    <td class="text-center"><strong>:</strong></td>
+                    <td class="text-right"><strong>&#x20B9; {{grandTotal}}/-</strong></td>
+                  </tr>
+                </table>
+              </div>
+
+              <div class="row">
+                <div class="col s12">
+                  <div class="cs-btn fixedd mt32 text-right">
+                    <div class="in-btn">
+                      <button mat-raised-button color="accent" type="button" (click)="(quotationData.length == 0)?'':saveQuotation()">Save</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </form>
+
+      <!-- <div class="row">
+        <div class="col s12">
+          <div class="cs-btn fixedd mt32 text-right">
+            <div class="in-btn">
+              <button mat-raised-button color="accent" type="button" (click)="(quotationData.length == 0)?'':saveQuotation()">Save</button>
+            </div>
+          </div>
+        </div>
+      </div> -->
+
+    </div>
+  </div>
+
+  <div class="edit-modal" style="display: none;">
+
+
+    <div mat-dialog-actions>
+      <button mat-button color="warn" [mat-dialog-close]="false">Cancel</button>
+      <button mat-button color="accent" (click)="(quotationData.length == 0)?'':saveQuotation()" [disabled]="false">{{quotationData.length}}Save</button>
+    </div>
+
+  </div>

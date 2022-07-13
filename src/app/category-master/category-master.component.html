@@ -1,0 +1,185 @@
+<div class="main-container" >
+  <div class="middle-container mb0">
+    <div class="page-heading">
+      <img src="assets/img/cogs.svg" class="h-icon h20">
+      <div class="heading-text">
+        <h2>Category Master</h2>
+        <p>Total Category {{categorylist.length}}</p>
+      </div>
+      
+    </div>
+    <!-- <div class="top-search wp20 ml15">
+      !-- <input type="text" placeholder="SEARCH. . ." (input)="getItemsList()" #search="ngModel" [(ngModel)]="value.search"> --
+      <i class="material-icons">search</i>
+    </div>
+  -->
+  <!-- <div class="top-pagination">
+    <ul>
+      <li class="refresh-area">
+        <a class="refresh-btn" mat-raised-button  matTooltip="Refresh" (click)="refresh()"><i class="material-icons"> refresh</i></a>
+      </li>
+      <li><p>Pages {{pagenumber}} Of {{total_page}}</p></li>
+      
+      <li>
+        <button mat-button class="left-btn" (click)="mydiscountList()" [disabled]="pagenumber==1">
+          <i class="material-icons">keyboard_arrow_left</i></button>
+        </li>
+        
+        <li>
+          <input type="text" placeholder="GO TO" name="pagenumber" (keyup.enter)="mydiscountList()" [(ngModel)]="pagenumber"  min="1" max={{total_page}}>
+        </li>
+        
+        <li>
+          <button mat-button class="right-btn"  (click)="mydiscountList()" [disabled]="pagenumber == total_page">
+            <i class="material-icons">keyboard_arrow_right</i>
+          </button>
+        </li>
+      </ul>
+    </div> -->
+  </div>
+  
+  
+  <div class="container-outer">
+    <!-- <h1>qqqqq</h1> -->
+    <app-master-tab-list></app-master-tab-list>
+    <!-- <div *ngIf="loader">
+      <mat-spinner class="loader">
+        <div><p>Loading....</p></div>
+      </mat-spinner>
+    </div> -->
+    <div class="container" >
+      <div class="row">
+        <div class="col s12">
+          <div class="cs-table left-right-20">
+            <div class="sticky-head">
+              <div class="table-head">
+                <table>
+                  <tr>
+                    <!-- <th class="w30">&nbsp;</th> -->
+                    <th class="w200">Category</th>
+                    <th>Sub Category</th>
+                    <th class="w100">Action</th>
+                    <!-- <th class="w130 text-center">Direct Retailer(%)</th> -->
+                    <!-- <th class="w130 text-center">GST (%)</th> -->
+                  </tr>
+                </table>
+              </div>
+              <div class="table-head bdrt" >
+                <table>
+                  <tr>
+                    <th class="w200">
+                      <div class="th-search-acmt">
+                        <mat-form-field class="example-full-width cs-input select-input">
+                          <input matInput placeholder="Category. . ." (keyup.enter)="getItemsList()" #search="ngModel" [(ngModel)]="value.search">
+                          
+                        </mat-form-field>
+                      </div>
+                    </th>
+                    
+                    
+                    
+                    <th  >
+                      <!-- <div class="th-search-acmt">
+                        <mat-form-field class="example-full-width cs-input select-input">
+                          <input matInput placeholder="Sub Category. . ." (input)="getItemsList()" #search="ngModel" [(ngModel)]="value.search">
+                          
+                        </mat-form-field>
+                      </div> -->
+                    </th>               
+                    <th class="w100" ></th>               
+                  </tr>
+                </table>
+              </div>
+            </div>
+            
+            <div class="table-container">
+              <div class="table-content">
+                <table>
+                  <tr *ngFor="let row of categorylist;let i = index">
+                    <!-- <td class="w30">{{i+1}}</td> -->
+                    <td class="w200">{{row.category}} || Products:{{row.cat_products}}
+                      <!-- <a *ngIf="row.category_product_exist==0" (click)="delete_cat(row.category)">Delete Category</a> -->
+                    </td>
+                    <td class="padding0">
+                      <table class="inner-table">
+                        <tr  >
+                          <td>
+                            <div class="tags">
+                              <ul>
+                                <li  *ngFor="let data of row.sub_cat">
+                                  <span *ngIf="data.sub_category!=''">{{data.sub_category}}  || Products:{{data.subcat_products}}
+                                    <div class="action-item">
+                                      <ul>
+                                        <li><a><i class="material-icons" (click)="edit_diolog('edit_subcategory',data.sub_category)" >create</i></a></li>
+                                        <li *ngIf="data.sub_category_product_exist==0"><a><i (click)="delete_sub_category(data.sub_category,row.category)" class="material-icons  red-clr">delete_sweep</i></a>
+                                        </li>
+                                      </ul>
+                                    </div>
+                                  </span>
+                                </li>
+                              </ul>
+                            </div>
+                            <!-- <div class="category-tags">
+                              <div class="chips">
+                                
+                                <ul class="actions">
+                                  <li *ngIf="!data.sub_category_product_exist">
+                                    <a><i (click)="delete_sub_category(data.sub_category,row.category)" class="material-icons red-clr">delete_sweep</i></a>
+                                  </li>
+                                </ul>
+                              </div>
+                            </div> -->
+                          </td>
+                        </tr>
+                      </table>
+                    </td>
+                    <td class="w100">
+                      <!-- <div class="cs-btn">
+                        <div class="in-btn sm-btn">
+                          <button (click)="openDialog(row.category)" mat-raised-button color="accent" >Add Sub Category</button>
+                          <button (click)="edit_diolog('edit_category',row.category)" mat-raised-button color="accent" >Edit Category</button>
+                        </div>
+                      </div> -->
+                      
+                      <button mat-raised-button color="accent" [matMenuTriggerFor]="menu">Action</button>
+                      <mat-menu #menu="matMenu">
+                        <button mat-menu-item (click)="edit_diolog('edit_category',row.category)">Edit Category</button>
+                        <button mat-menu-item (click)="openDialog(row.category)">Add Sub Category</button>
+                        <button mat-menu-item  *ngIf="row.category_product_exist==0" (click)="delete_cat(row.category)">Delete Category</button>
+                      </mat-menu>
+                    </td>
+                    <!--  -->
+                    <!-- </td> -->
+                    <!-- <td class="w130 text-center">{{dicount.direct_retailer}} -->
+                      <!-- <td class="w130 text-center">{{dicount.gst}} -->
+                        
+                        <!-- <div class="action-btns">
+                          <a mat-button class="view" (click)="discountDetail(dicount.id)"><i class="material-icons">remove_red_eye</i> View</a>
+                          <button mat-button class="delete" (click)="deletediscount(dicount.id)"><i class="material-icons">delete_sweep</i> Delete</button>
+                        </div>
+                      </td> -->
+                    </tr>
+                    
+                    <ng-container *ngFor="let lead of skelton">
+                      <tr class="sk-loading"  *ngIf="loader">
+                        <td class="w200"><div>&nbsp;</div></td>
+                        <td><div>&nbsp;</div></td>
+                        <td class="w100"><div>&nbsp;</div></td>
+                      </tr>
+                    </ng-container>
+                  </table>
+                </div>
+              </div>
+              
+            </div>
+          </div>
+        </div>
+        
+        <div class="fix-btn">
+          <a class="bottom-btn" mat-raised-button (click)="openDialog('category')"><i class="material-icons">add</i></a>
+        </div>
+        
+        <div class="h100"></div>
+      </div>
+    </div>
+  </div>

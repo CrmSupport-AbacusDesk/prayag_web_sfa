@@ -1,0 +1,66 @@
+<div class="main-container" [@routerTransition]>
+  <div class="middle-container">
+    <div class="page-heading">
+      <img src="assets/img/leads_icon.svg" class="h-icon">
+      <div class="heading-text pr20">
+        <h2>Leaves & Holidays</h2>
+        <p>Add New Leave Rule & Holiday</p>
+      </div>
+    </div>
+    <div class="tabs">
+      <ul>
+        <li><a routerLink="/leave-rule-list" routerLinkActive="active">LEAVES RULES</a></li>
+        <li><a routerLink="/holiday-list" routerLinkActive="active">HOLIDAYS</a></li>
+      </ul>
+    </div>
+  </div>
+  
+  
+  <div class="container-outer">
+    <app-master-tab-list></app-master-tab-list>
+    <div class="container tab-container" >
+      <div class="row">
+        <div class="col s12">
+          <div class="list-thumbnail">
+            <div class="cs-list" *ngFor="let data of holiday_rule_data">
+              <div class="list-heading">
+                <h2>{{data.subject  | titlecase}}</h2>
+                <div class="left-icon-menu">
+                  <ul>
+                    <li><span class="counter-digit">{{data.holiday_count}}</span></li>
+                    <li>
+                      <div class="edit-menu">
+                        <button mat-icon-button [matMenuTriggerFor]="menu"> 
+                          <i class="material-icons">more_vert</i>
+                        </button>
+                        <mat-menu #menu="matMenu">
+                          <button mat-menu-item (click)="delete(data.id)">
+                            <span class="red-clr">Delete</span>
+                          </button>
+                          <!-- <button mat-menu-item disabled>
+                            <span>Check voicemail</span>
+                          </button>
+                          <button mat-menu-item>
+                            <span>Disable alerts</span>
+                          </button> -->
+                        </mat-menu>
+                      </div>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+              
+              <div class="text-box-outer">
+                <div class="text-box-inner">
+                  <p><strong>Description :</strong>{{data.description | titlecase}}</p>
+                </div>
+              </div>
+            </div>
+           
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  

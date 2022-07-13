@@ -1,0 +1,1665 @@
+<div class="main-container">
+    <div *ngIf="loader">
+        <mat-spinner class="loader">
+            <div>
+                <p>Loading....</p>
+            </div>
+        </mat-spinner>
+    </div>
+    <div class="middle-container mb0">
+        <div class="page-heading">
+            <div class="{{login_data.view_dashboard=='1'  ?'heading-text bc-space':'heading-text pl0'}}">
+
+                        <div class="back-btn" (click)="back()">
+                            <a mat-button ><i class="material-icons">west</i></a>
+                        </div>
+
+                        <h2>{{dr_detail.company_name}}</h2>
+                    </div>
+                </div>
+
+                <div class="left-auto">
+                    <div class="click-btn" *ngIf="login_data.access_level=='1'">
+                    </div>
+                </div>
+
+                <div class="tabs right-tab ml15">
+                    <ul class="dflex1">
+                        <li><a [ngClass]="{'active': view_tab=='profile'}" (click)="related_tabs('profile')">Profile</a></li>
+                        <li *ngIf="login_data.view_dashboard!='1'">
+                            <a [ngClass]="{'active': view_tab=='Detail'}"
+                            (click)="count_data();related_tabs('Detail')">Dashboard</a>
+                        </li>
+
+                        <li>
+                            <a [ngClass]="{'active': view_tab=='Checkin'}" (click)="related_tabs('Checkin')">Check In</a>
+                        </li>
+                        <li *ngIf="this.dr_detail.type!='3'">
+                            <a [ngClass]="{'active': view_tab=='pOrder'}"
+                            (click)="getOrders('pOrder','Pending');related_tabs('pOrder')">Primary Orders</a>
+                        </li>
+                        <li *ngIf="this.dr_detail.type=='3'">
+                            <a [ngClass]="{'active': view_tab=='pOrder'}"
+                            (click)="getOrders('pOrder','Pending');related_tabs('pOrder')">Orders</a>
+                        </li>
+                        <li *ngIf="dr_detail?.type!='3'">
+                            <a [ngClass]="{'active': view_tab=='sOrder'}"
+                            (click)="getOrders('sOrder','Pending');related_tabs('sOrder')">Seconday Orders</a>
+                        </li>
+                        <li *ngIf="dr_detail?.type=='1'">
+                            <a class="" [ngClass]="{'active': view_tab=='Dealers'}"
+                            (click)="getDealersData();related_tabs('Dealers')">Retailer</a>
+                        </li>
+
+                        <!-- <li>
+                            <a [ngClass]="{'active': view_tab=='visiting-card'}"
+                            (click)="related_tabs('visiting-card')">Visiting Card</a>
+                        </li> -->
+
+                        </ul>
+
+                    </div>
+                </div>
+
+                <div class="container-outer pt0">
+                    <div class="container">
+                        <div *ngIf="view_tab=='profile'">
+                            <div class="row mt15">
+                                <div class="col {{login_data.access_level == '1' ? ( dr_detail.type==1 ? 's9' : 's8') : 's12'}}">
+                                    <div class="details-info">
+                                        <div class="basic-details">
+                                            <div class="cs-heading">
+                                                <h2>Basic Detail</h2>
+                                                <button *ngIf="login_data.access_level == '1'" class="edit-item" mat-raised-button
+                                                color="accent"
+                                                (click)="edit_dr_detail(dr_detail.company_name,dr_detail.type,dr_detail.mobile,dr_detail.email,dr_detail.gst,dr_detail.assign_distributor,dr_detail.landline_no,dr_detail.name,dr_detail.date_of_birth,dr_detail.date_of_anniversary,dr_detail.password,'basic_detail',dr_detail.target,dr_detail.opening_balance,dr_detail.whatsapp_no, dr_detail.username, dr_detail.dr_code ,dr_detail.category_code,dr_detail.credit_limit)"><i
+                                                class="material-icons">create</i></button>
+                                            </div>
+                                            <div class="cs-figure">
+                                                <ul class="minus-top">
+                                                    <li>
+                                                        <div class="outer">
+                                                            <div class="inner">
+                                                                <span>Company Name</span>
+                                                                <p>{{dr_detail.company_name?dr_detail.company_name:'--'}}</p>
+                                                            </div>
+                                                        </div>
+                                                    </li>
+                                                    <li>
+                                                        <div class="outer">
+                                                            <div class="inner">
+                                                                <span>Mobile No.</span>
+                                                                <p>{{dr_detail.mobile?dr_detail.mobile:'--'}}</p>
+                                                            </div>
+                                                        </div>
+                                                    </li>
+
+                                                    <li>
+                                                        <div class="outer">
+                                                            <div class="inner">
+                                                                <span>GST No.</span>
+                                                                <p>{{dr_detail.gst?dr_detail.gst:'--'}}</p>
+                                                            </div>
+                                                        </div>
+                                                    </li>
+                                                </ul>
+                                                <ul class="minus-top">
+                                                    <li>
+                                                        <div class="outer">
+                                                            <div class="inner">
+                                                                <span>Name</span>
+                                                                <p>{{dr_detail.name?dr_detail.name:'--'}}</p>
+                                                            </div>
+                                                        </div>
+                                                    </li>
+                                                    <li>
+                                                        <div class="outer">
+                                                            <div class="inner">
+                                                                <span>Email</span>
+                                                                <p>{{dr_detail.email?dr_detail.email:'--'}}</p>
+                                                            </div>
+                                                        </div>
+                                                    </li>
+                                                    <li>
+                                                        <div class="outer">
+                                                            <div class="inner">
+                                                                <span>WhatsApp No.</span>
+                                                                <p>{{dr_detail.whatsapp_no?dr_detail.whatsapp_no:'--'}}</p>
+                                                            </div>
+                                                        </div>
+                                                    </li>
+                                                </ul>
+                                                <ul class="minus-top">
+                                                    <li>
+                                                        <div class="outer">
+                                                            <div class="inner">
+                                                                <span>Alternate Mobile No.</span>
+                                                                <p>{{dr_detail.mobile2?dr_detail.mobile2:'--'}}</p>
+                                                            </div>
+                                                        </div>
+                                                    </li>
+
+                                                    <li>
+                                                        <div class="outer">
+                                                            <div class="inner">
+                                                                <span>Date of Birth</span>
+                                                                <p>{{dr_detail.date_of_birth !='0000-00-00' && dr_detail.date_of_birth != null ?(dr_detail.date_of_birth | date : 'd MMM y' ):'--'}}</p>
+                                                                </div>
+                                                            </div>
+                                                        </li>
+                                                        <li>
+                                                            <div class="outer">
+                                                                <div class="inner">
+                                                                    <span>ERP Code</span>
+                                                                    <p>{{dr_detail.dr_code
+                                                                        ?dr_detail.dr_code  :'--'}}</p>
+                                                                    </div>
+                                                                </div>
+                                                            </li>
+
+                                                            <!-- <li>
+                                                                <div class="outer" *ngIf="dr_detail.type=='1'">
+                                                                    <div class="inner">
+                                                                        <span>Credit Limit</span>
+                                                                        <p>&#8377;{{dr_detail.credit_limit? dr_detail.credit_limit :'--'}}</p>
+                                                                        </div>
+                                                                    </div>
+                                                                </li> -->
+                                                        </ul>
+                                                        <div class="cs-figure" *ngIf="dr_detail.type=='3'">
+                                                            <ul class="minus-top">
+                                                                <li>
+                                                                    <div class="outer">
+                                                                        <div class="inner">
+                                                                            <span>Distributor</span>
+                                                                            <p>{{dr_detail.assign_distributor?dr_detail.assign_distributor:'--'}}
+                                                                            </p>
+                                                                        </div>
+                                                                    </div>
+                                                                </li>
+                                                            </ul>
+                                                        </div>
+                                                    </div>
+                                                    <!-- -------------- -->
+                                                </div>
+                                            </div>
+
+                                            <div class="details-info mt15">
+                                                <div class="basic-details">
+                                                    <div class="cs-heading">
+                                                        <h2>Address</h2>
+                                                        <button class="edit-item" mat-raised-button color="accent"
+                                                        (click)="editAddress(dr_detail.country,dr_detail.state,dr_detail.district,dr_detail.city,dr_detail.pincode,dr_detail.area,dr_detail.address,dr_detail.type,'address')"><i
+                                                        class="material-icons">create</i></button>
+                                                    </div>
+                                                    <div class="cs-figure">
+                                                        <ul class="minus-top">
+                                                            <li>
+                                                                <div class="outer">
+                                                                    <div class="inner">
+                                                                        <span>State</span>
+                                                                        <p>{{dr_detail.state && dr_detail.state != null  ? dr_detail.state : '--' }}</p>
+                                                                    </div>
+                                                                </div>
+                                                            </li>
+                                                            <li>
+                                                                <div class="outer">
+                                                                    <div class="inner">
+                                                                        <span>District</span>
+                                                                        <p>{{dr_detail.district && dr_detail.district != null  ? dr_detail.district : '--'}}</p>
+                                                                    </div>
+                                                                </div>
+                                                            </li>
+                                                            <li>
+                                                                <div class="outer">
+                                                                    <div class="inner">
+                                                                        <span>City</span>
+                                                                        <p>{{dr_detail.city && dr_detail.city != null  ? dr_detail.city : '--'}}</p>
+                                                                    </div>
+                                                                </div>
+                                                            </li>
+                                                            <li>
+                                                                <div class="outer">
+                                                                    <div class="inner">
+                                                                        <span>Pincode</span>
+                                                                        <p>{{dr_detail.pincode && dr_detail.pincode != null  ? dr_detail.pincode : '--'}}</p>
+                                                                    </div>
+                                                                </div>
+                                                            </li>
+
+                                                        </ul>
+                                                        <ul class="minus-top">
+                                                             <li *ngIf="dr_detail.type!='3'">
+                                                                <div class="outer">
+                                                                    <div class="inner">
+                                                                        <span>Area</span>
+                                                                        <p>{{dr_detail.area && dr_detail.area != null  ? dr_detail.area : '--'}}</p>
+                                                                    </div>
+                                                                </div>
+                                                            </li>
+                                                            <li *ngIf="dr_detail.type=='3'">
+                                                                <div class="outer">
+                                                                    <div class="inner">
+                                                                        <span>Beat Code</span>
+                                                                        <p>{{dr_detail.beat_code && dr_detail.beat_code != null  ? dr_detail.beat_code : '--'}}-{{dr_detail.area && dr_detail.area != null  ? dr_detail.area : '--'}}</p>
+                                                                    </div>
+                                                                </div>
+                                                            </li>
+                                                            <li>
+                                                                <div class="outer">
+                                                                    <div class="inner">
+                                                                        <span>Street</span>
+                                                                        <p>{{dr_detail.address && dr_detail.address != null  ? dr_detail.address : '--'}}</p>
+                                                                    </div>
+                                                                </div>
+                                                            </li>
+                                                        </ul>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col {{dr_detail.type==1 ? 's6' : 's6'}} mt10" *ngIf="login_data.access_level == '1' ">
+                                                <div class="details-info padding0" *ngIf="sales_executive_update!='true'">
+                                                    <div class="basic-details">
+                                                        <div class="cs-heading margin0" [ngClass]="{'active':active.user==true}">
+                                                            <h2>Sales User</h2>
+                                                            <a class="edit-item" (click)="update_assigned_sales_executive('true')"><i
+                                                                class="material-icons">create</i></a>
+                                                            </div>
+                                                            <div class="cs-checkbox" *ngIf="dr_detail.assign_user.length!=0">
+                                                                <div class="checkbox-outer">
+                                                                    <section class="checkbox-inner bodr0">
+                                                                        <mat-checkbox class="check-list bg-none check-none" value="1"
+                                                                        *ngFor="let row of dr_detail.assign_user">
+                                                                        <div class="name-outer">
+                                                                            <div class="outer">
+                                                                                <div class="inner">
+                                                                                    <div class="name-inner">
+                                                                                        {{row.sales_executive_name.charAt(0).toUpperCase()}}
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="text-box">
+                                                                            <h2>{{row.employee_id}}|  {{row.sales_executive_name}}|  {{row.team_code}}|  {{row.team_name}}|  {{row.team_state}}</h2>
+                                                                        </div>
+                                                                    </mat-checkbox>
+                                                                </section>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="details-info padding0" *ngIf="sales_executive_update=='true'">
+                                                    <div class="basic-details">
+                                                        <div class="cs-heading margin0" [ngClass]="{'active':active.user==true}">
+                                                            <h2>Sales User</h2>
+                                                            <i class="material-icons search-icon right20"
+                                                            (click)="toggleterritory('user','open')" matRipple>search</i>
+                                                            <input type="text" placeholder="search..." class="fix-search"
+                                                            (input)="getItemsList(search.search)" #search="ngModel"
+                                                            [(ngModel)]="search.search">
+                                                            <i class="material-icons close-icon" (click)="toggleterritory('user','close')"
+                                                            matRipple>clear</i>
+                                                        </div>
+                                                        <div class="cs-logs">
+                                                            <div class="cs-checkbox">
+                                                                <div class="checkbox-outer">
+                                                                    <section class="checkbox-inner">
+                                                                        <ng-container *ngFor="let list of asmList;let index=index"
+                                                                        aria-required="true">
+                                                                        <mat-checkbox (scroll)="scrollHandler($event)" class="check-list"
+                                                                        [(ngModel)]="list.check"
+                                                                        (change)="product_Brand(list.id,index,$event)"
+                                                                        value="{{list.name}}">{{list.employee_id}}|{{list.name}}|{{list.team_code}} |{{list.team_name}}|{{list.team_state}}
+                                                                    </mat-checkbox>
+                                                                </ng-container>
+                                                            </section>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="cs-btn mb10 mt10 mr10 text-right">
+                                                    <div class="in-btn sm-btn">
+                                                        <button mat-raised-button color="accent"
+                                                        (click)="update_assigned_executive(dr_detail.sales_executive)">Update</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+<div>
+                                        <!-- <div class="details-info mt15">
+                                            <div class="basic-details">
+                                                <div class="cs-heading">
+                                                    <h2>Point Location</h2>
+                                                </div>
+                                                <div style="margin: -10px;">
+                                                    <agm-map [zoom]="zoom" center="[latitude, longitude]" [latitude]="latitude"
+                                                    [longitude]="longitude" [mapTypeId]='mapType'>
+                                                    <agm-marker [latitude]="latitude" [longitude]="longitude"></agm-marker>
+                                                </agm-map>
+                                                <div class="cs-btn padding10 border-top text-right">
+                                                    <div class="in-btn sm-btn">
+                                                        <button mat-raised-button color="accent"
+                                                        (click)="update_google_location(dr_detail.country,dr_detail.state,dr_detail.district,dr_detail.city,dr_detail.pincode,dr_detail.address,'updateGoogleLocation')">Update
+                                                        Location</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div> -->
+                                    </div>
+
+                                </div>
+                                                </div>
+
+                                           
+
+                                </div>
+
+                            </div>
+
+                            <div *ngIf="view_tab=='Detail' && login_data.view_dashboard!='1'">
+
+                                <div class="dashboard pt20" style="margin: 0px -30px;" ng-init="order_dashboard()">
+                                    <div class="container-outer">
+                                        <div class="container">
+                                            <div class="row top-info">
+                                                <figure class="col s2" style="width: 20%" (click)="related_tabs('Dealers')">
+                                                    <div class="box">
+                                                        <h1>My Retailers</h1>
+                                                        <div class="bxe">
+                                                            <div class="outer">
+                                                                <div class="inner">
+                                                                    <h2>
+                                                                        <a>{{dashboardCounts.dealer}}</a>
+                                                                    </h2>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="bt-bg">
+                                                            <img src="assets/img/icon-lead.png" alt="" style="width: 150px;">
+                                                        </div>
+                                                    </div>
+                                                </figure>
+
+                                                <figure class="col s2" style="width: 20%" (click)="related_tabs('Executives')">
+                                                    <div class="box">
+                                                        <h1>My Executives</h1>
+                                                        <div class="bxe">
+                                                            <div class="outer">
+                                                                <div class="inner">
+                                                                    <h2>
+                                                                        <a>{{dashboardCounts.myExecutivesCount}}</a>
+                                                                    </h2>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="bt-bg">
+                                                            <img src="assets/img/icon-distributer.png" alt="" style="width: 150px;">
+                                                        </div>
+                                                    </div>
+                                                </figure>
+
+                                                <figure class="col s2" style="width: 20%" (click)="related_tabs('Checkin')">
+                                                    <div class="box">
+                                                        <h1>Checkins</h1>
+                                                        <div class="bxe">
+                                                            <div class="outer">
+                                                                <div class="inner">
+                                                                    <h2>
+                                                                        <a>{{dashboardCounts.checkin}}</a>
+                                                                    </h2>
+
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="bt-bg">
+                                                            <img src="assets/img/icon-retailer.png" alt="" style="width: 150px;">
+                                                        </div>
+                                                    </div>
+                                                </figure>
+
+
+                                                <figure class="col s2" style="width: 20%" (click)="related_tabs('pOrder')">
+                                                    <div class="box">
+                                                        <h1>Order</h1>
+                                                        <div class="bxe">
+                                                            <div class="outer">
+                                                                <div class="inner">
+                                                                    <h2>
+                                                                        <a>{{dashboardCounts.primary_order.count}}</a>
+                                                                        <a> &#x20B9; {{dashboardCounts.primary_order.sum}}</a>
+                                                                    </h2>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="bt-bg">
+                                                            <img src="assets/img/icon-order.png" alt="" style="width: 150px;">
+                                                        </div>
+                                                    </div>
+                                                </figure>
+
+                                                <figure class="col s2" style="width: 20%" (click)="related_tabs('sOrder')">
+                                                    <div class="box">
+                                                        <h1>Order From Retailer </h1>
+                                                        <div class="bxe">
+                                                            <div class="outer">
+                                                                <div class="inner">
+                                                                    <h2>
+                                                                        <a>{{dashboardCounts.secondary_order.count}}</a>
+                                                                        <a> &#x20B9; {{dashboardCounts.secondary_order.sum}}</a>
+                                                                    </h2>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="bt-bg">
+                                                            <img src="assets/img/icon-order.png" alt="" style="width: 150px;">
+                                                        </div>
+                                                    </div>
+                                                </figure>
+                                            </div>
+
+
+                                            <div class="row mt-15 graph-info">
+                                                <div class="col s12 figure">
+
+                                                    <div style="display: block">
+                                                        <canvas baseChart [datasets]="barChartData" [labels]="barChartLabels"
+                                                        [options]="barChartOptions" [legend]="barChartLegend"
+                                                        [chartType]="barChartType">
+                                                    </canvas>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="row mt-15 middle-info">
+                                        </div>
+
+
+                                        <div class="row">
+                                            <div class="col s4">
+                                                <div class="ds-box pink">
+                                                    <div class="ds-head">
+                                                        Latest Checkin
+                                                    </div>
+                                                    <div class="ds-body">
+                                                        <div class="cs-information">
+                                                            <div class="cs-border"
+                                                            *ngFor="let row of dashboardCounts.latestCheckin">
+                                                            <div class="top-srip">
+                                                                <ul>
+                                                                    <li>
+                                                                        <p><span>Date :</span>
+                                                                            {{row.visit_start | date : 'd MMM y' }}</p>
+                                                                        </li>
+                                                                        <li>
+                                                                            <p><span>Start
+                                                                                :</span>{{row.visit_start | date: 'h:mm a' }}
+                                                                            </p>
+                                                                        </li>
+                                                                        <li *ngIf="row.visit_end!='0000-00-00 00:00:00'">
+                                                                            <p><span>End :</span>
+                                                                                {{row.visit_end | date: 'h:mm a' }}</p>
+                                                                            </li>
+                                                                            <li *ngIf="row.visit_end=='0000-00-00 00:00:00'">
+                                                                                <p><span>End :</span> N.A.</p>
+                                                                            </li>
+                                                                        </ul>
+                                                                    </div>
+                                                                    <div class="flex-content">
+                                                                        <div class="alfa-digit" *ngIf="row.d_name!=''">
+                                                                            {{row.d_name.charAt(0).toUpperCase()}}</div>
+                                                                            <div class="content">
+                                                                                <p ng-click="dr_detail(row.dr_id,row.dr_type)">
+                                                                                    {{row.d_name}}</p>
+                                                                                    <span>Executive : {{row.user_name}}</span>
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="remark">
+                                                                                <strong>Remark : </strong>{{row.remark ? row.remark : 'N.A.'}}
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col s4">
+                                                            <div class="ds-box green">
+                                                                <div class="ds-head">
+                                                                    Latest Order From Retailer
+                                                                </div>
+                                                                <div class="ds-body">
+                                                                    <div class="cs-information">
+                                                                        <div class="cs-border secondary"
+                                                                        *ngFor="let row of dashboardCounts.latestSecondary">
+                                                                        <div class="top-srip">
+                                                                            <ul>
+                                                                                <li>
+                                                                                    <p><span>Date :</span>
+                                                                                        {{row.date_created | date : 'd MMM y'}}</p>
+                                                                                    </li>
+                                                                                    <li class="amount">
+                                                                                        <p><span>Amount :</span> &#x20B9; {{row.order_total}}
+                                                                                        </p>
+                                                                                    </li>
+                                                                                </ul>
+                                                                            </div>
+                                                                            <div class="flex-content" style="margin-bottom: 0px;">
+                                                                                <div class="alfa-digit">
+                                                                                    {{row.user_name.charAt(0).toUpperCase()}}</div>
+                                                                                    <div class="content">
+                                                                                        <p> {{row.user_name}}</p>
+                                                                                        <p *ngIf="row.type == 3"> Retailer : {{row.dr_name}}</p>
+                                                                                        <p *ngIf="row.type == 1"> Distributor/Dealer :
+                                                                                            {{row.dr_name}}</p>
+                                                                                            <p *ngIf="row.type == 7"> Direct Dealer : {{row.dr_name}}
+                                                                                            </p>
+                                                                                            <a routerLink="/order-detail/{{row.id}}"
+                                                                                            style="color: #2f00ec;">{{row.order_no}}</a>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col s4">
+                                                                    <div class="ds-box orange">
+                                                                        <div class="ds-head">
+                                                                            My Executive Information
+                                                                        </div>
+
+
+
+                                                                        <div class="dss-body">
+                                                                            <div class="dss-body-1" *ngFor="let row of dashboardCounts.execInfo">
+                                                                                <div class="dss-head">
+                                                                                    <h3>{{row.name}}</h3>
+                                                                                    <p>{{row.attendance}} days</p>
+                                                                                </div>
+
+                                                                                <div class="detail">
+                                                                                    <ul>
+                                                                                        <li>
+                                                                                            <h3>Check In</h3>
+                                                                                            <p><span>{{row.check_in}}</span></p>
+                                                                                        </li>
+
+                                                                                        <li>
+                                                                                            <h3>Primary Order</h3>
+                                                                                            <p><span>{{row.p_order}}</span> ₹ {{row.pri_order_value}}
+                                                                                            </p>
+                                                                                        </li>
+
+                                                                                        <li>
+                                                                                            <h3>Secondary Order</h3>
+                                                                                            <p><span>{{row.order}}</span> ₹ {{row.sec_order_value}}</p>
+                                                                                        </li>
+                                                                                    </ul>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <!-- <div *ngIf="dr_type!=3">
+                                                <div class="row" *ngIf="view_tab=='Discount'">
+                                                    <div class="cs-table left-right-10">
+                                                        <div class="sticky-head">
+                                                            <div class="table-head border-left border-right">
+                                                                <table>
+                                                                    <tr>
+                                                                        <th class="w60">S. No</th>
+                                                                        <th class="w150">Product Name</th>
+                                                                        <th class="w170">Product Code</th>
+                                                                        <th class="w110 text-right">Default Price</th>
+                                                                        <th class="w140 text-right">Customized Price</th>
+                                                                    </tr>
+                                                                </table>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="table-container">
+                                                            <div class="table-content">
+                                                                <table>
+                                                                    <tr *ngFor="let prod of productlist;let i = index ">
+                                                                        <td class="w60">{{i + 1}}</td>
+                                                                        <td class="w150"><a class="link-btn" mat-button
+                                                                            routerLink="/product-detail/{{(prod.id)}}" routerLinkActive="active">
+                                                                            {{prod.product_name}}</a></td>
+                                                                        <td class="w170">{{prod.product_code}}</td>
+                                                                        <td class="w110 text-right">&#x20B9; {{prod.product_mrp}}</td>
+                                                                        <td class="w140">
+                                                                            <div class="place-input active df ac  text-right">
+                                                                                <input type="number" placeholder="Enter Price ..."
+                                                                                name="customised_price" #customised_price="ngModel"
+                                                                                [(ngModel)]="prod.customised_price">
+                                                                                <button *ngIf="prod.id==mode && showSave" mat-button
+                                                                                class="delete-mat ml10"
+                                                                                (click)="updateProductDetail(prod.customised_price,prod.id)">
+                                                                                <i class="material-icons green-clr" mat-button
+                                                                                matTooltip="Save">save</i>
+                                                                                </button>
+                                                                                <button *ngIf="!(prod.id==mode && showEdit)" mat-button
+                                                                                 class="delete-mat ml10" (click)="editProduct(prod.id)">
+                                                                                 <i class="material-icons green-clr" mat-button
+                                                                                 matTooltip="Edit">create</i>
+                                                                                </button>
+                                                                            </div>
+                                                                        </td>
+                                                                    </tr>
+                                                                </table>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="no-data" *ngIf="data_not_found==true">
+                                                        <img src="assets/img/no-data.gif" alt="">
+                                                        <p>Data not <span>available !</span></p>
+                                                    </div>
+                                                </div>
+                                            </div> -->
+                                            <div class="row" *ngIf="view_tab=='Target'">
+                                                <div class="cs-table left-right-10">
+                                                    <div class="sticky-head">
+                                                        <div class="table-head border-left border-right">
+                                                            <table>
+                                                                <tr>
+                                                                    <th class="w45 text-center">Sr.No</th>
+                                                                    <th class="w140">Company Name</th>
+                                                                    <th class="w100">Distributor Code</th>
+                                                                    <th class="w90">Mobile No.</th>
+                                                                    <th class="w130">State</th>
+                                                                    <th class="w90">District</th>
+                                                                    <th class="w90">City</th>
+                                                                    <th class="w100">Assign User</th>
+                                                                    <th class="w150">Primary Target</th>
+                                                                    <th class="w120">Primary Achievement</th>
+                                                                </tr>
+                                                            </table>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="table-container">
+                                                        <div class="table-content">
+                                                            <table>
+                                                                <tr *ngFor="let stock of stockList;let i = index ">
+                                                                    <td class="w60">{{i + 1}}</td>
+                                                                    <td class="w150">{{stock.product_name}}</td>
+                                                                    <td class="w190">{{stock.product_size}}</td>
+                                                                    <td class="w110 text-right">{{stock.qty == null ? 0 : stock.qty}}</td>
+                                                                    <td class="w140 text-right">{{stock.pendingQty == null ? 0 : stock.pendingQty}}</td>
+                                                                </tr>
+                                                            </table>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                            <div *ngIf="dr_type!=3">
+                                                <div class="row" *ngIf="view_tab=='Discount'">
+                                                    <div class="cs-table left-right-10">
+                                                        <div class="sticky-head">
+                                                            <div class="table-head border-left border-right">
+                                                                <table>
+                                                                    <tr>
+                                                                        <th class="w60">S. No</th>
+                                                                        <th class="w150">Category</th>
+                                                                        <th class="w100 text-right">Basic Discount</th>
+                                                                        <th class="w100 text-right">Sr Discount</th>
+                                                                        <th class="w100 text-right">Dd Discount</th>
+                                                                        <th class="w100 text-right">Family Discount</th>
+                                                                        <th class="w100 text-right">Ss Discount</th>
+                                                                        <th class="w100 text-right">Cd Discount</th>
+                                                                        <th class="w100 text-right">Total Discount</th>
+                                                                        <th class="w60 text-right">Action</th>
+                                                                    </tr>
+                                                                </table>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="table-container">
+                                                            <div class="table-content">
+                                                                <table>
+                                                                    <tr *ngFor="let prod of discount_list;let i = index ">
+                                                                        <td class="w60">{{i + 1}}</td>
+                                                                        <td class="w150">{{prod.category}}</td>
+                                                                        <td class="w100">
+                                                                            <div class="place-input active df ac  text-right">
+                                                                                <input type="text" onkeypress="return event.charCode>=48 && event.charCode<=57 " placeholder="Enter Discount"
+                                                                                name="basic_discount" #basic_discount="ngModel"
+                                                                                [(ngModel)]="prod.basic_discount" (ngModelChange)="total_discount(i)">
+                                                                                <!-- <button  mat-button
+                                                                                class="delete-mat ml10"
+                                                                                (click)="updateProductDetail(prod.basic_discount,prod.id)">
+                                                                                <i class="material-icons green-clr" mat-button
+                                                                                matTooltip="Save">save</i>
+                                                                                </button>
+                                                                                <button mat-button
+                                                                                 class="delete-mat ml10" (click)="editProduct(prod.id)">
+                                                                                 <i class="material-icons green-clr" mat-button
+                                                                                 matTooltip="Edit">create</i>
+                                                                                </button> -->
+                                                                            </div>
+                                                                        </td>
+
+                                                                        <td class="w100">
+                                                                            <div class="place-input active df ac  text-right">
+                                                                                <input type="text" placeholder="Enter Price ..."
+                                                                                name="sr_discount" #sr_discount="ngModel"
+                                                                                [(ngModel)]="prod.sr_discount" (ngModelChange)="total_discount(i)">
+                                                                                <!-- <button *ngIf="prod.id==mode && showSave" mat-button
+                                                                                class="delete-mat ml10"
+                                                                                (click)="updateProductDetail(prod.sr_discount,prod.id)">
+                                                                                <i class="material-icons green-clr" mat-button
+                                                                                matTooltip="Save">save</i>
+                                                                                </button>
+                                                                                <button *ngIf="!(prod.id==mode && showEdit)" mat-button
+                                                                                 class="delete-mat ml10" (click)="editProduct(prod.id)">
+                                                                                 <i class="material-icons green-clr" mat-button
+                                                                                 matTooltip="Edit">create</i>
+                                                                                </button> -->
+                                                                            </div>
+                                                                        </td>
+                                                                        <td class="w100">
+                                                                            <div class="place-input active df ac  text-right">
+                                                                                <input type="text"  placeholder="Enter Price ..."
+                                                                                name="dd_discount" #dd_discount="ngModel"
+                                                                                [(ngModel)]="prod.dd_discount" (ngModelChange)="total_discount(i)">
+                                                                                <!-- <button *ngIf="prod.id==mode && showSave" mat-button
+                                                                                class="delete-mat ml10"
+                                                                                (click)="updateProductDetail(prod.dd_discount,prod.id)">
+                                                                                <i class="material-icons green-clr" mat-button
+                                                                                matTooltip="Save">save</i>
+                                                                                </button>
+                                                                                <button *ngIf="!(prod.id==mode && showEdit)" mat-button
+                                                                                 class="delete-mat ml10" (click)="editProduct(prod.id)">
+                                                                                 <i class="material-icons green-clr" mat-button
+                                                                                 matTooltip="Edit">create</i>
+                                                                                </button> -->
+                                                                            </div>
+                                                                        </td>
+                                                                        <td class="w100">
+                                                                            <div class="place-input active df ac  text-right">
+                                                                                <input type="text" placeholder="Enter Price ..."
+                                                                                name="family_discount" #family_discount="ngModel"
+                                                                                [(ngModel)]="prod.family_discount" (ngModelChange)="total_discount(i)">
+                                                                                <!-- <button *ngIf="prod.id==mode && showSave" mat-button
+                                                                                class="delete-mat ml10"
+                                                                                (click)="updateProductDetail(prod.family_discount,prod.id)">
+                                                                                <i class="material-icons green-clr" mat-button
+                                                                                matTooltip="Save">save</i>aaaaaaaaaaaaaaaaaaa
+                                                                                </button>
+                                                                                <button *ngIf="!(prod.id==mode && showEdit)" mat-button
+                                                                                 class="delete-mat ml10" (click)="editProduct(prod.id)">
+                                                                                 <i class="material-icons green-clr" mat-button
+                                                                                 matTooltip="Edit">create</i>
+                                                                                </button> -->
+                                                                            </div>
+                                                                        </td>
+                                                                        <td class="w100">
+                                                                            <div class="place-input active df ac  text-right">
+                                                                                <input type="text" placeholder="Enter Price ..."
+                                                                                name="ss_discount" #ss_discount="ngModel"
+                                                                                [(ngModel)]="prod.ss_discount" (ngModelChange)="total_discount(i)">
+                                                                                <!-- <button *ngIf="prod.id==mode && showSave" mat-button
+                                                                                class="delete-mat ml10"
+                                                                                (click)="updateProductDetail(prod.ss_discount,prod.id)">
+                                                                                <i class="material-icons green-clr" mat-button
+                                                                                matTooltip="Save">save</i>
+                                                                                </button>
+                                                                                <button *ngIf="!(prod.id==mode && showEdit)" mat-button
+                                                                                 class="delete-mat ml10" (click)="editProduct(prod.id)">
+                                                                                 <i class="material-icons green-clr" mat-button
+                                                                                 matTooltip="Edit">create</i>
+                                                                                </button> -->
+                                                                            </div>
+                                                                        </td>
+                                                                        <td class="w100">
+                                                                            <div class="place-input active df ac  text-right">
+                                                                                <input type="text" placeholder="Enter Price ..."
+                                                                                name="cd_discount" #cd_discount="ngModel"
+                                                                                [(ngModel)]="prod.cd_discount" (ngModelChange)="total_discount(i)">
+                                                                                <!-- <button *ngIf="prod.id==mode && showSave" mat-button
+                                                                                class="delete-mat ml10"
+                                                                                (click)="updateProductDetail(prod.cd_discount,prod.id)">
+                                                                                <i class="material-icons green-clr" mat-button
+                                                                                matTooltip="Save">save</i>
+                                                                                </button>
+                                                                                <button *ngIf="!(prod.id==mode && showEdit)" mat-button
+                                                                                 class="delete-mat ml10" (click)="editProduct(prod.id)">
+                                                                                 <i class="material-icons green-clr" mat-button
+                                                                                 matTooltip="Edit">create</i>
+                                                                                </button> -->
+                                                                            </div>
+                                                                        </td>
+                                                                        <td class="w100">
+                                                                            {{prod.discount}}
+                                                                            <!-- <div class="place-input active df ac  text-right">
+                                                                                <input type="number" placeholder="Enter Price ..."
+                                                                                name="customised_price" #customised_price="ngModel"
+                                                                                [(ngModel)]="prod.customised_price">
+                                                                                <button *ngIf="prod.id==mode && showSave" mat-button
+                                                                                class="delete-mat ml10"
+                                                                                (click)="updateProductDetail(prod.customised_price,prod.id)">
+                                                                                <i class="material-icons green-clr" mat-button
+                                                                                matTooltip="Save">save</i>
+                                                                                </button>
+                                                                                <button *ngIf="!(prod.id==mode && showEdit)" mat-button
+                                                                                 class="delete-mat ml10" (click)="editProduct(prod.id)">
+                                                                                 <i class="material-icons green-clr" mat-button
+                                                                                 matTooltip="Edit">create</i>
+                                                                                </button>
+                                                                            </div> -->
+                                                                        </td>
+                                                                        <td class="w60">
+                                                                           <button mat-button class="delete-mat ml10"
+                                                                                (click)="updateDiscount(prod)">
+                                                                                <i class="material-icons green-clr" mat-button
+                                                                                matTooltip="Save">save</i>
+                                                                                </button>
+                                                                        </td>
+                                                                    </tr>
+                                                                </table>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="no-data" *ngIf="data_not_found==true">
+                                                        <img src="assets/img/no-data.gif" alt="">
+                                                        <p>Data not <span>available !</span></p>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                        <div *ngIf="dr_type!=3">
+                                            <div class="row" *ngIf="view_tab=='Stock'">
+                                                <div class="cs-table left-right-10">
+                                                    <div class="sticky-head">
+                                                        <div class="table-head border-left border-right">
+                                                            <table>
+                                                                <tr>
+                                                                    <th class="w60">S.No</th>
+                                                                    <th class="w150">Product Name</th>
+                                                                    <!-- <th class="w190">Size</th> -->
+                                                                    <th class="w110 text-right">Stock Quantity</th>
+                                                                    <th class="w140 text-right">Pending Quantity</th>
+                                                                </tr>
+                                                            </table>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="table-container">
+                                                        <div class="table-content">
+                                                            <table>
+                                                                <tr *ngFor="let stock of stockList;let i = index ">
+                                                                    <td class="w60">{{i + 1}}</td>
+                                                                    <td class="w150">{{stock.product_name}}</td>
+                                                                    <!-- <td class="w190">{{stock.product_size}}</td> -->
+                                                                    <td class="w110 text-right">{{stock.qty == null ? 0 : stock.qty}}</td>
+                                                                    <td class="w140 text-right">{{stock.pendingQty == null ? 0 : stock.pendingQty}}</td>
+                                                                </tr>
+                                                            </table>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                        </div>
+
+
+                                        <div class="pt10" *ngIf="view_tab=='pOrder' || view_tab=='sOrder' ">
+                                            <div class="dflex1 space-btw mb10 mt10">
+                                                <div class="cube-bx">
+                                                    <div class="detail-bx">
+                                                        <ng-container *ngIf="view_tab=='pOrder'">
+                                                            <p>Total Primary Sale :</p>
+                                                            <p>{{totalOrders.count}}</p>
+                                                        </ng-container>
+                                                        <ng-container *ngIf="view_tab=='sOrder'">
+                                                            <p>Total Secondary Sale :</p>
+                                                            <p>{{totalOrders.count}}</p>
+                                                        </ng-container>
+
+                                                    </div>
+                                                    <div class="detail-bx">
+                                                        <p>Amount :</p>
+                                                        <p>₹ {{totalOrders.sum}} /-</p>
+                                                    </div>
+                                                </div>
+                                                <div class="tabs">
+                                                    <ul *ngIf="view_tab=='pOrder'">
+                                                        <li><a class=""
+                                                            (click)="orderTabActive.active='Pending';getOrders(view_tab,orderTabActive.active)"
+                                                            [ngClass]="{'active' : orderTabActive.active=='Pending' } ">Pending </a></li>
+                                                            <li *ngIf="this.dr_detail.type!='3'"><a class=""
+                                                                (click)="orderTabActive.active='Approved';getOrders(view_tab,orderTabActive.active)"
+                                                                [ngClass]="{'active' : orderTabActive.active=='Approved' } ">Approved </a></li>
+                                                                <li *ngIf="this.dr_detail.type!='3'"><a class=""
+                                                                    (click)="orderTabActive.active='Dispatch';getOrders(view_tab,orderTabActive.active)"
+                                                                    [ngClass]="{'active' : orderTabActive.active=='Dispatch' } ">Reject </a></li>
+                                                                    <li *ngIf="this.dr_detail.type=='3'"><a class=""
+                                                                        (click)="orderTabActive.active='Dispatch';getOrders(view_tab,orderTabActive.active)"
+                                                                        [ngClass]="{'active' : orderTabActive.active=='Dispatch' } ">Dispatch </a></li>
+                                                                    </ul>
+                                                                    <!-- <ul *ngIf="view_tab=='sOrder'">
+                                                                        <li><a class=""
+                                                                            (click)="orderTabActive.active='Pending';getOrders(view_tab,orderTabActive.active)"
+                                                                            [ngClass]="{'active' : orderTabActive.active=='Pending' } ">Pending </a></li>
+                                                                            <li><a class=""
+                                                                                (click)="orderTabActive.active='Approved';getOrders(view_tab,orderTabActive.active)"
+                                                                                [ngClass]="{'active' : orderTabActive.active=='Approved' } ">Delivered </a></li>
+                                                                            </ul> -->
+                                                                        </div>
+
+                                                                    </div>
+
+                                                                    <div class="row">
+                                                                        <div class="col s12">
+
+                                                                            <div class="cs-table left-right-15" *ngIf="view_tab=='sOrder' ">
+                                                                                <div class="sticky-head">
+                                                                                    <div class="table-head border-top">
+                                                                                        <table class="sno-border">
+                                                                                            <tr>
+                                                                                                <th class="w50">S. No</th>
+                                                                                                <th class="w80">Date</th>
+                                                                                                <th class="w220">Created By</th>
+                                                                                                <th *ngIf="view_tab=='sOrder'" class="w200">Retailer</th>
+                                                                                                <th class="w120">Order No</th>
+                                                                                                <th class="w100 text-center">Total Item</th>
+                                                                                                <th class="w130 text-right">Order Value</th>
+                                                                                                <th *ngIf="orderTabActive.active=='Approved'" class="w130">Approved By</th>
+                                                                                                <th *ngIf="orderTabActive.active=='Dispatch' && this.dr_detail.type!='3'" class="w130">Reject By</th>
+                                                                                                <th *ngIf="orderTabActive.active=='Dispatch' && this.dr_detail.type!='3'" class="w130">Reason</th>
+                                                                                                <th *ngIf="orderTabActive.active=='Dispatch' && this.dr_detail.type=='3'" class="w130">Approved By</th>
+                                                                                            </tr>
+                                                                                        </table>
+                                                                                    </div>
+                                                                                    <div class="table-head bdrt">
+                                                                                        <table class="sno-border">
+                                                                                            <tr>
+                                                                                                <th class="w50">&nbsp;</th>
+                                                                                                <th class="w80"></th>
+                                                                                                <th class="w220">
+                                                                                                    <div class="th-search-acmt">
+                                                                                                        <mat-form-field class="example-full-width cs-input select-input">
+                                                                                                            <input matInput placeholder="Search...."
+                                                                                                            (input)="getOrders(view_tab,orderTabActive.active)"
+                                                                                                            #search="ngModel" [(ngModel)]="search4.created_by">
+                                                                                                        </mat-form-field>
+                                                                                                    </div>
+                                                                                                    <div>
+                                                                                                    </div>
+                                                                                                </th>
+                                                                                                <th class="w200" *ngIf="view_tab=='sOrder'">
+                                                                                                    <div class="th-search-acmt">
+                                                                                                        <mat-form-field class="example-full-width cs-input select-input">
+                                                                                                            <input matInput placeholder="Search...."
+                                                                                                            (input)="getOrders(view_tab,orderTabActive.active)"
+                                                                                                            #search="ngModel" [(ngModel)]="search4.company_name">
+                                                                                                        </mat-form-field>
+                                                                                                    </div>
+                                                                                                </th>
+                                                                                                <th class="w120">
+                                                                                                    <div class="th-search-acmt">
+                                                                                                        <mat-form-field class="example-full-width cs-input select-input">
+                                                                                                            <input matInput placeholder="Order No...."
+                                                                                                            (input)="getOrders(view_tab,orderTabActive.active)"
+                                                                                                            #search="ngModel" [(ngModel)]="search4.order_id">
+                                                                                                        </mat-form-field>
+                                                                                                    </div>
+                                                                                                    <div>
+                                                                                                    </div>
+                                                                                                </th><th class="w100 text-center">&nbsp;</th>
+                                                                                                <th class="w130 text-right">&nbsp;</th>
+                                                                                                <th *ngIf="orderTabActive.active=='Approved'" class="w130">&nbsp;</th>
+                                                                                                <th *ngIf="orderTabActive.active=='Dispatch'" class="w130">&nbsp;</th>
+                                                                                                <th *ngIf="orderTabActive.active=='Dispatch'" class="w130">&nbsp;</th>
+                                                                                            </tr>
+                                                                                        </table>
+                                                                                    </div>
+                                                                                </div>
+
+                                                                                <div class="table-container">
+                                                                                    <div class="table-content">
+                                                                                        <table class="sno-border">
+                                                                                            <tr *ngFor="let list of order_data;let i = index">
+                                                                                                <td class="w50">{{i+1}}</td>
+                                                                                                <td class="w80">{{list.date_created | date : 'd MMM y'}}</td>
+                                                                                                <td class="w220">
+                                                                                                    {{list.created_by_name ? list.created_by_name : list.ord_create_by}}
+                                                                                                </td>
+                                                                                                <td *ngIf="view_tab=='sOrder'" class="w200">{{list.company_name}}</td>
+                                                                                                <td class="w120"><a class="link-btn" mat-button
+                                                                                                    routerLink="/order-detail/{{list.id}}"
+                                                                                                    routerLinkActive="active">{{list.order_no}}</a></td>
+                                                                                                    <td class="w100 text-center">{{list.order_item}}</td>
+                                                                                                    <td class="w130 text-right">&#8377; {{list.order_total}}
+                                                                                                        <td class="w130" *ngIf="orderTabActive.active=='Approved'">{{list.approved_by_name?list.approved_by_name:'--'}}</td>
+                                                                                                        <td class="w130" *ngIf="orderTabActive.active=='Dispatch'">{{list.approved_by_name?list.approved_by_name:'--'}}</td>
+                                                                                                        <td class="w130" *ngIf="orderTabActive.active=='Dispatch'">{{list.reason_reject?list.reason_reject:'--'}}
+                                                                                                        </td>
+                                                                                                    </tr>
+                                                                                                </table>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                        <div class="no-data" *ngIf="order_data.length==0">
+                                                                                            <img src="assets/img/no-data.gif" alt="">
+                                                                                            <p>Data not <span>available !</span></p>
+                                                                                        </div>
+                                                                                    </div>
+
+                                                                                    <div class="cs-table left-right-15" *ngIf="view_tab=='pOrder' ">
+                                                                                        <div class="sticky-head">
+                                                                                            <div class="table-head">
+                                                                                                <table class="sno-border">
+                                                                                                    <tr>
+                                                                                                        <th class="w50">S. No</th>
+                                                                                                        <th class="w80">Date</th>
+                                                                                                        <th class="w220">Created By</th>
+                                                                                                        <th *ngIf="view_tab=='sOrder'" class="w200">Retailer</th>
+                                                                                                        <th class="w120">Order No</th>
+                                                                                                        <th class="w100 text-center">Total Item</th>
+                                                                                                        <th class="w130 text-right">Order Value</th>
+                                                                                                        <th *ngIf="orderTabActive.active=='Approved'" class="w130">Approved By</th>
+                                                                                                        <th *ngIf="orderTabActive.active=='Dispatch' && this.dr_detail.type!='3'" class="w130">Reject By</th>
+                                                                                                        <th *ngIf="orderTabActive.active=='Dispatch' && this.dr_detail.type!='3'" class="w130">Reason</th>
+                                                                                                        <th *ngIf="orderTabActive.active=='Dispatch' && this.dr_detail.type=='3'" class="w130">Approved By</th>
+                                                                                                    </tr>
+                                                                                                </table>
+                                                                                            </div>
+                                                                                            <div class="table-head bdrt">
+                                                                                                <table class="sno-border">
+                                                                                                    <tr>
+                                                                                                        <th class="w50">&nbsp;</th>
+                                                                                                        <th class="w80"></th>
+                                                                                                        <th class="w220">
+                                                                                                            <div class="th-search-acmt">
+                                                                                                                <mat-form-field class="example-full-width cs-input select-input">
+                                                                                                                    <input matInput placeholder="Search...."
+                                                                                                                    (input)="getOrders(view_tab,orderTabActive.active)"
+                                                                                                                    #search="ngModel" [(ngModel)]="search4.created_by">
+                                                                                                                </mat-form-field>
+                                                                                                            </div>
+                                                                                                            <div>
+                                                                                                            </div>
+                                                                                                        </th>
+                                                                                                        <th class="w200" *ngIf="view_tab=='sOrder'">
+                                                                                                            <div class="th-search-acmt">
+                                                                                                                <mat-form-field class="example-full-width cs-input select-input">
+                                                                                                                    <input matInput placeholder="Search...."
+                                                                                                                    (input)="getOrders(view_tab,orderTabActive.active)"
+                                                                                                                    #search="ngModel" [(ngModel)]="search4.company_name">
+                                                                                                                </mat-form-field>
+                                                                                                            </div>
+                                                                                                        </th>
+                                                                                                        <th class="w120">
+                                                                                                            <div class="th-search-acmt">
+                                                                                                                <mat-form-field class="example-full-width cs-input select-input">
+                                                                                                                    <input matInput placeholder="Order No...."
+                                                                                                                    (input)="getOrders(view_tab,orderTabActive.active)"
+                                                                                                                    #search="ngModel" [(ngModel)]="search4.order_id">
+                                                                                                                </mat-form-field>
+                                                                                                            </div>
+                                                                                                            <div>
+                                                                                                            </div>
+                                                                                                        </th><th class="w100 text-center">&nbsp;</th>
+                                                                                                        <th class="w130 text-right">&nbsp;</th>
+                                                                                                        <th *ngIf="orderTabActive.active=='Approved'" class="w130">&nbsp;</th>
+                                                                                                        <th *ngIf="orderTabActive.active=='Dispatch' && this.dr_detail.type!='3'" class="w130">&nbsp;</th>
+                                                                                                        <th *ngIf="orderTabActive.active=='Dispatch' && this.dr_detail.type!='3'" class="w130">&nbsp;</th>
+                                                                                                        <th *ngIf="orderTabActive.active=='Dispatch' && this.dr_detail.type=='3'" class="w130">&nbsp;</th>
+                                                                                                    </tr>
+                                                                                                </table>
+                                                                                            </div>
+                                                                                        </div>
+
+                                                                                        <div class="table-container">
+                                                                                            <div class="table-content">
+                                                                                                <table class="sno-border">
+                                                                                                    <tr *ngFor="let list of order_data;let i = index">
+                                                                                                        <td class="w50">{{i+1}}</td>
+                                                                                                        <td class="w80">{{list.date_created | date : 'd MMM y'}}</td>
+                                                                                                        <td class="w220">
+                                                                                                            {{list.created_by_name ? list.created_by_name : list.ord_create_by}}
+                                                                                                        </td>
+                                                                                                        <td *ngIf="view_tab=='sOrder'" class="w200">{{list.company_name}}</td>
+                                                                                                        <td class="w120"><a class="link-btn" mat-button
+                                                                                                            routerLink="/order-detail/{{list.id}}"
+                                                                                                            routerLinkActive="active">{{list.order_no}}</a></td>
+                                                                                                            <td class="w100 text-center">{{list.order_item}}</td>
+                                                                                                            <td class="w130 text-right">&#8377; {{list.order_total}}
+                                                                                                                <td class="w130" *ngIf="orderTabActive.active=='Approved'">{{list.approved_by_name?list.approved_by_name:'--'}}</td>
+                                                                                                                <td class="w130" *ngIf="orderTabActive.active=='Dispatch'  && this.dr_detail.type!='3'">{{list.approved_by_name?list.approved_by_name:'--'}}</td>
+                                                                                                                <td class="w130" *ngIf="orderTabActive.active=='Dispatch'  && this.dr_detail.type!='3'">{{list.reason_reject?list.reason_reject:'--'}}
+                                                                                                                    <td class="w130" *ngIf="orderTabActive.active=='Dispatch'  && this.dr_detail.type=='3'">{{list.approved_by_name?list.approved_by_name:'--'}}
+                                                                                                                    </td>
+                                                                                                                </tr>
+                                                                                                            </table>
+                                                                                                        </div>
+                                                                                                    </div>
+
+                                                                                                </div>
+
+
+
+                                                                                            </div>
+                                                                                        </div>
+                                                                                    </div>
+
+                                                                                    <div class="row" *ngIf="view_tab=='Checkin'">
+                                                                                        <div class="cs-table left-right-10">
+                                                                                            <div class="sticky-head">
+                                                                                                <div class="table-head">
+                                                                                                    <table class="sno-border">
+                                                                                                        <tr>
+                                                                                                            <th class="w40">S. No.</th>
+                                                                                                            <th class="w120">Date</th>
+                                                                                                            <th class="w200">Sales User</th>
+                                                                                                            <th class="w300">Company Name</th>
+                                                                                                            <th>Check in </th>
+                                                                                                            <th>Check out</th>
+                                                                                                            <th>Remark</th>
+                                                                                                        </tr>
+                                                                                                    </table>
+                                                                                                </div>
+                                                                                                <div class="table-head bdrt">
+                                                                                                    <table class="sno-border">
+                                                                                                        <tr>
+                                                                                                            <th class="w40">&nbsp;</th>
+                                                                                                            <th class="w120"></th>
+                                                                                                            <th class="w200">
+                                                                                                                <div class="th-search-acmt">
+                                                                                                                    <mat-form-field class="example-full-width cs-input select-input">
+                                                                                                                        <input matInput placeholder="Search...."
+                                                                                                                        (input)="getItemscheckin(search3.search)" #search="ngModel"
+                                                                                                                        [(ngModel)]="search3.search">
+                                                                                                                    </mat-form-field>
+                                                                                                                </div>
+                                                                                                            </th>
+                                                                                                            <th class="w300"></th>
+                                                                                                            <th></th>
+                                                                                                            <th></th>
+                                                                                                            <th></th>
+                                                                                                        </tr>
+                                                                                                    </table>
+                                                                                                </div>
+                                                                                            </div>
+
+                                                                                            <div class="table-container">
+                                                                                                <div class="table-content">
+                                                                                                    <table class="sno-border">
+                                                                                                        <tr *ngFor="let row of dr_detail.checkin ; let i=index">
+                                                                                                            <td class="w40">{{i+1}}</td>
+                                                                                                            <td class="w120">{{row.date_created | date : 'MMMM d, y'}}</td>
+                                                                                                            <td class="w200">{{row.exec_name?row.exec_name:'--'}}</td>
+                                                                                                            <td class="w300">{{row.company_name?row.company_name:'--'}}</td>
+                                                                                                            <td class="one-line" matTooltip=" {{row.visit_start | date : 'h:mm a'}} {{row.start_address}}" matTooltipPosition="above"><span style="font-weight: 500;">{{row.visit_start | date : 'h:mm a'}}</span>
+                                                                                                                {{row.start_address?row.start_address:'--'}}</td>
+                                                                                                                <td class="one-line" matTooltip=" {{row.visit_end | date : 'h:mm a'}} {{row.address}}" matTooltipPosition="above"><span style="font-weight: 500;">{{row.visit_end | date : 'h:mm a'}}</span>
+                                                                                                                    {{row.address}}</td>
+                                                                                                                    <td>{{row.description}}</td>
+                                                                                                                </tr>
+                                                                                                            </table>
+                                                                                                        </div>
+                                                                                                    </div>
+                                                                                                </div>
+                                                                                            </div>
+
+                                                                                            <div class="row" *ngIf="view_tab=='Dealers'">
+                                                                                                <div class="col s12">
+                                                                                                    <div class="cs-table left-right-15">
+                                                                                                        <div class="sticky-head">
+                                                                                                            <div class="table-head">
+                                                                                                                <table class="sno-border">
+                                                                                                                    <tr>
+                                                                                                                        <th class="w40">&nbsp;</th>
+                                                                                                                        <th class="w250">Company Name</th>
+                                                                                                                        <th class="w200">Contact Person</th>
+                                                                                                                        <th class="w110">Mobile </th>
+                                                                                                                        <th class="w140">Gst </th>
+                                                                                                                        <th class="">Address</th>
+                                                                                                                        <th class="">Secondary Sale</th>
+                                                                                                                    </tr>
+                                                                                                                </table>
+                                                                                                            </div>
+
+                                                                                                        </div>
+
+                                                                                                        <div class="table-container">
+                                                                                                            <div class="table-content">
+                                                                                                                <table class="sno-border">
+                                                                                                                    <tr *ngFor="let row of assignedDealers ; let i=index">
+                                                                                                                        <td class="w40">{{i+1}}</td>
+                                                                                                                        <td class="w250">{{row.company_name}}</td>
+                                                                                                                        <td class="w200">{{row.name}}</td>
+                                                                                                                        <td class="w110">{{row.mobile}}</td>
+                                                                                                                        <td class="w140">{{!row.gst ? '--' : row.gst }}</td>
+                                                                                                                        <td class=""
+                                                                                                                        *ngIf="row.address || row.area || row.city || row.district || row.state || row.pincode">
+                                                                                                                        {{row.address}} {{row.area}} {{row.city}} {{row.district}} {{row.state}}
+                                                                                                                        {{row.pincode}}</td>
+                                                                                                                        <td class=""
+                                                                                                                        *ngIf="!row.address && !row.area && !row.city && !row.district && !row.state && !row.pincode">
+                                                                                                                        --</td>
+                                                                                                                        <td class="">{{row.secondary_sale.count}} | &#8377;{{row.secondary_sale.sum}}
+                                                                                                                        </td>
+
+                                                                                                                    </tr>
+                                                                                                                </table>
+                                                                                                            </div>
+                                                                                                        </div>
+                                                                                                    </div>
+                                                                                                </div>
+                                                                                            </div>
+
+                                                                                            <div class="row" *ngIf="view_tab=='Executives'">
+                                                                                                <div class="col s12">
+                                                                                                    <div class="cs-table left-right-15">
+                                                                                                        <div class="sticky-head">
+                                                                                                            <div class="table-head">
+                                                                                                                <table class="sno-border">
+                                                                                                                    <tr>
+                                                                                                                        <th class="w40">&nbsp;</th>
+                                                                                                                        <th class="w250">Executive Name</th>
+                                                                                                                        <th class="w110">Mobile </th>
+                                                                                                                        <th class="">Address</th>
+                                                                                                                        <th class="">Secondary Sale</th>
+                                                                                                                        <th class="w90">Checkins</th>
+                                                                                                                    </tr>
+                                                                                                                </table>
+                                                                                                            </div>
+
+                                                                                                        </div>
+
+                                                                                                        <div class="table-container">
+                                                                                                            <div class="table-content">
+                                                                                                                <table class="sno-border">
+                                                                                                                    <tr *ngFor="let row of assignedExecutives ; let i=index">
+                                                                                                                        <td class="w40">{{i+1}}</td>
+                                                                                                                        <td class="w250">{{row.name}}</td>
+                                                                                                                        <td class="w110">{{row.mobile}}</td>
+                                                                                                                        <td class=""
+                                                                                                                        *ngIf="row.address || row.area || row.city || row.district || row.state || row.pincode">
+                                                                                                                        {{row.address}} {{row.area}} {{row.city}} {{row.district}} {{row.state}}
+                                                                                                                        {{row.pincode}}</td>
+                                                                                                                        <td class=""
+                                                                                                                        *ngIf="!row.address && !row.area && !row.city && !row.district && !row.state && !row.pincode">
+                                                                                                                        --</td>
+                                                                                                                        <td class="">{{row.secondary_sale.count}} | &#8377;{{row.secondary_sale.sum}}
+                                                                                                                        </td>
+                                                                                                                        <td class="w90">
+                                                                                                                            {{row.checkins}}
+                                                                                                                            <div class="action-btns">
+                                                                                                                                <a mat-button class="view"
+                                                                                                                                (click)="disExecutive('View',row.assigned_to)"><i
+                                                                                                                                class="material-icons">remove_red_eye</i>View</a>
+                                                                                                                                <button mat-button class="edit"
+                                                                                                                                (click)="disExecutive('Edit',row.assigned_to)"><i
+                                                                                                                                class="material-icons">edit</i> Edit</button>
+                                                                                                                            </div>
+                                                                                                                        </td>
+                                                                                                                    </tr>
+                                                                                                                </table>
+                                                                                                            </div>
+                                                                                                        </div>
+                                                                                                    </div>
+                                                                                                </div>
+                                                                                            </div>
+
+                                                                                            <div class="row" *ngIf="view_tab=='legder'">
+                                                                                                <div class="col s12">
+                                                                                                    <div class="tab-strip">
+                                                                                                        <div class="left-auto">
+                                                                                                            <div class="cs-btn">
+                                                                                                                <div class="in-btn" *ngIf="ledger_data.length!='0' && login_data.access_level=='1'">
+                                                                                                                    <button mat-button color="primary" (click)="add_ledger('add_amount')"
+                                                                                                                    style="background: #2e8002;">Add Payment</button>
+
+                                                                                                                    <button mat-button color="primary" (click)="add_ledger('add_invoice')"
+                                                                                                                    style="background: #2e8002;">Add Invoice</button>
+                                                                                                                </div>
+                                                                                                            </div>
+
+                                                                                                        </div>
+                                                                                                    </div>
+
+                                                                                                    <div class="cs-table left-right-15">
+                                                                                                        <div class="sticky-head">
+                                                                                                            <div class="table-head">
+                                                                                                                <table class="sno-border">
+                                                                                                                    <tr>
+                                                                                                                        <th class="w30">&nbsp;</th>
+                                                                                                                        <th class="w100">Last Update</th>
+                                                                                                                        <th class="w220">Invoice No</th>
+                                                                                                                        <th class="w300">Payment</th>
+                                                                                                                        <th class="w100">Amount</th>
+                                                                                                                        <th class="w120">Balance</th>
+                                                                                                                    </tr>
+                                                                                                                </table>
+                                                                                                            </div>
+                                                                                                        </div>
+
+                                                                                                        <div class="table-container">
+                                                                                                            <div class="table-content">
+                                                                                                                <table class="sno-border">
+                                                                                                                    <tr *ngFor="let list of ledger_data;let i = index">
+                                                                                                                        <td class="w30">{{i+1}}</td>
+                                                                                                                        <td class="w100">{{list.date_created | date:'d MMM, y'}}</td>
+                                                                                                                        <td class="w220"><strong *ngIf="list.invoice_no">Invoice No:</strong>
+                                                                                                                            {{list.invoice_no}}</td>
+                                                                                                                            <td class="w300" *ngIf="list.payment_type==''"></td>
+                                                                                                                            <td class="w300" *ngIf="list.payment_type=='Nfft'"><strong>Mode:
+                                                                                                                            </strong>{{list.payment_type}} <strong>Transaction Id:</strong>
+                                                                                                                            {{list.transaction_id}}</td>
+                                                                                                                            <td class="w300" *ngIf="list.payment_type=='Cheque'"><strong>Mode:</strong>
+                                                                                                                                {{list.payment_type}} <strong>Bank:</strong> {{list.cheque_bank}}
+                                                                                                                                <strong>Cheque No:</strong> {{list.cheque_no}} <strong>Date:
+                                                                                                                                </strong>{{list.cheque_date | date:'d MMM, y'}}
+                                                                                                                            </td>
+                                                                                                                            <td class="w100"> &#x20B9; {{list.amount}}</td>
+                                                                                                                            <td class="w120"> &#x20B9; {{list.balance}}
+                                                                                                                                <div class="action-btns">
+                                                                                                                                    <button mat-button class="delete"
+                                                                                                                                    *ngIf="i==0 && login_data.access_level == '1'"
+                                                                                                                                    (click)="deleteUser(list.id)"><i
+                                                                                                                                    class="material-icons">delete_sweep</i> Delete</button>
+                                                                                                                                </div>
+                                                                                                                            </td>
+                                                                                                                        </tr>
+                                                                                                                    </table>
+                                                                                                                </div>
+                                                                                                            </div>
+
+                                                                                                            <div class="no-data" *ngIf="data_not_found==true">
+                                                                                                                <img src="assets/img/no-data.gif" alt="">
+                                                                                                                <p>Data not <span>available !</span></p>
+                                                                                                            </div>
+                                                                                                        </div>
+                                                                                                    </div>
+                                                                                                </div>
+
+                                                                                                <div class="" *ngIf="view_tab=='contractor-meet'">
+                                                                                                    <div class="cs-table left-right-10">
+                                                                                                        <div class="sticky-head">
+                                                                                                            <div class="table-head">
+                                                                                                                <table>
+                                                                                                                    <tr>
+                                                                                                                        <th class="w90">Date Create</th>
+                                                                                                                        <th class="w90">Type</th>
+                                                                                                                        <th class="w130">Created By</th>
+                                                                                                                        <th class="w130">Company Name</th>
+                                                                                                                        <th class="w130">Contact Person</th>
+                                                                                                                        <!-- <th class="w100">Email</th> -->
+                                                                                                                        <th class="w90">Meeting Date</th>
+                                                                                                                        <th class="w90">Total Member</th>
+                                                                                                                        <th class="w90">Total Budget</th>
+                                                                                                                        <th>Description</th>
+                                                                                                                        <!-- <th class="w60 pt0 pb0">No. of Days</th> -->
+                                                                                                                        <!-- <th class="w90">Last Meeting</th> -->
+                                                                                                                        <th class="w100">Status</th>
+                                                                                                                    </table>
+                                                                                                                </div>
+                                                                                                            </div>
+
+                                                                                                            <div class="table-container">
+
+                                                                                                                <div class="table-content">
+                                                                                                                    <table>
+                                                                                                                        <ng-container *ngFor="let detail of contractorMeetListDetail ; let i = index">
+                                                                                                                            <tr>
+                                                                                                                                <!-- , hh:mm aa -->
+                                                                                                                                <td class="w90">{{detail.date_created | date:'dd-MMM-yyyy'}}</td>
+                                                                                                                                <td *ngIf="detail.type==1" class="w90"><a class="link-btn" mat-button
+                                                                                                                                    routerLink="/contractor-detail/{{detail.id}}"
+                                                                                                                                    routerLinkActive="active">Distributer/Dealer</a></td>
+                                                                                                                                    <td *ngIf="detail.type==7" class="w90"><a class="link-btn" mat-button
+                                                                                                                                        routerLink="/contractor-detail/{{detail.id}}"
+                                                                                                                                        routerLinkActive="active">Direct Dealer</a></td>
+                                                                                                                                        <td *ngIf="detail.type==3" class="w90"><a class="link-btn" mat-button
+                                                                                                                                            routerLink="/contractor-detail/{{detail.id}}"
+                                                                                                                                            routerLinkActive="active">Retailer</a></td>
+                                                                                                                                            <td class="w130" matTooltip="{{detail.created_by_user | titlecase }}"
+                                                                                                                                            matTooltipPosition="above"><a class="link-btn"
+                                                                                                                                            routerLink="/sale-user-detail/{{detail.created_by}}"
+                                                                                                                                            routerLinkActive="active" mat-button>{{detail.created_by_user |
+                                                                                                                                                titlecase}}</a></td>
+
+                                                                                                                                                <td class="w130" matTooltip="{{detail.company_name | titlecase }}"
+                                                                                                                                                matTooltipPosition="above">{{detail.company_name }}</td>
+                                                                                                                                                <td class="w130" matTooltip="{{detail.name | titlecase }}, {{detail.mobile}}"
+                                                                                                                                                matTooltipPosition="above">{{detail.name}}, {{detail.mobile}}</td>
+
+                                                                                                                                                <td class="w90">{{detail.date_of_meeting | date:'dd-MMM-yyyy'}}</td>
+                                                                                                                                                <td class="w90"><strong>{{detail.total_member}}</strong></td>
+                                                                                                                                                <td class="w90">&#x20B9; {{detail.total_budget}}</td>
+                                                                                                                                                <td matTooltip="{{detail.description}}" matTooltipPosition="above">
+                                                                                                                                                    <p class="one-line">{{detail.description}}</p>
+                                                                                                                                                </td>
+
+
+                                                                                                                                                <td class="w100">
+                                                                                                                                                    <strong class="" [ngClass]="{'yellow-clr':detail.status=='pending','red-clr':detail.status=='rejected','green-clr':detail.status=='completed','orange-clr':detail.status=='approved'}">{{detail.status | uppercase}}</strong>
+
+                                                                                                                                                </td>
+                                                                                                                                            </tr>
+                                                                                                                                        </ng-container>
+                                                                                                                                        <ng-container *ngFor="let lead of skelton">
+                                                                                                                                            <tr class="sk-loading" *ngIf="loader">
+                                                                                                                                                <td class="w90">
+                                                                                                                                                    <div>&nbsp;</div>
+                                                                                                                                                </td>
+                                                                                                                                                <td class="w150">
+                                                                                                                                                    <div>&nbsp;</div>
+                                                                                                                                                </td>
+                                                                                                                                                <td class="w150">
+                                                                                                                                                    <div>&nbsp;</div>
+                                                                                                                                                </td>
+                                                                                                                                                <td class="w90">
+                                                                                                                                                    <div>&nbsp;</div>
+                                                                                                                                                </td>
+                                                                                                                                                <td class="w90">
+                                                                                                                                                    <div>&nbsp;</div>
+                                                                                                                                                </td>
+                                                                                                                                                <td class="w100">
+                                                                                                                                                    <div>&nbsp;</div>
+                                                                                                                                                </td>
+                                                                                                                                                <td>
+                                                                                                                                                    <div>&nbsp;</div>
+                                                                                                                                                </td>
+                                                                                                                                                <td class="w100">
+                                                                                                                                                    <div>&nbsp;</div>
+                                                                                                                                                </td>
+                                                                                                                                            </tr>
+                                                                                                                                        </ng-container>
+                                                                                                                                    </table>
+                                                                                                                                </div>
+                                                                                                                            </div>
+                                                                                                                        </div>
+
+                                                                                                                        <div *ngIf="contractorMeetListDetail.length==0">
+                                                                                                                            <div class="no-data">
+                                                                                                                                <img src="assets/img/no-data.gif" alt="">
+                                                                                                                                <p>Data not <span>available !</span></p>
+                                                                                                                            </div>
+                                                                                                                        </div>
+                                                                                                                    </div>
+
+
+                                                                                                                    <div class="" *ngIf="view_tab=='visiting-card'">
+                                                                                                                        <div class="cs-table left-right-10">
+                                                                                                                            <div class="sticky-head">
+                                                                                                                                <div class="table-head">
+                                                                                                                                    <table>
+                                                                                                                                        <tr>
+                                                                                                                                            <th class="w90">Date Created</th>
+
+                                                                                                                                            <th class="w130">Created By</th>
+                                                                                                                                            <th class="w150">Company Name</th>
+                                                                                                                                            <th class="w130">Contact Person</th>
+                                                                                                                                            <th class="w130">Contact Number</th>
+                                                                                                                                            <!-- <th class="w150">Email-ID</th> -->
+                                                                                                                                            <th>Description</th>
+                                                                                                                                            <!-- <th class="w55 pt0 pb0">No. of Days</th> -->
+                                                                                                                                            <th class="w80">Total Card</th>
+                                                                                                                                            <th class="w80">Status</th>
+                                                                                                                                        </tr>
+                                                                                                                                    </table>
+                                                                                                                                </div>
+
+                                                                                                                            </div>
+                                                                                                                            <div class="table-container">
+                                                                                                                                <div class="table-content">
+                                                                                                                                    <table>
+                                                                                                                                        <ng-container *ngFor="let detail of visitingCardDetail ; let i = index">
+                                                                                                                                            <tr>
+
+                                                                                                                                                <td class="w90">{{detail.created_at | date:'dd-MMM-yyyy'}}</td>
+
+                                                                                                                                                <td class="w130" matTooltip="{{detail.created_by_user | titlecase}}"
+                                                                                                                                                matTooltipPosition="above">
+                                                                                                                                                <p class="one-line">{{detail.created_by_user | titlecase}}</p>
+                                                                                                                                            </td>
+                                                                                                                                            <td class="w150" matTooltip="{{detail.company_name | titlecase }}"
+                                                                                                                                            matTooltipPosition="above">
+                                                                                                                                            <p class="one-line">{{detail.company_name | titlecase }}</p>
+                                                                                                                                        </td>
+                                                                                                                                        <td class="w130" matTooltip="{{detail.name | titlecase}}"
+                                                                                                                                        matTooltipPosition="above">
+                                                                                                                                        <p class="one-line">{{detail.name | titlecase}}</p>
+                                                                                                                                    </td>
+                                                                                                                                    <td class="w130">{{detail.mobile}}</td>
+
+                                                                                                                                    <td class="one-line" matTooltip="{{detail.description}}" matTooltipPosition="above">
+                                                                                                                                        <span >{{detail.description}}</span>
+                                                                                                                                    </td>
+
+
+                                                                                                                                    <td class="w80"><strong>{{detail.total_cards}}</strong></td>
+                                                                                                                                    <td class="w80">
+                                                                                                                                        <strong class="" [ngClass]="{'yellow-clr':detail.status=='pending','red-clr':detail.status=='reject','blue-clr':detail.status=='delivered','green-clr':detail.status=='received','orange-clr':detail.status=='running'}">{{detail.status | uppercase}}</strong>
+                                                                                                                                    </td>
+                                                                                                                                </tr>
+                                                                                                                            </ng-container>
+
+                                                                                                                            <ng-container *ngFor="let lead of skelton">
+                                                                                                                                <tr class="sk-loading" *ngIf="loader">
+                                                                                                                                    <td class="w90">
+                                                                                                                                        <div>&nbsp;</div>
+                                                                                                                                    </td>
+                                                                                                                                    <td class="w140">
+                                                                                                                                        <div>&nbsp;</div>
+                                                                                                                                    </td>
+                                                                                                                                    <td class="w140">
+                                                                                                                                        <div>&nbsp;</div>
+                                                                                                                                    </td>
+                                                                                                                                    <td class="w140">
+                                                                                                                                        <div>&nbsp;</div>
+                                                                                                                                    </td>
+                                                                                                                                    <td class="w90">
+                                                                                                                                        <div>&nbsp;</div>
+                                                                                                                                    </td>
+                                                                                                                                    <td>
+                                                                                                                                        <div>&nbsp;</div>
+                                                                                                                                    </td>
+                                                                                                                                    <td class="w100">
+                                                                                                                                        <div>&nbsp;</div>
+                                                                                                                                    </td>
+                                                                                                                                    <td class="w100">
+                                                                                                                                        <div>&nbsp;</div>
+                                                                                                                                    </td>
+                                                                                                                                </tr>
+                                                                                                                            </ng-container>
+                                                                                                                        </table>
+                                                                                                                    </div>
+                                                                                                                </div>
+                                                                                                            </div>
+                                                                                                            <div *ngIf="visitingCardDetail.length==0">
+                                                                                                                <div class="no-data">
+                                                                                                                    <img src="assets/img/no-data.gif" alt="">
+                                                                                                                    <p>Data not <span>available !</span></p>
+                                                                                                                </div>
+                                                                                                            </div>
+                                                                                                        </div>
+
+
+                                                                                                        <div class="" *ngIf="view_tab=='Pop-n-Gifts'">
+                                                                                                            <div class="cs-table left-right-10">
+                                                                                                                <div class="sticky-head">
+                                                                                                                    <div class="table-head">
+                                                                                                                        <table>
+                                                                                                                            <tr>
+                                                                                                                                <th class="w50">S. No</th>
+                                                                                                                                <th class="w90">Date Created</th>
+                                                                                                                                <th class="w130">Created By</th>
+                                                                                                                                <th class="w130">Item Name</th>
+                                                                                                                                <th class="w60">Qty</th>
+
+                                                                                                                                <th>Delivery Note</th>
+                                                                                                                            </tr>
+                                                                                                                        </table>
+                                                                                                                    </div>
+                                                                                                                </div>
+
+                                                                                                                <div class="table-container" *ngIf="PopData.length!=0">
+
+                                                                                                                    <div class="table-content">
+                                                                                                                        <table>
+                                                                                                                            <ng-container *ngFor="let outgoing of PopData ; let i = index">
+
+                                                                                                                                <tr>
+                                                                                                                                    <td class="w50">{{i+1}}</td>
+                                                                                                                                    <td class="w90">{{outgoing.date_created| date : 'd MMM y'}}</td>
+                                                                                                                                    <td class="w130">{{outgoing.created_by_name}}</td>
+                                                                                                                                    <td class="w130">{{outgoing.item_name}}</td>
+                                                                                                                                    <td class="w60">{{outgoing.qty}}</td>
+
+                                                                                                                                    <td>{{outgoing.delivery_note}}</td>
+                                                                                                                                </tr>
+
+                                                                                                                            </ng-container>
+                                                                                                                            <ng-container *ngFor="let lead of skelton">
+                                                                                                                                <tr class="sk-loading" *ngIf="loader">
+                                                                                                                                    <td class="w90">
+                                                                                                                                        <div>&nbsp;</div>
+                                                                                                                                    </td>
+                                                                                                                                    <td class="w150">
+                                                                                                                                        <div>&nbsp;</div>
+                                                                                                                                    </td>
+                                                                                                                                    <td class="w150">
+                                                                                                                                        <div>&nbsp;</div>
+                                                                                                                                    </td>
+                                                                                                                                    <td class="w90">
+                                                                                                                                        <div>&nbsp;</div>
+                                                                                                                                    </td>
+                                                                                                                                    <td class="w90">
+                                                                                                                                        <div>&nbsp;</div>
+                                                                                                                                    </td>
+                                                                                                                                    <td class="w100">
+                                                                                                                                        <div>&nbsp;</div>
+                                                                                                                                    </td>
+                                                                                                                                    <td>
+                                                                                                                                        <div>&nbsp;</div>
+                                                                                                                                    </td>
+                                                                                                                                    <td class="w100">
+                                                                                                                                        <div>&nbsp;</div>
+                                                                                                                                    </td>
+                                                                                                                                </tr>
+                                                                                                                            </ng-container>
+                                                                                                                        </table>
+                                                                                                                    </div>
+                                                                                                                </div>
+                                                                                                            </div>
+
+                                                                                                            <div *ngIf="PopData.length==0">
+                                                                                                                <div class="no-data">
+                                                                                                                    <img src="assets/img/no-data.gif" alt="">
+                                                                                                                    <p>Data not <span>available !</span></p>
+                                                                                                                </div>
+                                                                                                            </div>
+                                                                                                        </div>
+                                                                                                    </div>
+                                                                                                </div>
+                                                                                            </div>

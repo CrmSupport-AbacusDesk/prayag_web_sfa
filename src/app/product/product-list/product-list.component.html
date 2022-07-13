@@ -1,0 +1,241 @@
+<!-- <div class="main-container" *ngIf="loader">
+  <div class="" >
+    
+    
+    <div class="container-outer padding0">
+      <div class="container tab-container" >
+        <div class="cs-table">
+          <div class="table-head">
+            <table>
+              <tr class="sk-loading">
+                <th class="w70"><div>&nbsp;</div></th> 
+                <th class=""><div>&nbsp;</div></th> 
+                <th class="w170"><div>&nbsp;</div></th>
+                <th class="w300"><div>&nbsp;</div></th>
+                <th><div>&nbsp;</div></th>
+              </tr>
+            </table>
+          </div>
+          <div class="table-container">
+            <div class="table-content">
+              <table>
+                <tr *ngFor="let lead of skelton" class="sk-loading">
+                  <td class="w70"><div>&nbsp;</div></td> 
+                  <td class=""><div>&nbsp;</div></td>
+                  <td class="w170"><div>&nbsp;</div></td>
+                  <td class="w300"><div>&nbsp;</div></td>
+                  <td><div>&nbsp;</div></td>
+                </tr>
+              </table>
+            </div>
+          </div>
+        </div>
+        
+      </div>
+    </div>
+    <div>
+    </div>
+  </div>
+</div> -->
+<div  class="main-container">
+  <div class="middle-container mb0">
+    <div class="page-heading">
+      <div class="heading-text w250">
+        <h2>Total Products</h2>
+        <p>{{count}}</p>
+      </div>
+    </div>
+    <!-- <div class="tabs">
+      <ul>
+        <li><a class="" [ngClass]="tab_active=='all' ? 'active' : ''"  (click)="getProductList('all')">All<span class="counter">{{count}}</span></a></li>
+        <li><a class="" [ngClass]="tab_active=='scheme' ? 'active' : ''" (click)="getProductList('scheme')">Scheme<span class="counter">{{scheme_active_count}}</span></a></li>
+      </ul>
+    </div> -->
+    <!-- <div class="page-heading w250">
+      <img src="assets/img/pipes.svg" class="h-icon h20">
+      <div class="heading-text">
+        <h2> Product</h2>
+        <p>Total Product - {{count}}</p>
+      </div>
+    </div> -->
+    
+    <!-- <div class="top-pagination">
+      <ul>
+        <li class="refresh-area">
+          <a class="refresh-btn" mat-raised-button  matTooltip="Refresh" (click)="refresh()"><i class="material-icons"> refresh</i></a>
+        </li>
+        <li><p>Pages {{pagenumber}} Of {{total_page}}</p></li>
+        <li>
+          <button mat-button class="left-btn" (click)="start=start-page_limit; getProductList()" [disabled]="pagenumber == 1">
+            <i class="material-icons">keyboard_arrow_left</i></button>
+          </li>
+          <li>
+            <input type="text" placeholder="GO TO" name="pagenumber" (keyup.enter)="start=(pagenumber*page_limit)-page_limit; getProductList()" [(ngModel)]="pagenumber"  min="1" max={{total_page}}>
+          </li>
+          
+          <li>
+            <button mat-button class="right-btn"  (click)="start=start+page_limit; getProductList()" [disabled]="pagenumber == total_page">
+              <i class="material-icons">keyboard_arrow_right</i>
+            </button>
+          </li>
+        </ul>
+      </div> -->
+    </div>
+    
+    <div class="container-outer padding0">
+      <div class="container pb60" >
+        <div class="cs-table">
+          <div class="sticky-head">
+            <div class="table-head">
+              <table>
+                <tr>
+                  <th class="w70">S. No</th> 
+                  <th class="w100">Category</th>
+                  <th class="">Product Name</th> 
+                  <th class="w210">Product Code</th>
+                  <th class="w210">HSN Code</th>
+                  <th class="w100">GST Percent</th>
+                  <th class="w100">Unit</th>
+                  <th class="w90">MRP</th>
+                  
+                </tr>
+              </table>
+            </div>
+            
+            <div class="table-head bdrt">
+              <table>
+                <tr>
+                  <th class="w70"></th>
+                  <th class="w100">
+                    <div class="th-search-acmt">
+                      <mat-form-field>
+                        <input type="text"  matInput placeholder="category...." name="category" (keyup)="getProductList(getProductList)" #category="ngModel" [(ngModel)]="data.category" >
+                        <mat-autocomplete #search="matAutocomplete" >
+                          <mat-option >
+                          </mat-option>
+                        </mat-autocomplete>
+                      </mat-form-field>
+                    </div>
+                  </th>
+                  <th class=" pt0 pb0">
+                    <div class="th-search-acmt">
+                      <mat-form-field class="example-full-width cs-input select-input">
+                        <input matInput placeholder="Enter Product Name..." [matAutocomplete]="subCategory" (keyup)="getProductList('notype')" (input)="sub_categoryy_array_filter(data.sub_category,tmp_subcategory)" name="subCategory" #subCategory="ngModel" [(ngModel)]="data.product_name" >
+                        <mat-autocomplete #subCategory="matAutocomplete">
+                          <mat-option *ngFor="let subCategory of subCategory_list" (click)="getProductList('notype')" value="{{subCategory.sub_category}}">
+                            <small>{{subCategory.sub_category}}</small>
+                          </mat-option>
+                        </mat-autocomplete>
+                      </mat-form-field>
+                    </div>
+                  </th>    
+                  <th class="w210 pt0 pb0">
+                    <div class="th-search-acmt">
+                      <mat-form-field>
+                        <input type="text"  matInput placeholder="Enter Product Code...." name="cat_no" (keyup)="getProductList(getProductList)" #cat_no="ngModel" [(ngModel)]="data.prod_code" >
+                        <mat-autocomplete #search="matAutocomplete" >
+                          <mat-option >
+                          </mat-option>
+                        </mat-autocomplete>
+                      </mat-form-field>
+                    </div>
+                  </th>  
+                  <th class="w210">
+                    <div class="th-search-acmt">
+                      <mat-form-field>
+                        <input type="text"  matInput placeholder="Hsn...." name="hsn" (keyup)="getProductList(getProductList)" #hsn="ngModel" [(ngModel)]="data.hsn" >
+                        <mat-autocomplete #search="matAutocomplete" >
+                          <mat-option >
+                          </mat-option>
+                        </mat-autocomplete>
+                      </mat-form-field>
+                    </div>
+                  </th>
+                  <th class="w100">&nbsp;</th>
+                 
+                  <th class="w100"></th>
+                  <th class="w90"></th>
+                  <!-- <th>
+                    <div class="th-search-acmt">
+                      <mat-form-field>
+                        <input type="text"  matInput placeholder="Enter Product Description...." name="description" (keyup.enter)="getProductList()" #description="ngModel" [(ngModel)]="data.desc" >
+                        <mat-autocomplete #search="matAutocomplete" >
+                          <mat-option >
+                          </mat-option>
+                        </mat-autocomplete>
+                      </mat-form-field>
+                    </div>
+                  </th> -->
+                  
+                </tr>
+              </table>
+            </div>
+          </div>
+          
+          <div class="table-container" *ngIf="loader">
+
+            <div class="table-content">
+              <table>
+                <tr *ngFor="let lead of skelton" class="sk-loading">
+                  <td class="w70"><div>&nbsp;</div></td> 
+                  <td  class="w100"><div>&nbsp;</div></td>
+                  <td class=""><div>&nbsp;</div></td>
+                  <td class="w210"><div>&nbsp;</div></td>
+                  <td class="w210"><div>&nbsp;</div></td>
+                  <td class="w100"><div>&nbsp;</div>
+                  <td class="w100"><div>&nbsp;</div>
+                  <td class="w90"><div>&nbsp;</div>
+                 
+                </td>
+                </tr>
+              </table>
+            </div>
+          </div>
+
+          <div class="table-container" *ngIf="!loader">
+            <div class="table-content">
+              <table>
+                <tr *ngFor="let p of productlist;let i = index ">
+                  <!-- <td class="w180">{{p.category}}</td> -->
+                  <td class="w70">{{i + 1}}</td>    
+                  <td class="w100">{{p.category?p.category:'--'}}</td>
+                  <td class=" pt0 pb0"><a *ngIf="view_edit" class="link-btn" mat-button routerLink="/product-detail/{{(p.id)}}" routerLinkActive="active"> {{p.product_name}}</a></td>    
+                  <td class="w210">{{p.product_code && p.product_code!=''?p.product_code:'--'}}</td>
+                  <td class="w210">{{p.hsn && p.hsn!= '' ?p.hsn:'--'}}</td>
+                  <td class="w100">{{p.gst && p.gst!= '' && p.gst != '0' ?p.gst+" %" :'--'}}</td>
+                  <td class="w100">{{p.unit?p.unit:'--'}}</td>
+                  <td class="w90">{{p.mrp?p.mrp:'--'}}
+                    <div class="action-btns" >
+                      <a mat-button class="view" (click)="detailProduct(p.id)"><i class="material-icons">remove_red_eye</i> View</a>
+                      <button mat-button class="delete" (click)="deleteProduct(p.id)"><i class="material-icons">delete_sweep</i> Delete</button>
+                    </div>
+                  </td>
+               
+                  <!-- <td>{{p.description}}
+                    
+                  </td> -->
+                </tr>
+              </table>
+            </div>
+          </div>
+        </div>
+        <div class="no-data" *ngIf="data_not_found==true">
+          <img src="assets/img/no-data.gif" alt="">
+          <p>Data not <span>available !</span></p>
+        </div>
+      </div>
+    </div>
+    <div>
+    </div>
+    <div class="fix-btn">
+      <a *ngIf="view_add" class="bottom-btn" mat-raised-button routerLink="/add-product"><i class="material-icons">add</i></a>
+      <a class="bottom-btn ecxel-btn" matTooltip="Download Excel" matTooltipPosition="above" mat-raised-button (click)="exportAsXLSX()"><img src="assets/img/excel.svg"></a>
+        
+     
+    </div>
+    <!-- <pagination-controls class="myPagination" (pageChange)=" p = $event "></pagination-controls> -->
+  </div>
+  
+  
+  
+  

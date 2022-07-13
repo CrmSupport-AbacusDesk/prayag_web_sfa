@@ -1,0 +1,243 @@
+<div class="main-container">
+    <div class="middle-container mb0">
+        <div class="page-heading">
+            <div class="heading-text bc-space">
+                <div class="back-btn">
+                    <a mat-button (click)="backToList()"><i class="material-icons">west</i></a>
+                </div>
+                <h2>Travel Plan Detail</h2>
+                <!-- <p>10</p> -->
+            </div>
+        </div>
+    </div>
+    
+    <div class="container-outer padding0">
+        <div class="container" >
+            <div class="row mt15">
+                <div class="col s12">
+                    <div class="details-info">
+                        <div class="basic-details">
+                            <div class="cs-heading">
+                                <h2>Basic Detail</h2>
+                                <!-- <button  class="edit-item" mat-raised-button color="accent" (click)="edit_dr_detail(dr_detail.company_name,dr_detail.type,dr_detail.mobile,dr_detail.email,dr_detail.gst,dr_detail.assign_distributor,dr_detail.landline_no,dr_detail.name,dr_detail.date_of_birth,dr_detail.date_of_anniversary,dr_detail.password,'basic_detail',dr_detail.target,dr_detail.opening_balance,dr_detail.whatsapp_no, dr_detail.username, dr_detail.dr_code ,dr_detail.category_code)">
+                                    <i class="material-icons">create</i>
+                                </button> -->
+                            </div>
+                            <div class="cs-figure">
+                                <ul class="minus-top">
+                                    <li>
+                                        <div class="outer">
+                                            <div class="inner">
+                                                <span>Sales User</span>
+                                                
+                                                <p>{{travellist.assign_to_name}}({{travellist.contact_01}})</p>
+                                                
+                                            </div>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div class="outer">
+                                            <div class="inner">
+                                                
+                                                <span>Date From</span>
+                                                <p>{{travellist.date_from |date : 'd MMM y'}}</p>
+                                                
+                                            </div>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div class="outer">
+                                            <div class="inner">
+                                                
+                                                <span>Date To</span>
+                                                <p>{{travellist.date_to |date : 'd MMM y'}}</p>
+                                            </div>
+                                        </div>
+                                    </li>
+                                    
+                                    
+                                    <li>
+                                        <div class="outer">
+                                            <div class="inner">
+                                                <span>Plan Type</span>
+                                                <p *ngIf="travellist.travel_type == 'Distributor Visit'">Party Visit</p>
+                                                <p *ngIf="travellist.travel_type != 'Distributor Visit'">{{travellist.travel_type}}</p>
+                                            </div>
+                                        </div>
+                                    </li>
+                                    
+                                </ul>
+                                <ul class="minus-top">
+                                    <li>
+                                        <div class="outer">
+                                            <div class="inner">
+                                                <span>Created By.</span>
+                                                <p>{{travellist.created_by_name && travellist.created_by_name != '' && travellist.created_by_name != null?travellist.created_by_name:'--'}}</p>
+                                            </div>
+                                        </div>
+                                    </li>
+                                    
+                                    <li>
+                                        <div class="outer">
+                                            <div class="inner">
+                                                
+                                                <span>Remark</span>
+                                                <p>{{travellist.status_remark && travellist.status_remark != '' && travellist.status_remark != null?travellist.status_remark:'--'}}</p>
+                                                
+                                            </div>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div class="outer">
+                                            <div class="inner">
+                                                <span>Status</span>
+                                                <p>{{travellist.status && travellist.status != '' && travellist.status != null?travellist.status:'--'}}</p>
+                                            </div>
+                                        </div>
+                                    </li>
+                                    <li >
+                                        <div class="outer">
+                                            <div class="inner">
+                                                <span>Reason of Reject</span>
+                                                <p>{{travellist.reason && travellist.reason != '' && travellist.reason != null?travellist.reason:'--'}}</p>
+                                                
+                                            </div>
+                                        </div>
+                                    </li>
+                                    
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+            </div>
+            
+            <div class="row mt15">
+                <div class="col s6" *ngIf="traveldistributor.length">
+                    <div class="details-info">
+                        <div class="basic-details">
+                            <div class="cs-heading">
+                                <h2>Distributor detail</h2>
+                                <button  class="edit-item" mat-raised-button color="accent" (click)="openEditDialog(traveldistributor)">
+                                    <i class="material-icons">create</i>
+                                </button>
+                            </div>
+                            <div class="cs-table" style="margin: -10px;">
+                                <div class="sticky-head">
+                                    <div class="table-head">
+                                        <table>
+                                            <tr>
+                                                <th class="w100 text-center">Company Name</th>
+                                                <th class="w100 text-center">Network</th>
+                                                <th class="w100 text-center">Network Type</th>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                </div>        
+                                <div class="table-container">
+                                    <div class="table-content">
+                                        <table>
+                                            <tr *ngFor="let list of traveldistributor">
+                                                <td class="w100 text-center">{{(list.company_name?list.company_name :'--') | uppercase }}</td>
+                                                <td class="w100 text-center" *ngIf="list.lead_type == 'Lead'">Lead Network</td>
+                                                <td class="w100 text-center" *ngIf="list.lead_type == 'Dr'">Distributor Network</td>
+                                                <td class="w100 text-center" *ngIf="list.type == '1'">Distributor</td>
+                                                <td class="w100 text-center" *ngIf="list.type == '3'">Retailers</td>
+                                                <td class="w100 text-center" *ngIf="list.type == '9'">Project</td>
+                                                <td class="w100 text-center" *ngIf="list.type == '5'">End User</td>
+                                                <td class="w100 text-center" *ngIf="list.type == '11'">Electrician</td>
+                                                <td class="w100 text-center" *ngIf="list.type == '12'">Sub Dealer</td>
+                                                <td class="w100 text-center" *ngIf="list.type == '13'">Private Contractor</td>
+                                                <td class="w100 text-center" *ngIf="list.type == '14'">Government Contractor</td>
+                                                <td class="w100 text-center" *ngIf="list.type == '15'">Builder</td>
+                                                <td class="w100 text-center" *ngIf="list.type == '16'">Architect</td>
+                                                <!-- <td class="w100 text-center" *ngIf="list.type == '7'">Direct Dealer</td>                                                 -->
+                                            </tr>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+               
+            </div>
+            <div class="row mt15">
+                <div class="s6" >
+                    <div class="details-info">
+                        <div class="basic-details">
+                            <div class="cs-heading">
+                                <h2>Area Details</h2>
+                                <button  class="edit-item" mat-raised-button color="accent" (click)="openEditDialog2(travelarea)">
+                                    <i class="material-icons">create</i>
+                                </button>
+                            </div>
+                            
+                            <div class="cs-list-item">
+                                <div class="type-body" *ngFor="let data of travelarea; let i = index">
+                                    <p>AREA {{i+1}}</p> 
+                                    <ul>
+                                        <li>
+                                            <span>{{data.state}}</span>
+                                        </li>
+                                        <li>
+                                            <span>{{data.district}}</span>
+                                        </li>
+                                        <li>
+                                            <span>{{data.city}}</span>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col s6" *ngIf="check_in_data.length">
+                    <div class="details-info">
+                        <div class="basic-details">
+                            <div class="cs-heading">
+                                <h2>Checkin detail</h2>
+                               
+                            </div>
+                            <div class="cs-table" style="margin: -10px;">
+                                <div class="sticky-head">
+                                    <div class="table-head">
+                                        <table>
+                                            <tr>
+                                                <th class="w100 text-center">Company Name</th>
+                                                <th class="w100 text-center">Network Type</th>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                </div>        
+                                <div class="table-container">
+                                    <div class="table-content">
+                                        <table>
+                                            <tr *ngFor="let list of check_in_data">
+                                                <td class="w100 text-center">{{(list.company_name?list.company_name :'--') | uppercase }}</td>
+                                               
+                                                <td class="w100 text-center" *ngIf="list.dr_type == '1'">Distributor</td>
+                                                <td class="w100 text-center" *ngIf="list.dr_type == '3'">Retailers</td>
+                                                <td class="w100 text-center" *ngIf="list.dr_type == '9'">Project</td>
+                                                <td class="w100 text-center" *ngIf="list.dr_type == '5'">End User</td>
+                                                <td class="w100 text-center" *ngIf="list.dr_type == '11'">Electrician</td>
+                                                <td class="w100 text-center" *ngIf="list.dr_type == '12'">Sub Dealer</td>
+                                                <td class="w100 text-center" *ngIf="list.dr_type == '13'">Private Contractor</td>
+                                                <td class="w100 text-center" *ngIf="list.dr_type == '14'">Government Contractor</td>
+                                                <td class="w100 text-center" *ngIf="list.dr_type == '15'">Builder</td>
+                                                <td class="w100 text-center" *ngIf="list.dr_type == '16'">Architect</td>
+                                                <td class="w100 text-center" *ngIf="list.dr_type == '7'">Direct Dealer</td>                                                
+                                            </tr>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+               
+            </div>
+        </div>
+    </div>    
+</div>

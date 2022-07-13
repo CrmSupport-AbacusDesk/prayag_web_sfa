@@ -1,0 +1,147 @@
+<div class="main-container">
+  <div class="middle-container mb0">
+    <div class="page-heading">
+      <img src="assets/img/person.svg" class="h-icon">
+      <div class="heading-text">
+        <h2> PLumber Leads</h2>
+        <p>Total PLumber Lead: {{count}}</p>
+      </div>
+    </div>
+  </div>
+  
+  <div class="container-outer padding0">
+    <!-- <div *ngIf="loader">
+      <mat-spinner class="loader">
+        <div><p>Loading....</p></div>
+      </mat-spinner>
+    </div> -->
+    <div class="container mb60" >
+      <div class="cs-table">
+        <div class="sticky-head">
+          <div class="table-head">
+            <table>
+              <tr>
+                <th class="w110">Date</th>
+                <th class="w200">Name</th>
+                <th class="w110">Mobile</th>
+                <th class="w150">State</th>
+                <th class="w150">District</th>
+                <th class="w90">D.O.B</th>
+                <th>Dealer</th>
+                <th class="w70">Wallet</th>
+                <th class="w50">Status</th>
+              </tr>
+            </table>
+          </div>
+          <div class="table-head bdrt" >
+            <table>
+              <tr>
+                <th class="w110"></th>
+                <th class="w200">
+                  <div class="th-search-acmt">
+                    <mat-form-field class="example-full-width cs-input select-input">
+                      <input matInput placeholder="Name. . ." type="text" name="name" [(ngModel)]="search_val.name" (keyup.enter)="leadList()">
+                      
+                    </mat-form-field>
+                  </div>
+                </th>
+                <th class="w110">
+                  <div class="th-search-acmt">
+                    <mat-form-field class="example-full-width cs-input select-input">
+                      <input matInput placeholder="Mobile. . ." type="text" name="mobile" [(ngModel)]="search_val.mobile" (keyup.enter)="leadList()" >
+                    </mat-form-field>
+                  </div>
+                </th>    
+                <th class="w150">
+                  <div class="th-search-acmt">
+                    <mat-form-field>
+                      <input type="text"  matInput placeholder="State. . ." type="text" name="state" [(ngModel)]="search_val.state" (keyup.enter)="leadList()">
+                      
+                    </mat-form-field>
+                  </div>
+                </th> 
+                
+                
+                <th class="w150">
+                  <div class="th-search-acmt">
+                    <mat-form-field>
+                      <input type="text"  matInput placeholder="District. . ." type="text" name="district" [(ngModel)]="search_val.district" (keyup.enter)="leadList()">
+                      
+                    </mat-form-field>
+                  </div>
+                </th>                             
+                <th class="w90" ></th>     
+                <th>
+                  <div class="th-search-acmt">
+                    <mat-form-field>
+                      <input type="text"  matInput placeholder="Dealer. . ." (keyup.enter)="getItemsList('dealer_name',value.search6)" #search="ngModel" [(ngModel)]="value.search6">
+                      
+                    </mat-form-field>
+                  </div>
+                </th> 
+                <th class="w70"></th>
+                <th class="w50"></th>          
+              </tr>
+            </table>
+          </div>
+        </div>
+        
+        <div class="table-container">
+          <div class="table-content">
+            <table>
+              <tr *ngFor="let lead of lead_List">
+                <td class="w110 text-center">{{lead.date_created | date :' dd/MM/yyyy'}}</td>
+                <td class="w200"><a class="link-btn" routerLink="/plumber-detail.component/{{lead.id}}" routerLinkActive="active">{{lead.name}}</a></td>
+                <td class="w110">{{lead.mobile}}</td>
+                <td class="w150">{{lead.state}}</td>
+                <td class="w150">{{lead.district}}</td>
+                <td class="w90">{{lead.dob | date :'dd/MM/yyyy'}}</td>
+                <td matTooltip=" {{lead.dealer_name}}" matTooltipPosition="above">
+                  <div class="one-line">
+                    {{lead.dealer_name}}
+                  </div>
+                </td> 
+                <td class="w70" *ngIf="!lead.wallet">Empty</td> 
+                <td class="w70" *ngIf="lead.wallet">{{lead.wallet}}</td>
+                <td class="w70">{{lead.status}}</td> 
+              </tr>
+              <ng-container *ngFor="let lead of skelton">
+                <tr class="sk-loading"  *ngIf="loader">
+                  <td class="w110"><div>&nbsp;</div></td>
+                  <td class="w200"><div>&nbsp;</div></td>
+                  <td class="w110"><div>&nbsp;</div></td>
+                  <td class="w150"><div>&nbsp;</div></td>
+                  <td class="w150"><div>&nbsp;</div></td>
+                  <td class="w90"><div>&nbsp;</div></td>
+                  <td><div>&nbsp;</div></td>
+                  <td class="w70"><div>&nbsp;</div></td>
+                </tr>
+              </ng-container>
+            </table>
+            <div
+            class="search-results"
+            data-infinite-scroll
+            debounce
+            [infiniteScrollDistance]="1"
+            [infiniteScrollUpDistance]="2"
+            [infiniteScrollThrottle]="10"
+            (scrolled)="leadList()"              
+            >
+          </div>
+          
+        </div>
+      </div>
+      
+    </div>
+    
+    <div class="no-data" *ngIf="data_not_found==true">
+      <img src="assets/img/no-data.gif" alt="">
+      <p>Data not <span>available !</span></p>
+    </div>
+  </div>
+  
+</div>
+<div class="fix-btn">
+  <a class="bottom-btn ecxel-btn" matTooltip="Download Excel" matTooltipPosition="above" mat-raised-button (click)="exportAsXLSX()"><img src="assets/img/excel.svg"></a>
+</div>
+

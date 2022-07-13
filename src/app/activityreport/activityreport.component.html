@@ -1,0 +1,145 @@
+<div class="main-container">
+  <div class="middle-container mb0">
+    <div class="page-heading">
+      <div class="heading-text">
+        <h2>Activity Report</h2>
+      </div>
+
+    </div>
+
+    <div class="uppr-one m-right-data">
+
+      <ul>
+        <li class="refresh-area mr0 after-none">
+          <a class="refresh-btn" mat-raised-button (click)="refresh() "  matTooltip="Refresh" ><i class="material-icons"> refresh</i></a>
+          <!-- <a class="refresh-btn" mat-raised-button  matTooltip="Refresh" ><i class="material-icons"> refresh</i></a> -->
+        </li>
+      </ul>
+
+      <div class="cs-form date-filter">
+        <mat-form-field appearance="outline" class="cs-input w150"
+        >
+        <mat-label>Sales Team</mat-label>
+        <mat-select multiple name="users" #user="ngModel" [(ngModel)]="data.user_id">
+          <mat-option *ngFor="let row of systemuserlist" value="{{row.id}}" color="accent">{{row.name}}</mat-option>
+        </mat-select>
+      </mat-form-field>
+        <mat-form-field appearance="outline" class="cs-input w150" >
+          <mat-label>Date From</mat-label>
+          <input matInput [matDatepicker]="date_from" placeholder="From Date" [(ngModel)]="data.date_from"  readonly>
+          <mat-datepicker-toggle matSuffix [for]="date_from"></mat-datepicker-toggle>
+          <mat-datepicker #date_from></mat-datepicker>
+        </mat-form-field>
+
+        <div class="df">
+          <mat-form-field appearance="outline" class="cs-input w150">
+            <mat-label>Date To</mat-label>
+            <input matInput [matDatepicker]="date_to" placeholder="To Date" [(ngModel)]="data.date_to" readonly>
+            <mat-datepicker-toggle matSuffix [for]="date_to"></mat-datepicker-toggle>
+            <mat-datepicker #date_to></mat-datepicker>
+          </mat-form-field>
+          <a class="add-item ml10" mat-raised-button  (click)="activityList()">Go</a>
+        </div>
+      </div>
+
+
+
+
+    </div>
+
+  </div>
+  <div class="suggestion-box" *ngIf="!activity_list.length">
+    <img src="assets/img/select_please.jpg">
+  </div>
+  <div class="container-outer padding0"*ngIf="activity_list.length">
+    <div *ngIf="exp_loader">
+      <mat-spinner class="loader">
+        <div><p>Loading....</p></div>
+      </mat-spinner>
+    </div>
+
+    <div class="container mb60">
+      <div class="cs-table horizontal-scroll">
+        <div class="sticky-head">
+          <div class="table-head">
+            <table class="sno-border">
+              <tr>
+                <th class="w50">S.No.</th>
+
+                <th class="w100">Date Created</th>
+                <th class="w100">Created By</th>
+                <th class="w170">Company Name</th>
+                <th class="w170">Contact No.</th>
+
+                <th class="w170">Activity Type</th>
+
+                <th>Description</th>
+              </tr>
+            </table>
+          </div>
+
+        </div>
+
+
+        <div class="table-container">
+          <div class="table-content">
+            <table class="sno-border">
+              <tr *ngFor="let list of activity_list;let i=index">
+                <td class="w50">{{i+1+start}}</td>
+
+                <td class="w100">{{list.date_created | date : 'd MMM y'}}</td>
+                <td  class="w100">{{list.created_by_name}}</td>
+                <td class="w170">{{list.company_name}}</td>
+                <td class="w170">{{list.mobile}}</td>
+
+                <td class="w170">{{list.activity_type}}</td>
+
+                <td>{{list.remark}}
+
+                </td>
+              </tr>
+
+              <ng-container *ngFor="let lead of skelton">
+                <tr class="sk-loading sno-border"  *ngIf="loader">
+                  <td class="w100"><div>&nbsp;</div></td>
+                  <td class="w100"><div>&nbsp;</div></td>
+
+                  <td class="w170"><div>&nbsp;</div></td>
+                  <td class="w170"><div>&nbsp;</div></td>
+
+                  <td class="w170"><div>&nbsp;</div></td>
+
+                  <td><div>&nbsp;</div></td>
+                </tr>
+              </ng-container>
+            </table>
+            <div
+            class="search-results"
+            data-infinite-scroll
+            debounce
+            [infiniteScrollDistance]="1"
+            [infiniteScrollUpDistance]="2"
+            [infiniteScrollThrottle]="10"
+            (scrolled)="activityList()"
+            >
+          </div>
+          <div *ngIf="loader" class="lazy-loading" >
+            <img src="../../../paraflex/assets/img/lazy_loader.gif" alt="">
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="no-data" *ngIf="data_not_found==true">
+      <img src="assets/img/no-data.gif" alt="">
+      <p>Data not <span>available !</span></p>
+    </div>
+  </div>
+</div>
+
+<div class="fix-btn">
+  <a class="bottom-btn ecxel-btn" matTooltip="Download Excel" matTooltipPosition="above" mat-raised-button  (click)="exportAsXLSX()"><img src="assets/img/excel.svg"></a>
+
+</div>
+</div>

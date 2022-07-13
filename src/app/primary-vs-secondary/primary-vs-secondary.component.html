@@ -1,0 +1,194 @@
+<div class="main-container">
+  <div class="middle-container mb0">
+    <div class="page-heading">
+      <img src="assets/img/report.svg" class="h-icon h20">
+      <div class="heading-text">
+        <h2>Primary V/S Secondary</h2>
+      </div>
+    </div>
+    <div class="left-auto">
+      <div class="from-fields cs-flex">
+        <!-- name="distributor" [(ngModel)]="data.distributor" -->
+        <select class="select-filter" name="distributor" [(ngModel)]="data.distributor">
+          <option selected disabled value="">Select Distributor</option>
+          <option *ngFor="let val of distributor_list" value="{{val.id}}">{{val.company_name}}</option>
+        </select>
+        
+        <div class="control-field mr15">
+          <mat-form-field class="cs-input date-column infix-bodr">
+            <input matInput [matDatepicker]="pickers" placeholder="From" name="start_date" [(ngModel)]="data.start_date">
+            <mat-datepicker-toggle matSuffix [for]="pickers"></mat-datepicker-toggle>
+            <mat-datepicker #pickers></mat-datepicker>
+          </mat-form-field>
+        </div>
+        
+        <div class="control-field mr15">
+          <mat-form-field class="cs-input date-column infix-bodr">
+            <input matInput [matDatepicker]="picker" placeholder="To" name="end_date" [(ngModel)]="data.end_date" readonly>
+            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="cs-btn mt5">
+        <div class="in-btn">
+          <button mat-raised-button color="accent" [disabled]="!data.distributor && !data.start_date && !data.end_date" (click)="select_distributor()">Go</button>
+        </div>
+      </div>
+    </div>
+    
+  </div>
+  
+  <div class="container-outer">
+    <div class="container" *ngIf="data_not_found == true">
+      
+      <div class="row mb20">
+        <div class="col s4">
+          <div class="white-box">
+            <div class="upr">
+              <div class="img-part">
+                <img src="assets/img/distributor-icon.svg">
+              </div>
+              <h2>distributor Detail</h2>
+            </div>
+            <div class="lwr ht-scroll">
+              <div class="flex-bx">
+                <div class="content wp100">
+                  <p>Company Name</p>
+                  <h1>{{distributor_detail.company_name}}</h1>
+                </div>
+              </div>
+              <div class="flex-bx">
+                <div class="content">
+                  <p>Contact Person</p>
+                  <h1>{{distributor_detail.name}}</h1>
+                </div>
+                <div class="content">
+                  <p>Mobile Name</p>
+                  <h1>{{distributor_detail.mobile}}</h1>
+                </div>
+              </div>
+              <div class="flex-bx">
+                <div class="content wp100">
+                  <p>Address</p>
+                  <h1>{{distributor_detail.address}} {{distributor_detail.city}} {{distributor_detail.district}} {{distributor_detail.state}} {{distributor_detail.pincode}}</h1>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <div class="col s4">
+          <div class="white-box">
+            <div class="upr">
+              <div class="img-part">
+                <img src="assets/img/team.svg">
+              </div>
+              
+              <h2>Pearl Team</h2>
+            </div>
+            <div class="lwr ht-scroll">
+              <div class="team-list">
+                <div class="line" *ngFor="let data of user_assign">
+                  <p>{{data.name.charAt(0)}}</p>
+                  <h2>{{data.name}}</h2>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <div class="col s4">
+          <div class="white-box">
+            <div class="upr">
+              <div class="img-part">
+                <img src="assets/img/vs.svg">
+              </div>
+              
+              <h2>comparison</h2>
+            </div>
+            <div class="lwr">
+              <div class="compare-part">
+                <table class="compare-table">
+                  <tr>
+                    <th>Primary</th>
+                    <th>Secondary</th>
+                  </tr>
+                  <tr>
+                    <td>₹ {{distributor_detail.primary_sale}}</td>
+                    <td><a (click)="open_model()">₹ {{distributor_detail.secondary_sale}}</a></td>
+                  </tr>
+                </table>
+                
+                <p class="vs">V/S</p>
+              </div>
+            </div>
+          </div>
+          
+          
+          <div class="white-box mt15">
+            <div class="upr">
+              <div class="img-part">
+                <img src="assets/img/group.svg">
+              </div>
+              
+              <h2>Dealers</h2>
+            </div>
+            <div class="lwr">
+              <div class="compare-part">
+                <table class="compare-table">
+                  <tr>
+                    <th>Total Dealers</th>
+                    <th>Check-In</th>
+                  </tr>
+                  <tr>
+                    <td>{{dealer_count}}</td>
+                    <td>{{dealer_checkin_count.checkin}}</td>
+                  </tr>
+                </table>
+              </div>
+            </div>
+          </div>
+          
+        </div>
+      </div>
+      
+      
+      <div class="row">
+        <div class="col s12">
+          <div class="cs-table left-right-20">
+            <div class="sticky-head">
+              <div class="table-head">
+                <table>
+                  <tr>
+                    <th class="w50">S No</th>
+                    <th>Product</th>
+                    <th class="w200">Primary</th>
+                    <th class="w200">Secondary</th>
+                  </tr>
+                </table>
+              </div>
+            </div>
+            
+            <div class="table-container">
+              <div class="table-content">
+                <table>
+                  <tr *ngFor="let product of product_data; let i =index">
+                    <td class="w50">{{i+1}}</td>
+                    <td>{{product.product_code}}</td>
+                    <td class="w200">₹ {{product.primary_amount}}</td>
+                    <td class="w200">₹ {{product.secondary_amount}}</td>
+                  </tr>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  
+  <div class="suggestion-box" *ngIf="data_not_found == false">
+    <img src="assets/img/click-here.jpg">
+  </div>
+</div>
+</div>

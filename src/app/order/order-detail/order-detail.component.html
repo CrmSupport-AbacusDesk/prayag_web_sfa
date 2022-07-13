@@ -1,0 +1,495 @@
+<!-- <div class="{{login_data.access_level?'main-container':'main-container pl0'}}"> -->
+    <!-- {{login_data.view_dashboard=='1' ? 'main-container':'main-container pl0'}} -->
+    <div class="main-container ">
+        
+        <div *ngIf="loader">
+            <mat-spinner class="loader">
+                <div><p>Loading....</p></div>
+            </mat-spinner>
+        </div>
+        <div class="middle-container">
+            <div class="page-heading" >
+                <div class="heading-text bc-space">
+                    <div class="back-btn" (click)="back()">
+                        <a mat-button ><i class="material-icons">west</i></a>
+                    </div> 
+                    <h2>Order Details</h2>
+                </div>
+            </div>
+            
+         
+        </div>
+        
+        
+        <div class="container-outer">
+            <div class="container" >
+                <div class="row" >
+                    <div class="col s6">
+                        <div class="details-info">
+                            <div class="basic-details">
+                                <div class="cs-heading">
+                                    <h2>Order Details</h2>
+                                </div>
+                                <div class="cs-figure">
+                                    <ul>
+                                        <li class="w100" style="min-width: 100px;">
+                                            <div class="outer">
+                                                <div class="inner">
+                                                    <span> Date</span>
+                                                    <p>{{order_detail.date_created  | date :' dd/MM/yyyy'}}</p>
+                                                </div>
+                                            </div>
+                                        </li>
+                                        <li>
+                                            <div class="outer">
+                                                <div class="inner">
+                                                    <span>Order ID</span>
+                                                    <p>{{order_detail.order_no}}</p>
+                                                </div>
+                                            </div>
+                                        </li>
+                                        <li *ngIf="order_detail.created_by_type != 'channel partner'">
+                                            <div class="outer">
+                                                <div class="inner">
+                                                    <span>Created By</span>
+                                                    <p>{{order_detail.created_by_name}}</p>
+                                                </div>
+                                            </div>
+                                        </li>
+                                        
+                                        
+                                        <li *ngIf="order_detail.type=='3'||order_detail.type=='4'||order_detail.type=='11'||order_detail.type=='9'||order_detail.type=='12'||order_detail.type=='13'||order_detail.type=='14'||order_detail.type=='15'||order_detail.type=='16'">
+                                            <div class="outer">
+                                                <div class="inner">
+                                                    <span>Distributor</span>
+                                                    <p>{{order_detail.distributor_name}}</p>
+                                                    <!-- <a  class="one-edit" color="accent" matRipple matTooltip="EDIT" (click)="openEditDialog(order_detail.created_by,'order_cp_edit')" *ngIf="(login_data.access_level == '1') && (order_detail.order_status=='Pending')"><i class="material-icons">create</i></a> -->
+                                                </div>
+                                            </div>
+                                        </li>
+                                        
+                                  
+                                        </ul>
+                                        
+                                  
+                                        
+                                        <ul class="mt10" >
+                                            <li  *ngIf="order_detail.remark">
+                                                <div class="outer">
+                                                    <div class="inner">
+                                                        <span>Accepted Remark</span>
+                                                        <p *ngIf="order_detail.remark">{{order_detail.remark}}</p>
+                                                    </div>
+                                                </div>
+                                            </li>
+                                            <li  *ngIf="order_detail.preclose_remark">
+                                                <div class="outer">
+                                                    <div class="inner">
+                                                        <span>Pre-Close Remark</span>
+                                                        <p *ngIf="order_detail.remark">{{order_detail.preclose_remark}}</p>
+                                                    </div>
+                                                </div>
+                                            </li>
+                                            <li  *ngIf="order_detail.order_remark">
+                                                <div class="outer">
+                                                    <div class="inner">
+                                                        <span>Order Remark</span>
+                                                        <p *ngIf="order_detail.remark">{{order_detail.order_remark}}</p>
+                                                    </div>
+                                                </div>
+                                            </li>
+                                        </ul>
+                                        <ul class="mt10" >
+                                            
+                                            <li  *ngIf="order_detail.total_qty">
+                                                <div class="outer">
+                                                    <div class="inner">
+                                                        <span>Total Qty</span>
+                                                        <p *ngIf="order_detail.total_qty">{{order_detail.total_qty}}</p>
+                                                    </div>
+                                                </div>
+                                            </li>
+                                            <li  *ngIf="order_detail.total_amount">
+                                                <div class="outer">
+                                                    <div class="inner">
+                                                        <span>Total Amount</span>
+                                                        <p *ngIf="order_detail.total_amount">{{order_detail.total_amount}}</p>
+                                                    </div>
+                                                </div>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- transport detail -->
+                            <div class="details-info mt10" hidden>
+                                <div class="basic-details">
+                                    <div class="cs-heading">
+                                        <h2>Transport Detail</h2>
+                                    </div>
+                                    <div class="cs-figure">
+                                        <ul>
+                                            <li>
+                                                <div class="outer">
+                                                    <div class="inner">
+                                                        <span>Transporter Name</span>
+                                                        <p>{{!order_detail.transport_name ? ' -- ' : order_detail.transport_name | titlecase }} </p>
+                                                    </div>
+                                                </div>
+                                            </li>
+                                            <li>
+                                                <div class="outer">
+                                                    <div class="inner">
+                                                        <span>Mobile</span>
+                                                        <p>{{!order_detail.transport_mobile ? ' -- ' : order_detail.transport_mobile  }} </p>
+                                                    </div>
+                                                </div>
+                                            </li>
+                                            <li>
+                                                <div class="outer">
+                                                    <div class="inner">
+                                                        <span>Address</span>
+                                                        <p>{{!order_detail.transport_address ? ' -- ' : order_detail.transport_address | titlecase }} </p>
+                                                    </div>
+                                                </div>
+                                            </li>
+                                        </ul>
+                                        <ul class="mt10">
+                                            <li >
+                                                <div class="outer">
+                                                    <div class="inner">
+                                                        <span>Private Marka</span>
+                                                        <p>{{!order_detail.private_marka ? ' -- ' : order_detail.private_marka | titlecase }} </p>
+                                                    </div>
+                                                </div>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                             <!-- <div class="details-info mt10" *ngIf="order_detail.delivery_from!='paraflex'">
+                                <div class="basic-details">
+                                    <div class="cs-heading">
+                                        <h2>Order Logs</h2>
+                                    </div>
+                                    <div class="cs-table scroll400">
+                                        <div class="table-head">
+                                            <table class="sno-border">
+                                                <tr>
+                                                    <th class="w50 text-center">S.No</th>
+                                                    <th class="w100">Date</th>
+                                                    <th class="w150">Created by</th>
+                                                    <th>Remark</th>
+                                                </tr>
+                                            </table>
+                                        </div>
+                                        
+                                        <div class="table-container">
+                                            <div class="table-content">
+                                                <table class="sno-border" >
+                                                    <tr  *ngFor="let data of order_logs; let i=index;">
+                                                        <td class="w50 text-center">{{i+1}}</td>
+                                                        <td class="w100">{{data.date_created  | date :' dd/MM/yyyy'}}</td>
+                                                        <td  class="w150">{{data.created_by_name}}</td>
+                                                        <td>{{data.remark}} </td>
+                                                        
+                                                    </tr>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+                            </div> -->
+                            
+                            
+                            <!-- transport detail -->
+                        </div>
+                        
+                        
+                        <div class="col s6">
+                            <div class="details-info">
+                                <div class="basic-details">
+                                    <div class="cs-heading">
+                                        <h2 *ngIf="order_detail.delivery_from=='paraflex'">Company Details</h2>
+                                        <h2 *ngIf="order_detail.delivery_from!='paraflex'">Company Details</h2>
+                                    </div>
+                                    <div class="cs-figure">
+                                        <ul>
+                                            <li>
+                                                <div class="outer">
+                                                    <div class="inner">
+                                                        <span>Company Name & type</span>
+                                                        <p>
+                                                            {{order_detail.dr_name}} 
+                                                            ( <strong style="color: #63270e;" *ngIf="order_detail.type==1"> Distributor</strong>
+                                                            <strong style="color: #63270e;" *ngIf="order_detail.type==2">Dealer</strong>
+                                                           
+                                                            <!-- <strong style="color: #63270e;" *ngIf="order_detail.type==3">Retailer</strong> -->
+                                                            <strong style="color: #63270e;" *ngIf="order_detail.type==4">Project</strong>
+                                                            <strong style="color: #63270e;" *ngIf="order_detail.type==12">Sub-dealer</strong>
+                                                            <strong style="color: #63270e;" *ngIf="order_detail.type==13">Pvt. Contractor</strong>
+                                                            <strong style="color: #63270e;" *ngIf="order_detail.type==14">Govt. Contractor</strong>
+                                                            <strong style="color: #63270e;" *ngIf="order_detail.type==15">Builder</strong>
+                                                            <strong style="color: #63270e;" *ngIf="order_detail.type==16">Architect</strong>
+
+                                                            <strong style="color: #63270e;" *ngIf="order_detail.type==3">Retailer</strong> )
+                                                        </p>
+                                                    </div>
+                                                </div>
+                                            </li>
+                                            <li class="w200" style="min-width: 200px;">
+                                                <div class="outer">
+                                                    <div class="inner">
+                                                        <span>GST No.</span>
+                                                        <p>{{order_detail.gst ? order_detail.gst : '--'}}</p>
+                                                    </div>
+                                                </div>
+                                            </li>
+                                        </ul>
+                                        <ul class="mt10">
+                                            <li >
+                                                <div class="outer">
+                                                    <div class="inner">
+                                                        <span>Address</span>
+                                                        <p>{{order_detail.address ? order_detail.address : '--'}} {{order_detail.city ? ', '+  order_detail.city : ''}} {{order_detail.district ? ', '+order_detail.district : ''}} {{order_detail.state ? ', '+order_detail.state : ''}}</p>
+                                                    </div>
+                                                </div>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                    </div>
+                    
+                    
+                    
+                    <div class="row">
+                        <div class="col s12">
+                            <div class="heading-bg left-right-15 mb0">
+                                <h2>Order Item</h2>
+                            </div>
+                            <div class="cs-table left-right-15">
+                                <div class="table-head">
+                                    <table class="sno-border">
+                                        <tr>
+                                            <th class="w40 text-center"></th>
+                                            <th>Product Description</th>
+                                            <!-- <th class="w100">Type</th> -->
+                                           
+                                            <th class="w80">QTY</th>
+                                            <th class="w80">AMOUNT</th>
+
+                                            <!-- <th class="w80" *ngIf="order_detail.delivery_from=='paraflex'" > Pending QTY</th>
+                                            <th class="w80"  *ngIf="order_detail.delivery_from=='paraflex'" > Dispatch QTY</th>
+                                            
+                                            <th class="w90">Rate</th>
+                                            <th class="w80" >Sub-Total</th> -->
+
+                                            <!-- <th class="w90"> Basic Discount Percent</th>
+                                            <th class="w90"> Sd Discount Percent</th>
+                                            <th class="w90"> Cd Discount Percent</th>
+                                            <th class="w90"> Other Discount Percent</th>
+
+                                            <th class="w90">Discount Amount</th> -->
+                                             <!-- <th class="w120" >Discount</th> -->
+                                                <!-- <th class="w100" >GST Amount</th> 
+                                                <th class="w140 text-right"> Amount</th> -->
+                                            </tr>
+                                        </table>
+                                    </div>
+                                    
+                                    <div class="table-container">
+                                        <div class="table-content">
+                                            <table class="sno-border">
+                                                <tr *ngFor="let list of order_item; let i=index;">
+                                                    <td class="w40 text-center">{{i+1}}</td>
+                                                    <!-- <td>{{list.product_name}} {{list.cat_no}}</td> -->
+                                                    <td>{{list.product_name}}</td>
+                                                   <td class="w80" >{{list.qty}}</td>
+                                                   <td class="w80" >{{list.amount}}</td>
+
+<!-- 
+                                                    <td class="w90"> {{list.basic_discount + '%'}}</td>
+                                                    <td class="w90"> {{list.sr_discount + '%'}}</td>
+                                                    <td class="w90"> {{list.cd_discount + '%'}}</td>
+                                                    <td class="w90"> {{list.basic_discount + '%'}}</td>
+
+                                                    <td class="w90">&#8377; {{list.discount_amount}}</td> -->
+                                                    <!-- <td class="w120">&#8377;  {{list.discount_amount * list.qty}}({{list.discount_percent}}%)</td> -->
+                                                   
+                                                    
+                                                </tr>
+                                            </table>
+                                        </div>
+                                    </div>
+                                    
+                                </div>
+                            </div>
+                        </div>
+                        
+                   
+                                </div>
+                            </div>
+                            
+                        </div>
+                        
+<!DOCTYPE html>
+<html id="printData" style="display:none" lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+
+<div style="width: 1024px; margin: 0 auto; font-family: Arial, Helvetica, sans-serif;">
+  <table style="width: 1024px; table-layout: fixed; box-sizing: border-box; table-layout: fixed; border-collapse: collapse;" border="1">
+
+    <tr>
+      <td colspan="3" style="vertical-align: top; padding: 5px; text-align: center;">
+        <div>
+
+          <p style="font-size: 12px; line-height: 20px; margin: 0px;"><strong>SALES ORDER</strong></p>
+        </div>
+      </td>
+
+    </tr>
+
+
+    <tr>
+      <td style="vertical-align: top; padding: 5px; text-align: center;">
+        <div>
+
+          <img src="assets/img/logo.png" alt="Logo" style="height: 70px;">
+        </div>
+      </td>
+      <td style="vertical-align: top; padding: 5px; text-align: right;" colspan="2">
+        <div>
+          <p style="font-size: 12px; line-height: 20px; margin: 0px;"><strong>Address:-</strong> AMI Unit-3, C 35-36, Sector 5, DSIIDC, IND. Area Bawana, Delhi-110039
+           </p>
+          <p style="font-size: 12px; line-height: 20px; margin: 0px;"><strong>Contact Us:-</strong> 1800 833 3401</p>
+          <p style="font-size: 12px; line-height: 20px; margin: 0px;"><strong>E-Mail Address:-</strong>  inquiry@paraflex.co.in</p>
+        
+        </div>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top; padding: 5px;">
+        <p style="font-size: 12px; line-height: 20px; margin: 0px;"><strong>Date:-</strong> {{order_detail.date_created  | date :' dd/MM/yyyy'}}</p>
+        <p style="font-size: 12px; line-height: 20px; margin: 0px;"><strong>Order ID:-</strong>{{order_detail.order_no}}</p>
+     
+
+      </td>
+      <td  colspan="2"style="vertical-align: top; padding: 5px;">
+        <h2 style="font-size: 14px; line-height: 20px; margin: 0px 0px 10px 0px; text-decoration: underline;">Company Details</h2>
+        <p style="font-size: 12px; line-height: 20px; margin: 0px;"><strong>Company Name & Type:-</strong>  {{order_detail.dr_name}}</p>
+        <p  *ngIf="order_detail.gst"style="font-size: 12px; line-height: 20px; margin: 0px;"><strong>GST NO.:-</strong>{{order_detail.gst ? order_detail.gst : '--'}}</p>
+        <p style="font-size: 12px; line-height: 20px; margin: 0px;"><strong>Address:-</strong>{{order_detail.address ? order_detail.address : '--'}} {{order_detail.city ? ', '+  order_detail.city : ''}} {{order_detail.district ? ', '+order_detail.district : ''}} {{order_detail.state ? ', '+order_detail.state : ''}}</p>
+
+      </td>
+
+
+    </tr>
+    <tr>
+      <td colspan="3" style="padding:10px; background: #cccccc; font-size: 14px; font-weight: 600;">Order Summary</td>
+    </tr>
+  </table>
+  <table style="width: 1024px; table-layout: fixed; box-sizing: border-box; table-layout: fixed; border-collapse: collapse;" border="1" >
+
+    <tr >
+      <th style="font-size: 12px; background: #f9f9f9; padding: 5px; width: 60px;">S.no.</th>
+
+      <th colspan="2" style="font-size: 12px; background: #f9f9f9; padding: 5px; text-align: left;">Description of Goods</th>
+      <!-- <th style="font-size: 12px; background: #f9f9f9; padding: 5px; width: 110px;">Size</th> -->
+      <th style="font-size: 12px; background: #f9f9f9; padding: 5px; width: 100px;">Rate</th>
+    
+      <th style="font-size: 12px; background: #f9f9f9; padding: 5px; width: 110px;">Qty</th>
+      <th style="font-size: 12px; background: #f9f9f9; padding: 5px; width: 100px;">Pending QTY</th>
+      <th style="font-size: 12px; background: #f9f9f9; padding: 5px; width: 100px;"> Dispatch QTY</th>
+      <th style="font-size: 12px; background: #f9f9f9; padding: 5px; text-align: right; width: 100px;"> Amount</th>
+
+    </tr>
+
+    <tr *ngFor="let list of order_item; let i=index">
+
+      <td style="font-size: 12px; padding: 5px; text-align: left;">
+        {{i+1}}</td>
+      <td colspan="2" style="font-size: 12px; padding: 5px; text-align: left; width: 100px;">{{list.product_name}}  {{list.cat_no}} </td>
+      <td style="font-size: 12px; padding: 5px; text-align: right; width: 100px;">&#8377;{{list.price}}</td>
+      
+      <td style="font-size: 12px; padding: 5px; text-align: center; width: 110px;">{{list.qty}}</td>
+      <td style="font-size: 12px; padding: 5px; text-align: center; width: 100px;">{{list.pending_qty}}</td>
+      <td style="font-size: 12px; padding: 5px; text-align: center; width: 110px;">{{list.dispatch_qty}}</td>
+     
+    
+      <td style="font-size: 12px; padding: 5px; text-align: right; width: 100px;">&#8377;{{list.amount}}</td>
+      
+    
+    </tr>
+
+  </table>
+  <table style="width: 1024px; table-layout: fixed; box-sizing: border-box; table-layout: fixed; border-collapse: collapse;">
+
+ 
+
+  <tr>
+    <td style="font-size: 12px; padding: 10px; text-align: right; border-left: 1px solid #000000;">Net Total-:</td>
+    <td style="font-size: 12px; padding: 10px; text-align: right; width: 150px; border-right: 1px solid #000000;">{{order_detail.order_total}}</td>
+  </tr>
+ 
+ 
+ 
+</table>
+  <table style="width: 1024px; table-layout: fixed; box-sizing: border-box; table-layout: fixed; border-collapse: collapse;">
+
+      <tr>
+          <td style="font-size: 12px; padding: 10px; text-align: left; border-left: 1px solid #000000;border-right: 1px solid #000000;">Remark: {{order_detail.order_remark ? order_detail.order_remark : 'No Remark'}}</td>
+
+       </tr>
+
+
+  </table>
+
+
+
+  <table style="width: 1024px; table-layout: fixed; box-sizing: border-box; table-layout: fixed; border-collapse: collapse;" border="1" >
+
+    <tr>
+
+        <td style="text-align: right; padding: 10px;">
+
+
+                <span style="margin: 2px; font-size: 14px; font-weight: 700; line-height: 28px;" >
+                    <b>For ParaFlex<br>
+
+
+Authorised Signatory
+
+                    </b></span>
+
+            </td>
+        </tr>
+
+  </table>
+
+
+
+
+</div>
+
+</body>
+</html>
+                        
+                        
+                        
+                        

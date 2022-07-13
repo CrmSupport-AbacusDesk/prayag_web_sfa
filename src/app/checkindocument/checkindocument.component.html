@@ -1,0 +1,39 @@
+<div class="edit-modal" *ngIf="data.type!='officialdocument'">
+  <form validate #update_basic="ngForm" name="update_basic">
+
+    <p class="heading">UPLOADED DOCUMENT</p>
+    <div mat-dialog-content>
+      <div class="cs-form">
+        <div class="row">
+          <div class="col s6">
+            <div class="cs-file">
+              <!-- <p>UPLOADED DOCUMENT</p> -->
+              <ul class="product-images">
+                <li class="multi-images">
+                  <label class="cs-file-img" *ngFor="let val of data.list">
+                 
+                      
+                      
+                      <img  src="{{val.Doc}}"  (click)="imageModel(val.Doc)" >
+                      
+                    
+                    </label>
+                  </li>
+                </ul>
+
+
+            </div>
+          </div>
+
+        </div>
+
+
+      </div>
+    </div>
+    <div mat-dialog-actions>
+      <button mat-button color="warn"	 [mat-dialog-close]="false">Cancel</button>
+      <button mat-button	 color="accent" type="submit" >Save</button>
+    </div>
+  </form>
+</div>
+

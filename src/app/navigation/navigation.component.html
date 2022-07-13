@@ -1,0 +1,150 @@
+<div class="navigation" >
+    <ul>
+        <li *ngIf="login_data.view_dashboard=='1'">
+            <a mat-button  title="dashboard" routerLink="/dashboard" (click)="toggleDropdown(0)" routerLinkActive="active"><i class="material-icons nav-icon">desktop_windows</i>Dashboard </a>
+        </li>
+        
+        <li class="dropdown" *ngIf="login_data.view_leads=='1'">
+            <a mat-button (click)="toggleDropdown(4)" [ngClass]="{'active':leadactive }" ><i class="material-icons nav-icon">person_add_alt_1</i> Leads </a>
+            <ul>
+                <li *ngFor="let row of serve.leadArray">
+                    <a mat-button  routerLink="/lead-list/{{row.type}}/{{row.module_name}}" routerLinkActive="active">
+                        {{row.module_name}}
+                        <i class="material-icons">chevron_right </i>
+                        <span class="nav-counter orange-count">{{row.lead_count}}</span>
+
+                    </a>
+                </li>
+
+            </ul>
+        </li>
+        
+        <li class="dropdown" *ngIf="login_data.view_distribution_n_w=='1'">
+            <a mat-button (click)="toggleDropdown(1)" [ngClass]="{'active':distactive }"><i class="material-icons nav-icon">people_alt</i> Customer Network</a>
+            <ul>
+                <li *ngFor="let row of serve.drArray">
+                    <a mat-button  routerLink="/distribution-list/{{row.type}}/{{row.module_name}}" routerLinkActive="active">
+                        {{row.module_name}}
+                        <i class="material-icons">chevron_right </i>
+                        <span class="nav-counter orange-count">{{row.dr_count}}</span>
+
+                    </a>
+                </li>
+               
+            </ul>
+        </li>
+        
+        <li class="dropdown" *ngIf="login_data.view_orders=='1'">
+            <a mat-button (click)="toggleDropdown(2)" [ngClass]="{'active':ordersactive}"><i class="material-icons nav-icon">shopping_cart</i> Orders </a>
+            <ul>
+                <li *ngIf="login_data.view_orders_primary=='1'">
+                    <a mat-button routerLink="/order-list" routerLinkActive="active">
+                        Primary Order
+                        <i class="material-icons">chevron_right</i>
+                        <span class="nav-counter orange-count">{{serve.counterArray.primary_order}}</span>
+                    </a>
+                </li>
+                <li *ngIf="login_data.view_orders_secondary=='1'">
+                    <a mat-button routerLink="/secondary-order-list" routerLinkActive="active">
+                        Secondary Order
+                        <i class="material-icons">chevron_right</i>
+                        <span class="nav-counter orange-count">{{serve.counterArray.secondary_order}}</span>
+                    </a>
+                </li>
+            </ul>
+        </li>
+
+        <li *ngIf="login_data.view_attendence=='1'">
+            <a mat-button routerLink="/attendance" (click)="toggleDropdown(0)"routerLinkActive="active">
+                Attendance
+                <i class="material-icons nav-icon">insert_invitation</i> 
+                <span class="nav-counter orange-count">{{serve.counterArray.today_attendance}}</span>
+            </a>
+         
+        </li>
+        
+        <li *ngIf="login_data.view_check_in=='1'">
+           
+            <a mat-button routerLink="/checkin" (click)="toggleDropdown(0)">
+                Check In
+                <i class="material-icons nav-icon">my_location</i> 
+                <span class="nav-counter orange-count">{{serve.counterArray.checkins}}</span>
+            </a>
+        </li>
+        
+        <li *ngIf="login_data.view_leaves=='1'">
+            <a mat-button (click)="toggleDropdown(0)" routerLink="/leave-list" routerLinkActive="active">
+                <i class="material-icons nav-icon">exit_to_app</i>
+                <span class="nav-counter orange-count">{{serve.counterArray.leaves}}</span>
+
+                Leaves
+            </a>
+        </li>
+        
+        <li *ngIf="login_data.view_travel_plan=='1'">
+          
+
+            <a mat-button routerLink="/travel-list" (click)="toggleDropdown(0)">
+                Travel Plan
+                <i class="material-icons nav-icon">directions_transit</i> 
+                <span class="nav-counter orange-count">{{serve.counterArray.today_travel_plan}}</span>
+            </a>
+        </li>
+        
+        <li *ngIf="login_data.follow_up=='1'">
+            <a mat-button routerLink="/followup-list" routerLinkActive="active">
+                <i class="material-icons nav-icon">add_ic_call</i>
+                Follow Up
+            </a>
+        </li>
+        
+        <li *ngIf="login_data.announcement=='1'">
+            <a mat-button routerLink="/announcement-list" outerLinkActive="active">
+                <i class="material-icons nav-icon">campaign</i>
+                Announcement
+            </a>
+        </li>
+        
+        <li *ngIf="login_data.expense=='1'">
+            <a mat-button routerLink="/expense-list" routerLinkActive="active">
+                <i class="material-icons nav-icon">account_balance_wallet</i>
+                Expense
+            </a>
+        </li>
+       
+        <li class="dropdown" *ngIf="login_data.masters=='1' ">
+            <a  mat-button (click)=toggleDropdown(3) [ngClass]="{'active':masteractive}"><i class="material-icons nav-icon">star_rate</i>Masters </a>
+            <ul>
+                <!-- <li *ngIf="login_data.view_products=='1'">
+                    <a mat-button routerLink="/product-list" routerLinkActive="active">
+                        Products
+                        <i class="material-icons">chevron_right </i>
+                        <span class="nav-counter orange-count">{{serve.counterArray.product}}</span>
+                    </a>
+                </li> -->
+                <li *ngIf="login_data.view_users=='1'">
+                    <a mat-button routerLink="/sale-user-list" routerLinkActive="active">
+                        Users
+                        <i class="material-icons">chevron_right </i>
+                        <span class="nav-counter orange-count">{{serve.counterArray.user}}</span>
+                    </a>
+                </li>
+                <li *ngIf="login_data.view_allowance_master=='1'">
+                    <a mat-button routerLink="/allowances" routerLinkActive="active">
+                        Allowance Master
+                        <i class="material-icons">chevron_right </i>
+                    </a>
+                </li>
+                <li *ngIf="login_data.view_category_master=='1'">
+                    <a routerLink="/location-Master" routerLinkActive="active">
+                        Beat Code Master
+                        <i class="material-icons">chevron_right </i>
+
+                    </a>
+                </li>
+            </ul>
+        </li>
+      
+    </ul>
+</div>
+

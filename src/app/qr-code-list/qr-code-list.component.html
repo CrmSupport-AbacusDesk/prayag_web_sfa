@@ -1,0 +1,105 @@
+<div class="main-container" >
+  <div class="middle-container mb0">
+    <div class="page-heading w250">
+      <img src="assets/img/calender.svg" class="h-icon h16">
+      <div class="heading-text">
+        <h2>OR CODE</h2>
+      </div>
+    </div>
+    <div class="tabs">
+      <ul>
+        <li><a class="" [ngClass]="show_today ? 'active' : ''"  (click)="change_tab(1)">Today <span class="counter">{{today_count}}</span></a></li>
+        <li><a class="" [ngClass]="!show_today ? 'active' : ''" (click)="change_tab(2)">All <span class="counter">{{all_count}}</span></a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="container-outer">
+    
+    <div class="container tab-container" >
+      <div class="cs-table ">
+        <div class="sticky-head">
+          <div class="table-head">
+            <table>
+              <tr>
+                <th class="w100">Date</th>
+                <th class="w150">Category</th> 
+                <th class="w150">Product Name</th>
+                <th class="w100">Product Code</th>
+                <th class="w150">QR Code</th>
+                <th class="w150">Plumber Name</th>
+                <th class="W100">Plumber Mobile No</th>
+                <th class="W100">Coupon Point</th>
+              </tr>
+            </table>
+          </div>
+          
+          <div class="table-head bdrt" *ngIf="!show_today">
+            <table>
+              <tr>
+                <th class="w100">
+                  <div class="th-search-acmt">
+                    <mat-form-field class="example-full-width cs-input picker-icon"  >
+                      <input matInput [matDatepicker]="picker" placeholder="Date" (dateChange)="qrcode_list(2)" name="date_created" [(ngModel)]="data.date_created">
+                      
+                      <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                      
+                      <mat-datepicker #picker></mat-datepicker>
+                    </mat-form-field>
+                  </div>
+                </th>
+                <th class="w150"></th>    
+                <th class="w150"></th>
+                <th class="w100">&nbsp;</th>
+                <th class="w150"></th>
+                <th class="w150">&nbsp;</th>
+                <th class="W100">&nbsp;</th>
+                <th class="W100">&nbsp;</th>
+              </tr>
+            </table>
+          </div>
+        </div>
+        <div class="table-container">
+          <div class="table-content">
+            <table>
+              <tr *ngFor="let p of qr_code_list">
+                <td class="w100">{{p.scanned_date | date : 'd MMM, y' }}</td>
+                <td class="w150">{{p.product_category}}</td>    
+                <td class="w150">{{p.product_name}}</td> 
+                <td class="w100">{{p.product_code}}</td> 
+                <td class="w150">{{p.qr_code}}</td> 
+                <td class="w150">{{p.scanned_by_name}}</td> 
+                <td class="w100">{{p.scanned_by_mobile}}</td>
+                <td class="W100">{{p.qr_code_value}}</td>
+              </tr>
+              <!-- <ng-container *ngFor="let lead of skelton">
+                <tr class="sk-loading"  *ngIf="loader">
+                  <td class="w100"><div>&nbsp;</div></td>
+                  <td class="w150"><div>&nbsp;</div></td>
+                  <td ><div>&nbsp;</div></td>
+                  <td class="w100"><div>&nbsp;</div></td>
+                  <td class="w150"><div>&nbsp;</div></td>
+                  <td><div>&nbsp;</div></td>
+                  <td class="W100"><div>&nbsp;</div></td>
+                  <td class="W100"><div>&nbsp;</div></td>
+                </tr>
+              </ng-container> -->
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <div class="no-data" *ngIf="data_not_found==true">
+        <img src="assets/img/no-data.gif" alt="">
+        <p>Data not <span>available !</span></p>
+      </div>
+    </div>
+    
+    
+    <!-- <div class="fix-btn">
+      <a class="bottom-btn ecxel-btn" matTooltip="Download Excel" matTooltipPosition="above" mat-raised-button (click)="exportAsXLSX()"><img src="assets/img/excel.svg"></a>
+    </div> -->
+  </div>
+  <div>
+  </div>
+</div>
+

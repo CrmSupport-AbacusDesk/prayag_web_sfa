@@ -1,0 +1,329 @@
+
+<div class="main-container" >
+    <!-- <div *ngIf="loader">
+        <mat-spinner class="loader">
+            <div><p>Loading....</p></div>
+        </mat-spinner>
+    </div> -->
+    <div class="middle-container">
+        <div class="page-heading">
+            <div class="heading-text bc-space">
+                <div class="back-btn">
+                    <a mat-button routerLink="/contractor-meet" routerLinkActive="active"><i class="material-icons">west</i></a>
+                </div>
+                <h2>event Detail</h2>
+                <!-- <p class="light">{{productDetail.sub_category}}</p> -->
+            </div>
+        </div>
+    </div>
+    
+    <div class="container-outer">
+        <div class="container" >
+            <!-- <div class="row">
+                <div class="col s8 pr10">
+                    <div class="details-info flat">
+                        <div class="basic-details">
+                            <div class="cs-heading mb0">
+                                <h2>Participate Delaer</h2>
+                            </div>
+                            
+                            <div class="cs-table left-right-10">
+                                <div class="table-head">
+                                    <table>
+                                        <tr>
+                                            <th class="w50">S.No</th>
+                                            <th>Dealer Name</th> 
+                                            <th class="w110">Mobile No.</th>
+                                        </tr>
+                                    </table>
+                                </div>
+                                <div class="table-container pb0">
+                                    <div class="table-content none-shadow">
+                                        <table>
+                                            <tr>
+                                                <td class="w50">1</td>
+                                                <td>Sachin Paint</td> 
+                                                <td class="w110">9990123412</td>
+                                            </tr>
+                                            <tr>
+                                                <td class="w50">2</td>
+                                                <td>Akash Paint</td> 
+                                                <td class="w110">9990123412</td>
+                                            </tr>
+                                            <tr>
+                                                <td class="w50">3</td>
+                                                <td>Suraj Gupta</td> 
+                                                <td class="w110">9990123412</td>
+                                            </tr>
+                                            <tr>
+                                                <td class="w50">4</td>
+                                                <td>Sachin Paint</td> 
+                                                <td class="w110">9990123412</td>
+                                            </tr>
+                                            <tr>
+                                                <td class="w50">5</td>
+                                                <td>Akash Paint</td> 
+                                                <td class="w110">9990123412</td>
+                                            </tr>
+                                            <tr>
+                                                <td class="w50">6</td>
+                                                <td>Suraj Gupta</td> 
+                                                <td class="w110">9990123412</td>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col s4">
+                    <div class="details-info pb0">
+                        <div class="basic-details">
+                            <div class="cs-heading">
+                                <h2>Uploaded Images </h2>
+                            </div>
+                            <div class="cs-image">
+                                <div class="vertical-img multiple-img">
+                                    <div class="sm-img">
+                                        <ul>
+                                            <li class="overlay-content">
+                                                <img src="https://en.iranfair.com/uploads/3432892.jpg" alt="">
+                                                <a class="close" matRipple matTooltip="Delete" (click)="deleteImage(img.id,i)">
+                                                    <i class="material-icons">delete_sweep</i></a>
+                                                    <div class="overlay">
+                                                    </div>
+                                                </li>
+                                                <li class="overlay-content">
+                                                    <img src="https://www.creativehut.org/wp-content/uploads/2020/03/top-photo-exhibition-in-india.jpg" alt="">
+                                                    <a class="close" matRipple matTooltip="Delete" (click)="deleteImage(img.id,i)">
+                                                        <i class="material-icons">delete_sweep</i></a>
+                                                        <div class="overlay">
+                                                        </div>
+                                                    </li>
+                                                    <li class="overlay-content">
+                                                        <img src="https://static.businessworld.in/article/article_large_image/1584082680_JDxbWn_IMEX_Frankfurt_1_.jpg" alt="">
+                                                        <a class="close" matRipple matTooltip="Delete" (click)="deleteImage(img.id,i)">
+                                                            <i class="material-icons">delete_sweep</i></a>
+                                                            <div class="overlay">
+                                                            </div>
+                                                        </li>
+                                                        <li class="overlay-content">
+                                                            <img src="https://www.creativehut.org/wp-content/uploads/2020/03/top-photo-exhibition-in-india.jpg" alt="">
+                                                            <a class="close" matRipple matTooltip="Delete" (click)="deleteImage(img.id,i)">
+                                                                <i class="material-icons">delete_sweep</i></a>
+                                                                <div class="overlay">
+                                                                </div>
+                                                            </li>
+                                                        </ul>
+                                                    </div>
+                                                </div>
+                                                
+                                                <div class="default-product" *ngIf="productDetail?.image_array?.length==0">
+                                                    <i class="material-icons">image</i>
+                                                    <p>Uploaded images not available</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div> -->
+                            <div class="row" >
+                                <div class="col s8 pr10" >
+                                    <div class="details-info" *ngIf = "contractorMeetDetail.result">
+                                        <div class="basic-details">
+                                            <div class="cs-heading">
+                                                <h2>Basic Information</h2>
+                                            </div>
+                                            <div class="cs-figure">
+                                                <ul class="minus-top">
+                                                    <li>
+                                                        <div class="outer">
+                                                            <div class="inner">
+                                                                <span>Company Name</span>
+                                                                <p>{{contractorMeetDetail.result[0].company_name}}</p>
+                                                            </div>
+                                                        </div>
+                                                    </li>
+                                                    <li>
+                                                        <div class="outer">
+                                                            <div class="inner">
+                                                                <span>Created By</span>
+                                                                <p>{{contractorMeetDetail.result[0].created_by_user}}</p>
+                                                            </div>
+                                                        </div>
+                                                    </li>
+                                                    <li>
+                                                        <div class="outer">
+                                                            <div class="inner">
+                                                                <span>Mobile No.</span>
+                                                                <p>{{contractorMeetDetail.result[0].created_by_mobile}}</p>
+                                                            </div>
+                                                        </div>
+                                                    </li>
+                                                    <li>
+                                                        <div class="outer">
+                                                            <div class="inner">
+                                                                <span>Email</span>
+                                                                <p>{{contractorMeetDetail.result[0].created_by_user_email}}</p>
+                                                            </div>
+                                                        </div>
+                                                    </li>
+                                                </ul>
+                                                <ul class="minus-top">                                            
+                                                    <li>
+                                                        <div class="outer">
+                                                            <div class="inner">
+                                                                <span>Date Of Meeting</span>
+                                                                <p>{{contractorMeetDetail.result[0].date_of_meeting| date:'dd-MMM-yyyy'}}</p>
+                                                            </div>
+                                                        </div>
+                                                    </li>
+                                                    <li>
+                                                        <div class="outer">
+                                                            <div class="inner">
+                                                                <span>Status</span>
+                                                                <p>{{contractorMeetDetail.result[0].status}}</p>
+                                                            </div>
+                                                        </div>
+                                                    </li>
+                                                    <li>
+                                                        <div class="outer">
+                                                            <div class="inner">
+                                                                <span>Total Budget</span>
+                                                                <p>{{contractorMeetDetail.result[0].total_budget}}</p>
+                                                            </div>
+                                                        </div>
+                                                    </li>
+                                                    <li>
+                                                        <div class="outer">
+                                                            <div class="inner">
+                                                                <span>Total Member</span>
+                                                                <p>{{contractorMeetDetail.result[0].total_member}}</p>
+                                                            </div>
+                                                        </div>
+                                                    </li>
+                                                </ul>
+                                                <ul class="minus-top">    
+                                                    <li>
+                                                        <div class="outer">
+                                                            <div class="inner">
+                                                                <span>Expense</span>
+                                                                <p>{{contractorMeetDetail.result[0].expense}}</p>
+                                                            </div>
+                                                        </div>
+                                                    </li>                                        
+                                                    <li >
+                                                        <div class="outer" >
+                                                            <div class="inner">
+                                                                <span>Description</span>
+                                                                <p >{{contractorMeetDetail.result[0].description}}</p>
+                                                            </div>
+                                                        </div>
+                                                    </li>
+                                                </ul>
+
+                                                
+                                                <ul class="minus-top" *ngIf="contractorMeetDetail.result[0].status=='rejected'" >                                            
+                                                    <li>
+                                                        <div class="outer">
+                                                            <div class="inner">
+                                                                <span>Remark</span>
+                                                                <p>{{contractorMeetDetail.result[0].remarks}}</p>
+                                                            </div>
+                                                        </div>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="details-info flat mt10"  *ngIf = "contractorMeetDetail.participants">
+                                        <div class="basic-details">
+                                            <div class="cs-heading mb0">
+                                                <h2>Total Participate :- {{contractorMeetDetail.participants.length}}</h2>
+                                            </div>
+                                            
+                                            <div class="cs-table left-right-10">
+                                                <div class="table-head">
+                                                    <table>
+                                                        <tr>
+                                                            <th class="w50">S.No</th>
+                                                            <th>Dealer Name</th> 
+                                                            <th class="w110">Mobile No.</th>
+                                                        </tr>
+                                                    </table>
+                                                </div>
+                                                <div class="table-container pb0" *ngIf="contractorMeetDetail.participants.length != '0'">
+                                                    <div class="table-content none-shadow">
+                                                        <table>
+                                                            <tr  *ngFor = "let details of contractorMeetDetail.participants; let i = index">
+                                                                <td class="w50">{{i+1}}</td>
+                                                                <td>{{details.participent_name}}</td> 
+                                                                <td class="w110">{{details.participent_mobile}}</td>
+                                                            </tr>
+                                                        </table>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    <!-- <div class="details-info flat" *ngIf = "contractorMeetDetail.participants && contractorMeetDetail.result[0].status=='completed'">
+                                        <div class="basic-details">
+                                            <h1>Total Participants : {{contractorMeetDetail.participants.length}}</h1>
+                                            <div class="cs-heading mb0" *ngFor = "let details of contractorMeetDetail.participants; let i = index">
+                                                <h2>Name : {{details.participent_name}}</h2> 
+                                                <h2>Contact Number :  {{details.participent_mobile}}</h2>
+                                                <h2>-----------</h2>
+                                            </div>
+                                        </div>
+                                    </div> -->
+                                </div>
+                                
+                                <div class="col s4" *ngIf="contractorMeetDetail.result[0].status=='completed'"  >
+                                    
+                                    <div class="details-info pb0">
+                                        <div class="basic-details">
+                                            <div class="cs-heading">
+                                                <h2>Uploaded Images </h2>
+                                            </div>
+                                            <div class="cs-image">
+                                                <div class="vertical-img multiple-img">
+                                                    <div class="sm-img">
+                                                        <ul> 
+                                                            <li class="overlay-content" *ngFor="let detail of contractorMeetDetail.meetingImages ; let i = index">
+                                                                <!-- <img src={{dburl2/detail.img_path}} alt=""> -->
+                                                                <a *ngIf="detail.type=='image'" [href]="serve.dburl2+detail.img_path" target="_blank">
+                                                                    <img *ngIf="detail.type=='image'" [src]="serve.dburl2+detail.img_path">
+                                                                </a>
+                                                                
+                                                                <a *ngIf="detail.type=='video'" [href]="serve.dburl2+detail.img_path" target="_blank">
+                                                                    <video width="100%" height="100%" controls><source target="_blank" [src]="serve.dburl2+detail.img_path" type="video/mp4">
+                                                                    </video>
+                                                                </a>
+                                                                
+                                                                <!-- <div class="overlay view-delete">
+                                                                    <i class="material-icons">zoom_out_map</i>
+                                                                   
+                                                                </div> -->
+
+                                                                <a class="close" matRipple matTooltip="Delete" (click)="deleteImage(detail.id,i)">
+                                                                    <i class="material-icons">delete_sweep</i>
+                                                                </a>
+                                                            </li>
+                                                        </ul>
+                                                    </div>
+                                                </div>
+                                                <!-- <div class="default-product" *ngIf="contractorMeetDetail != 0">
+                                                    <i class="material-icons">image</i>
+                                                    <p>Uploaded images not available</p>
+                                                </div> -->
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>

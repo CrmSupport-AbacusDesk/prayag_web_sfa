@@ -1,0 +1,135 @@
+<form #f="ngForm" (ngSubmit)="f.valid && onSaveSchemeHandler()" id="mainForm" novalidate>
+
+
+    <div class="main-container">
+
+        <div *ngIf="loader">
+            <mat-spinner class="loader">
+              <div><p>Loading....</p></div>
+            </mat-spinner>
+          </div>
+
+        <div class="middle-container mb0">
+          <div class="page-heading">
+            <img src="assets/img/person.svg" class="h-icon">
+            <div class="heading-text">
+              <h2>Scheme Master</h2>
+              <!-- <p>Total Consumer Lead: 23</p> -->
+            </div>
+          </div>
+
+          <div class="click-btn">
+              <button type= "submit" mat-button>Update</button>
+            </div>
+        </div>
+
+        <div class="container-outer">
+          <div class="container" >
+
+            <div class="uppr-section">
+              <div class="heading-part">
+                <h2>Scheme</h2>
+              </div>
+              <div class="inner-section">
+                <div class="choose-part">
+                  <p>Scheme Type</p>
+
+                  <mat-radio-group name="schemeType" id="schemeType" [(ngModel)]="data.schemeType"  #schemeType="ngModel" [ngClass]="{'has-error' : schemeType.invalid }"  aria-label="Select Scheme Type" required>
+                        <mat-radio-button value="Instant">Instant</mat-radio-button>
+                        <mat-radio-button value="Redeem Request">Redeem Request</mat-radio-button>
+                  </mat-radio-group>
+
+                </div>
+
+                <div class="from-fields">
+                  <div class="row">
+                    <div class="col s4 pl0">
+                      <div class="control-field">
+                        <mat-form-field class="cs-input">
+                          <input type="number" name="scanPerDay" #scanPerDay="ngModel" [(ngModel)]="data.scanPerDay" id="scanPerDay" [ngClass]="{'has-error' : scanPerDay.invalid } " matInput placeholder="Total Scan Per Day" required>
+                        </mat-form-field>
+                      </div>
+                    </div>
+
+                    <div class="col s4">
+                      <div class="control-field">
+                        <mat-form-field class="cs-input">
+
+                          <input type="number" name="minPointRequest" #minPointRequest="ngModel" [(ngModel)]="data.minPointRequest" id="minPointRequest" [ngClass]="{'has-error' : minPointRequest.invalid } " matInput placeholder="Minimum Point Request" required>
+
+                        </mat-form-field>
+
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="cs-table left-right-10 mt15">
+              <div class="sticky-head">
+                <div class="table-head">
+                  <table>
+                    <tr>
+                      <th class="w110">S.No.</th>
+                      <th class="">State</th>
+                      <th class="w300">Scheme Status</th>
+                      <th class="w150">Point Value</th>
+                    </tr>
+                  </table>
+                </div>
+                <div class="table-head bdrt" >
+                  <table>
+
+                    <tr>
+                      <th class="w110"></th>
+                      <th class="">
+                        <div class="th-search-acmt">
+                          <mat-form-field class="wp100 example-full-width cs-input select-input">
+                            <input matInput [(ngModel)] = "data.searchData"  placeholder="Name. . ." name="name">
+                          </mat-form-field>
+                        </div>
+                      </th>
+                      <th class="w300"></th>
+                      <th class="w150"></th>
+                    </tr>
+
+                  </table>
+                </div>
+              </div>
+
+              <div class="table-container">
+                <div class="table-content">
+                  <table>
+
+                    <tr *ngFor= "let row of schemeStateData | myfilter:{src: 'schemeState', search: data.searchData}; let index = index">
+                      <td class="w110 text-center">{{index+1}}</td>
+                      <td class="">{{row.state_name}}</td>
+                      <td class="w300">
+                        <div class="active-deactive">
+                          <mat-radio-group [(ngModel)] = "row.scheme_status" name="schemeStatus{{index}}" aria-label="Select an option">
+                            <mat-radio-button value="Active">Active</mat-radio-button>
+                            <mat-radio-button value="Deactive">Deactive</mat-radio-button>
+                          </mat-radio-group>
+                        </div>
+                      </td>
+                      <td class="w150">
+                        <input class="fill-input" [(ngModel)] = "row.point_value" name ="pointValue{{index}}"  type="number" id="redeemPoint{{row.id}}" ng-required = "row.scheme_status=='Active'">
+
+                        <span style="color:#ff0000;" *ngIf="row.scheme_status == 'Active' && (!row.point_value || row.point_value == 0 || row.point_value < 0)" >Required!</span>
+
+                      </td>
+                    </tr>
+
+                  </table>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+
+    </div>
+
+  
+
+</form>

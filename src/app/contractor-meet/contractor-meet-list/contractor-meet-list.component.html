@@ -1,0 +1,1047 @@
+<div class="main-container">
+    <div class="middle-container mb0">
+        <div class="page-heading">
+            <div *ngIf="backButton" class="heading-text bc-space">
+                <div class="back-btn" (click)="back()">
+                    <a mat-button ><i class="material-icons">west</i></a>
+                </div>
+                <h2>Event</h2>
+            </div>
+            <div  *ngIf="!backButton" class="heading-text">
+                <h2>Event</h2>
+            </div>
+            <!-- <div class="uppr-one m-right-data">
+                <ul>
+                    <li class="refresh-area mr0 after-none">
+                        <a class="refresh-btn" mat-raised-button (click)="data.date_from='';data.dom_from='';start = 0 ; getContractorMeetList()" matTooltip="Refresh"><i class="material-icons"> refresh</i></a>
+                    </li>
+                </ul>
+            </div> -->
+        </div>
+        <div class="left-auto">
+            <div class="uppr-one m-right-data">
+                <ul>
+                  <li class="refresh-area mr0 after-none">
+                    <a class="refresh-btn" mat-raised-button (click)="getContractorMeetList('refresh')"  matTooltip="Refresh" ><i class="material-icons"> refresh</i></a>
+                  </li>
+                </ul>
+              </div> 
+            <div class="tabs">
+                <ul *ngFor="let count of allCount; let i = index">
+                    <li>
+                        <a (click)="tabActive('tab0')" [ngClass]="{'active' : tabActiveType['tab0'] == true}">
+                            All
+                            <span class="counter">{{count.all_cnt}}</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a (click)="tabActive('tab1')" [ngClass]="{'active' : tabActiveType['tab1'] == true}">
+                            Pending
+                            <span class="counter">{{count.pend_cnt}}</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a (click)="tabActive('tab2')" [ngClass]="{'active' : tabActiveType['tab2'] == true}">Approved
+                            <span class="counter">{{count.approved_cnt}}</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a (click)="tabActive('tab3')" [ngClass]="{'active' : tabActiveType['tab3'] == true}">Completed
+                            <span class="counter">{{count.completed_cnt}}</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a (click)="tabActive('tab4')" [ngClass]="{'active' : tabActiveType['tab4'] == true}">
+                            Reject
+                            <span class="counter">{{count.reject_cnt}}</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    
+    <div class="container-outer padding0">
+        <div class="container">
+            
+            
+            
+            <!-- *** All tab table start *** -->
+            <div class="cs-table horizontal-scroll" *ngIf="tabActiveType['tab0']">
+                <div class="sticky-head">
+                    <div class="table-head">
+                        <table>
+                            <tr>
+                                <th class="w90">Date Created</th>
+                                <th class="w130">Created By</th>
+                                <th class="w90">Type</th>
+                                <th class="w150">Company Name</th>
+                                <th class="w140">Contact Person</th>
+                                <!-- <th class="w100">Email</th> -->
+                                <th class="w90">Meeting Date</th>
+                                <th class="w90">Last Meeting</th>
+                                <th class="w90">Total Member</th>
+                                <th class="w90 text-right">Total Budget</th>
+                                <th class="w140">Description</th>
+                                <!-- <th class="w90">Last Meeting</th> -->
+                                <th class="w90">Status</th>
+                            </tr>
+                        </table>
+                    </div>
+                    <!-- *** filters *** -->
+                    <div class="table-head bdrt">
+                        <table class="sno-border">
+                            <tr>
+                                <th class="w90">
+                                    <div class="th-search-acmt">
+                                        <mat-form-field class="cs-input date-column infix-bodr">
+                                            <input matInput [matDatepicker]="picker" placeholder="Date" name="date_from"
+                                            [(ngModel)]="data.date_from" (dateChange)="onDate($event)" readonly>
+                                            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                                            <mat-datepicker #picker></mat-datepicker>
+                                        </mat-form-field>
+                                    </div>
+                                    
+                                    
+                                    
+                                </th>
+                                
+                                <th class="w130">
+                                    <div class="th-search-acmt">
+                                        <mat-form-field class="example-full-width cs-input select-input">
+                                            <input matInput placeholder="Created By. . ." type="text" name="created_by"
+                                            [(ngModel)]="data.created_by" (keyup.enter)="getContractorMeetList()">
+                                        </mat-form-field>
+                                    </div>
+                                </th>
+                                
+                                
+                                <th class="w90">
+                                    
+                                    <div class="th-search-acmt">
+                                        <mat-form-field class="cs-input select-input">
+                                            <mat-select placeholder="Type">
+                                                <mat-option (click)="selectType('all')" value="All">All</mat-option>
+                                                <mat-option (click)="selectType('1')" value="Distributor">Distributor</mat-option>
+                                                <mat-option (click)="selectType('3')" value="Dealer">Retailer</mat-option>
+                                                <mat-option (click)="selectType('7')" value="Direct Dealer ">Direct Dealer </mat-option>
+                                            </mat-select>
+                                        </mat-form-field>
+                                    </div>
+                                    
+                                </th>
+                                
+                                <th class="w150">
+                                    <div class="th-search-acmt">
+                                        <mat-form-field class="example-full-width cs-input select-input">
+                                            <!-- getItemsList('created_by',value.search) -->
+                                            <input matInput placeholder="Company Name ...." type="text" name="company_name"
+                                            [(ngModel)]="data.company_name" (keyup.enter)="getContractorMeetList()">
+                                        </mat-form-field>
+                                    </div>
+                                </th>
+                                <th class="w140">
+                                    <div class="th-search-acmt">
+                                        <mat-form-field class="example-full-width cs-input select-input">
+                                            <!-- getItemsList('created_by',value.search) -->
+                                            <input matInput placeholder="Mobile No. . ." type="text" name="Mobile No"
+                                            [(ngModel)]="data.mobile_number" (keyup.enter)="getContractorMeetList()">
+                                        </mat-form-field>
+                                    </div>
+                                </th>
+                                <!-- <th class="w100">
+                                    <div class="th-search-acmt">
+                                        <mat-form-field class="example-full-width cs-input select-input">
+                                            <input matInput placeholder="E-Mail. . ." type="text" name="email" [(ngModel)]="data.email"
+                                            (keyup.enter)="getContractorMeetList()">
+                                        </mat-form-field>
+                                    </div>
+                                </th> -->
+                                <th class="w90">
+                                    <div class="th-search-acmt">
+                                        <mat-form-field class="cs-input date-column infix-bodr">
+                                            <input matInput [matDatepicker]="picker2" placeholder="Date" name="dom_from"
+                                            [(ngModel)]="data.dom_from" (dateChange)="DateOfMeeting($event)" readonly>
+                                            <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+                                            <mat-datepicker #picker2></mat-datepicker>
+                                        </mat-form-field>
+                                    </div>
+                                </th>
+                                <th class="w90">&nbsp;</th>
+                                <th class="w90 text-right">&nbsp;</th>
+                                <th class="w90">&nbsp;</th>
+                                <th class="w140">&nbsp;</th>
+                                <th class="w90"></th>
+                            </tr>
+                        </table>
+                    </div>
+                    <!-- *** Filters End ***  -->
+                </div>
+                
+                <div class="table-container">
+                    
+                    <div class="table-content">
+                        <table>
+                            <tr *ngFor="let detail of contractorMeetListDetail ; let i = index">
+                                <!-- <td class="w40 text-center"><strong>{{ ((pageNumber - 1) * pageLimit) + (i+1)}} </strong></td> -->
+                                <td class="w90">{{detail.date_created | date:'dd-MMM-yyyy'}}</td>
+                                <td class="w130">
+                                    <a class="link-btn" routerLink="/sale-user-detail/{{detail.created_by}}" routerLinkActive="active" mat-button>{{detail.created_by_user |titlecase }}</a>
+                                </td>
+                                <td *ngIf="detail.type==1" class="w90" matTooltip=" Click here to View Detail " matTooltipPosition="above">
+                                    <a class="link-btn" mat-button routerLink="/contractor-detail/{{detail.id}}" routerLinkActive="active">Distributor</a>
+                                </td>
+                                <td *ngIf="detail.type==7" class="w90" matTooltip=" Click here to View Detail " matTooltipPosition="above">
+                                    <a class="link-btn" mat-button routerLink="/contractor-detail/{{detail.id}}" routerLinkActive="active">Direct Dealer</a>
+                                </td>
+                                <td *ngIf="detail.type==3" class="w90" matTooltip=" Click here to View Detail " matTooltipPosition="above">
+                                    <a class="link-btn" mat-button routerLink="/contractor-detail/{{detail.id}}" routerLinkActive="active">Retailer</a>
+                                </td>
+                                <td *ngIf="detail.type==5" class="w90" matTooltip=" Click here to View Detail " matTooltipPosition="above">
+                                    <a class="link-btn" mat-button routerLink="/contractor-detail/{{detail.id}}" routerLinkActive="active">End User</a>
+                                </td>
+                                <td *ngIf="detail.type==9" class="w90" matTooltip=" Click here to View Detail " matTooltipPosition="above">
+                                    <a class="link-btn" mat-button routerLink="/contractor-detail/{{detail.id}}" routerLinkActive="active">Project</a>
+                                </td>
+                                <td *ngIf="detail.type==12" class="w90" matTooltip=" Click here to View Detail " matTooltipPosition="above">
+                                    <a class="link-btn" mat-button routerLink="/contractor-detail/{{detail.id}}" routerLinkActive="active">Sub dealer</a>
+                                </td>
+                                <td *ngIf="detail.type==11" class="w90" matTooltip=" Click here to View Detail " matTooltipPosition="above">
+                                    <a class="link-btn" mat-button routerLink="/contractor-detail/{{detail.id}}" routerLinkActive="active">Electrician</a>
+                                </td>
+                                <td *ngIf="detail.type==13" class="w90" matTooltip=" Click here to View Detail " matTooltipPosition="above">
+                                    <a class="link-btn" mat-button routerLink="/contractor-detail/{{detail.id}}" routerLinkActive="active">Private Contractor</a>
+                                </td>
+                                <td *ngIf="detail.type==14" class="w90" matTooltip=" Click here to View Detail " matTooltipPosition="above">
+                                    <a class="link-btn" mat-button routerLink="/contractor-detail/{{detail.id}}" routerLinkActive="active">Government Contractor</a>
+                                </td>
+                                <td *ngIf="detail.type==15" class="w90" matTooltip=" Click here to View Detail " matTooltipPosition="above">
+                                    <a class="link-btn" mat-button routerLink="/contractor-detail/{{detail.id}}" routerLinkActive="active">Builder</a>
+                                </td>
+                                <td *ngIf="detail.type==16" class="w90" matTooltip=" Click here to View Detail " matTooltipPosition="above">
+                                    <a class="link-btn" mat-button routerLink="/contractor-detail/{{detail.id}}" routerLinkActive="active">Architect</a>
+                                </td>
+                                <td class="w150">
+                                    <a class="link-btn" mat-button routerLink="/distribution-detail/{{detail.dealer_id}}" routerLinkActive="active">{{detail.company_name | titlecase}}</a>
+                                </td>
+                                <td class="w140">{{detail.name}}, {{detail.mobile}}</td>
+                                <!-- <td class="w150">{{detail.created_by_user_email}}</td> -->
+                                <!-- , hh:mm aa -->
+                                <td class="w90">{{detail.date_of_meeting | date:'dd-MMM-yyyy'}}</td>
+                                <td class="w90">
+                                    {{detail.last_meeting == null? "First Meeting" :detail.last_meeting | date:'dd-MMM-yyyy'}}
+                                </td>
+                                <td class="w90 text-center"><strong>{{detail.total_member}}</strong></td>
+                                <td class="w90 text-right">&#x20B9; {{detail.total_budget}}</td>
+                                <td class="w140" matTooltip="{{detail.description}}" matTooltipPosition="above">
+                                    <p class="one-line">{{detail.description}}</p>
+                                </td>
+                                <!-- <td class="w90">60 days ago</td> -->
+                                <td class="w90">
+                                    <strong class="" [ngClass]="{'yellow-clr':detail.status=='pending','red-clr':detail.status=='rejected','blue-clr':detail.status=='completed','green-clr':detail.status=='approved'}">{{detail.status | uppercase}}</strong>
+                                    <a *ngIf="(( detail.status!='completed') )"
+                                    class="edit-column" (click)="statusModal(detail.id,detail.status)" mat-button
+                                    matTooltip="Edit status"><i class="material-icons">create</i></a>
+                                </td>
+                                <!-- <td class="w100"><a class="link-btn" mat-button routerLink="/contractor-detail/{{detail.id}}" routerLinkActive="active">view </a></td> -->
+                            </tr>
+                            <ng-container *ngFor="let lead of skelton">
+                                <tr class="sk-loading" *ngIf="loader">
+                                    <td class="w90">
+                                        <div>&nbsp;</div>
+                                    </td>
+                                    <td class="w130">
+                                        <div>&nbsp;</div>
+                                    </td>
+                                    <td class="w90">
+                                        <div>&nbsp;</div>
+                                    </td>
+                                    <td class="w150">
+                                        <div>&nbsp;</div>
+                                    </td>
+                                    <td class="w140">
+                                        <div>&nbsp;</div>
+                                    </td>
+                                    <td class="w90">
+                                        <div>&nbsp;</div>
+                                    </td>
+                                    <td class="w90">
+                                        <div>&nbsp;</div>
+                                    </td>  
+                                    <td class="w90">
+                                        <div>&nbsp;</div>
+                                    </td> 
+                                     <td class="w90">
+                                        <div>&nbsp;</div>
+                                    </td>
+                                   
+                                    <td class="w140">
+                                        <div>&nbsp;</div>
+                                    </td>
+                                    <td class="w90">
+                                        <div>&nbsp;</div>
+                                    </td>
+                                </tr>
+                            </ng-container>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- *** All tab table end *** -->
+            
+            
+            
+            <!--*** pending tab table start ***-->
+            <div class="cs-table horizontal-scroll" *ngIf="tabActiveType['tab1']">
+                <div class="sticky-head">
+                    <div class="table-head">
+                        <table>
+                            <tr>
+                                <th class="w90">Date Created</th>
+                                <th class="w130">Created By</th>
+                                <th class="w90">Type</th>
+                                <th class="w150">Company Name</th>
+                                <th class="w140">Contact Person</th>
+                                <!-- <th class="w100">Email</th> -->
+                                <th class="w90">Meeting Date</th>
+                                <th class="w90">Last Meeting </th>
+                                <th class="w90">Total Member</th>
+                                <th class="w90 text-right">Total Budget</th>
+                                <th class="w140">Description</th>
+                                <th class="w80">Pending By</th>
+                                <!-- <th class="w90">Last Meeting</th> -->
+                                <th class="w100">Action</th>
+                                <!-- <th></th> -->
+                            </table>
+                        </div>
+                        <!-- *** filter *** -->
+                        <div class="table-head bdrt">
+                            <table class="sno-border">
+                                <tr>
+                                    <th class="w90">
+                                        <div class="th-search-acmt">
+                                            <mat-form-field class="cs-input date-column infix-bodr">
+                                                <input matInput [matDatepicker]="picker" placeholder="Date" name="date_from"
+                                                [(ngModel)]="data.date_from" (dateChange)="onDate($event)">
+                                                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                                                <mat-datepicker #picker></mat-datepicker>
+                                            </mat-form-field>
+                                        </div>
+                                    </th>
+                                    
+                                    <th class="w130">
+                                        <div class="th-search-acmt">
+                                            <mat-form-field class="example-full-width cs-input select-input">
+                                                <input matInput placeholder="Created By. . ." type="text" name="created_by"
+                                                [(ngModel)]="data.created_by" (keyup.enter)="getContractorMeetList()">
+                                            </mat-form-field>
+                                        </div>
+                                    </th>
+                                    
+                                    <th class="w90">
+                                        <div class="th-search-acmt">
+                                            <mat-form-field class="cs-input select-input">
+                                                <mat-select placeholder="Type">
+                                                    <mat-option (click)="selectType('all')" value="All">All</mat-option>
+                                                    <mat-option (click)="selectType('1')" value="Distributor">Distributor/Dealer</mat-option>
+                                                    <mat-option (click)="selectType('3')" value="Dealer">Retailer</mat-option>
+                                                    <mat-option (click)="selectType('7')" value="Direct Dealer ">Direct Dealer </mat-option>
+                                                </mat-select>
+                                            </mat-form-field>
+                                        </div>
+                                    </th>
+                                    
+                                    <th class="w150">
+                                        <div class="th-search-acmt">
+                                            <mat-form-field class="example-full-width cs-input select-input">
+                                                <!-- getItemsList('created_by',value.search) -->
+                                                <input matInput placeholder="Company Name ...." type="text" name="company_name"
+                                                [(ngModel)]="data.company_name" (keyup.enter)="getContractorMeetList()">
+                                            </mat-form-field>
+                                        </div>
+                                    </th>
+                                    <th class="w140">
+                                        <div class="th-search-acmt">
+                                            <mat-form-field class="example-full-width cs-input select-input">
+                                                <!-- getItemsList('created_by',value.search) -->
+                                                <input matInput placeholder="Mobile No. . ." type="text" name="Mobile No"
+                                                [(ngModel)]="data.mobile_number" (keyup.enter)="getContractorMeetList()">
+                                            </mat-form-field>
+                                        </div>
+                                    </th>
+                                    <!-- <th class="w100">
+                                        <div class="th-search-acmt">
+                                            <mat-form-field class="example-full-width cs-input select-input">
+                                                <input matInput placeholder="E-Mail. . ." type="text" name="email" [(ngModel)]="data.email"
+                                                (keyup.enter)="getContractorMeetList()">
+                                            </mat-form-field>
+                                        </div>
+                                    </th> -->
+                                    <th class="w90">
+                                        <div class="th-search-acmt">
+                                            <mat-form-field class="cs-input date-column infix-bodr">
+                                                <input matInput [matDatepicker]="picker2" placeholder="Date" name="dom_from"
+                                                [(ngModel)]="data.dom_from" (dateChange)="DateOfMeeting($event)">
+                                                <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+                                                <mat-datepicker #picker2></mat-datepicker>
+                                            </mat-form-field>
+                                        </div>
+                                    </th>
+                                    <th class="w90">&nbsp;</th>
+                                    <th class="w90 text-right">&nbsp;</th>
+                                    <th class="w90">&nbsp;</th>
+                                    <th class="w140"></th>
+                                    <th class="w80">&nbsp;</th>
+                                    <!-- <th class="w90">Last Meeting</th> -->
+                                    <th class="w100">&nbsp;</th>
+                                    <!-- <th></th> -->
+                                </tr>
+                            </table>
+                        </div>
+                        <!-- ***filter End *** -->
+                    </div>
+                    
+                    <div class="table-container">
+                        
+                        <div class="table-content">
+                            <table>
+                                <ng-container *ngFor="let detail of contractorMeetListDetail ; let i = index">
+                                    <tr *ngIf="detail.status=='pending'">
+                                        <!-- , hh:mm aa -->
+                                        <td class="w90">{{detail.date_created | date:'dd-MMM-yyyy'}}</td>
+                                        <td class="w130">
+                                            <a class="link-btn" routerLink="/sale-user-detail/{{detail.created_by}}"
+                                            routerLinkActive="active" mat-button>{{detail.created_by_user | titlecase}}</a>
+                                        </td>
+                                        <td *ngIf="detail.type==1" class="w90" matTooltip=" Click here to View Detail " matTooltipPosition="above">
+                                            <a class="link-btn" mat-button routerLink="/contractor-detail/{{detail.id}}" routerLinkActive="active">Distributor/Dealer</a>
+                                        </td>
+                                        <td *ngIf="detail.type==7" class="w90" matTooltip=" Click here to View Detail " matTooltipPosition="above">
+                                            <a class="link-btn" mat-button routerLink="/contractor-detail/{{detail.id}}" routerLinkActive="active">Direct Dealer</a>
+                                        </td>
+                                        <td *ngIf="detail.type==3" class="w90" matTooltip=" Click here to View Detail " matTooltipPosition="above">
+                                            <a class="link-btn" mat-button routerLink="/contractor-detail/{{detail.id}}" routerLinkActive="active">Retailer</a>
+                                        </td>
+                                        <td *ngIf="detail.type==11" class="w90" matTooltip=" Click here to View Detail " matTooltipPosition="above">
+                                            <a class="link-btn" mat-button routerLink="/contractor-detail/{{detail.id}}" routerLinkActive="active">Electrician</a>
+                                        </td>
+                                        <td *ngIf="detail.type==12" class="w90" matTooltip=" Click here to View Detail " matTooltipPosition="above">
+                                            <a class="link-btn" mat-button routerLink="/contractor-detail/{{detail.id}}" routerLinkActive="active">Sub-dealer</a>
+                                        </td>
+                                        <td *ngIf="detail.type==13" class="w90" matTooltip=" Click here to View Detail " matTooltipPosition="above">
+                                            <a class="link-btn" mat-button routerLink="/contractor-detail/{{detail.id}}" routerLinkActive="active">Private Contractor</a>
+                                        </td>
+                                        <td *ngIf="detail.type==14" class="w90" matTooltip=" Click here to View Detail " matTooltipPosition="above">
+                                            <a class="link-btn" mat-button routerLink="/contractor-detail/{{detail.id}}" routerLinkActive="active">Government Contractor</a>
+                                        </td>
+                                        <td *ngIf="detail.type==15" class="w90" matTooltip=" Click here to View Detail " matTooltipPosition="above">
+                                            <a class="link-btn" mat-button routerLink="/contractor-detail/{{detail.id}}" routerLinkActive="active">Builder</a>
+                                        </td>
+                                        <td *ngIf="detail.type==16" class="w90" matTooltip=" Click here to View Detail " matTooltipPosition="above">
+                                            <a class="link-btn" mat-button routerLink="/contractor-detail/{{detail.id}}" routerLinkActive="active">Architect</a>
+                                        </td>
+
+                                        
+                                        <td class="w150">
+                                            <a class="link-btn" mat-button routerLink="/distribution-detail/{{detail.dealer_id}}"
+                                            routerLinkActive="active">{{detail.company_name | uppercase}}</a>
+                                        </td>
+                                        <td class="w140">{{detail.name}}, {{detail.mobile}}</td>
+                                        <td class="w90">{{detail.date_of_meeting | date:'dd-MMM-yyyy'}}</td>
+                                        
+                                        <td class="w90">
+                                            {{detail.last_meeting == null? "First Meeting" :detail.last_meeting | date:'dd-MMM-yyyy'}}
+                                        </td>
+                                        <td class="w90 text-center"><strong>{{detail.total_member}}</strong></td>
+                                        <td class="w90 text-right">&#x20B9; {{detail.total_budget}}</td>
+                                        <td class="w140" matTooltip="{{detail.description}}" matTooltipPosition="above">
+                                            <p class="one-line">{{detail.description}}</p>
+                                        </td>
+                                        <td class="w80 text-center">{{detail.day_diff}}Days</td>
+                                        <td class="w100">
+                                            <!-- <strong class="yellow-clr">{{detail.status | uppercase}}</strong> -->
+                                            <div class="df">
+                                                <a *ngIf="((detail.status!='rejected' && detail.status!='completed') && (detail.status!='approved'))"
+                                                matTooltip="Edit" matTooltipPosition="above"
+                                                class="delete-mat" (click)="statusModal(detail.id,detail.status)" mat-button
+                                                matTooltip="Edit status"><i class="material-icons green-clr">create</i></a>
+                                                <!-- <div class=""> -->
+                                                    <a (click)="delete(detail.id)" matTooltip="Delete" matTooltipPosition="above" class="delete-mat">
+                                                        <i class="material-icons red-clr">delete_sweep</i>
+                                                    </a>
+                                                </div>
+                                                <!-- </div> -->
+                                            </td>
+                                        </tr>
+                                    </ng-container>
+                                    <ng-container *ngFor="let lead of skelton">
+                                        <tr class="sk-loading" *ngIf="loader">
+                                            <td class="w90">
+                                                <div>&nbsp;</div>
+                                            </td>
+                                            <td class="w150">
+                                                <div>&nbsp;</div>
+                                            </td>
+                                            <td class="w150">
+                                                <div>&nbsp;</div>
+                                            </td>
+                                            <td class="w90">
+                                                <div>&nbsp;</div>
+                                            </td>
+                                            <td class="w90">
+                                                <div>&nbsp;</div>
+                                            </td>
+                                            <td class="w100">
+                                                <div>&nbsp;</div>
+                                            </td>
+                                            <td>
+                                                <div>&nbsp;</div>
+                                            </td>
+                                            <td class="w100">
+                                                <div>&nbsp;</div>
+                                            </td>
+                                        </tr>
+                                    </ng-container>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <!--*** pending tab table end ***-->
+                    
+                    
+                    <!--*** approved tab table start ***-->
+                    <div class="cs-table horizontal-scroll" *ngIf="tabActiveType['tab2']">
+                        <div class="sticky-head">
+                            <div class="table-head">
+                                <table>
+                                    <tr>
+                                        <th class="w90">Date Created</th>
+                                        <th class="w130">Created By</th>
+                                        <th class="w90">Type</th>
+                                        <th class="w150">Company Name</th>
+                                        <th class="w100">Contact Person</th>
+                                        <th class="w90">Meeting Date</th>
+                                        <th class="w90">Last Meeting</th>
+                                        <th class="w90">Total Member</th>
+                                        <th class="w90 text-right">Total Budget</th>
+                                        <th class="w140">Description</th>
+                                        <th class="w90">Approved By</th>
+                                        <th class="w90">Approved Date</th>
+                                    </tr>
+                                </table>
+                            </div>
+                            <!-- *** filter *** -->
+                            <div class="table-head bdrt">
+                                <table class="sno-border">
+                                    <tr>
+                                        <th class="w90">
+                                            <div class="th-search-acmt">
+                                                <mat-form-field class="cs-input date-column infix-bodr">
+                                                    <input matInput [matDatepicker]="picker" placeholder="Date" name="date_from"
+                                                    [(ngModel)]="data.date_from" (dateChange)="onDate($event)">
+                                                    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                                                    <mat-datepicker #picker></mat-datepicker>
+                                                </mat-form-field>
+                                            </div>
+                                        </th>
+                                        
+                                        <th class="w130">
+                                            <div class="th-search-acmt">
+                                                <mat-form-field class="example-full-width cs-input select-input">
+                                                    <input matInput placeholder="Created By. . ." type="text" name="created_by"
+                                                    [(ngModel)]="data.created_by" (keyup.enter)="getContractorMeetList()">
+                                                </mat-form-field>
+                                            </div>
+                                        </th>
+                                        
+                                        <th class="w90">
+                                            <div class="th-search-acmt">
+                                                <mat-form-field class="cs-input select-input">
+                                                    <mat-select placeholder="Type">
+                                                        <mat-option (click)="selectType('all')" value="All">All</mat-option>
+                                                        <mat-option (click)="selectType('1')" value="Distributor">Distributor/Dealer</mat-option>
+                                                        <mat-option (click)="selectType('3')" value="Dealer">Retailer</mat-option>
+                                                        <mat-option (click)="selectType('7')" value="Direct Dealer ">Direct Dealer </mat-option>
+                                                    </mat-select>
+                                                </mat-form-field>
+                                            </div>
+                                        </th>
+                                        
+                                        <th class="w150">
+                                            <div class="th-search-acmt">
+                                                <mat-form-field class="example-full-width cs-input select-input">
+                                                    <!-- getItemsList('created_by',value.search) -->
+                                                    <input matInput placeholder="Company Name ...." type="text" name="company_name"
+                                                    [(ngModel)]="data.company_name" (keyup.enter)="getContractorMeetList()">
+                                                </mat-form-field>
+                                            </div>
+                                        </th>
+                                        <th class="w100">
+                                            <div class="th-search-acmt">
+                                                <mat-form-field class="example-full-width cs-input select-input">
+                                                    <!-- getItemsList('created_by',value.search) -->
+                                                    <input matInput placeholder="Mobile No. . ." type="text" name="Mobile No"
+                                                    [(ngModel)]="data.mobile_number" (keyup.enter)="getContractorMeetList()">
+                                                </mat-form-field>
+                                            </div>
+                                        </th>
+                                        
+                                        <th class="w90">
+                                            <div class="th-search-acmt">
+                                                <mat-form-field class="cs-input date-column infix-bodr">
+                                                    <input matInput [matDatepicker]="picker2" placeholder="Date" name="dom_from"
+                                                    [(ngModel)]="data.dom_from" (dateChange)="DateOfMeeting($event)">
+                                                    <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+                                                    <mat-datepicker #picker2></mat-datepicker>
+                                                </mat-form-field>
+                                            </div>
+                                        </th>
+                                        <th class="w90">&nbsp;</th>
+                                        <th class="w90">&nbsp;</th>
+                                        <th class="w90">&nbsp;</th>
+                                        <th class="w140">&nbsp;</th>
+                                        <th class="w90">&nbsp;</th>
+                                        <th class="w90">&nbsp;</th>
+
+
+                                        <!-- <th class="w130">&nbsp;</th>
+                                        <th class="w90">&nbsp;</th>
+                                        <th class="w150">&nbsp;</th>
+                                        <th class="w100">&nbsp;</th>
+                                        <th class="w90">&nbsp;</th>
+                                        <th class="w90">&nbsp;</th>
+                                        <th class="w90">&nbsp;</th>
+
+                                        <th class="w90 text-right">&nbsp;</th>
+                                        <th class="w140"></th>
+                                        <th class="w90">&nbsp;</th>
+                                        <th class="w90">&nbsp;</th>
+                                         -->
+                                    </tr>
+                                </table>
+                            </div>
+                            <!-- ***filter End *** -->
+                        </div>
+                        
+                        <div class="table-container">
+                            <div class="table-content">
+                                <table>
+                                    <ng-container *ngFor="let detail of contractorMeetListDetail ; let i = index">
+                                        <tr *ngIf="detail.status=='approved'">
+                                            <td class="w90">{{detail.date_created | date:'dd-MMM-yyyy'}}</td>
+                                            <td class="w130"><a class="link-btn" routerLink="/sale-user-detail/{{detail.created_by}}"
+                                                routerLinkActive="active" mat-button>{{detail.created_by_user | titlecase}}</a></td>
+                                                <td *ngIf="detail.type==1" class="w90" matTooltip=" Click here to View Detail " matTooltipPosition="above">
+                                                    <a class="link-btn" mat-button routerLink="/contractor-detail/{{detail.id}}" routerLinkActive="active">Distributer</a>
+                                                </td>
+                                                <td *ngIf="detail.type==7" class="w90" matTooltip=" Click here to View Detail " matTooltipPosition="above">
+                                                    <a class="link-btn" mat-button routerLink="/contractor-detail/{{detail.id}}" routerLinkActive="active">Direct Dealer</a>
+                                                </td>
+                                                <td *ngIf="detail.type==3" class="w90" matTooltip=" Click here to View Detail " matTooltipPosition="above">
+                                                    <a class="link-btn" mat-button routerLink="/contractor-detail/{{detail.id}}" routerLinkActive="active">Retailer</a>
+                                                </td>
+                                                <td class="w150">
+                                                    <a class="link-btn" mat-button routerLink="/distribution-detail/{{detail.dealer_id}}" routerLinkActive="active">{{detail.company_name | titlecase}}</a>
+                                                </td>
+                                                <td class="w100">{{detail.name}}, {{detail.mobile}}</td>
+                                                <td class="w90">{{detail.date_of_meeting | date:'dd-MMM-yyyy'}}</td>
+                                                <td class="w90">
+                                                    {{detail.last_meeting == null? "First Meeting" :detail.last_meeting | date:'dd-MMM-yyyy'}}
+                                                </td>
+                                                <td class="w90 text-center"><strong>{{detail.total_member}}</strong></td>
+                                                <td class="w90 text-right">&#x20B9; {{detail.total_budget}}</td>
+                                                <td class="w140" matTooltip="{{detail.description}}" matTooltipPosition="above">
+                                                    <p class="one-line">{{detail.description}}</p>
+                                                </td>
+                                                <td class="w90 text-center">{{detail.status_changed_by_user.name}}</td>
+                                                <td class="w90 text-center">{{detail.date_updated | date:'dd-MMM-yyyy'}}</td>
+                                            </tr>
+                                        </ng-container>
+                                        <ng-container *ngFor="let lead of skelton">
+                                            <tr class="sk-loading" *ngIf="loader">
+                                                <td class="w90">
+                                                    <div>&nbsp;</div>
+                                                </td>
+                                                <td class="w150">
+                                                    <div>&nbsp;</div>
+                                                </td>
+                                                <td class="w150">
+                                                    <div>&nbsp;</div>
+                                                </td>
+                                                <td class="w90">
+                                                    <div>&nbsp;</div>
+                                                </td>
+                                                <td class="w90">
+                                                    <div>&nbsp;</div>
+                                                </td>
+                                                <td class="w100">
+                                                    <div>&nbsp;</div>
+                                                </td>
+                                                <td class="w140">
+                                                    <div>&nbsp;</div>
+                                                </td>
+                                                <td class="w100">
+                                                    <div>&nbsp;</div>
+                                                </td>
+                                            </tr>
+                                        </ng-container>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                        <!--*** approved tab table end ***-->
+                        
+                        
+                        <!--*** compelete tab table start ***-->
+                        <div class="cs-table" *ngIf="tabActiveType['tab3']">
+                            <div class="sticky-head">
+                                <div class="table-head">
+                                    <table>
+                                        <tr>
+                                            <th class="w90">Date Created</th>
+                                            <th class="w130">Created By</th>
+                                            <th class="w90">Type</th>
+                                            <th class="w150">Company Name</th>
+                                            <th class="w100">Contact Person</th>
+                                            <th class="w90">Meeting Date</th>
+                                            <th class="w90 text-center">Total Member</th>
+                                            <th class="">Description</th>
+                                            <th class="w90"></th>
+                                        </tr>
+                                    </table>
+                                </div>
+                                <!-- *** filter *** -->
+                                
+                                <div class="table-head bdrt">
+                                    <table class="sno-border">
+                                        <tr>
+                                            <th class="w90">
+                                                <div class="th-search-acmt">
+                                                    <mat-form-field class="cs-input date-column infix-bodr">
+                                                        <input matInput [matDatepicker]="picker" placeholder="Date" name="date_from"
+                                                        [(ngModel)]="data.date_from" (dateChange)="onDate($event)">
+                                                        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                                                        <mat-datepicker #picker></mat-datepicker>
+                                                    </mat-form-field>
+                                                </div>
+                                            </th>
+                                            <th class="w130">
+                                                <div class="th-search-acmt">
+                                                    <mat-form-field class="example-full-width cs-input select-input">
+                                                        <input matInput placeholder="Created By. . ." type="text" name="created_by"
+                                                        [(ngModel)]="data.created_by" (keyup.enter)="getContractorMeetList()">
+                                                    </mat-form-field>
+                                                </div>
+                                            </th>
+                                            <th class="w90">
+                                                <div class="th-search-acmt">
+                                                    <mat-form-field class="cs-input select-input">
+                                                        <mat-select placeholder="Type">
+                                                            <mat-option (click)="selectType('all')" value="All">All</mat-option>
+                                                            <mat-option (click)="selectType('1')" value="Distributor">Distributor/Dealer</mat-option>
+                                                            <mat-option (click)="selectType('3')" value="Dealer">Retailer</mat-option>
+                                                            <mat-option (click)="selectType('7')" value="Direct Dealer ">Direct Dealer </mat-option>
+                                                        </mat-select>
+                                                    </mat-form-field>
+                                                </div>
+                                            </th>
+                                            <th class="w150">
+                                                <div class="th-search-acmt">
+                                                    <mat-form-field class="example-full-width cs-input select-input">
+                                                        <input matInput placeholder="Company Name ...." type="text" name="company_name"
+                                                        [(ngModel)]="data.company_name" (keyup.enter)="getContractorMeetList()">
+                                                    </mat-form-field>
+                                                </div>
+                                            </th>
+                                            <th class="w100">
+                                                <div class="th-search-acmt">
+                                                    <mat-form-field class="example-full-width cs-input select-input">
+                                                        <input matInput placeholder="Mobile No. . ." type="text" name="Mobile No"
+                                                        [(ngModel)]="data.mobile_number" (keyup.enter)="getContractorMeetList()">
+                                                    </mat-form-field>
+                                                </div>
+                                            </th>
+                                            <th class="w90">
+                                                <div class="th-search-acmt">
+                                                    <mat-form-field class="cs-input date-column infix-bodr">
+                                                        <input matInput [matDatepicker]="picker2" placeholder="Date" name="dom_from"
+                                                        [(ngModel)]="data.dom_from" (dateChange)="DateOfMeeting($event)">
+                                                        <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+                                                        <mat-datepicker #picker2></mat-datepicker>
+                                                    </mat-form-field>
+                                                </div>
+                                            </th>
+                                            <th class="w90 text-center">&nbsp;</th>
+                                            <th>&nbsp;</th>
+                                            <th class="w90">&nbsp;</th>
+                                        </tr>
+                                    </table>
+                                </div>
+                                
+                                <!-- ***filter End *** -->
+                            </div>
+                            
+                            <div class="table-container">
+                                <div class="table-content">
+                                    <table>
+                                        <ng-container *ngFor="let detail of contractorMeetListDetail ; let i = index">
+                                            <tr *ngIf="detail.status=='completed'">
+                                                <td class="w90">{{detail.date_created | date:'dd-MMM-yyyy'}}</td>
+                                                <td class="w130">{{detail.created_by_user | titlecase}}</td>
+                                                <td *ngIf="detail.type==1" class="w90">Distributer</td>
+                                                <td *ngIf="detail.type==7" class="w90">Direct Dealer</td>
+                                                <td *ngIf="detail.type==3" class="w90">Deale</td>
+                                                <td class="w150">{{detail.company_name | titlecase}}</td>
+                                                <td class="w100">{{detail.name}}, {{detail.mobile}}</td>
+                                                <td class="w90">{{detail.date_of_meeting | date:'dd-MMM-yyyy'}}</td>
+                                                <td class="w90 text-center"><strong>{{detail.total_participants}}</strong></td>
+                                                <td matTooltip="{{detail.description}}" matTooltipPosition="above">
+                                                    <p class="one-line">{{detail.description}}</p>
+                                                </td>
+                                                <td class="w90"><a class="link-btn" routerLink="/contractor-detail/{{detail.id}}" routerLinkActive="active" mat-button>View Details</a></td>
+                                            </tr>
+                                        </ng-container>
+                                        <ng-container *ngFor="let lead of skelton">
+                                            <tr class="sk-loading" *ngIf="loader">
+                                                <td class="w90">
+                                                    <div>&nbsp;</div>
+                                                </td>
+                                                <td class="w150">
+                                                    <div>&nbsp;</div>
+                                                </td>
+                                                <td class="w150">
+                                                    <div>&nbsp;</div>
+                                                </td>
+                                                <td class="w90">
+                                                    <div>&nbsp;</div>
+                                                </td>
+                                                <td class="w90">
+                                                    <div>&nbsp;</div>
+                                                </td>
+                                                <td class="w100">
+                                                    <div>&nbsp;</div>
+                                                </td>
+                                                <td>
+                                                    <div>&nbsp;</div>
+                                                </td>
+                                                <td class="w100">
+                                                    <div>&nbsp;</div>
+                                                </td>
+                                            </tr>
+                                        </ng-container>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                        <!--*** compelete tab table end ***-->
+                        
+                        <!--*** reject tab table start ***-->
+                        <div class="cs-table horizontal-scroll" *ngIf="tabActiveType['tab4']">
+                            <div class="sticky-head">
+                                <div class="table-head">
+                                    <table>
+                                        <tr>
+                                            <th class="w90">Date Created</th>
+                                            <th class="w130">Created By</th>
+                                            <th class="w90">Type</th>
+                                            <th class="w150">Company Name</th>
+                                            <th class="w100">Contact Person</th>
+                                            <th class="w90">Meeting Date</th>
+                                            <th class="w90">Last Meeting</th>
+                                            <th class="w90  pt0 pb0 text-center">Total Member</th>
+                                            <th class="w90 pt0 pb0 text-right">Total Budget</th>
+                                            <th class="w140">Description</th>
+                                            <th class="w70 pt0 pb0 text-right">Reject By</th>
+                                            <th class="w70 pt0 pb0 text-right">Reject Date</th>
+                                            <th class="w140">Reason</th>
+                                        </tr>
+                                    </table>
+                                </div>
+                                <!-- *** filter *** -->
+                                
+                                <div class="table-head bdrt">
+                                    <table class="sno-border">
+                                        <tr>
+                                            <th class="w90">
+                                                <div class="th-search-acmt">
+                                                    <mat-form-field class="cs-input date-column infix-bodr">
+                                                        <input matInput [matDatepicker]="picker" placeholder="Date" name="date_from"
+                                                        [(ngModel)]="data.date_from" (dateChange)="onDate($event)">
+                                                        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                                                        <mat-datepicker #picker></mat-datepicker>
+                                                    </mat-form-field>
+                                                </div>
+                                                
+                                                
+                                            </th>
+                                            
+                                            <th class="w130">
+                                                <div class="th-search-acmt">
+                                                    <mat-form-field class="example-full-width cs-input select-input">
+                                                        <input matInput placeholder="Created By. . ." type="text" name="created_by"
+                                                        [(ngModel)]="data.created_by" (keyup.enter)="getContractorMeetList()">
+                                                    </mat-form-field>
+                                                </div>
+                                            </th>
+                                            
+                                            <th class="w90">
+                                                <div class="th-search-acmt">
+                                                    <mat-form-field class="cs-input select-input">
+                                                        <mat-select placeholder="Type">
+                                                            <mat-option (click)="selectType('all')" value="All">All</mat-option>
+                                                            <mat-option (click)="selectType('1')" value="Distributor">Distributor/Dealer</mat-option>
+                                                            <mat-option (click)="selectType('3')" value="Dealer">Retailer</mat-option>
+                                                            <mat-option (click)="selectType('7')" value="Direct Dealer ">Direct Dealer </mat-option>
+                                                        </mat-select>
+                                                    </mat-form-field>
+                                                </div>
+                                            </th>
+                                            
+                                            <th class="w150">
+                                                <div class="th-search-acmt">
+                                                    <mat-form-field class="example-full-width cs-input select-input">
+                                                        <!-- getItemsList('created_by',value.search) -->
+                                                        <input matInput placeholder="Company Name ...." type="text" name="company_name"
+                                                        [(ngModel)]="data.company_name" (keyup.enter)="getContractorMeetList()">
+                                                    </mat-form-field>
+                                                </div>
+                                            </th>
+                                            <th class="w100">
+                                                <div class="th-search-acmt">
+                                                    <mat-form-field class="example-full-width cs-input select-input">
+                                                        <!-- getItemsList('created_by',value.search) -->
+                                                        <input matInput placeholder="Mobile No. . ." type="text" name="Mobile No"
+                                                        [(ngModel)]="data.mobile_number" (keyup.enter)="getContractorMeetList()">
+                                                    </mat-form-field>
+                                                </div>
+                                            </th>
+                                            <!-- <th class="w100">
+                                                <div class="th-search-acmt">
+                                                    <mat-form-field class="example-full-width cs-input select-input">
+                                                        <input matInput placeholder="E-Mail. . ." type="text" name="email" [(ngModel)]="data.email"
+                                                        (keyup.enter)="getContractorMeetList()">
+                                                    </mat-form-field>
+                                                </div>
+                                            </th> -->
+                                            <th class="w90">
+                                                <div class="th-search-acmt">
+                                                    <mat-form-field class="cs-input date-column infix-bodr">
+                                                        <input matInput [matDatepicker]="picker2" placeholder="Date" name="dom_from"
+                                                        [(ngModel)]="data.dom_from" (dateChange)="DateOfMeeting($event)">
+                                                        <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+                                                        <mat-datepicker #picker2></mat-datepicker>
+                                                    </mat-form-field>
+                                                </div>
+                                            </th>
+                                            <th class="w90 text-center">&nbsp;</th>
+                                            <th class="w90 text-right">&nbsp;</th>
+                                            <th class="w90">&nbsp;</th>
+                                            <th class="w140"></th>
+                                            <th class="w70 pt0 pb0">&nbsp;</th>
+                                            <!-- <th class="w90">&nbsp;</th> -->
+                                            <th class="w70">&nbsp;</th>
+                                            <th class="w140">&nbsp;</th>
+                                        </tr>
+                                    </table>
+                                </div>
+                                
+                                <!-- ***filter End *** -->
+                            </div>
+                            
+                            
+                            <div class="table-container">
+                                <div class="table-content">
+                                    <table>
+                                        <ng-container *ngFor="let detail of contractorMeetListDetail ; let i = index">
+                                            <tr *ngIf="detail.status=='rejected'">
+                                                <td class="w90">{{detail.date_created | date:'dd-MMM-yyyy'}}</td>
+                                                
+                                                <td class="w130"><a class="link-btn" routerLink="/sale-user-detail/{{detail.created_by}}"
+                                                    routerLinkActive="active" mat-button>{{detail.created_by_user | titlecase}}</a></td>
+                                                    
+                                                    
+                                                    <td *ngIf="detail.type==1" class="w90" matTooltip=" Click here to View Detail " matTooltipPosition="above"><a class="link-btn" mat-button
+                                                        routerLink="/contractor-detail/{{detail.id}}" routerLinkActive="active">Distributor/Dealer</a></td>
+                                                        <td *ngIf="detail.type==7" class="w90" matTooltip=" Click here to View Detail " matTooltipPosition="above"><a class="link-btn" mat-button
+                                                            routerLink="/contractor-detail/{{detail.id}}" routerLinkActive="active">Direct Dealer</a></td>
+                                                            <td *ngIf="detail.type==3" class="w90" matTooltip=" Click here to View Detail " matTooltipPosition="above"><a class="link-btn" mat-button
+                                                                routerLink="/contractor-detail/{{detail.id}}" routerLinkActive="active">Retailer</a></td>
+                                                                
+                                                                <td class="w150"><a class="link-btn" mat-button routerLink="/distribution-detail/{{detail.dealer_id}}"
+                                                                    routerLinkActive="active">{{detail.company_name | titlecase}}</a></td>
+                                                                    <td class="w100">{{detail.name}}, {{detail.mobile}}</td>
+                                                                    <!-- <td class="w100">{{detail.created_by_user_email}}</td> -->
+                                                                    <!-- , hh:mm aa -->
+                                                                    <td class="w90">{{detail.date_of_meeting | date:'dd-MMM-yyyy'}}</td>
+                                                                    <td class="w90">{{detail.last_meeting | date:'dd-MMM-yyyy'}}</td>
+                                                                    <td class="w90 text-center"><strong>{{detail.total_member}}</strong></td>
+                                                                    <td class="w90 text-right">&#x20B9; {{detail.total_budget}}</td>
+                                                                    <td class="w140">
+                                                                        <p class="one-line">{{detail.description}}</p>
+                                                                    </td>
+                                                                    
+                                                                    
+                                                                    <td class="w70" matTooltip="{{detail.status_changed_by_user.name}}" matTooltipPosition="above">
+                                                                        <p class="one-line">{{detail.status_changed_by_user.name}}</p>
+                                                                        
+                                                                    </td>
+                                                                    <td class="w70" matTooltip="{{detail.date_updated}}" matTooltipPosition="above">
+                                                                        <p class="one-line">{{detail.date_updated| date:'dd-MMM-yyyy'}}</p>
+                                                                    </td>
+                                                                    
+                                                                    <td class="w140" matTooltip="{{detail.remarks}}" matTooltipPosition="above">
+                                                                        <p class="one-line">{{detail.remarks}}</p>
+                                                                    </td>
+                                                                    <!-- <td class="w90">{{detail.date_updated| date:'dd-MMM-yyyy'}}</td> -->
+                                                                </tr>
+                                                            </ng-container>
+                                                            <ng-container *ngFor="let lead of skelton">
+                                                                <tr class="sk-loading" *ngIf="loader">
+                                                                    <td class="w90">
+                                                                        <div>&nbsp;</div>
+                                                                    </td>
+                                                                    <td class="w150">
+                                                                        <div>&nbsp;</div>
+                                                                    </td>
+                                                                    <td class="w150">
+                                                                        <div>&nbsp;</div>
+                                                                    </td>
+                                                                    <td class="w90">
+                                                                        <div>&nbsp;</div>
+                                                                    </td>
+                                                                    <td class="w90">
+                                                                        <div>&nbsp;</div>
+                                                                    </td>
+                                                                    <td class="w100">
+                                                                        <div>&nbsp;</div>
+                                                                    </td>
+                                                                    <td>
+                                                                        <div>&nbsp;</div>
+                                                                    </td>
+                                                                    <td class="w100">
+                                                                        <div>&nbsp;</div>
+                                                                    </td>
+                                                                </tr>
+                                                            </ng-container>
+                                                        </table>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <!--*** reject tab table end ***-->
+                                            
+                                            <!-- *** pagination **** -->
+                                            
+                                            <!-- <mat-paginator [length]="length" [pageSize]="pageSize" (page)="pageEvent = getServerData($event)">
+                                            </mat-paginator> -->
+                                            
+                                            
+                                            <div class="no-data" *ngIf="!contractorMeetListDetail.length">
+                                                <img src="assets/img/no-data.gif" alt="">
+                                                <p>Data not <span>available !</span></p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    
+                                </div>

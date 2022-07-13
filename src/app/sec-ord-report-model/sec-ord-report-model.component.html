@@ -1,0 +1,28 @@
+<div class="edit-modal">
+  <p class="heading">Secondary Order</p>
+  <div class="cs-table left-right-20">
+    <div class="table-head">
+      <table>
+        <tr>
+          <th>Dealer</th>
+          <th class="text-right w160">Order Value</th>
+        </tr>
+      </table>
+    </div>
+    
+    <div class="table-container">
+      <div class="table-content">
+        <table>
+          <tr *ngFor="let data of dealer_data">
+            <td>{{data.company_name}}</td>
+            <td class="text-right w160">&#x20B9; {{data.amount}}</td>
+          </tr>
+        </table>
+      </div>
+    </div>
+  </div>
+  
+  <div mat-dialog-actions>
+    <button mat-button color="warn" [mat-dialog-close]="false">Cancel</button>
+  </div>
+</div>

@@ -1,0 +1,984 @@
+<div class="main-container" >
+  <!-- <div *ngIf="loader" class="cs-loader">
+    <mat-spinner class="loader">
+      <div><p>Loading....</p></div>
+    </mat-spinner>
+  </div> -->
+  
+  <div class="middle-container">
+    <div class="page-heading">
+      <div class="heading-text">
+        <h2>Expense</h2>
+        <p>Add New Expense</p>
+      </div>
+    </div>
+  </div>
+  
+  <div class="container-outer">
+    <!-- <app-master-tab></app-master-tab> -->
+    <div class="container tab-container" >
+      <div class="sprate-box">
+        <div class="cs-heading">
+          <h2>BASIC INFORMATION</h2>
+          
+          <span class="required">Indicates required fields ( <sup>*</sup> )</span>
+        </div>
+        <mat-divider class="left-right-15 mt10"></mat-divider>
+        <div class="cs-form mt10">
+          <div class="row">
+            <div class="col s12 m12">
+              <div class="form-column-radio stretch">
+                <div class="name">Select Type</div>
+                <div class="check-radio">
+                  <mat-radio-group>
+                    <mat-radio-button class="w200" color="accent" value="out">Outstation Travel</mat-radio-button>
+                    <mat-radio-button class="w200" color="accent" value="sales">Sales Promotion Activity</mat-radio-button>
+                    <mat-radio-button class="w200" color="accent" value="misc">Misc Exp.</mat-radio-button>
+                    <mat-radio-button class="w200" color="accent" value="local">Local Conveyance</mat-radio-button>
+                  </mat-radio-group>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          <div class="row">
+            <div class="col s12 m3">
+              <mat-form-field appearance="outline" class="cs-input">
+                <mat-label>Purpose Of Visit</mat-label>
+                <input matInput placeholder="Type Here ...">
+                <!-- Use this -->
+                <!-- <mat-hint>required</mat-hint> -->
+                <!-- Use this -->
+              </mat-form-field>
+            </div>
+            
+            <div class="col s12 m3">
+              <mat-form-field appearance="outline" class="cs-input ml5">
+                <mat-label>Advance Amount</mat-label>
+                <input matInput placeholder="Type Here ..." >
+                <span class="prefix-icon" matPrefix>&#8377;</span>
+                <!-- Use this -->
+                <!-- <mat-hint>required</mat-hint> -->
+                <!-- Use this -->
+              </mat-form-field>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+
+
+      <div class="cs-form mt10">
+        <div class="row ">
+          <div class="col s12">
+            <div class="cs-collapse">
+              <mat-accordion class="example-headers-align">
+                
+                <!-- Travelentitlement mat-expansion--->
+                <mat-expansion-panel [expanded]="step === 0" (opened)="setStep(0)" hideToggle>
+                  <mat-expansion-panel-header>
+                    <mat-panel-title>
+                      travelentitlement
+                    </mat-panel-title>
+                  </mat-expansion-panel-header>
+                  
+                  <div class="collapse-body">
+                    <div class="cs-form">
+                      <div class="row ">
+                        <div class="col s12 m3">
+                          <mat-form-field appearance="outline" class="cs-input">
+                            <mat-label>Mode Of Travel</mat-label>
+                            <mat-select>
+                              <mat-option value="b">Bus</mat-option>
+                              <mat-option value="c">Car</mat-option>
+                              <mat-option value="r">Rail</mat-option>
+                            </mat-select>
+                            <!-- Use this -->
+                            <!-- <mat-hint>required</mat-hint> -->
+                            <!-- Use this -->
+                          </mat-form-field>
+                        </div>
+                        
+                        <div class="col s12 m3">
+                          <mat-form-field appearance="outline" class="cs-input">
+                            <mat-label>Class</mat-label>
+                            <mat-select>
+                              <mat-option value="f">Fisrt Clas</mat-option>
+                              <mat-option value="a">Ac</mat-option>
+                              <mat-option value="n">Non-AC</mat-option>
+                            </mat-select>
+                            <!-- Use this -->
+                            <!-- <mat-hint>required</mat-hint> -->
+                            <!-- Use this -->
+                          </mat-form-field>
+                        </div>
+                      </div>
+                      
+                      <div class="cs-form-box mt10">
+                        <label class="floating-heading transparent">Depature</label>
+                        <div class="row ">
+                          <div class="col s12 m4">
+                            <mat-form-field appearance="outline" class="cs-input flat-padding" (click)="first.open()">
+                              <mat-label>Date</mat-label>
+                              <input matInput [matDatepicker]="first" placeholder="Type Here">
+                              <mat-datepicker-toggle matSuffix [for]="first"></mat-datepicker-toggle>
+                              <mat-datepicker #first></mat-datepicker>
+                              <!-- Use this -->
+                              <!-- <mat-hint>required</mat-hint> -->
+                              <!-- Use this -->
+                            </mat-form-field>
+                          </div>
+                          
+                          <div class="col s12 m4 mob-mt10">
+                            <mat-form-field appearance="outline" class="cs-input flat-padding">
+                              <mat-label>Station</mat-label>
+                              <input matInput  placeholder="Type Here">
+                              <!-- Use this -->
+                              <!-- <mat-hint>required</mat-hint> -->
+                              <!-- Use this -->
+                            </mat-form-field>
+                          </div>
+                          
+                          <div class="col s12 m4 mob-mt10">
+                            <mat-form-field appearance="outline" class="cs-input flat-padding">
+                              <mat-label>Time</mat-label>
+                              <input matInput type="time" placeholder="Type Here">
+                              <!-- Use this -->
+                              <!-- <mat-hint>required</mat-hint> -->
+                              <!-- Use this -->
+                            </mat-form-field>
+                          </div>
+                        </div>
+                      </div>
+                      
+                      <div class="cs-form-box mt15">
+                        <label class="floating-heading transparent">ARRIVAL</label>
+                        <div class="row ">
+                          <div class="col s12 m4">
+                            <mat-form-field appearance="outline" class="cs-input" (click)="two.open()">
+                              <mat-label>Date</mat-label>
+                              <input matInput [matDatepicker]="two" placeholder="Type Here">
+                              <mat-datepicker-toggle matSuffix [for]="two"></mat-datepicker-toggle>
+                              <mat-datepicker #two></mat-datepicker>
+                              <!-- Use this -->
+                              <!-- <mat-hint>required</mat-hint> -->
+                              <!-- Use this -->
+                            </mat-form-field>
+                          </div>
+                          
+                          <div class="col s12 m4">
+                            <mat-form-field appearance="outline" class="cs-input">
+                              <mat-label>Station</mat-label>
+                              <input matInput  placeholder="Type Here">
+                              <!-- Use this -->
+                              <!-- <mat-hint>required</mat-hint> -->
+                              <!-- Use this -->
+                            </mat-form-field>
+                          </div>
+                          
+                          <div class="col s12 m4">
+                            <mat-form-field appearance="outline" class="cs-input">
+                              <mat-label>Time</mat-label>
+                              <input matInput type="time" placeholder="Type Here">
+                              <!-- Use this -->
+                              <!-- <mat-hint>required</mat-hint> -->
+                              <!-- Use this -->
+                            </mat-form-field>
+                          </div>
+                        </div>
+                        <div class="row ">
+                          <div class="col s12 m3">
+                            <mat-form-field appearance="outline" class="cs-input flat-padding">
+                              <mat-label>Detail Ticket No</mat-label>
+                              <input matInput  placeholder="Type Here">
+                              <!-- Use this -->
+                              <!-- <mat-hint>required</mat-hint> -->
+                              <!-- Use this -->
+                            </mat-form-field>
+                          </div>
+                          
+                          <div class="col s12 m3 mob-mt10">
+                            <mat-form-field appearance="outline" class="cs-input flat-padding">
+                              <mat-label>Amount</mat-label>
+                              <input matInput  placeholder="Type Here">
+                              <span class="prefix-icon" matPrefix>&#8377;</span>
+                              <!-- Use this -->
+                              <!-- <mat-hint>required</mat-hint> -->
+                              <!-- Use this -->
+                            </mat-form-field>
+                          </div>
+                          
+                          <div class="col s12 m3 mob-mt10">
+                            <mat-form-field appearance="outline" class="cs-input flat-padding">
+                              <mat-label>Tax Amount</mat-label>
+                              <input matInput placeholder="Type Here">
+                              <span class="prefix-icon" matPrefix>&#8377;</span>
+                              <!-- Use this -->
+                              <!-- <mat-hint>required</mat-hint> -->
+                              <!-- Use this -->
+                            </mat-form-field>
+                          </div>
+                          
+                          <div class="col s12 m3 mob-mt10">
+                            <mat-form-field appearance="outline" class="cs-input flat-padding">
+                              <mat-label>Travel Distance</mat-label>
+                              <input matInput placeholder="Type Here">
+                              <!-- Use this -->
+                              <!-- <mat-hint>required</mat-hint> -->
+                              <!-- Use this -->
+                            </mat-form-field>
+                          </div>
+                        </div>
+                      </div>
+                      
+                      <div class="row">
+                        <div class="col s12">
+                          <div class="cs-btn mt16 text-right">
+                            <div class="in-btn">
+                              <button mat-raised-button color="accent"  type="save">Add To List</button>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      
+                      
+                      <div class="cs-table left-right-10">
+                        <div class="table-head">
+                          <table>
+                            <tr>
+                              <th class="w310">Departure</th>
+                              <th class="w310">Arrival</th>
+                              <th>Class & Mode Of Travel</th>
+                              <th class="w100 text-center">Ticket No / K.M</th>
+                              <th class="w80 text-right">Amount</th>
+                              <th class="w80 text-right">Tax</th>
+                            </tr>
+                          </table>
+                        </div>
+                        <div class="table-head bdrt">
+                          <table>
+                            <tr>
+                              <th class="w310 padding0">
+                                <table>
+                                  <tr>
+                                    <th class="w90">Date</th>
+                                    <th class="w130">Station</th>
+                                    <th class="w90">Time</th>
+                                  </tr>
+                                </table>
+                              </th>
+                              <th class="w310 padding0">
+                                <table>
+                                  <tr>
+                                    <th class="w90">Date</th>
+                                    <th class="w130">Station</th>
+                                    <th class="w90">Time</th>
+                                  </tr>
+                                </table>
+                              </th>
+                              <th>Class & Mode Of Travel</th>
+                              <th class="w100 text-center">&nbsp;</th>
+                              <th class="w80 text-right">&nbsp;</th>
+                              <th class="w80 text-right">&nbsp;</th>
+                            </tr>
+                          </table>
+                        </div>
+                        
+                        <div class="table-container">
+                          <div class="table-content">
+                            <table>
+                              <tr>
+                                <td class="w310 padding0">
+                                  <table>
+                                    <tr>
+                                      <td class="w90">12 April 2020</td>
+                                      <td class="w130">Delhii</td>
+                                      <td class="w90">11 : 46 AM</td>
+                                    </tr>
+                                  </table>
+                                </td>
+                                <td class="w310 padding0">
+                                  <table>
+                                    <tr>
+                                      <td class="w90">12 April 2020</td>
+                                      <td class="w130">Delhii</td>
+                                      <td class="w90">11 : 46 AM</td>
+                                    </tr>
+                                  </table>
+                                </td>
+                                <td>Ac bus</td>
+                                <td class="w100 text-center">RTRw230</td>
+                                <td class="w80 text-right">&#x20B9; 300</td>
+                                <td class="w80 text-right">&#x20B9; 200
+                                  <div class="action-btns">
+                                    <button mat-button class="delete"><i class="material-icons">delete_sweep</i> Delete</button>
+                                  </div>
+                                </td>
+                              </tr>
+                            </table>
+                          </div>
+                        </div>
+                        
+                      </div>
+                      
+                      <div class="row">
+                        <div class="col s12 m2 offset-m10">
+                          <div class="summary">
+                            <table>
+                              <tr>
+                                <td>Total</td>
+                                <td class="text-right">&#x20B9; 12,000 /-</td>
+                              </tr>
+                            </table>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </mat-expansion-panel>
+                <!-- Travelentitlement mat-expansion--->
+                
+                
+                <!-- Hotel mat-expansion--->
+                <mat-expansion-panel [expanded]="step === 1" (opened)="setStep(1)" hideToggle>
+                  <mat-expansion-panel-header>
+                    <mat-panel-title>
+                      hotel
+                    </mat-panel-title>
+                  </mat-expansion-panel-header>
+                  <div class="collapse-body">
+                    <div class="cs-form">
+                      <div class="row ">
+                        <div class="col s12 m6">
+                          <div class="row ">
+                            <div class="col s12 m6">
+                              <mat-form-field appearance="outline" class="cs-input">
+                                <mat-label>City</mat-label>
+                                <input matInput  placeholder="Type Here">
+                                <!-- Use this -->
+                                <!-- <mat-hint>required</mat-hint> -->
+                                <!-- Use this -->
+                              </mat-form-field>
+                            </div>
+                            <div class="col s12 m6">
+                              <mat-form-field appearance="outline" class="cs-input" (click)="third.open()">
+                                <mat-label>Check In Date</mat-label>
+                                <input matInput [matDatepicker]="third" placeholder="Type Here">
+                                <mat-datepicker-toggle matSuffix [for]="third"></mat-datepicker-toggle>
+                                <mat-datepicker #third></mat-datepicker>
+                                <!-- Use this -->
+                                <!-- <mat-hint>required</mat-hint> -->
+                                <!-- Use this -->
+                              </mat-form-field>
+                            </div>
+                          </div>
+                          <div class="row ">
+                            <div class="col s12 m6">
+                              <mat-form-field appearance="outline" class="cs-input" (click)="four.open()">
+                                <mat-label>Check Out Date</mat-label>
+                                <input matInput [matDatepicker]="four" placeholder="Type Here">
+                                <mat-datepicker-toggle matSuffix [for]="four"></mat-datepicker-toggle>
+                                <mat-datepicker #four></mat-datepicker>
+                                <!-- Use this -->
+                                <!-- <mat-hint>required</mat-hint> -->
+                                <!-- Use this -->
+                              </mat-form-field>
+                            </div>
+                            <div class="col s12 m6">
+                              <mat-form-field appearance="outline" class="cs-input">
+                                <mat-label>Hotel Name</mat-label>
+                                <input matInput placeholder="Type Here">
+                                <!-- Use this -->
+                                <!-- <mat-hint>required</mat-hint> -->
+                                <!-- Use this -->
+                              </mat-form-field>
+                            </div>
+                          </div>
+                          <div class="row ">
+                            <div class="col s12 m6">
+                              <mat-form-field appearance="outline" class="cs-input">
+                                <mat-label>Amount</mat-label>
+                                <input matInput  placeholder="Type Here">
+                                <span class="prefix-icon" matPrefix>&#8377;</span>
+                                <!-- Use this -->
+                                <!-- <mat-hint>required</mat-hint> -->
+                                <!-- Use this -->
+                              </mat-form-field>
+                            </div>
+                            <div class="col s12 m6">
+                              <mat-form-field appearance="outline" class="cs-input">
+                                <mat-label>Tax Amount</mat-label>
+                                <input matInput  placeholder="Type Here">
+                                <span class="prefix-icon" matPrefix>&#8377;</span>
+                                <!-- Use this -->
+                                <!-- <mat-hint>required</mat-hint> -->
+                                <!-- Use this -->
+                              </mat-form-field>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="col s12 m6">
+                          <mat-form-field appearance="outline" class="cs-input flat-padding mob-mb10">
+                            <mat-label>Remark</mat-label>
+                            <textarea matInput  placeholder="Type Here" class="h116"></textarea>
+                            <!-- Use this -->
+                            <!-- <mat-hint>required</mat-hint> -->
+                            <!-- Use this -->
+                          </mat-form-field>
+                        </div>
+                      </div>
+                      
+                      <div class="row">
+                        <div class="col s12">
+                          <div class="cs-btn mt16 text-right">
+                            <div class="in-btn">
+                              <button mat-raised-button color="accent"  type="save">Add To List</button>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      
+                      
+                      <div class="cs-table left-right-10">
+                        <div class="table-head">
+                          <table>
+                            <tr>
+                              <th class="w100">Check In Date</th>
+                              <th class="w100">Check Out Date</th>
+                              <th class="w130">City</th>
+                              <th class="w160 text-center">Hotel Name</th>
+                              <th class="w80 text-right">Amount</th>
+                              <th class="w80 text-center">Tax</th>
+                              <th class="w100">Status</th>
+                              <th>Remark</th>
+                            </tr>
+                          </table>
+                        </div>
+                        
+                        <div class="table-container">
+                          <div class="table-content">
+                            <table>
+                              <tr>
+                                <td class="w100">12 April 2020</td>
+                                <td class="w100">12 April 2020</td>
+                                <td class="w130">Faridabad</td>
+                                <td class="w160 text-center">Hotel Orchid</td>
+                                <td class="w80 text-right">&#x20B9; 300</td>
+                                <td class="w80 text-center">&#x20B9; 300</td>
+                                <td class="w100"><strong class="green-clr">Allow</strong></td>
+                                <td>
+                                  Lorem ipsum dolor sit amet consectetur, adipisicing elit. Repudiandae, voluptates quos ad quae fugiat 
+                                  <div class="action-btns">
+                                    <button mat-button class="delete"><i class="material-icons">delete_sweep</i> Delete</button>
+                                  </div>
+                                </td>
+                              </tr>
+                            </table>
+                          </div>
+                        </div>
+                        
+                      </div>
+                      
+                      <div class="row">
+                        <div class="col s12 m2 offset-m10">
+                          <div class="summary">
+                            <table>
+                              <tr>
+                                <td>Total</td>
+                                <td class="text-right">&#x20B9; 12,000 /-</td>
+                              </tr>
+                            </table>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </mat-expansion-panel>
+                <!-- Hotel mat-expansion--->
+                
+                <!-- Food mat-expansion--->
+                <mat-expansion-panel [expanded]="step === 2" (opened)="setStep(2)" hideToggle>
+                  <mat-expansion-panel-header>
+                    <mat-panel-title>
+                      food
+                    </mat-panel-title>
+                  </mat-expansion-panel-header>
+                  
+                  <div class="collapse-body">
+                    <div class="cs-form">
+                      <div class="row ">
+                        <div class="col s12 m6">
+                          <div class="row ">
+                            <div class="col s12 m6">
+                              <mat-form-field appearance="outline" class="cs-input">
+                                <mat-label>City</mat-label>
+                                <input matInput  placeholder="Type Here">
+                                <!-- Use this -->
+                                <!-- <mat-hint>required</mat-hint> -->
+                                <!-- Use this -->
+                              </mat-form-field>
+                            </div>
+                            <div class="col s12 m6">
+                              <mat-form-field appearance="outline" class="cs-input" (click)="five.open()">
+                                <mat-label>Check In Date</mat-label>
+                                <input matInput [matDatepicker]="five" placeholder="Type Here">
+                                <mat-datepicker-toggle matSuffix [for]="five"></mat-datepicker-toggle>
+                                <mat-datepicker #five></mat-datepicker>
+                                <!-- Use this -->
+                                <!-- <mat-hint>required</mat-hint> -->
+                                <!-- Use this -->
+                              </mat-form-field>
+                            </div>
+                          </div>
+                          <div class="row ">
+                            <div class="col s12 m6">
+                              <mat-form-field appearance="outline" class="cs-input">
+                                <mat-label>Amount</mat-label>
+                                <input matInput  placeholder="Type Here">
+                                <span class="prefix-icon" matPrefix>&#8377;</span>
+                                <!-- Use this -->
+                                <!-- <mat-hint>required</mat-hint> -->
+                                <!-- Use this -->
+                              </mat-form-field>
+                            </div>
+                            <div class="col s12 m6">
+                              <mat-form-field appearance="outline" class="cs-input">
+                                <mat-label>Tax Amount</mat-label>
+                                <input matInput  placeholder="Type Here">
+                                <span class="prefix-icon" matPrefix>&#8377;</span>
+                                <!-- Use this -->
+                                <!-- <mat-hint>required</mat-hint> -->
+                                <!-- Use this -->
+                              </mat-form-field>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="col s12 m6">
+                          <mat-form-field appearance="outline" class="cs-input flat-padding mob-mb10">
+                            <mat-label>Remark</mat-label>
+                            <textarea matInput  placeholder="Type Here" class="h70"></textarea>
+                            <!-- Use this -->
+                            <!-- <mat-hint>required</mat-hint> -->
+                            <!-- Use this -->
+                          </mat-form-field>
+                        </div>
+                      </div>
+                      
+                      <div class="row">
+                        <div class="col s12">
+                          <div class="cs-btn mt16 text-right">
+                            <div class="in-btn">
+                              <button mat-raised-button color="accent"  type="save">Add To List</button>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      
+                      
+                      <div class="cs-table left-right-10">
+                        <div class="table-head">
+                          <table>
+                            <tr>
+                              <th class="w100">Date</th>
+                              <th class="w130">City</th>
+                              <th class="w80 text-right">Amount</th>
+                              <th class="w80 text-center">Tax</th>
+                              <th class="w100">Status</th>
+                              <th>Remark</th>
+                            </tr>
+                          </table>
+                        </div>
+                        
+                        <div class="table-container">
+                          <div class="table-content">
+                            <table>
+                              <tr>
+                                <td class="w100">12 April 2020</td>
+                                <td class="w130">Faridabad</td>
+                                <td class="w80 text-right">&#x20B9; 300</td>
+                                <td class="w80 text-center">&#x20B9; 300</td>
+                                <td class="w100"><strong class="green-clr">Allow</strong></td>
+                                <td>
+                                  Lorem ipsum dolor sit amet consectetur, adipisicing elit. Repudiandae, voluptates quos ad quae fugiat 
+                                  <div class="action-btns">
+                                    <button mat-button class="delete"><i class="material-icons">delete_sweep</i> Delete</button>
+                                  </div>
+                                </td>
+                              </tr>
+                            </table>
+                          </div>
+                        </div>
+                        
+                      </div>
+                      
+                      <div class="row">
+                        <div class="col s12 m2 offset-m10">
+                          <div class="summary">
+                            <table>
+                              <tr>
+                                <td>Total</td>
+                                <td class="text-right">&#x20B9; 12,000 /-</td>
+                              </tr>
+                            </table>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </mat-expansion-panel>
+                <!-- Food mat-expansion--->
+                
+                <!-- Local Conveyance mat-expansion--->
+                <mat-expansion-panel [expanded]="step === 3" (opened)="setStep(3)" hideToggle>
+                  <mat-expansion-panel-header>
+                    <mat-panel-title>
+                      local conveyance
+                    </mat-panel-title>
+                  </mat-expansion-panel-header>
+                  <div class="collapse-body">
+                    <div class="cs-form">
+                      <div class="row ">
+                        <div class="col s12 m4">
+                          <mat-form-field appearance="outline" class="cs-input">
+                            <mat-label>Mode Of Travel</mat-label>
+                            <mat-select>
+                              <mat-option value="b">Bus</mat-option>
+                              <mat-option value="c">Car</mat-option>
+                              <mat-option value="r">Rail</mat-option>
+                            </mat-select>
+                            <!-- Use this -->
+                            <!-- <mat-hint>required</mat-hint> -->
+                            <!-- Use this -->
+                          </mat-form-field>
+                        </div>
+                        
+                        <div class="col s12 m2">
+                          <mat-form-field appearance="outline" class="cs-input" (click)="six.open()">
+                            <mat-label>Date</mat-label>
+                            <input matInput [matDatepicker]="six" placeholder="Type Here">
+                            <mat-datepicker-toggle matSuffix [for]="six"></mat-datepicker-toggle>
+                            <mat-datepicker #six></mat-datepicker>
+                            <!-- Use this -->
+                            <!-- <mat-hint>required</mat-hint> -->
+                            <!-- Use this -->
+                          </mat-form-field>
+                        </div>
+                        <div class="col s12 m2">
+                          <mat-form-field appearance="outline" class="cs-input" (click)="seven.open()">
+                            <mat-label>Date From</mat-label>
+                            <input matInput [matDatepicker]="seven" placeholder="Type Here">
+                            <mat-datepicker-toggle matSuffix [for]="seven"></mat-datepicker-toggle>
+                            <mat-datepicker #seven></mat-datepicker>
+                            <!-- Use this -->
+                            <!-- <mat-hint>required</mat-hint> -->
+                            <!-- Use this -->
+                          </mat-form-field>
+                        </div>
+                        <div class="col s12 m2">
+                          <mat-form-field appearance="outline" class="cs-input" (click)="eight.open()">
+                            <mat-label>Date To</mat-label>
+                            <input matInput [matDatepicker]="eight" placeholder="Type Here">
+                            <mat-datepicker-toggle matSuffix [for]="eight"></mat-datepicker-toggle>
+                            <mat-datepicker #eight></mat-datepicker>
+                            <!-- Use this -->
+                            <!-- <mat-hint>required</mat-hint> -->
+                            <!-- Use this -->
+                          </mat-form-field>
+                        </div>
+                        <div class="col s12 m2">
+                          <mat-form-field appearance="outline" class="cs-input" (click)="eight.open()">
+                            <mat-label>Fare</mat-label>
+                            <input matInput  placeholder="Type Here">
+                            <span class="prefix-icon" matPrefix>&#8377;</span>
+                            <!-- Use this -->
+                            <!-- <mat-hint>required</mat-hint> -->
+                            <!-- Use this -->
+                          </mat-form-field>
+                        </div>
+                      </div>
+                      
+                      <div class="row">
+                        <div class="col s12">
+                          <div class="cs-btn mt16 text-right">
+                            <div class="in-btn">
+                              <button mat-raised-button color="accent"  type="save">Add To List</button>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      
+                      
+                      <div class="cs-table left-right-10">
+                        <div class="table-head">
+                          <table>
+                            <tr>
+                              <th class="w100">Date</th>
+                              <th class="w100">Date From</th>
+                              <th class="w100">Date To</th>
+                              <th>Mode</th>
+                              <th class="w80 text-right">Amount</th>
+                            </tr>
+                          </table>
+                        </div>
+                        
+                        <div class="table-container">
+                          <div class="table-content">
+                            <table>
+                              <tr>
+                                <td class="w100">12 April 2020</td>
+                                <td class="w100">12 April 2020</td>
+                                <td class="w100">12 April 2020</td>
+                                <td>Metro</td>
+                                <td class="w80 text-right">
+                                  &#x20B9; 300
+                                  <div class="action-btns">
+                                    <button mat-button class="delete"><i class="material-icons">delete_sweep</i> Delete</button>
+                                  </div>
+                                </td>
+                              </tr>
+                            </table>
+                          </div>
+                        </div>
+                      </div>
+                      
+                      <div class="row">
+                        <div class="col s12 m2 offset-m10">
+                          <div class="summary">
+                            <table>
+                              <tr>
+                                <td>Total</td>
+                                <td class="text-right">&#x20B9; 12,000 /-</td>
+                              </tr>
+                            </table>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </mat-expansion-panel>
+                <!-- Local Conveyance mat-expansion--->
+                
+                <!-- Misc Expense mat-expansion--->
+                <mat-expansion-panel [expanded]="step === 4" (opened)="setStep(4)" hideToggle>
+                  <mat-expansion-panel-header>
+                    <mat-panel-title>
+                      misc expense information
+                    </mat-panel-title>
+                  </mat-expansion-panel-header>
+                  
+                  <div class="collapse-body">
+                    <div class="cs-form">
+                      <div class="row ">
+                        <div class="col s12 m6">
+                          <div class="row ">
+                            <div class="col s12 m6">
+                              <mat-form-field appearance="outline" class="cs-input">
+                                <mat-label>Nature Of Expense</mat-label>
+                                <mat-select>
+                                  <mat-option value="e">Entertainment Expense</mat-option>
+                                  <mat-option value="g">Gift To Dealerr</mat-option>
+                                  <mat-option value="l">Lunch/Dinner With Team</mat-option>
+                                  <mat-option value="t">Training Program</mat-option>
+                                  <mat-option value="o">Other</mat-option>
+                                </mat-select>
+                                <!-- Use this -->
+                                <!-- <mat-hint>required</mat-hint> -->
+                                <!-- Use this -->
+                              </mat-form-field>
+                            </div>
+                            <div class="col s12 m6">
+                              <mat-form-field appearance="outline" class="cs-input" (click)="nine.open()">
+                                <mat-label>Check In Date</mat-label>
+                                <input matInput [matDatepicker]="nine" placeholder="Type Here">
+                                <mat-datepicker-toggle matSuffix [for]="nine"></mat-datepicker-toggle>
+                                <mat-datepicker #nine></mat-datepicker>
+                                <!-- Use this -->
+                                <!-- <mat-hint>required</mat-hint> -->
+                                <!-- Use this -->
+                              </mat-form-field>
+                            </div>
+                          </div>
+                          <div class="row ">
+                            <div class="col s12 m6">
+                              <mat-form-field appearance="outline" class="cs-input">
+                                <mat-label>Place Of Expense</mat-label>
+                                <input matInput placeholder="Type Here">
+                                <!-- Use this -->
+                                <!-- <mat-hint>required</mat-hint> -->
+                                <!-- Use this -->
+                              </mat-form-field>
+                            </div>
+                            <div class="col s12 m6">
+                              <mat-form-field appearance="outline" class="cs-input">
+                                <mat-label>Name Of Beneficiaries</mat-label>
+                                <input matInput placeholder="Type Here">
+                                <!-- Use this -->
+                                <!-- <mat-hint>required</mat-hint> -->
+                                <!-- Use this -->
+                              </mat-form-field>
+                            </div>
+                          </div>
+                          <div class="row ">
+                            <div class="col s12 m6">
+                              <mat-form-field appearance="outline" class="cs-input">
+                                <mat-label>Amount</mat-label>
+                                <input matInput  placeholder="Type Here">
+                                <span class="prefix-icon" matPrefix>&#8377;</span>
+                                <!-- Use this -->
+                                <!-- <mat-hint>required</mat-hint> -->
+                                <!-- Use this -->
+                              </mat-form-field>
+                            </div>
+                            <div class="col s12 m6">
+                              <mat-form-field appearance="outline" class="cs-input">
+                                <mat-label>Tax Amount</mat-label>
+                                <input matInput  placeholder="Type Here">
+                                <span class="prefix-icon" matPrefix>&#8377;</span>
+                                <!-- Use this -->
+                                <!-- <mat-hint>required</mat-hint> -->
+                                <!-- Use this -->
+                              </mat-form-field>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="col s12 m6">
+                          <mat-form-field appearance="outline" class="cs-input flat-padding mob-mb10">
+                            <mat-label>Remark</mat-label>
+                            <textarea matInput  placeholder="Type Here" class="h116"></textarea>
+                            <!-- Use this -->
+                            <!-- <mat-hint>required</mat-hint> -->
+                            <!-- Use this -->
+                          </mat-form-field>
+                        </div>
+                      </div>
+                      
+                      <div class="row">
+                        <div class="col s12">
+                          <div class="cs-btn mt16 text-right">
+                            <div class="in-btn">
+                              <button mat-raised-button color="accent"  type="save">Add To List</button>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      
+                      
+                      <div class="cs-table left-right-10">
+                        <div class="table-head">
+                          <table>
+                            <tr>
+                              <th class="w100">Date</th>
+                              <th class="w130">Nature Of Exp.</th>
+                              <th class="w130">Beneficiaries Name</th>
+                              <th class="w130">Place Of Expense</th>
+                              <th class="w80 text-right">Amount</th>
+                              <th class="w80 text-right">Tax</th>
+                              <th>Remark</th>
+                            </tr>
+                          </table>
+                        </div>
+                        
+                        <div class="table-container">
+                          <div class="table-content">
+                            <table>
+                              <tr>
+                                <td class="w100">12 April 2020</td>
+                                <td class="w130">Gift To Dealer</td>
+                                <td class="w130">Sumit Kumar</td>
+                                <td class="w130">Delhi</td>
+                                <td class="w80 text-right"> &#x20B9; 300</td>
+                                <td class="w80 text-right"> &#x20B9; 300</td>
+                                <td>
+                                  Lorem ipsum dolor sit amet consectetur, adipisicing elit. Architecto quae dicta quam mollitia atque nihil distinctio
+                                  <div class="action-btns">
+                                    <button mat-button class="delete"><i class="material-icons">delete_sweep</i> Delete</button>
+                                  </div>
+                                </td>
+                              </tr>
+                            </table>
+                          </div>
+                        </div>
+                      </div>
+                      
+                      
+                      <div class="row">
+                        <div class="col s12 m2 offset-m10">
+                          <div class="summary">
+                            <table>
+                              <tr>
+                                <td>Total</td>
+                                <td class="text-right">&#x20B9; 12,000 /-</td>
+                              </tr>
+                            </table>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </mat-expansion-panel>
+                <!-- Misc Expense mat-expansion--->
+                
+              </mat-accordion>
+            </div>
+          </div>
+        </div>
+        
+        <div class="row">
+          <div class="col s8">
+            <div class="cs-file" >
+              <p>Upload File</p>
+              <ul class="product-images">
+                <li class="multi-images">
+                  <label class="cs-file-img">
+                    <img height="75" width="75" src="http://www.toyzone.in/web/image/product.template/1136/image/300x300?unique=8bc2e28"  alt="">
+                    <span  class="cancel-icon">
+                      <a class="close"><i class="material-icons dp48">clear</i></a>
+                    </span>
+                  </label>
+                  
+                  <label class="cs-file-img default">
+                    <i class="material-icons">cloud_upload</i>
+                    <input type="file"   style="display: none;" required>
+                  </label>
+                </li>
+              </ul>
+              
+            </div>
+          </div>
+          <div class="col s4">
+            <div class="summary">
+              <table>
+                <tr>
+                  <td>Bill Amount</td>
+                  <td class="text-right">&#x20B9; 12,000 /-</td>
+                </tr>
+                <tr>
+                  <td>Advance</td>
+                  <td class="text-right">&#x20B9; 12,000 /-</td>
+                </tr>
+                <tr>
+                  <td>Claim</td>
+                  <td class="text-right">&#x20B9; 12,000 /-</td>
+                </tr>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col s12">
+          <div class="cs-btn fixedd mt32 text-right">
+            <div class="in-btn">
+              <button mat-raised-button color="accent"  type="save">Save</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+    </div>
+  </div>
+</div>
+
+

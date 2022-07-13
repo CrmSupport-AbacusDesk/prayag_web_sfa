@@ -1,0 +1,182 @@
+<div class="main-container" >
+	<div class="middle-container mb0">
+		<div class="page-heading w250">
+			<img src="assets/img/leads_icon.svg" class="h-icon">
+			<div class="heading-text">
+				<h2>Offer</h2>
+				<p>Total Offer - {{count}}</p>
+			</div>
+			<!-- <button mat-button (click)="exportAsXLSX()">Click Here To Download Excel</button> -->
+		</div>
+		
+		<!-- <div class="top-search wp20">
+			<input type="text" placeholder="SEARCH. . .">
+			<i class="material-icons">search</i>
+		</div> -->
+		
+		<!-- <div class="click-btn">
+			<button mat-button (click)="exportAsXLSX()">Click Here To Download Excel</button>
+		</div> -->
+		<div class="top-pagination">
+			<ul>
+				<li class="refresh-area">
+					<a class="refresh-btn" mat-raised-button  matTooltip="Refresh"><i class="material-icons"> refresh</i></a>
+				</li>
+				<li><p>Pages {{pagenumber}} Of {{total_page}}</p></li>
+				<li>
+					<button mat-button class="left-btn" (click)="start=start-page_limit;" [disabled]="pagenumber == 1">
+						<i class="material-icons">keyboard_arrow_left</i></button>
+					</li>
+					<li>
+						<input type="text" placeholder="GO TO" name="pagenumber" (keyup.enter)="start=(pagenumber*page_limit)-page_limit;" [(ngModel)]="pagenumber"  min="1" max={{total_page}}>
+					</li>
+					<li>
+						<button mat-button class="right-btn"  (click)="start=start+page_limit;" [disabled]="pagenumber == total_page">
+							<i class="material-icons">keyboard_arrow_right</i>
+						</button>
+					</li>
+				</ul>
+			</div>
+			<!-- <pagination-controls class="myPagination" (pageChange)=" p = $event "></pagination-controls> -->
+		</div>
+		<div class="container-outer">
+			
+			<app-master-tab-list></app-master-tab-list>
+			<div *ngIf="loader">
+				<mat-spinner class="loader">
+					<div><p>Loading....</p></div>
+				</mat-spinner>
+			</div>
+			<div class="container tab-container" >
+				<div class="row">
+					<div class="col s12">
+						<div class="cs-table left-right-20">
+							<div class="sticky-head">
+								<div class="table-head">
+									<table>
+										<tr>
+											<!-- <th class="w110">Brand</th> -->
+											<th class="w200">Date / Created by</th>
+											<th>Offer Name</th> 
+											<th class="w170">Start Date</th>
+											<th class="w140">End Date</th>
+											<th class="w140">Total Gift</th>
+											<th class="w240">Status</th>
+											<!-- <th class="w130">Unit of Mes.</th> -->
+										</tr>
+									</table>
+								</div>
+								<div class="table-head bdrt" >
+									<table>
+										<tr>
+											<th class="w200">
+												<div class="th-search-acmt">
+												</div>
+											</th>
+											<th>
+												<div class="th-search-acmt">
+													<mat-form-field class="example-full-width cs-input select-input">
+														<input matInput placeholder="Enter Offer Name...">
+														<mat-autocomplete>
+															<mat-option value="{{subCategory}}">
+																<small>{{subCategory}}</small>
+															</mat-option>
+														</mat-autocomplete>
+													</mat-form-field>
+												</div>
+											</th>    
+											<th class="w170">
+												<!-- <div class="th-search-acmt">
+													<mat-form-field>
+														<input type="text"  matInput placeholder="Enter Start Date...." name="type" (input)=">
+														<mat-autocomplete #search="matAutocomplete" >
+															<mat-option >
+															</mat-option>
+														</mat-autocomplete>
+													</mat-form-field>
+												</div> -->
+											</th> 
+											<th class="w140">
+												<!-- <div class="th-search-acmt">
+													<mat-form-field>
+														<input type="text"  matInput placeholder="Enter End Date...." name="type" (input)=">
+														<mat-autocomplete #search="matAutocomplete" >
+															<mat-option >
+															</mat-option>
+														</mat-autocomplete>
+													</mat-form-field>
+												</div> -->
+											</th> 
+											<th class="w140">
+												<!-- <div class="th-search-acmt">
+													<mat-form-field>
+														<input type="text"  matInput placeholder="Enter Gift...." name="type" (input)=">
+														<mat-autocomplete #search="matAutocomplete" >
+															<mat-option >
+															</mat-option>
+														</mat-autocomplete>
+													</mat-form-field>
+												</div> -->
+											</th>  
+											<th class="w240">
+												<!-- <div class="th-search-acmt">
+													<mat-form-field>
+														<input type="text"  matInput placeholder="Enter Status...." name="cattype" (input)=">
+														<mat-autocomplete #search="matAutocomplete" >
+															<mat-option >
+															</mat-option>
+														</mat-autocomplete>
+													</mat-form-field>
+												</div> -->
+											</th>                    
+										</tr>
+									</table>
+								</div>
+							</div>
+							<div class="table-container">
+								<div class="table-content">
+									<table>
+										<!-- *ngFor="let p of productlist " -->
+										<tr *ngFor="let row of offerlist">
+											<!-- <td class="w110">{{p.brand}}</td>  -->
+											<td class="w200">{{row.created_by_name}}  |  {{row.date_created   | date :' dd/MM/yyyy'}} </td>
+											<td>
+												<a class="link-btn" mat-button routerLink="/offer-detail/{{row.id}}" 				routerLinkActive="active">{{row.title}}
+												</a>
+											</td>
+											<td class="w170">{{row.start_date   | date :' dd/MM/yyyy'}} </td>    
+											<td class="w140">{{row.end_date   | date :' dd/MM/yyyy'}} </td>
+											<td class="w140">{{row.total_gift}}</td>
+											<td class="w240 active">{{row.offer_status | titlecase}}
+												<!-- <td class="w130">{{p.unit_type}} -->
+													<div class="action-btns">
+														<a mat-button class="view" (click)="detailProduct(p.id)"><i class="material-icons">remove_red_eye</i> View
+														</a>
+														<button mat-button class="delete" (click)="deleteProduct(p.id)"><i class="material-icons">delete_sweep</i> Delete</button>
+													</div>
+												</td>
+											</tr>
+										</table>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					
+					<div class="no-data" *ngIf="data_not_found==true">
+						<img src="assets/img/no-data.gif" alt="">
+						<p>Data not <span>available !</span></p>
+					</div>
+					
+				</div>
+			</div>
+			<div>
+				<div class="fix-btn">
+					<a class="bottom-btn" mat-raised-button routerLink="/offer-add"><i class="material-icons">add</i></a>
+				</div>
+				<!-- <pagination-controls class="myPagination" (pageChange)=" p = $event "></pagination-controls> -->
+			</div>
+		</div>
+		
+		
+		

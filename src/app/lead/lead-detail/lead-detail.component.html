@@ -1,0 +1,887 @@
+<div class="main-container">
+  <!-- <div *ngIf="loader">
+    <mat-spinner class="loader">
+      <div><p>Loading....</p></div>
+    </mat-spinner>
+  </div> -->
+  <div class="middle-container">
+
+    <div class="page-heading">
+      <div class="heading-text bc-space">
+        <div class="back-btn">
+          <a mat-button (click)="backToList()"><i class="material-icons">west</i></a>
+        </div>
+        <h2>{{lead_detail.company_name}}</h2>
+        <p class="light">{{lead_detail.dr_type}}</p>
+      </div>
+    </div>
+
+    <div class="left-auto">
+      <div class="tabs">
+        <ul>
+          <li><a (click)="tabActive('tab1')" [ngClass]="{'active' : tabActiveType['tab1'] == true}">Detail</a></li>
+
+          <li><a (click)="tabActive('tab2'); activityList()"
+            [ngClass]="{'active' : tabActiveType['tab2'] == true}">Activity</a></li>
+            <li><a (click)="tabActive('tab3'); followupList()"
+              [ngClass]="{'active' : tabActiveType['tab3'] == true}">Followup</a></li>
+
+
+              <!-- <li><a (click)="tabActive('tab4'); quotationList()"
+                [ngClass]="{'active' : tabActiveType['tab4'] == true}">Quotation</a></li> -->
+
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <!-- Detail Tab start -->
+        <div class="container-outer" *ngIf="tabActiveType['tab1']">
+          <div class="container mb60">
+            <div class="row">
+              <div class="col s8">
+                <div class="details-info">
+                  <div class="basic-details">
+                    <div class="cs-heading" [ngClass]="{'active':active.user==true}">
+                      <h2>Basic Detail</h2>
+                      <!-- (click)="editDilog(lead_detail,'All')" -->
+                      <a mat-button class="edit-item" matTooltip="EDIT" color="accent"
+                      (click)="editDilog(lead_detail,'basic_information')"><i class="material-icons">edit</i></a>
+                    </div>
+                    <div class="profile-info">
+                      <ul>
+                        <li>
+                          <div class="cs-box">
+                            <img src="assets/img/calendars.svg" class="fix-img">
+                            <span>Date & Created By</span>
+                            <p>{{lead_detail.date_created | date: 'MMM d, y'}} /
+                              {{lead_detail.created_by_name?lead_detail.created_by_name:'--'}}</p>
+                            </div>
+                          </li>
+                          <li>
+                            <div class="cs-box">
+                              <img src="assets/img/company.svg" class="fix-img">
+                              <span>Company Name</span>
+                              <p>{{lead_detail.company_name?lead_detail.company_name:'--'}}</p>
+                            </div>
+                          </li>
+                          <li>
+                            <div class="cs-box">
+                              <img src="assets/img/people.svg" class="fix-img">
+                              <span> Contact Person Name</span>
+                              <p>{{lead_detail.name?lead_detail.name:'--'}}</p>
+                            </div>
+                          </li>
+                          <li>
+                            <div class="cs-box">
+                              <img src="assets/img/mobile.svg" class="fix-img">
+                              <span>Mobile</span>
+                              <p>{{lead_detail.mobile?lead_detail.mobile:'--'}}</p>
+                            </div>
+                          </li>
+                        </ul>
+                        <ul>
+                          <li>
+                            <div class="cs-box">
+                              <img src="assets/img/gmail.svg" class="fix-img">
+                              <span>Email</span>
+                              <p>{{lead_detail.email?lead_detail.email:'--'}}</p>
+                            </div>
+                          </li>
+                          <!-- <li>
+                            <div class="cs-box">
+                              <img src="assets/img/gst.svg" class="fix-img">
+                              <span>GST No.</span>
+                              <p>{{lead_detail.gst?lead_detail.gst:'--'}}</p>
+                            </div>
+                          </li> -->
+                          <li>
+                            <div class="cs-box">
+                              <img src="assets/img/source.svg" class="fix-img">
+                              <span>Source</span>
+                              <p>{{lead_detail.source?lead_detail.source:'--'}}</p>
+                            </div>
+                          </li>
+                          <li>
+                            <div class="cs-box">
+                              <img src="assets/img/status_.svg" class="fix-img">
+                              <span>Status</span>
+                              <p>{{lead_detail.status?lead_detail.status:'--'}}</p>
+                            </div>
+                          </li>
+                          <!-- <li>
+                            <div class="cs-box">
+                              <img src="assets/img/dob.png" class="fix-img">
+                              <span>Date of Birth</span>
+                              <p>{{(lead_detail.date_of_birth !='0000-00-00' && lead_detail.date_of_birth != null)  ?(lead_detail.date_of_birth | date : 'd MMM y' ):'--'}}</p>
+                            </div>
+                          </li> -->
+                          <!-- <li>
+                            <div class="cs-box">
+                              <img src="assets/img/date-of-birth.svg" class="fix-img">
+                              <span>Date of Anniversary</span>
+                              <p>{{(lead_detail.date_of_anniversary !='0000-00-00' && lead_detail.date_of_anniversary != null) ?(lead_detail.date_of_anniversary | date : 'd MMM y') :'--'}}</p>
+                            </div>
+                          </li> -->
+                        </ul>
+                        <ul>
+                          <!-- <li>
+                            <div class="cs-box">
+                              <img src="assets/img/category.svg" class="fix-img">
+                              <span>Stage</span>
+                              <p>{{lead_detail.stage?lead_detail.stage:'--'}}</p>
+                            </div>
+                          </li> -->
+
+                          <li>
+                            <div class="cs-box">
+                              <img src="assets/img/mobile.svg" class="fix-img">
+                              <span>Alternate Mobile No.</span>
+                              <p>{{lead_detail.whatsapp_no?lead_detail.whatsapp_no:'--'}}</p>
+                            </div>
+                          </li>
+                          <li>
+                            <div class="cs-box">
+                              <img src="assets/img/dealer.svg" class="fix-img">
+                              <span>Lead Type</span>
+                              <!-- <p *ngIf="lead_detail.type == '12'">Online Enquiry</p>
+                              <p *ngIf="lead_detail.type == '11'">Architect</p>
+                              <p *ngIf="lead_detail.type == '10'">Contractor</p>
+                              <p *ngIf="lead_detail.type == '13'">Builder</p>
+                              <p *ngIf="lead_detail.type == '14'">Cement Dealer</p> -->
+
+                              <p *ngIf="lead_detail.type == '1'">Distributor</p>
+                              <p *ngIf="lead_detail.type == '2'">Dealer</p>
+                              <p *ngIf="lead_detail.type == '5'">Architect</p>
+                              <p *ngIf="lead_detail.type == '6'">Constructor</p>
+                              <p *ngIf="lead_detail.type == '7'">Contractor</p>
+                              <p *ngIf="lead_detail.type == '8'">Interior Designer</p>
+                              <p *ngIf="lead_detail.type == '9'">Online</p>
+
+                              <!-- <p *ngIf="lead_detail.type == '9'">Project</p>
+                              <p *ngIf="lead_detail.type == '5'">End User</p>
+                              <p *ngIf="lead_detail.type == '3'">Reatiler</p>
+                              <p *ngIf="lead_detail.type == '1'">Distributor/Dealer</p> -->
+                            </div>
+                          </li>
+                        </ul>
+                        <ul>
+                          <!-- <li>
+                            <div class="cs-box">
+                              <img src="assets/img/category.svg" class="fix-img">
+                              <span>Stage</span>
+                              <p>{{lead_detail.stage?lead_detail.stage:'--'}}</p>
+                            </div>
+                          </li> -->
+
+                          <li>
+                            <div class="cs-box">
+                              <img src="assets/img/description.svg" class="fix-img">
+                              <span>Product name</span>
+                              <p>{{lead_detail.product_name?lead_detail.product_name:'--'}}</p>
+                            </div>
+                          </li>
+                          <li>
+                            <div class="cs-box">
+                              <img src="assets/img/description.svg" class="fix-img">
+                              <span>Description</span>
+                              <p>{{lead_detail.description?lead_detail.description:'--'}}</p>
+                            </div>
+                          </li>
+                        </ul>
+                        <ul style="align-items:flex-start;">
+                          <li class="flat-item">
+                            <ul>
+                              <!-- <li>
+                                <div class="cs-box">
+                                  <img src="assets/img/network.svg" class="fix-img">
+                                  <span>Network</span>
+                                  <p *ngIf="lead_detail.lead_type == 'Lead'">Lead Network</p>
+                                  <p *ngIf="lead_detail.lead_type == 'Dr'">Distributor Network</p>
+                                </div>
+                              </li> -->
+
+                            </ul>
+                           
+                            <ul >
+                              <li>
+                                <div class="cs-box" >
+                                  <img src="assets/img/description.svg" class="fix-img">
+                                  <span> Enquiry Id</span>
+                                     <!-- <div [innerHtml]="lead_detail.enquiry_desc"></div> -->
+
+                                  <p>{{lead_detail.query_id?lead_detail.query_id:'--'}}</p>
+                                </div>
+                              </li>
+                            </ul>
+                            <ul >
+                              <li>
+                                <div class="cs-box" >
+                                  <img src="assets/img/description.svg" class="fix-img">
+                                  <span> Recieved As</span>
+                                     <!-- <div [innerHtml]="lead_detail.enquiry_desc"></div> -->
+
+                                  <p>{{lead_detail.q_type?lead_detail.q_type:'--'}}</p>
+                                </div>
+                              </li>
+                            </ul>
+                            <ul >
+                              <li>
+                                <div class="cs-box" >
+                                  <img src="assets/img/description.svg" class="fix-img">
+                                  <span> Enquiry Description</span>
+                                     <div [innerHtml]="lead_detail.enquiry_desc"></div>
+
+                                  <!-- <p>{{lead_detail.enquiry_desc?lead_detail.enquiry_desc:'--'}}</p> -->
+                                </div>
+                              </li>
+                            </ul>
+                           
+
+                            <ul *ngIf="lead_detail.reason">
+                              <li>
+                                <div class="cs-box" >
+                                  <img src="assets/img/description.svg" class="fix-img">
+                                  <span>Reason</span>
+                                  <p>{{lead_detail.reason?lead_detail.reason:'--'}}</p>
+                                </div>
+                              </li>
+                            </ul>
+                          </li>
+
+
+                          <li class="flat-item">
+                            <span>Upload Image</span>
+
+                            <div class="">
+                            <div class="fix btn">
+
+
+                              <div class="visting-card">
+
+
+                                <img matTooltip="No Visiting Card Image" matTooltipPosition="above" *ngIf="!lead_detail.visiting_card_image || lead_detail.visiting_card_image == null" src="../assets/img/no_visiting_card.png" class="fix-img">
+                                <img matTooltip="Visiting Card" matTooltipPosition="above" *ngIf="lead_detail.visiting_card_image && lead_detail.visiting_card_image != null" src="{{lead_detail.visiting_card_image}}" (click)="imageModel(lead_detail.visiting_card_image)">
+                         <a mat-button class="edit-column" mat-button matTooltip="Change image" color="accent"><i class="material-icons" (click)="Editimg()">create</i></a>
+
+                              </div>
+                            </div>
+                            </div>
+                          </li>
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+
+
+
+                      <div class="details-info mt10">
+                        <div class="basic-details">
+                          <div class="cs-heading">
+                            <h2>Address</h2>
+                            <a mat-button class="edit-item" matTooltip="EDIT" color="accent" *ngIf="lead_detail.status != 'win'&& lead_detail.status != 'lost'"
+                            (click)="editAddress(lead_detail,'basic_information2')"><i class="material-icons">edit</i></a>
+                          </div>
+                          <div class="cs-figure">
+                            <ul class="minus-top">
+                              <li>
+                                <div class="outer">
+                                  <div class="inner">
+                                    <span>State</span>
+                                    <p>{{lead_detail.state?lead_detail.state:'--'}}</p>
+                                  </div>
+                                </div>
+                              </li>
+                              <li>
+                                <div class="outer">
+                                  <div class="inner">
+                                    <span>District</span>
+                                    <p>{{lead_detail.district?lead_detail.district:'--'}}</p>
+                                  </div>
+                                </div>
+                              </li>
+                              <li>
+                                <div class="outer">
+                                  <div class="inner">
+                                    <span>City</span>
+                                    <p>{{lead_detail.city?lead_detail.city:'--'}}</p>
+                                  </div>
+                                </div>
+                              </li>
+                              <li>
+                                <div class="outer">
+                                  <div class="inner">
+                                    <span>Pin Code</span>
+                                    <p>{{lead_detail.pincode?lead_detail.pincode:'--'}}</p>
+                                  </div>
+                                </div>
+                              </li>
+
+                               <!-- <li>
+                                <div class="outer">
+                                  <div class="inner">
+                                    <span>Area Details</span>
+                                    <p>{{lead_detail.area_details?lead_detail.area_details:'--'}}</p>
+                                  </div>
+                                </div>
+                              </li> -->
+
+                            </ul>
+                            <ul class="minus-top">
+                              <li>
+                                <div class="outer">
+                                  <div class="inner">
+                                    <span>Area</span>
+                                    <p>{{lead_detail.area?lead_detail.area:'--'}}</p>
+                                  </div>
+                                </div>
+                              </li>
+                              <!-- <li>
+                                <div class="outer">
+                                  <div class="inner">
+                                    <span>Area Details</span>
+                                    <p>{{lead_detail.area_details?lead_detail.area_details:'--'}}</p>
+                                  </div>
+                                </div>
+                              </li>
+                            -->
+                            <li>
+                              <div class="outer">
+                                <div class="inner">
+                                  <span>Street</span>
+                                  <p>{{lead_detail.address? lead_detail.address:'--'}}</p>
+                                </div>
+                              </div>
+                            </li>
+                          </ul>
+                        </div>
+                      </div>
+                    </div>
+
+
+
+
+                  </div>
+
+                  <div class="col s4">
+                    <div class="details-info mb10">
+                      <div class="basic-details">
+                        <div class="cs-heading df ac" [ngClass]="{'active':active.user==true}">
+                          <h2>Last Activity Information</h2>
+
+                          <p class="sm-format"><span>{{lead_detail.lastes_activity?.date_created | date: 'MMM d, y'}}</span></p>
+                        </div>
+                        <div class="profile-info">
+                          <ul>
+                            <li>
+                              <div class="cs-box pl0">
+                                <span>User Name</span>
+                                <p>
+                                  {{lead_detail.lastes_activity?.created_by_name?lead_detail.lastes_activity?.created_by_name:"--"}}
+                                </p>
+                              </div>
+                            </li>
+                            <li>
+                              <div class="cs-box pl0">
+                                <span>Activity Type</span>
+                                <p>{{lead_detail.lastes_activity?.activity_type?lead_detail.lastes_activity?.activity_type:"--"}}
+                                </p>
+                              </div>
+                            </li>
+                          </ul>
+                          <ul>
+                            <li>
+                              <div class="cs-box pl0">
+                                <span>Remark</span>
+                                <p>{{lead_detail.lastes_activity?.remark?lead_detail.lastes_activity?.remark:"--"}}</p>
+                              </div>
+                            </li>
+                          </ul>
+                        </div>
+                      </div>
+                    </div>
+
+
+                    <!-- <div class="details-info padding0" *ngIf="sales_executive_update!='true'">
+                      <div class="basic-details">
+                        <div class="cs-heading margin0" [ngClass]="{'active':active.user==true}">
+                          <h2>Sales User</h2>
+                          <a class="edit-item" (click)="update_assigned_sales_executive('true')"><i
+                            class="material-icons">create</i></a>
+                          </div>
+                          <div class="cs-checkbox" *ngIf="lead_detail.assign_user.length!=0">
+                            <div class="checkbox-outer">
+                              <section class="checkbox-inner bodr0">
+                                <mat-checkbox class="check-list bg-none check-none" value="1"
+                                *ngFor="let row of assign_user">
+                                <div class="name-outer">
+                                  <div class="outer">
+                                    <div class="inner">
+                                      <div class="name-inner">
+                                        {{row.name.charAt(0).toUpperCase()}}
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+                                <div class="text-box">
+                                  <h2>{{row.name}}</h2>
+                                  <p>{{row.role_name}}</p>
+                                </div>
+                              </mat-checkbox>
+                            </section>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="details-info padding0" *ngIf="sales_executive_update=='true'">
+                      <div class="basic-details">
+                        <div class="cs-heading margin0" [ngClass]="{'active':active.user==true}">
+                          <h2>Sales User</h2>
+                          <i class="material-icons search-icon right20"
+                          (click)="toggleterritory('user','open')" matRipple>search</i>
+                          <input type="text" placeholder="search..." class="fix-search"
+                          (input)="getItemsList(search.search)" #search="ngModel"
+                          [(ngModel)]="search.search">
+                          <i class="material-icons close-icon" (click)="toggleterritory('user','close')"
+                          matRipple>clear</i>
+                        </div>
+                        <div class="cs-logs">
+                          <div class="cs-checkbox">
+                            <div class="checkbox-outer">
+                              <section class="checkbox-inner">
+                                <ng-container *ngFor="let list of asmList;let index=index"
+                                aria-required="true">
+                                <mat-checkbox (scroll)="scrollHandler($event)" class="check-list"
+                                [(ngModel)]="list.check"
+                                (change)="product_Brand(list.id,index,$event)" value="{{list.name}}">{{list.name}} |
+                                {{list.role_name}}
+                              </mat-checkbox>
+                            </ng-container>
+                          </section>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="cs-btn mb10 mt10 mr10 text-right">
+                      <div class="in-btn sm-btn">
+                        <button mat-raised-button color="accent"
+                        (click)="update_assigned_executive(lead_detail.sales_executive)">Update</button>
+                      </div>
+                    </div>
+                  </div>
+                </div>  -->
+
+                <div class="details-info padding0" *ngIf="sales_executive_update!='true'">
+                  <div class="basic-details">
+                    <div class="cs-heading margin0 " [ngClass]="{'active':active.user==true}">
+                      <h2>Sales User</h2>
+                      <a class="edit-item" (click)="update_assigned_sales_executive('true')" *ngIf=" lead_detail.status != 'win' && lead_detail.status != 'lost'"><i
+                        class="material-icons">create</i></a>
+                      </div>
+
+                      <div class="cs-checkbox" *ngIf="assignUserList.length!=0">
+                        <div class="checkbox-outer">
+                          <section class="checkbox-inner bodr0">
+                            <mat-checkbox class="check-list bg-none check-none" value="1" *ngFor="let row of assignUserList">
+                              <div class="name-outer">
+                                <div class="outer">
+                                  <div class="inner">
+                                    <div class="name-inner">
+                                      {{row.name.charAt(0).toUpperCase()}}
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                              <div class="text-box">
+                                <h2>{{row.name}}</h2>
+                                <p>{{row.role_name}}</p>
+                              </div>
+                            </mat-checkbox>
+                          </section>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="details-info padding0" *ngIf="sales_executive_update=='true'">
+
+                    <div class="basic-details">
+                      <div class="cs-heading margin0 "[ngClass]="{'active':active.user==true}">
+                        <h2>Sales User</h2>
+                        <i class="material-icons search-icon right20" (click)="toggleterritory('user','open')"
+                        matRipple>search</i>
+                        <input type="text" placeholder="search..." class="fix-search" (input)="getItemsList(search.search)"
+                        #search="ngModel" [(ngModel)]="search.search">
+                        <i class="material-icons close-icon" (click)="toggleterritory('user','close')" matRipple>clear</i>
+                      </div>
+                      <div class="cs-logs">
+
+                        <div class="cs-checkbox">
+                          <div class="checkbox-outer">
+
+
+                            <section class="checkbox-inner">
+                              <ng-container *ngFor="let list of asmList;let index=index"
+                              aria-required="true">
+                              <mat-checkbox (scroll)="scrollHandler($event)" class="check-list"
+                              [(ngModel)]="list.check"
+                              (change)="product_Brand(list.id,index,$event)" value="{{list.name}}">{{list.name}} |
+                              {{list.role_name}}
+                            </mat-checkbox>
+                          </ng-container>
+                        </section>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="cs-btn text-right mb15 mt10 mr10">
+                    <div class="in-btn">
+                      <button mat-raised-button color="accent"
+                      (click)="update_assigned_executive(lead_detail.sales_executive)">Update</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+
+              <!-- <div class="details-info mt15">
+                <div class="basic-details">
+                  <div class="cs-heading">
+                    <h2>Point Location</h2>
+                  </div>
+                  <div style="margin: -10px;">
+                    <agm-map [zoom]="zoom" center="[latitude, longitude]" [latitude]="latitude"
+                    [longitude]="longitude" [mapTypeId]='mapType'>
+                    <agm-marker [latitude]="latitude" [longitude]="longitude"></agm-marker>
+                  </agm-map>
+                  <div class="cs-btn padding10 border-top text-right">
+                    <div class="in-btn sm-btn">
+                      <button mat-raised-button color="accent"
+                      (click)="update_google_location('India',lead_detail.state,lead_detail.district,lead_detail.city,lead_detail.pincode,lead_detail.address,'updateGoogleLocation')">Update
+                      Location</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div> -->
+
+
+
+
+
+
+            <div class="details-info mt10" *ngIf="false">
+              <div class="basic-details">
+                <div class="cs-heading">
+                  <h2>Summary Logs</h2>
+                </div>
+                <div class="chat-type-logs ">
+                  <!-- other  Loop-->
+                  <div class="message other">
+                    <div class="message-text">
+                      <div class="message-tittle">
+                        <div class="name">Rahul Verma</div>
+                        <div class="message-date">8 Jan 2018</div>
+                      </div>
+                      <div class="message-desc">It is a long established fact that a reader
+                        will be distracted by the readable
+                      </div>
+                    </div>
+                  </div>
+                  <!-- other Loop-->
+
+                  <!-- Admin Loop -->
+                  <div class="message admin">
+                    <div class="message-text">
+                      <div class="message-tittle">
+                        <div class="name">Bel Admin</div>
+                        <div class="message-date">8 Jan 2018</div>
+                      </div>
+                      <div class="message-desc">It is a long established
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="message admin">
+                    <div class="message-text">
+                      <div class="message-tittle">
+                        <div class="name">Bel Admin</div>
+                        <div class="message-date">8 Jan 2018</div>
+                      </div>
+                      <div class="message-desc">It is a long established
+                      </div>
+                    </div>
+                  </div>
+                  <!-- Admin Loop -->
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Detail Tab End -->
+
+    <!-- Activity Tab start -->
+    <div class="container-outer padding0" *ngIf="tabActiveType['tab2']">
+      <div class="container">
+        <div class="cs-table">
+          <div class="sticky-head">
+            <div class="table-head">
+              <table>
+                <tr>
+                  <th class="w50">S.No</th>
+                  <th class="w90">Date Created</th>
+                  <th class="w150">Created By</th>
+                  <th class="w200">Company Name</th>
+                  <th class="w100">Activity Type</th>
+                  <th>Description</th>
+                </tr>
+              </table>
+            </div>
+
+          </div>
+
+          <div class="table-container">
+
+            <div class="table-content" *ngIf=" activity_list != 0">
+              <table>
+                <tr *ngFor="let row of activity_list; let i=index">
+                  <td class="w50">{{i+1}}</td>
+                  <td class="w90">{{row.date_created | date : 'd MMM y'}}</td>
+                  <td class="w150">{{row.created_by_name? row.created_by_name:'--'}}</td>
+                  <td class="w200">{{row.dr_name? row.dr_name:'--'}}</td>
+                  <td class="w100">{{row.activity_type? row.activity_type:'--'}}</td>
+                  <td>{{row.remark? row.remark:'--'}}</td>
+                </tr>
+
+                <ng-container *ngFor="let lead of skelton">
+                  <tr class="sk-loading" *ngIf="loader">
+                    <td class="w90">
+                      <div>&nbsp;</div>
+                    </td>
+                    <td class="w150">
+                      <div>&nbsp;</div>
+                    </td>
+                    <td class="w150">
+                      <div>&nbsp;</div>
+                    </td>
+                    <td class="w90">
+                      <div>&nbsp;</div>
+                    </td>
+                    <td class="w90">
+                      <div>&nbsp;</div>
+                    </td>
+                    <td class="w100">
+                      <div>&nbsp;</div>
+                    </td>
+                    <td>
+                      <div>&nbsp;</div>
+                    </td>
+                    <td class="w100">
+                      <div>&nbsp;</div>
+                    </td>
+                  </tr>
+                </ng-container>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <div class="no-data" *ngIf="data_not_found==true && activity_list.length == 0">
+          <img src="assets/img/no-data.gif" alt="">
+          <p>Data not <span>available !</span></p>
+        </div>
+
+      </div>
+    </div>
+    <!-- Activity Tab start -->
+
+
+    <!-- Followup Tab start -->
+    <div class="container-outer padding0" *ngIf="tabActiveType['tab3']">
+      <div class="container">
+        <div class="cs-table">
+          <div class="sticky-head">
+            <div class="table-head">
+              <table>
+                <tr>
+                  <th class="w50">S.No</th>
+                  <th class="w90">Date Create</th>
+                  <th class="w150">Created By</th>
+                  <th class="w200">Company Name</th>
+                  <th class="w100">Followup Date</th>
+                  <th class="w150">Assign To</th>
+                  <th class="w100">Followup Type</th>
+                  <th>Description</th>
+                </tr>
+              </table>
+            </div>
+
+          </div>
+
+          <div class="table-container">
+            <div class="table-content " *ngIf=" followup_list != 0">
+              <table>
+                <tr *ngFor="let row of followup_list; let i=index">
+                  <td class="w50">{{i+1}}</td>
+                  <td class="w90">{{row.date_created | date : 'd MMM y'}}</td>
+                  <td class="w150">{{row.created_by_name? row.created_by_name:'--'}}</td>
+                  <td class="w200">{{row.dr_name? row.dr_name:'--'}}</td>
+                  <td class="w100">{{row.next_follow_date? row.next_follow_date:'--'}}</td>
+                  <td class="w150">{{row.assigned_to_name? (row.assigned_to_name| titlecase):'--'}}</td>
+                  <td class="w100">{{row.next_follow_type? row.next_follow_type:'--'}}</td>
+                  <td>{{row.description? row.description:'--'}}</td>
+                </tr>
+
+                <ng-container *ngFor="let lead of skelton">
+                  <tr class="sk-loading" *ngIf="loader">
+                    <td class="w90">
+                      <div>&nbsp;</div>
+                    </td>
+                    <td class="w150">
+                      <div>&nbsp;</div>
+                    </td>
+                    <td class="w150">
+                      <div>&nbsp;</div>
+                    </td>
+                    <td class="w90">
+                      <div>&nbsp;</div>
+                    </td>
+                    <td class="w90">
+                      <div>&nbsp;</div>
+                    </td>
+                    <td class="w100">
+                      <div>&nbsp;</div>
+                    </td>
+                    <td>
+                      <div>&nbsp;</div>
+                    </td>
+                    <td class="w100">
+                      <div>&nbsp;</div>
+                    </td>
+                  </tr>
+                </ng-container>
+              </table>
+            </div>
+          </div>
+        </div>
+
+
+
+        <div class="no-data" *ngIf="data_not_found==true">
+          <img src="assets/img/no-data.gif" alt="">
+          <p>Data not <span>available !</span></p>
+        </div>
+      </div>
+    </div>
+    <!-- Followup Tab start -->
+
+
+    <!-- Quotation Tab start -->
+    <div class="container-outer padding0" *ngIf="tabActiveType['tab4']">
+      <div class="container">
+        <div class="cs-table">
+          <div class="sticky-head">
+            <div class="table-head">
+              <table>
+                <tr>
+                  <th class="w50">S.No</th>
+                  <th class="w90">Date Create</th>
+                  <th class="w150">Quotation ID</th>
+                  <th>Created By</th>
+                  <th class="w100 text-center">Total QTY.</th>
+                  <th class="w170 text-right">Total Amount</th>
+                  <th class="w100">Status</th>
+                </tr>
+              </table>
+            </div>
+
+          </div>
+
+          <div class="table-container">
+            <div class="table-content " *ngIf=" quotation_list != 0">
+              <table>
+                <tr *ngFor="let row of quotation_list; let i=index">
+                  <td class="w50">{{i+1}}</td>
+                  <td class="w90">{{row.date_created | date : 'd MMM y'}}</td>
+                  <td class="w150">
+                    <a class="link-btn mat-button" routerLink="/quotation-detail/{{row.id}}" routerLinkActive="active">
+                      #QUOT ID-{{row.id? row.id:'--'}}
+                    </a>
+                  </td>
+                  <td>
+                    {{row.created_by_name? row.created_by_name:'--'}}
+                  </td>
+                  <td class="w100 text-center">
+                    {{row.item_count? row.item_count:'--'}}</td>
+                    <td class="w170 text-right">{{row.item_total? row.item_total:'--'}}</td>
+                    <td class="w100"><strong class="yellow-clr">{{row.quotation_status?
+                      row.quotation_status:'--'}}</strong></td>
+                    </tr>
+
+                    <ng-container *ngFor="let lead of skelton">
+                      <tr class="sk-loading" *ngIf="loader">
+                        <td class="w90">
+                          <div>&nbsp;</div>
+                        </td>
+                        <td class="w150">
+                          <div>&nbsp;</div>
+                        </td>
+                        <td class="w150">
+                          <div>&nbsp;</div>
+                        </td>
+                        <td class="w90">
+                          <div>&nbsp;</div>
+                        </td>
+                        <td class="w90">
+                          <div>&nbsp;</div>
+                        </td>
+                        <td class="w100">
+                          <div>&nbsp;</div>
+                        </td>
+                        <td>
+                          <div>&nbsp;</div>
+                        </td>
+                        <td class="w100">
+                          <div>&nbsp;</div>
+                        </td>
+                      </tr>
+                    </ng-container>
+                  </table>
+                </div>
+              </div>
+            </div>
+
+
+
+            <div class="no-data" *ngIf="data_not_found==true">
+              <img src="assets/img/no-data.gif" alt="">
+              <p>Data not <span>available !</span></p>
+            </div>
+          </div>
+        </div>
+        <!-- Quotation Tab start -->
+      </div>
+
+
+      <div class="fix-btn">
+        <div *ngIf="tabActiveType['tab2']">
+          <a class="bottom-btn ecxel-btn" matTooltip="Download Excel" matTooltipPosition="above" mat-raised-button (click)="exportAsXLSX()"><img src="assets/img/excel.svg"></a>
+
+        </div>
+        <a *ngIf="((lead_detail.type == '1') || (lead_detail.type == '2'))" class="bottom-btn square-btn" (click)="convertLead(lead_detail.id, lead_detail.type )" matTooltip="Convert"
+        matTooltipPosition="above" mat-raised-button>Convert Lead</a>
+
+        <!-- <a *ngIf="((lead_detail.status != 'Win') && ((lead_detail.type == '11') ||(lead_detail.type == '10') ||(lead_detail.type == '9') || (lead_detail.type == '5')))" class="bottom-btn square-btn" (click)="convertLead(lead_detail.id, '951011')" matTooltip="Convert"
+        matTooltipPosition="above" mat-raised-button>Convert-Lead</a> -->
+
+        <!-- <a *ngIf="(lead_detail.type == '1') || (lead_detail.type == '3')" class="bottom-btn square-btn"
+          (click)="convertLead(lead_detail.id,'1')"
+          matTooltip="Add Activity" matTooltipPosition="above" mat-raised-button>Convert to Distributor </a> -->
+
+          <a class="bottom-btn square-btn"
+          (click)="activityDialog(lead_detail.id,lead_detail.company_name,lead_detail.type)"
+          matTooltip="Add Activity" matTooltipPosition="above" mat-raised-button>Add Activity</a>
+          <a class="bottom-btn square-btn"
+          (click)="followupDialog(lead_detail.state,lead_detail.company_name,lead_detail.type)"
+          matTooltip="Add Followup" matTooltipPosition="above" mat-raised-button>Add Followup</a>
+        </div>

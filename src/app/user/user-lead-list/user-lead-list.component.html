@@ -1,0 +1,412 @@
+<div class="main-container" >
+  <div class="middle-container">
+    <div class="page-heading">
+      <div class="heading-text bc-space">
+        <div class="back-btn">
+          <a mat-button routerLink="/sale-user-detail/{{user_id}}" routerLinkActive="active"><i class="material-icons">west</i></a>
+        </div>
+        <h2>{{value.name}}</h2>
+        <p class="light">Sales Executive</p>
+      </div>
+    </div>
+    <div class="tabs right-tab">
+      <ul>
+        <li><a routerLink="/sale-user-detail/{{user_id}}" routerLinkActive="active">DETAIL</a></li>
+        <li><a routerLink="/my-network/{{user_id}}" routerLinkActive="active">My Network</a></li>
+        <li><a>ORDERS</a></li>
+        <li><a routerLink="/user-lead-list/{{user_id}}" routerLinkActive="active">LEADS</a></li>
+        <!-- <li><a>FOLLOWUP</a></li> -->
+      </ul>
+    </div>
+  </div>
+  
+  <div class="container-outer">
+    <div class="container" >
+        <div class="row">
+            <div class="col s12">
+              <div class="details-info">
+                <div class="img-box">
+                  <img src="assets/img/user.png">
+                </div>
+                <div class="basic-details">
+                  <div class="profile-info">
+                    <ul>
+                      <li class="col s4">
+                        <div class="cs-box">
+                          <img src="assets/img/gmail.svg" class="fix-img">
+                          <span>Email</span>
+                          <p class="link-clr">{{value.email}}</p>
+                         <a  class="edit-icon" color="accent" matRipple matTooltip="EDIT" ><i class="material-icons">create</i></a>
+                        </div>
+                      </li>
+                      <li  class="col s4">
+                        <div class="cs-box">
+                          <img src="assets/img/phone.svg" class="fix-img">
+                          <span>Contact no</span>
+                          <p>{{value.mobile_no_1}}</p>
+                         <a class="edit-icon" color="accent" matRipple matTooltip="EDIT"><i class="material-icons">create</i></a>
+                        </div>
+                      </li>
+                      <!-- <li  class="col s4">
+                        <div class="cs-box">
+                          <img src="assets/img/map-location.svg" class="fix-img">
+                          <span>Assign Location</span>
+                          <p>Faridabad Golden</p>
+                          <a class="edit-icon" color="accent" matRipple matTooltip="EDIT"><i class="material-icons">create</i></a>
+                        </div>
+                      </li> -->
+                    </ul>
+                  </div>
+                  
+                  <mat-divider class="mt15 mb15"></mat-divider>
+                </div>
+              </div>
+            </div>
+          </div>
+      <div class="row">
+        <div class="col s12">
+          <div class="list-thumbnail">
+            
+            <div class="cs-list cs-list-three" *ngFor="let list of userLeadList">
+              <div class="list-heading">
+                <h2>{{list.created_by_type}}</h2>
+                <div class="left-icon-menu">
+                  <ul>
+                    <li><p>{{list.date_created | date :'EEEE, MMMM d, y'}}</p></li>
+                    <li>
+                      <div class="edit-menu">
+                        <button mat-icon-button [matMenuTriggerFor]="menu"> 
+                          <i class="material-icons">more_vert</i>
+                        </button>
+                        <mat-menu #menu="matMenu">
+                          <button mat-menu-item>
+                            <span routerLink="/lead-detail/{{list.id}}" routerLinkActive="active" >View</span>
+                          </button>
+                          <button mat-menu-item>
+                            <span routerLink="/add-lead" routerLinkActive="active">Create Followup</span>
+                          </button>
+                          <button mat-menu-item>
+                            <span class="red-clr"(click)="deleteLead(list.dr_id)" >Delete</span>
+                          </button>
+                        </mat-menu>
+                      </div>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+              
+              <div class="text-box-outer">
+                <div class="text-box-inner">
+                  <div class="status-bar">
+                    <a class="name" mat-button  routerLink="/lead-detail" routerLinkActive="active">{{list.company_name}}</a>
+                    <span class="status social">SOCIAL</span>
+                  </div>
+                  <div class="personal-detail">
+                    <ul>
+                      <li>
+                        <i class="material-icons">{{list.contact_person}}</i>
+                        <p>A.naresh</p>
+                      </li>
+                      <li>
+                        <i class="material-icons">call</i>
+                        <p>{{list.contact_1}}</p>
+                      </li>
+                    </ul>
+                    <ul>
+                      <li>
+                        <i class="material-icons">home</i>
+                        <p>{{list.street}}, {{list.city}}, {{list.district}}, {{list.state}}</p>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            <!-- <div class="cs-list cs-list-three">
+              <div class="list-heading">
+                <h2>Rohit Singh</h2>
+                <div class="left-icon-menu">
+                  <ul>
+                    <li><p>12 Dec 2018</p></li>
+                    <li>
+                      <div class="edit-menu">
+                        <button mat-icon-button [matMenuTriggerFor]="menu2"> 
+                          <i class="material-icons">more_vert</i>
+                        </button>
+                        <mat-menu #menu2="matMenu">
+                          <button mat-menu-item>
+                            <span>View</span>
+                          </button>
+                          <button mat-menu-item>
+                            <span>Create Followup</span>
+                          </button>
+                          <button mat-menu-item>
+                            <span class="red-clr">Delete</span>
+                          </button>
+                        </mat-menu>
+                      </div>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+              
+              <div class="text-box-outer">
+                <div class="text-box-inner">
+                  <div class="status-bar">
+                    <a class="name" mat-button>Shree Varju electricals</a>
+                    <span class="status call">CALL</span>
+                  </div>
+                  <div class="personal-detail">
+                    <ul>
+                      <li>
+                        <i class="material-icons">person</i>
+                        <p>Uttam</p>
+                      </li>
+                      <li>
+                        <i class="material-icons">call</i>
+                        <p>9448431430</p>
+                      </li>
+                    </ul>
+                    <ul>
+                      <li>
+                        <i class="material-icons">home</i>
+                        <p>Near apna Bazaar kustgi road Sindhanur, , Raichur, KARNATAKA, 584128</p>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            <div class="cs-list cs-list-three">
+              <div class="list-heading">
+                <h2>Hemant Rajput</h2>
+                <div class="left-icon-menu">
+                  <ul>
+                    <li><p>12 Dec 2018</p></li>
+                    <li>
+                      <div class="edit-menu">
+                        <button mat-icon-button [matMenuTriggerFor]="menu3"> 
+                          <i class="material-icons">more_vert</i>
+                        </button>
+                        <mat-menu #menu3="matMenu">
+                          <button mat-menu-item>
+                            <span>View</span>
+                          </button>
+                          <button mat-menu-item>
+                            <span>Create Followup</span>
+                          </button>
+                          <button mat-menu-item>
+                            <span class="red-clr">Delete</span>
+                          </button>
+                        </mat-menu>
+                      </div>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+              
+              <div class="text-box-outer">
+                <div class="text-box-inner">
+                  <div class="status-bar">
+                    <a class="name" mat-button>Jain enterprises</a>
+                    <span class="status direct">DIRECT</span>
+                  </div>
+                  <div class="personal-detail">
+                    <ul>
+                      <li>
+                        <i class="material-icons">person</i>
+                        <p>Mayur R Desai</p>
+                      </li>
+                      <li>
+                        <i class="material-icons">call</i>
+                        <p>9449642233</p>
+                      </li>
+                    </ul>
+                    <ul>
+                      <li>
+                        <i class="material-icons">home</i>
+                        <p>Kustgi road Near Basava circal Sindhanur, , Raichur, KARNATAKA, 584128</p>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            <div class="cs-list cs-list-three">
+              <div class="list-heading">
+                <h2>Gangula Naresh Yadav</h2>
+                <div class="left-icon-menu">
+                  <ul>
+                    <li><p>12 Dec 2018</p></li>
+                    <li>
+                      <div class="edit-menu">
+                        <button mat-icon-button [matMenuTriggerFor]="menu4"> 
+                          <i class="material-icons">more_vert</i>
+                        </button>
+                        <mat-menu #menu4="matMenu">
+                          <button mat-menu-item>
+                            <span>View</span>
+                          </button>
+                          <button mat-menu-item>
+                            <span>Create Followup</span>
+                          </button>
+                          <button mat-menu-item>
+                            <span class="red-clr">Delete</span>
+                          </button>
+                        </mat-menu>
+                      </div>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+              
+              <div class="text-box-outer">
+                <div class="text-box-inner">
+                  <div class="status-bar">
+                    <a class="name" mat-button>Prakash electricals</a>
+                    <span class="status refferal">REFFERAL</span>
+                  </div>
+                  <div class="personal-detail">
+                    <ul>
+                      <li>
+                        <i class="material-icons">person</i>
+                        <p>Mayur R Desai</p>
+                      </li>
+                      <li>
+                        <i class="material-icons">call</i>
+                        <p>9449642233</p>
+                      </li>
+                    </ul>
+                    <ul>
+                      <li>
+                        <i class="material-icons">home</i>
+                        <p>Kustgi road Near Basava circal Sindhanur, , Raichur, KARNATAKA, 584128</p>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            <div class="cs-list cs-list-three">
+              <div class="list-heading">
+                <h2>Pankaj Verma</h2>
+                <div class="left-icon-menu">
+                  <ul>
+                    <li><p>12 Dec 2018</p></li>
+                    <li>
+                      <div class="edit-menu">
+                        <button mat-icon-button [matMenuTriggerFor]="menu5"> 
+                          <i class="material-icons">more_vert</i>
+                        </button>
+                        <mat-menu #menu5="matMenu">
+                          <button mat-menu-item>
+                            <span>View</span>
+                          </button>
+                          <button mat-menu-item>
+                            <span>Create Followup</span>
+                          </button>
+                          <button mat-menu-item>
+                            <span class="red-clr">Delete</span>
+                          </button>
+                        </mat-menu>
+                      </div>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+              
+              <div class="text-box-outer">
+                <div class="text-box-inner">
+                  <div class="status-bar">
+                    <a class="name" mat-button>Rumaan tiles</a>
+                    <span class="status walk-in">WALK-IN</span>
+                  </div>
+                  <div class="personal-detail">
+                    <ul>
+                      <li>
+                        <i class="material-icons">person</i>
+                        <p>Mayur R Desai</p>
+                      </li>
+                      <li>
+                        <i class="material-icons">call</i>
+                        <p>9449642233</p>
+                      </li>
+                    </ul>
+                    <ul>
+                      <li>
+                        <i class="material-icons">home</i>
+                        <p>Kustgi road Near Basava circal Sindhanur, , Raichur, KARNATAKA, 584128</p>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            <div class="cs-list cs-list-three">
+              <div class="list-heading">
+                <h2>Sanganna Karadi</h2>
+                <div class="left-icon-menu">
+                  <ul>
+                    <li><p>12 Dec 2018</p></li>
+                    <li>
+                      <div class="edit-menu">
+                        <button mat-icon-button [matMenuTriggerFor]="menu6"> 
+                          <i class="material-icons">more_vert</i>
+                        </button>
+                        <mat-menu #menu6="matMenu">
+                          <button mat-menu-item>
+                            <span>View</span>
+                          </button>
+                          <button mat-menu-item>
+                            <span>Create Followup</span>
+                          </button>
+                          <button mat-menu-item>
+                            <span class="red-clr">Delete</span>
+                          </button>
+                        </mat-menu>
+                      </div>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+              
+              <div class="text-box-outer">
+                <div class="text-box-inner">
+                  <div class="status-bar">
+                    <a class="name" mat-button>Vijayalaxmi traders</a>
+                    <span class="status social">SOCIAL</span>
+                  </div>
+                  <div class="personal-detail">
+                    <ul>
+                      <li>
+                        <i class="material-icons">person</i>
+                        <p>A.naresh</p>
+                      </li>
+                      <li>
+                        <i class="material-icons">call</i>
+                        <p>9448555786</p>
+                      </li>
+                    </ul>
+                    <ul>
+                      <li>
+                        <i class="material-icons">home</i>
+                        <p>Opp.chandra gardens Hanuman temple lane armanghat, , Hyderabad, TELANGANA, 500079</p>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div> -->
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+</div>
+

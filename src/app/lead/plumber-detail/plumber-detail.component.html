@@ -1,0 +1,236 @@
+<div class="main-container" >
+	<div *ngIf="loader">
+		<mat-spinner class="loader">
+			<div><p>Loading....</p></div>
+		</mat-spinner>
+	</div>
+	<div class="middle-container">
+		<div class="page-heading">
+			<div class="heading-text bc-space">
+				<div class="back-btn">
+					<a mat-button routerLink="/plumber-lead-list" routerLinkActive="active"><i class="material-icons">west</i></a>
+				</div>
+				<h2>Plumber</h2>
+				<p class="light">Plumber Detail</p>
+			</div>
+		</div>
+	</div>
+	<div class="container-outer">
+		<div class="container">
+			<div class="row mb15">
+				<div class="col s12">
+					<div class="details-info">
+						<!-- <div class="img-box">
+							<img src="assets/img/user.png">
+						</div> -->
+						<div class="top-heading">
+							<h2>basic infomation</h2>
+							<div class="pop-btn">
+								<a mat-button class="address-edit" matTooltip="EDIT" color="accent" (click)="edit_plumber_detail(plumber_data.name,plumber_data.email,plumber_data.mobile,plumber_data.whatsapp_no,plumber_data.dob,plumber_data.anniversry_dob,plumber_data.dealer_name,plumber_data.dealer_mobile,plumber_data.status,'basic_details')"><i class="material-icons">edit</i></a>
+							</div>
+						</div>
+						<div class="basic-details">
+							<div class="profile-info">
+								<ul>
+									<li>
+										<div class="cs-box">
+											<img src="assets/img/person.svg" class="fix-img">
+											<span>Name</span>
+											<p>{{plumber_data.name}}</p>
+										</div>
+									</li>
+									<li>
+										<div class="cs-box">
+											<img src="assets/img/gmail.svg" class="fix-img">
+											<span>Email</span>
+											<p class="link-clr">{{plumber_data.email ? plumber_data.email : 'N A'}}</p>
+											<!-- <a class="edit-icon" color="accent" matRipple matTooltip="EDIT"><i class="material-icons">create</i></a> -->
+										</div>
+									</li>
+									<li>
+										<div class="cs-box">
+											<img src="assets/img/mobile.svg" class="fix-img">
+											<span>Mobile</span>
+											<p>{{plumber_data.mobile}}</p>
+											<!-- <a class="edit-icon" color="accent" matRipple matTooltip="EDIT" ><i class="material-icons">create</i></a> -->
+										</div>
+									</li>
+									
+									<li>
+										<div class="cs-box">
+											<img src="assets/img/whatsapp.svg" class="fix-img">
+											<span>Whatsapp No.</span>
+											<p>{{plumber_data.whatsapp_no}}</p>
+											<!-- <a class="edit-icon" color="accent" matRipple matTooltip="EDIT"><i class="material-icons">create</i></a> -->
+										</div>
+									</li>
+								</ul>
+								<ul>
+									<li>
+										<div class="cs-box">
+											<img src="assets/img/date-of-birth.svg" class="fix-img">
+											
+											<p>D.O.B</p>
+											<span>{{plumber_data.dob | date:'d MMM, y'}}</span>
+										</div>
+									</li>
+									<li>											
+										
+										<div class="cs-box">
+											<img src="assets/img/birthday.svg" class="fix-img"> 
+											<p>Date Of Annevarsery</p>
+											<span>{{plumber_data.anniversry_dob | date:'d MMM, y'}}</span>
+										</div>
+									</li>
+									<li>
+										<div class="cs-box">
+											<img src="assets/img/dealer.svg" class="fix-img"> 
+											
+											<p>Dealer</p>
+											<span>{{plumber_data.dealer_name}}</span>
+										</div>
+									</li>
+									<li>
+										<div class="cs-box">
+											<img src="assets/img/smartphone.svg" class="fix-img"> 
+											
+											<p>Dealer Mobile</p>
+											<span>{{plumber_data.dealer_mobile}}</span>
+										</div>
+									</li>
+								</ul>
+								
+								<ul>
+									<li>
+										<div class="cs-box">
+											<img src="assets/img/date-of-birth.svg" class="fix-img">
+											<p>Status</p>
+											<span>{{plumber_data.status}}</span>
+										</div>
+									</li>
+									<li *ngIf="plumber_data.reject_reason">											
+										<div class="cs-box">
+											<img src="assets/img/birthday.svg" class="fix-img"> 
+											<p>Reject Reason</p>
+											<span>{{plumber_data.reject_reason | titlecase}}</span>
+										</div>
+									</li>
+								</ul>
+								
+							</div>
+						</div>
+						
+						
+					</div>
+				</div>
+			</div>
+			
+
+			
+			<div class="row mb15">
+				<div class="col s12">
+					<div class="sprate-box padding0">
+						<div class="full-address">
+							<div class="top-heading">
+								<h2>ADDRESS</h2>
+							</div>
+							<a mat-button class="address-edit" matTooltip="EDIT" color="accent" (click)=" edit_plumber_address(plumber_data.state,plumber_data.district,plumber_data.city,plumber_data.pincode,'address')"><i class="material-icons">edit</i></a>
+						
+							<div class="ds-from-fields">
+								
+								<div class="cs-row">
+									<div class="static-info">
+										<p>State</p>
+										<p>{{plumber_data.state ? plumber_data.state : 'N A'}}</p>
+									</div>
+									<div class="static-info">
+										<p>District</p>
+										<p>{{plumber_data.district ? plumber_data.district : 'N A'}}</p>
+									</div>
+									<div class="static-info">
+										<p>City</p>
+										<p>{{plumber_data.city ? plumber_data.city : 'N A'}}</p>
+									</div>
+									<div class="static-info">
+										<p>Pin Code</p>
+										<p>{{plumber_data.pincode ? plumber_data.pincode : 'N A'}}</p>
+									</div>
+								</div>
+							
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<div class="row mb15" *ngIf="plumber_data.document_name">
+				<div class="col s12">
+					<div class="sprate-box padding0">
+						<div class="full-address">
+							<div class="top-heading">
+								<h2>Document</h2>
+							</div>
+						
+							<div class="ds-from-fields">
+								
+								<div class="cs-row">
+									<div class="static-info">
+										<p>Document Name</p>
+										<p>{{plumber_data.document_name}}</p>
+									</div>
+									<div class="static-info">
+										<p>Document Number</p>
+										<p>{{plumber_data.document_number}}</p>
+									</div>
+									<div class="static-info">
+										<p>Document Image</p>
+										<img [src]="plumber_data.document_image">
+									</div>
+								</div>
+							
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="container tab-container" *ngIf="qr_code_data.length !='0'">
+			<div class="row">
+			  <div class="col s12">
+				<div class="cs-table left-right-20">
+				  <div class="sticky-head">
+					<div class="table-head">
+					  <table>
+						<tr>
+						  <th class="w100">Date</th>
+						  <th class="w150">Category</th> 
+						  <th class="w150">Product Name</th>
+						  <th class="w150">Product Code</th>
+						  <th class="w150">QR Code</th>
+						  <th class="W100">Coupon Point</th>
+						</tr>
+					  </table>
+					</div>
+				  </div>
+
+				  <div class="table-container">
+					<div class="table-content">
+					  <table>
+						<tr *ngFor="let p of qr_code_data">
+						  <td class="w100">{{p.scanned_date | date : 'd MMM, y' }}</td>
+						  <td class="w150">{{p.product_category}}</td>    
+						  <td class="w150">{{p.product_name}}</td> 
+						  <td class="w150">{{p.product_code}}</td> 
+						  <td class="w150">{{p.qr_code}}</td> 
+						  <td class="W100">{{p.qr_code_value}}</td>
+						</tr>
+					  </table>
+					</div>
+				  </div>
+				</div>
+			  </div>
+			</div>
+		  </div>
+	</div>
+</div>

@@ -1,0 +1,314 @@
+<div class="main-container">
+  <div class="middle-container mb0">
+    <div class="page-heading">
+      <!-- <img src="assets/img/checkin_icon.svg" class="h-icon h20"> -->
+      <div class="heading-text">
+        <h2>Reedeme Request</h2>
+        <p>Total Reedeme Request{{redeemTotalCount}}</p>
+      </div>
+    </div>
+
+    <div class="uppr-one m-right-data">
+      <ul>
+        <li class="refresh-area mr0 after-none">
+          <a class="refresh-btn" mat-raised-button (click)="onRefreshRedeemHandler() "  matTooltip="Refresh" ><i class="material-icons"> refresh</i></a>
+        </li>
+      </ul>
+    </div>
+
+    <div class="tabs">
+      <ul>
+        <li (click) = "onTabAndInputChangeHandler(1)" ><a [ngClass]="data.currentActiveTab==1 ? 'pending' : ''">Pending</a></li>
+        <li (click) = "onTabAndInputChangeHandler(2)"><a [ngClass]="data.currentActiveTab==2 ? 'approved' : ''">Transaction</a></li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="container-outer padding0">
+    <div class="container" >
+      <div *ngIf="data.currentActiveTab == 1" class="cs-table">
+
+        <div class="sticky-head">
+          <div class="table-head">
+            <table>
+              <tr>
+                <th class="w100">Request Date</th>
+                <th>Name</th>
+                <th class="w170">Mobile</th>
+                <th class="w200">Redeem Point</th>
+                <th class="w200">Point Value</th>
+                <th class="w200">Redeem Amount</th>
+                <th class="w90">&nbsp;</th>
+              </tr>
+            </table>
+          </div>
+
+          <div class="table-head bdrt">
+            <table>
+              <tr>
+                <th class="w100">
+
+                  <div class="th-search-acmt">
+
+                    <mat-form-field class="example-full-width cs-input picker-icon">
+
+                      <input matInput [(ngModel)] = "searchData.dateCreated" [matDatepicker]="picker" placeholder="Request Date" (ngModelChange) = "onTabAndInputChangeHandler(data.currentActiveTab)" [max]="currentDate" name="dateCreated">
+
+                      <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+
+                      <mat-datepicker #picker></mat-datepicker>
+                    </mat-form-field>
+
+                  </div>
+
+                </th>
+
+                <th>
+
+                  <div class="th-search-acmt">
+                    <mat-form-field class="example-full-width cs-input select-input">
+                      <input [(ngModel)] = "searchData.name" (ngModelChange) = "onTabAndInputChangeHandler(data.currentActiveTab)"  matInput placeholder="Search Name....">
+                    </mat-form-field>
+                  </div>
+
+                </th>
+
+                <th class="w170">
+
+                  <div class="th-search-acmt">
+                    <mat-form-field class="example-full-width cs-input select-input">
+                      <input [(ngModel)] = "searchData.mobile" (ngModelChange) = "onTabAndInputChangeHandler(data.currentActiveTab)"  matInput placeholder="Search Mobile....">
+                    </mat-form-field>
+                  </div>
+
+                </th>
+
+                <th class="w200"></th>
+                <th class="w200"></th>
+                <th class="w200"></th>
+                <th class="w90">&nbsp;</th>
+              </tr>
+            </table>
+          </div>
+        </div>
+
+        <div class="table-container">
+          <div class="table-content">
+
+            <table>
+              <tr *ngFor = "let row of redeemDataList">
+                <td class="w100">{{row.dateCreatedInFormat}}</td>
+                <td>{{row.user_name}}</td>
+                <td class="w170">{{row.user_mobile}}</td>
+                <td class="w200">{{row.redeem_point}} Points</td>
+                <td class="w200">&#x20B9; {{row.point_value}}</td>
+                <td class="w200">&#x20B9; {{row.redeem_amount}}</td>
+                <td class="w90 text-center">
+                  <button (click) = "onDisburseAmountToPaytmWalletHandler(row.id)" class="table-btn" mat-raised-button color="accent">Redeem</button>
+                </td>
+              </tr>
+
+              <ng-container  *ngFor="let row of skeltonList">
+
+                <tr class="sk-loading" *ngIf = "data.isRequestInProcess">
+
+                  <td class="w100"><div>&nbsp;</div></td>
+                  <td><div>&nbsp;</div></td>
+                  <td class="w170"><div>&nbsp;</div></td>
+                  <td class="w200"><div>&nbsp;</div></td>
+                  <td class="w200"><div>&nbsp;</div></td>
+                  <td class="w200"><div>&nbsp;</div></td>
+                  <td class="w90 text-center"><div>&nbsp;</div></td>
+
+                </tr>
+
+              </ng-container>
+
+            </table>
+
+            <div class="search-results"
+            data-infinite-scroll
+            debounce
+            [infiniteScrollDistance]="1"
+            [infiniteScrollUpDistance]="2"
+            [infiniteScrollThrottle]="10"
+            (scrolled)="onRedeemListHandler()">
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <div *ngIf="data.currentActiveTab == 2" class="cs-table">
+
+      <div class="sticky-head" >
+        <div class="table-head">
+          <table>
+            <tr>
+              <th class="w90">Date</th>
+              <th>Name</th>
+              <th class="w90">Mobile</th>
+              <th class="w100">Txn Type</th>
+
+              <th class="w60">Redeemm Pt.</th>
+              <th class="w60">Pt. Value</th>
+              <th class="w60">Redeem Amount</th>
+              <th class="w130">Txn Id</th>
+
+              <th class="w80">Status</th>
+              <th class="w170">Reason</th>
+              <th class="w100">Action By</th>
+              <th class="w90">Action Date</th>
+            </tr>
+          </table>
+        </div>
+
+        <div class="table-head bdrt">
+          <table>
+            <tr>
+
+              <th class="w90">
+
+                <div class="th-search-acmt">
+
+                  <mat-form-field class="example-full-width cs-input picker-icon">
+
+                    <input matInput [(ngModel)] = "searchData.dateCreated" [matDatepicker]="picker1" [max]="currentDate" placeholder="Date Created" (ngModelChange) = "onTabAndInputChangeHandler(data.currentActiveTab)" name="dateCreated">
+
+                    <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+
+                    <mat-datepicker #picker1></mat-datepicker>
+
+                  </mat-form-field>
+
+                </div>
+
+              </th>
+
+              <th>
+                <div class="th-search-acmt">
+                  <mat-form-field  class="example-full-width cs-input select-input">
+                    <input matInput [(ngModel)]="searchData.name" (ngModelChange) = "onTabAndInputChangeHandler(data.currentActiveTab)" placeholder="Search Name....">
+                  </mat-form-field>
+                </div>
+              </th>
+
+              <th class="w90">
+
+                <div class="th-search-acmt">
+                  <mat-form-field  class="example-full-width cs-input select-input">
+                    <input matInput [(ngModel)]="searchData.mobile" (ngModelChange) = "onTabAndInputChangeHandler(data.currentActiveTab)" placeholder="Search Mobile....">
+                  </mat-form-field>
+                </div>
+
+              </th>
+
+              <th class="w100">
+
+                <div class="th-search">
+                  <select [(ngModel)]="searchData.transactionType" (ngModelChange) = "onTabAndInputChangeHandler(data.currentActiveTab)" name = "transactionType">
+
+                    <option selected="selected" value=''>All</option>
+                    <option value='Instant'>Instant</option>
+                    <option value='Redeem Request'>Redeem Request</option>
+
+                  </select>
+
+                </div>
+              </th>
+
+              <th class="w60"></th>
+              <th class="w60"></th>
+              <th class="w60"></th>
+              <th class="w130"></th>
+
+              <th class="w80">
+
+                <div class="th-search">
+                  <select [(ngModel)]="searchData.status" (ngModelChange) = "onTabAndInputChangeHandler(data.currentActiveTab)" name="status">
+                    <option selected value=''>All</option>
+                    <option value='Inprocess'>Inprocess</option>
+                    <option value='Success'>Success</option>
+                    <option value='Failure'>Failure</option>
+                  </select>
+                </div>
+
+              </th>
+
+              <th class="w170"></th>
+              <th class="w100"></th>
+              <th class="w90"></th>
+
+            </tr>
+          </table>
+        </div>
+      </div>
+
+      <div class="table-container">
+        <div class="table-content">
+          <table>
+
+            <tr *ngFor = "let row of redeemDataList">
+
+              <td class="w90">{{row.dateCreatedInFormat}}</td>
+              <td>{{row.user_name}}</td>
+              <td class="w90">{{row.user_mobile}}</td>
+              <td class="w100">{{row.transaction_type}}</td>
+
+              <td class="w60">{{row.redeem_point}}</td>
+              <td class="w60">{{row.point_value}}</td>
+              <td class="w60">{{row.redeem_amount}}</td>
+              <td class="w130">{{row.paytm_order_id}}</td>
+
+              <td class="w80">{{row.status}}</td>
+              <td class="w170">{{row.failure_reason}}</td>
+              <td class="w100">{{row.redeem_action_by_name}}</td>
+              <td class="w90">{{row.redeemActionDateInFormat}}</td>
+
+            </tr>
+
+            <ng-container  *ngFor="let row of skeltonList">
+              <tr class="sk-loading" *ngIf = "data.isRequestInProcess">
+
+                <td class="w100"><div>&nbsp;</div></td>
+                <td><div>&nbsp;</div></td>
+                <td class="w170"><div>&nbsp;</div></td>
+                <td class="w200"><div>&nbsp;</div></td>
+
+                <td class="w100"><div>&nbsp;</div></td>
+                <td class="w100"><div>&nbsp;</div></td>
+                <td class="w100"><div>&nbsp;</div></td>
+                <td class="w100"><div>&nbsp;</div></td>
+
+                <td class="w200"><div>&nbsp;</div></td>
+                <td class="w200"><div>&nbsp;</div></td>
+                <td class="w100"><div>&nbsp;</div></td>
+                <td class="w100"><div>&nbsp;</div></td>
+
+              </tr>
+            </ng-container>
+
+          </table>
+
+          <div class="search-results"
+          data-infinite-scroll
+          debounce
+          [infiniteScrollDistance]="1"
+          [infiniteScrollUpDistance]="2"
+          [infiniteScrollThrottle]="10"
+          (scrolled)="onRedeemListHandler()">
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- <div class="no-data" *ngIf="data_not_found==true">
+    <img src="assets/img/no-data.gif" alt="">
+    <p>Data not <span>available !</span></p>
+  </div> -->
+</div>
+</div>
+</div>
+
+

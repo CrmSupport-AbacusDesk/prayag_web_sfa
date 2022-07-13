@@ -1,0 +1,210 @@
+<div class="main-container">
+  <div class="middle-container">
+    <div class="page-heading">
+      <div class="heading-text">
+        <h2>Beat Code Master</h2>
+        <!-- <p>Add Location Master</p> -->
+      </div>
+    <button *ngIf="view_add" mat-raised-button color="accent" style="right: -500px;" (click)="upload_excel()"><i class="material-icons">backup</i> Upload File</button>
+
+    </div>
+  
+  </div>
+ 
+  
+  <div class="container-outer">
+    <div *ngIf="loader">
+      <mat-spinner class="loader">
+        <div>
+          <p>Loading....</p>
+        </div>
+      </mat-spinner>
+    </div>
+    
+    <form>
+      <div class="container">
+        <div class="row">
+          <div class="col s12">
+            <div class="sprate-box cs-form">
+              <div class="cs-heading">
+                <h2>Beat Code Master</h2>
+                <span class="required">Indicates required fields ( <sup>*</sup> )</span>
+              </div>
+              
+              <mat-divider class="left-right-15 mt10 mb10 "></mat-divider>
+              <div class="cs-form">
+                <div class="row">
+                  <div class="col s3">
+                    <mat-form-field class="cs-input"  appearance="outline">
+                      <mat-label>State</mat-label>
+                      <mat-select  name="state" placeholder="State" #state="ngModel"  [(ngModel)]="data.state" (ngModelChange)="data.area = '';" [ngClass]="{'has-error' : distirct.invalid } " required>
+                        <mat-option disabled="">Select State</mat-option>
+                        <mat-option *ngFor="let state of state_list"(keyup.enter)="getDistrict(state)"(click)="getDistrict(state)" value="{{state}}">{{state}}</mat-option>
+                      </mat-select>
+
+                      <!-- <div class="alert alert-danger" *ngIf="!(data.state)">
+                        State is required...
+                    </div> -->
+                    </mat-form-field>
+                  </div>
+                  <div class="col s3">
+                    <mat-form-field class="cs-input"  appearance="outline">
+                      <mat-label>District</mat-label>
+                      <mat-select  name="distirct" placeholder="District" #distirct="ngModel"  [(ngModel)]="data.distirct" (ngModelChange)="data.area = '';" [ngClass]="{'has-error' : distirct.invalid } " required>
+                        <mat-option disabled="">Select District</mat-option>
+                        <mat-option *ngFor="let district of district_list" value="{{district}}">{{district}}</mat-option>
+                      </mat-select>
+                    </mat-form-field>
+                  </div>
+                  <div class="col s3">
+                    <mat-form-field class="cs-input"  appearance="outline">
+                      <mat-label>Area/ Route Name</mat-label>
+                      <input matInput type="text" name="route_name" #route_name="ngModel"  [(ngModel)]="data.route_name" > 
+                    </mat-form-field>
+                  </div>
+                  <div class="col s3">
+                  <div class="df">
+                    <mat-form-field class="cs-input"  appearance="outline">
+                      <mat-label>Beat Code</mat-label>
+                      <input matInput type="text" name="beat_code" #beat_code="ngModel"  [(ngModel)]="data.beat_code" (ngModelChange)="check_area()" required> 
+                    </mat-form-field>
+                      <a *ngIf="view_edit" class="add-item ml15"  mat-raised-button><i class="material-icons" (click)="submit_area()">add</i></a>
+                      <!-- <a class="add-item ml15" [disabled]="(!(data.state && data.state!='' && data.distirct && data.distirct!='' && data.area && data.area!='') || (false))" mat-raised-button><i class="material-icons" (click)=" (data.state && data.distirct && data.area) ?submit_area():''">add</i></a> -->
+
+                  </div>
+                  </div>
+                </div>
+               
+                <div class="cs-table left-right-10">
+                  <div class="sticky-head">
+                    <div class="table-head border-top">
+                      <table>
+                        <tr>
+                          <th class="w50 text-center">S No</th>
+                          <th class="w250">State</th>
+                          <th class="w250">District</th>
+                          <th class="w250">Area/Route Name</th>
+
+                          <th >Beat Code</th>
+                          <!-- <th class="w100">Description</th> -->
+                          <th class="w200 text-center" >Action</th>
+                        </tr>
+                      </table>
+                    </div>
+                    <div class="table-head bdrt">
+                      <table>
+                        <tr>
+                          <th class="w50"></th>
+                          <th class="w250">
+                            <div class="th-search-acmt">
+                              <mat-form-field>
+                                <input type="text"  matInput placeholder="state...." name="state" (keyup.enter)="area_list()" #state="ngModel" [(ngModel)]="search.state" >
+                                
+                              </mat-form-field>
+                            </div>
+                          </th>
+                          <th class="w250">
+                            <div class="th-search-acmt">
+                              <mat-form-field>
+                                <input type="text"  matInput placeholder="district" name="district"  [(ngModel)]="search.district" (keyup.enter)="area_list()">
+                               
+                              </mat-form-field>
+                            </div>
+                          </th>
+                          <th class="w250">
+                            <div class="th-search-acmt">
+                              <mat-form-field>
+                                <input type="text"  matInput placeholder="route_name" name="route_name"  [(ngModel)]="search.route_name" (keyup.enter)="area_list()">
+                               
+                              </mat-form-field>
+                            </div>
+                          </th>
+                          <th>
+                            <div class="th-search-acmt">
+                              <mat-form-field>
+                                <input type="text"  matInput placeholder="Area...." name="area"  [(ngModel)]="search.area" (keyup.enter)="area_list()" >
+                              
+                              </mat-form-field>
+                            </div>
+                          </th>
+                          <th class="w200"></th>
+
+                          </tr>
+                          </table>
+                          </div>
+                  </div>
+                  <div class="table-container">
+                    <div class="table-content">
+                      <table> 
+                        <ng-container *ngFor="let data of arealist,let i = index">
+                        <tr >
+                          <td class="w50 text-center">{{i+1}}</td>
+                          <td class="w250">{{data.state}}</td>
+                          <td class="w250">{{data.distirct}}</td>
+                          <td class="w250">{{data.area}}</td>
+
+                          <td *ngIf="editLocation != data.id">{{data.beat_code}}</td>
+                          <td *ngIf="editLocation == data.id">
+                            <div class="place-input active">
+                              <input name="Area{{i}}" type="text" placeholder="Enter Beat Code" #beat_code="ngModel" [(ngModel)]="data.beat_code">
+                          </div>
+                          </td>
+
+                          <!-- <td *ngIf="editLocation != data.id" class="w100" matTooltip="{{data.area_description}}" matTooltipPosition="above">
+                            <div class="one-line">{{data.area_description}}</div>
+                          </td> -->
+
+                          <!-- <td *ngIf="editLocation == data.id" class="w100">
+                            <div class="place-input active">
+                              <input name="Description{{i}}" type="text" placeholder="Enter Description" #area_description="ngModel" [(ngModel)]="data.area_description">
+                          </div>
+                          </td> -->
+
+                          <td class="w200 text-center">
+                            <button  *ngIf="editLocation != data.id && view_edit" mat-button class="delete-mat" (click)="showSave = !showSave; editLocation = data.id"> <i class="material-icons green-clr" mat-button matTooltip="Edit">create</i></button>
+                            <button *ngIf="editLocation == data.id" true mat-button class="delete-mat" (click)="updateData(data.id,data.beat_code,data.area_description);showSave = !showSave ; editLocation = 0"> <i class="material-icons green-clr" mat-button matTooltip="Save">save</i></button>
+                            <!-- <button mat-button class="delete-mat"><i class="material-icons red-clr" (click)="delete_area(data.id)">delete_sweep</i></button> -->
+                            <button *ngIf="view_delete" mat-button class="delete-mat"><i class="material-icons red-clr" (click)="delete_area(data.id)">delete_sweep</i></button>
+
+                          </td>
+                        </tr>
+                      </ng-container>
+                        <!-- <ng-container *ngFor="let lead of skelton">
+                          <tr class="sk-loading" *ngIf="loader">
+                              <td class="w30 text-center">
+                                  <div>&nbsp;</div>
+                              </td>
+                            
+                              <td class="w90">
+                                  <div>&nbsp;</div>
+                              </td>
+                              <td class="w50">
+                                  <div>&nbsp;</div>
+                              </td>
+                              <td class="w100">
+                                  <div>&nbsp;</div>
+                              </td>
+                             
+                              <td class="w100">
+                                  <div>&nbsp;</div>
+                              </td>
+                              <td class="w50">
+                                <div>&nbsp;</div>
+                            </td>
+                          </tr>
+                      </ng-container> -->
+                      </table>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+<div class="fix-btn" >
+  <a class="bottom-btn ecxel-btn" matTooltip="Download Excel" matTooltipPosition="above" mat-raised-button (click)="exportAsXLSX()"><img src="assets/img/excel.svg"></a>
+</div>

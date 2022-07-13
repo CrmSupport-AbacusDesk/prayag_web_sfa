@@ -1,0 +1,452 @@
+<div class="main-container">
+    <div class="middle-container mb0">
+        <div class="page-heading">
+            <div class="heading-text">
+                <h2>Attendance</h2>
+            </div>
+        </div>
+        <div class="uppr-one m-right-data">
+
+
+            <div class="top-pagination" *ngIf="!show_today">
+                <ul>
+                    <li class="refresh-area">
+                        <a class="refresh-btn" mat-raised-button (click)="refresh('getAttendance',2)" matTooltip="Refresh"><i class="material-icons"> refresh</i></a>
+                      </li>
+                    <li>
+                        <p>Pages {{pagenumber}} Of {{total_page}}</p>
+                    </li>
+                    <li *ngIf="pagenumber > 1">
+                        <button mat-button class="left-btn" (click)="start=start-page_limit; attendance_list('getAttendance',2)" [disabled]="pagenumber == 1">
+                            <i class="material-icons">keyboard_arrow_left</i>
+                        </button>
+                    </li>
+                    <li>
+                        <input type="text" placeholder="GO TO" name="pagenumber" (keyup.enter)="start=(pagenumber*page_limit)-page_limit; attendance_list('getAttendance',2)" [(ngModel)]="pagenumber"  min="1" max={{total_page}}>
+                    </li>
+
+                    <li *ngIf="pagenumber <= total_page">
+                        <button mat-button class="right-btn"  (click)="start=start+page_limit; attendance_list('getAttendance',2)" [disabled]="pagenumber == total_page">
+                            <i class="material-icons">keyboard_arrow_right</i>
+                        </button>
+                    </li>
+                </ul>
+            </div>
+            <div class="top-pagination" *ngIf="show_today">
+                <ul>
+                    <li class="refresh-area">
+                        <a class="refresh-btn" mat-raised-button (click)="refresh('getattendance_today',1)" matTooltip="Refresh"><i class="material-icons"> refresh</i></a>
+                      </li>
+                   
+                </ul>
+            </div>
+            <div *ngIf="!show_today">
+                <!-- <li class="refresh-area">
+                    <a class="refresh-btn" mat-raised-button (click)="refresh('getAttendance',2)" matTooltip="Refresh"><i class="material-icons"> refresh</i></a>
+                  </li> -->
+                <div class="cs-form date-filter">
+                    <mat-form-field appearance="outline" class="cs-input w150">
+                        <mat-label>Date From</mat-label>
+                        <input matInput [matDatepicker]="date_from" placeholder="From Date" [max]="today_date" [(ngModel)]="data.date_from" readonly>
+                        <mat-datepicker-toggle matSuffix [for]="date_from"></mat-datepicker-toggle>
+                        <mat-datepicker #date_from></mat-datepicker>
+                    </mat-form-field>
+
+                    <div class="df">
+                        <mat-form-field appearance="outline" class="cs-input w150">
+                            <mat-label>Date To</mat-label>
+                            <input matInput [matDatepicker]="date_to" placeholder="To Date" [min]="data.date_from" [max]="today_date"
+                            [(ngModel)]="data.date_to" readonly>
+                            <mat-datepicker-toggle matSuffix [for]="date_to"></mat-datepicker-toggle>
+                            <mat-datepicker #date_to></mat-datepicker>
+                        </mat-form-field>
+                        <a class="add-item ml10" mat-raised-button [disabled]="!data.date_from || !data.date_to"
+                        (click)="(data.date_from || data.date_to) ? attendance_list('getAttendance','2') : ''">Go</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="tabs ml15">
+                <ul>
+                    <li>
+                        <a class="" [ngClass]="show_today ? 'active' : ''" (click)="change_tab('getattendance_today',1)">Today
+                            <span ></span>
+                        </a>
+                    </li>
+                    <li>
+                        <a class="" [ngClass]="!show_today ? 'active' : ''" (click)="change_tab('getAttendance',2)">All
+                            <span ></span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+
+
+
+    </div>
+
+    <div class="middle-container mb0">
+        <div class="page-heading">
+          <div class="tabs ml15">
+            <ul>
+                <li *ngIf="today_and_all_tab==1">
+                    <a class="" [ngClass]="active_present_absent ? 'active' : ''" (click)="change_attendence_type_tab('getattendance_today','1','Present')" style="border-radius: 8px 0px 0px 8px;">Present
+                        <span ></span>
+                    </a>
+                    <a class="" [ngClass]="!active_present_absent ? 'active' : ''" (click)="change_attendence_type_tab('getattendance_today','1','Absent')" style="border-radius: 0px 8px 8px 0px;">Absent
+                      <span ></span>
+                    </a>
+                </li>
+
+                <li *ngIf="today_and_all_tab==2">
+                  <a class="" [ngClass]="active_present_absent ? 'active' : ''" (click)="change_attendence_type_tab('getAttendance',2 ,'Present')" style="border-radius: 8px 0px 0px 8px;">Present
+                      <span ></span>
+                  </a>
+                  <a class="" [ngClass]="!active_present_absent ? 'active' : ''" (click)="change_attendence_type_tab('getAttendance',2 ,'Absent')" style="border-radius: 0px 8px 8px 0px;">Absent
+                    <span ></span>
+                  </a>
+                </li>
+
+            </ul>
+          </div>
+        </div>
+      </div>
+    <div class="container-outer padding0">
+        <div *ngIf="exp_loader">
+            <mat-spinner class="loader">
+              <div><p>Loading....</p></div>
+            </mat-spinner>
+          </div>
+        <!-- <div *ngIf="loader">
+            <mat-spinner class="loader">
+                <div><p>Loading....</p></div>
+            </mat-spinner>
+        </div> -->
+        <div class="container mb60">
+            <div class="cs-table horizontal-scroll">
+                <div class="sticky-head">
+                    <div class="table-head">
+                        <table>
+                            <tr>
+                                <th class="w90 text-center" *ngIf="!show_today">Date</th>
+                                <th class="w90 text-center" >Team State</th>
+                                <th class="w90 text-center" >Team Code</th>
+                                <th class="w90 text-center" >Team Name</th>
+
+
+                                <th class="w100 text-center">Employee Code</th>
+
+                                <th class="w150 text-center">User </th>
+                                <!-- <th class="w90 text-center">Mode</th> -->
+
+                                <th class="w90 text-center">Start Time</th>
+                                <th class="w150 text-center">Start Location</th>
+                                <th class="w90 text-center">Stop Time</th>
+                                <th class="w150 text-center">Stop Location</th>
+                                <!-- <th class="w90 text-center">Start Reading</th>
+                                <th class="w130 text-center">Stop Reading</th>
+                                <th class="w90 text-center">Travel (Km)</th> -->
+                                <th class="w90 text-center">CheckIn Count</th>
+                                <th class="w90 text-center">Primary Order</th>
+                                <th class="w90 text-center">Secondary Order</th>
+                                <th class="w90 text-center">Google KM</th>
+                                <th class="w90 text-center">Expense</th>
+                                <!-- <th class="w100 text-center">Reading Image</th> -->
+
+                            </tr>
+                        </table>
+                    </div>
+
+                    <div class="table-head bdrt">
+                        <table>
+                            <tr>
+                                <th class="w90" *ngIf="!show_today">
+                                    <!-- <div class="th-search-acmt">
+                                        <mat-form-field class="example-full-width cs-input picker-icon">
+                                            <input matInput [matDatepicker]="picker" placeholder="Date"
+                                            (dateChange)="attendance_list('getAttendance',2)" [max]="today_date" name="date_created"
+                                            [(ngModel)]="data.date_created" readonly>
+
+                                            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+
+                                            <mat-datepicker #picker></mat-datepicker>
+                                        </mat-form-field>
+                                    </div> -->
+                                </th>
+                                <th class="w90"> <div class="th-search-acmt">
+                                    <mat-form-field class="example-full-width cs-input select-input">
+                                        <input matInput placeholder="Enterstate...."
+                                        (keyup.enter)="show_today? attendance_list('getattendance_today',1) : attendance_list('getAttendance',2)"
+                                        [(ngModel)]="data.team_state">
+                                    </mat-form-field>
+                                </div></th>
+                                <th class="w90"> <div class="th-search-acmt">
+                                    <mat-form-field class="example-full-width cs-input select-input">
+                                        <input matInput placeholder="Entercode...."
+                                        (keyup.enter)="show_today? attendance_list('getattendance_today',1) : attendance_list('getAttendance',2)"
+                                        [(ngModel)]="data.team_code">
+                                    </mat-form-field>
+                                </div></th>
+                                <th class="w90"> <div class="th-search-acmt">
+                                    <mat-form-field class="example-full-width cs-input select-input">
+                                        <input matInput placeholder="Entername...."
+                                        (keyup.enter)="show_today? attendance_list('getattendance_today',1) : attendance_list('getAttendance',2)"
+                                        [(ngModel)]="data.team_name">
+                                    </mat-form-field>
+                                </div></th>
+                                <th class="w100"> <div class="th-search-acmt">
+                                    <mat-form-field class="example-full-width cs-input select-input">
+                                        <input matInput placeholder="Enter code...."
+                                        (keyup.enter)="show_today? attendance_list('getattendance_today',1) : attendance_list('getAttendance',2)"
+                                        [(ngModel)]="data.employee_id">
+                                    </mat-form-field>
+                                </div></th>
+                                <th class="w150">
+                                    <div class="th-search-acmt">
+                                        <mat-form-field class="example-full-width cs-input select-input">
+                                            <input matInput placeholder="Enter Name...."
+                                            (keyup.enter)="show_today? attendance_list('getattendance_today',1) : attendance_list('getAttendance',2)"
+                                            [(ngModel)]="data.name">
+                                        </mat-form-field>
+                                    </div>
+                                </th>
+                              
+                                <th class="w90">&nbsp;</th>
+                                <!-- <th class="w90">&nbsp;</th> -->
+
+                                <th class="w150">&nbsp;</th>
+                                <th class="w90">&nbsp;</th>
+                                <th class="w150">&nbsp;</th>
+                                <!-- <th class="w90">&nbsp;</th>
+                                <th class="w130">&nbsp;</th>
+                                <th class="w90">&nbsp;</th> -->
+                                <th class="w90">&nbsp;</th>
+                                <th class="w90">&nbsp;</th>
+                                <th class="w90">&nbsp;</th>
+                                <th class="w90">&nbsp;</th>
+
+                                <th class="w90">&nbsp;</th>
+                                <!-- <th class="w100">&nbsp;</th> -->
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+                <div class="table-container">
+                    <div class="table-content">
+                        <table>
+                            <tr *ngFor="let p of attendancelist">
+                                <td *ngIf="!show_today" class="w90 text-center">{{(p.date_created?p.date_created :'--') | date : 'd MMM y' }}</td>
+                                <td  class="w90 text-center">{{p.team_state}}</td>
+                                <td  class="w90 text-center">{{p.team_code}}</td>
+                                <td  class="w90 text-center">{{p.team_name}}</td>
+
+                                <td  class="w100 text-center">{{p.employee_id}}</td>
+
+                                <td class="w150" [ngClass]="p.attend_date ? 'light-green' : ( (p.weekly_off && p.weekly_off == p.date_created_day) ? 'yellow-bgclr' : 'red-bgclr') ">{{p.name}}</td>
+
+
+                              <!--  <td *ngIf="p.work_type=='Working'" class="w100 text-center">{{p.work_type ? p.work_type : '--'}}</td>
+
+                                <td *ngIf="p.work_type=='Travel'" class="w100 text-center"
+                                matTooltip="{{p.travel_place ? p.travel_place : '--'}}" matTooltipPosition="above">{{p.work_type ?
+                                    p.work_type : '--'}}</td> -->
+                                <!-- <td class="w90 text-center">{{p.vehicle}}</td> -->
+
+                                <td class="w90 text-center">{{p.start_time?p.start_time:'--'}}</td>
+
+                                <td class="w150 text-center" matTooltip="{{p.start_address && p.start_address!=''?p.start_address:'--'}}"
+                                    matTooltipPosition="above">
+                                    <div class="one-line">{{p.start_address && p.start_address!=''?p.start_address:'--'}}</div>
+                                </td>
+                                <td class="w90 text-center" > {{p.stop_time && p.stop_time!='12:00 AM'?p.stop_time:'--'}}</td>
+
+                                <td class="w150 text-center" matTooltip="{{p.stop_address && p.stop_address != ''?p.stop_address:'--'}}"
+                                matTooltipPosition="above">
+                                <div class="one-line">{{p.stop_address && p.stop_address != ''?p.stop_address:'--'}}</div>
+                                <div class="action-btns" *ngIf="p.stop_address!='Not found' && show_today">
+                                    <a mat-button class="view" (click)="reset_attendance(p.id)"><i class="material-icons">restore</i>
+                                        Reset</a>
+                                    </div>
+                                </td>
+
+                                    <td class="w90 text-center" *ngIf="p.check_in_count">
+                                        <span style="cursor: pointer;color:blue" (click)="goTo(p.name,p.date_created,'checkin')">
+                                            {{p.check_in_count }}
+                                        </span>
+                                    </td>
+                                    <td class="w90 text-center"*ngIf="!(p.check_in_count)">
+                                        --
+                                    </td>
+                                    <td class="w90 text-center">
+                                        <span style="cursor: pointer;color:blue" (click)="p.today_primary_sales && p.today_primary_sales_count ? goTo(p.name,p.date_created,'primary_sale'):''">
+                                            {{p.today_primary_sales_count?p.today_primary_sales_count:'0'}}
+                                        </span>
+                                    </td>
+
+                                    <td class="w90 text-center">
+                                        <span style="cursor: pointer;color:blue" (click)="p.today_secondary_sales && p.today_secondary_sales_count ? goTo(p.name,p.date_created,'secondary_sale'):'--'">
+                                            {{p.today_secondary_sales_count?p.today_secondary_sales_count:'0'}} 
+                                        </span>
+                                    </td>
+                                    <td class="w90 text-center">
+                                      <div class="one-line" style="cursor: pointer;color:blue" (click)="attendancemodal(p)">{{p.google_map_km_per_day && p.google_map_km_per_day!='' ? p.google_map_km_per_day + ' Km': '--'}}</div>
+
+                                </td>
+
+
+                                    <td class="w90 text-center" *ngIf="p.expense_amount">
+                                        <span style="cursor: pointer;color:blue" (click)="goTo(p.name,p.date_created,'Expense')">
+                                            &#8377; {{p.expense_amount}}
+                                        </span>
+                                    </td>
+
+                                    <td class="w90 text-center"*ngIf="!(p.expense_amount)">
+                                        --
+
+                                    </td>
+                                    <!-- <a class="link-btn" mat-button routerLink="/order-detail/{{list.id}}" routerLinkActive="active"> -->
+
+
+
+
+                                    </tr>
+                                    <ng-container *ngFor="let lead of skelton">
+                                        <tr class="sk-loading" *ngIf="loader">
+                                            <td class="w90">
+                                                <div>&nbsp;</div>
+                                            </td>
+                                            <td class="w150">
+                                                <div>&nbsp;</div>
+                                            </td>
+                                            <td class="w100">
+                                                <div>&nbsp;</div>
+                                            </td>
+                                            <td class="w90">
+                                                <div>&nbsp;</div>
+                                            </td>
+                                            <td class="w90">
+                                                <div>&nbsp;</div>
+                                            </td>
+                                            <td class="w150">
+                                                <div>&nbsp;</div>
+                                            </td>
+                                            <td class="w90">
+                                                <div>&nbsp;</div>
+                                            </td>
+                                            <td class="w90">
+                                                <div>&nbsp;</div>
+                                            </td>
+                                            <td class="w150">
+                                                <div>&nbsp;</div>
+                                            </td>
+                                            <td class="w130">
+                                                <div>&nbsp;</div>
+                                            </td>
+                                            <td class="w90">
+                                                <div>&nbsp;</div>
+                                            </td>
+                                            <td class="w90">
+                                                <div>&nbsp;</div>
+                                            </td>
+                                            <td class="w90">
+                                                <div>&nbsp;</div>
+                                            </td>
+                                            <td class="w90">
+                                                <div>&nbsp;</div>
+                                            </td>
+                                            <td class="w90">
+                                                <div>&nbsp;</div>
+                                            </td>
+                                            <td class="w90">
+                                                <div>&nbsp;</div>
+                                            </td>
+                                            <td class="w100">
+                                                <div>&nbsp;</div>
+                                            </td>
+
+                                        </tr>
+                                    </ng-container>
+                                    <!-- <ng-container *ngFor="let lead of skelton">
+                                        <tr class="sk-loading" *ngIf="loader">
+                                            <td *ngIf="!show_today" class="w90">
+                                                <div>&nbsp;</div>
+                                            </td>
+                                            <td class="w150">
+                                                <div>&nbsp;</div>
+                                            </td>
+                                            <td class="w100">
+                                                <div>&nbsp;</div>
+                                            </td>
+                                            <td class="w90">
+                                                <div>&nbsp;</div>
+                                            </td>
+                                            <td class="w150">
+                                                <div>&nbsp;</div>
+                                            </td>
+                                            <td class="w90">
+                                                <div>&nbsp;</div>
+                                            </td>
+                                            <td class="w90">
+                                                <div>&nbsp;</div>
+                                            </td>
+                                            <td class="w150">
+                                                <div>&nbsp;</div>
+                                            </td>
+                                            <td class="w90">
+                                                <div>&nbsp;</div>
+                                            </td>
+                                            <td class="w100">
+                                                <div>&nbsp;</div>
+                                            </td>
+                                            <!-- <td class="w90">
+                                                <div>&nbsp;</div>
+                                            </td> -->
+                                            <!-- <td class="w90">
+                                                <div>&nbsp;</div>
+                                            </td>
+                                            <td class="w90">
+                                                <div>&nbsp;</div>
+                                            </td>
+                                            <td class="w90">
+                                                <div>&nbsp;</div>
+                                            </td>
+                                            <td class="w90">
+                                                <div>&nbsp;</div>
+                                            </td>
+                                            <td class="w90">
+                                                <div>&nbsp;</div>
+                                            </td>
+                                            <td class="w90">
+                                                <div>&nbsp;</div>
+                                            </td>
+                                        </tr>
+                                    </ng-container>  -->
+                                </table>
+                                <div class="search-results" data-infinite-scroll debounce [infiniteScrollDistance]="1"
+                                [infiniteScrollUpDistance]="2" [infiniteScrollThrottle]="10"
+                                (scrolled)="attendance_list('getAttendance',2)">
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+                <div class="no-data" *ngIf="data_not_found==true">
+                    <img src="assets/img/no-data.gif" alt="">
+                    <p>Data not <span>available !</span></p>
+                </div>
+
+            </div>
+
+
+            <div class="fix-btn" *ngIf="show_today">
+                <a class="bottom-btn ecxel-btn" matTooltip="Download Excel" matTooltipPosition="above" mat-raised-button (click)="exportAsXLSX()"><img src="assets/img/excel.svg"></a>
+            </div>
+            <div class="fix-btn" *ngIf="!show_today">
+                <a class="bottom-btn ecxel-btn" matTooltip="Download Excel" matTooltipPosition="above" mat-raised-button (click)="exportAsXLSX1()"><img src="assets/img/excel.svg"></a>
+            </div>
+        </div>
+        <div>
+        </div>
+    </div>

@@ -1,0 +1,111 @@
+<div class="edit-modal">
+  <p class="heading" *ngIf="type == 'add_amount' ">Add Amount</p>
+  <p class="heading" *ngIf="type == 'add_invoice' ">Add Invoice</p>
+  <form #update_basic="ngForm" name="update_basic" (ngSubmit)="(update_basic.valid && update_basic.submitted)?submit():''" validate>
+    <div mat-dialog-content style="padding: 0px 15px;">
+      <div class="cs-form">
+        <ng-container *ngIf="type == 'add_amount' ">
+          <div class="row row-flexs">
+            <div class="col">
+              <mat-form-field class="cs-input"  appearance="outline">
+                <mat-label>Payment Mode</mat-label>
+                <mat-select name="payment_mode" placeholder="Select Payment Mode" #payment_mode="ngModel" [(ngModel)]="form.payment_mode" [ngClass]="{'has-error' : payment_mode.invalid } " required>
+                  <mat-option disabled="">Select Payment Mode</mat-option>
+                  <mat-option value="Nfft">Nfft</mat-option>
+                  <mat-option value="Cheque">Cheque</mat-option>
+                </mat-select>
+              </mat-form-field>
+              <div class="alert alert-danger" *ngIf="!payment_mode.valid && update_basic.submitted">
+                Payment Mode is required....
+              </div>                
+            </div>
+            
+            <div class="col" *ngIf="form.payment_mode == 'Nfft'">
+              <mat-form-field class="cs-input"  appearance="outline">
+                <mat-label>Transaction Id</mat-label>
+                <input matInput placeholder="Type Here ..." name="transaction_id" #transaction_id="ngModel" [(ngModel)]="form.transaction_id" required>
+              </mat-form-field>
+              <div class="alert alert-danger" *ngIf="!transaction_id.valid && update_basic.submitted">
+                Transaction Id is required...
+              </div>
+            </div>
+            
+            <div class="col" *ngIf="form.payment_mode == 'Cheque'">
+              <mat-form-field class="cs-input"  appearance="outline">
+                <mat-label>Cheque No</mat-label>
+                <input matInput placeholder="Type Here ..." name="cheque_no" #cheque_no="ngModel" [(ngModel)]="form.cheque_no" required>
+              </mat-form-field>
+              <div class="alert alert-danger" *ngIf="!cheque_no.valid && update_basic.submitted">
+                Cheque No is required...
+              </div>
+            </div>
+            
+            
+            <div class="col" *ngIf="form.payment_mode == 'Cheque'">
+              <mat-form-field class="cs-input"  appearance="outline">
+                <mat-label>Bank Name</mat-label>
+                <input matInput placeholder="Type Here ..." name="bank_name" #bank_name="ngModel" [(ngModel)]="form.bank_name" required>
+              </mat-form-field>
+              <div class="alert alert-danger" *ngIf="!bank_name.valid && update_basic.submitted">
+                Bank Name is required...
+              </div>
+            </div>
+            
+            <div class="col" *ngIf="form.payment_mode == 'Cheque'">
+              <mat-form-field class="cs-input"  appearance="outline">
+                <mat-label>Cheque Date</mat-label>
+                <input type="date" name="cheque_date"  matInput  [matDatepicker]="picker" placeholder="Date" #cheque_date="ngModel" [(ngModel)]="form.cheque_date" >
+                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                <mat-datepicker #picker></mat-datepicker>
+              </mat-form-field>
+              <div class="alert alert-danger" *ngIf="!cheque_date.valid && update_basic.submitted">
+                Cheque Date is required...
+              </div>
+            </div>
+            
+            <div class="col">
+              <mat-form-field class="cs-input"  appearance="outline">
+                <mat-label>Amount</mat-label>
+                <input matInput placeholder="Type Here ..." name="amount" #amount="ngModel" [(ngModel)]="form.amount" required>
+              </mat-form-field>
+              <div class="alert alert-danger" *ngIf="!amount.valid && update_basic.submitted">
+                Amount is required...
+              </div>
+            </div>
+          </div>
+          
+        </ng-container>
+        
+        <ng-container *ngIf="type == 'add_invoice' ">
+          <div class="row">
+            <div class="col s4">
+              <mat-form-field class="cs-input"  appearance="outline">
+                <mat-label>Invoice No</mat-label>
+                <input matInput placeholder="Type Here ..." name="invoice_no" #invoice_no="ngModel" [(ngModel)]="form.invoice_no" required>
+              </mat-form-field>
+              <div class="alert alert-danger" *ngIf="!invoice_no.valid && update_basic.submitted">
+                Invoice No is required...
+              </div>
+            </div>
+            
+            <div class="col s4">
+              <mat-form-field class="cs-input"  appearance="outline">
+                <mat-label>Amount</mat-label>
+                <input matInput placeholder="Type Here ..." name="amount" #amount="ngModel" [(ngModel)]="form.amount" required>
+              </mat-form-field>
+              <div class="alert alert-danger" *ngIf="!amount.valid && update_basic.submitted">
+                Amount is required...
+              </div>
+            </div>
+            
+          </div>
+        </ng-container>
+      </div>
+    </div>
+    <div mat-dialog-actions>
+      <button mat-button color="warn" [mat-dialog-close]="false">Cancel</button>
+      <button mat-button color="accent" type="submit">Save</button>
+    </div>
+  </form>
+  
+</div>

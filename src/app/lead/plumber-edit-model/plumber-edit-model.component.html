@@ -1,0 +1,195 @@
+<div class="edit-modal"  *ngIf="data.type =='address'" >
+  <form #update_basic="ngForm" name="update_basic" (ngSubmit)="(update_basic.valid && update_basic.submitted)?updatePlumber(data):''" validate>
+    <p class="heading">Update Address</p>
+    <div mat-dialog-content>
+      <div class="cs-form">
+        <div class="row">           
+          <div class="col s3">
+            <mat-form-field class="cs-input"  appearance="outline">
+              <mat-label>State</mat-label>
+              <mat-select name="state" placeholder="Select State" #state="ngModel" [(ngModel)]="data.state"  [ngClass]="{'has-error' : state.invalid } " required>
+                <mat-option disabled="">Select State</mat-option>
+                <mat-option *ngFor="let state of state_list"(click)="getDistrict(data.state,data.country, 2)" (keyup.enter)="getDistrict(data.state, 2)" value="{{state}}">{{state}}</mat-option>
+              </mat-select>
+            </mat-form-field>
+            <div class="alert alert-danger" *ngIf="!data.state && update_basic.submitted">
+              State is required....
+            </div>                
+          </div>
+          
+          <div class="col s3"  >
+            <mat-form-field class="cs-input"  appearance="outline">
+              <mat-label>District</mat-label>
+              <mat-select name="district" placeholder="Select District" #district="ngModel" [(ngModel)]="data.district" >
+                <mat-option disabled="">Select District</mat-option>
+                <mat-option *ngFor="let district of district_list"(click)="getCityList(data.district,data.state, 2)" (keyup.enter)="getCityList(data.district,data.state, 2)"value="{{district}}">{{district}}</mat-option>
+              </mat-select>
+            </mat-form-field>             
+            <!-- <div class="alert alert-danger" *ngIf="!data.district && update_basic.submitted">
+              District is required....
+            </div> -->
+          </div>
+          
+          <div class="col s3"  >
+            <mat-form-field class="cs-input"  appearance="outline">
+              <mat-label>City</mat-label>
+              <mat-select name="city" placeholder="Type Here ..." #city="ngModel" [(ngModel)]="data.city" >
+                <mat-option disabled="">Select City</mat-option>
+                <mat-option *ngFor="let city of city_list"(click)="getPinCodeList(data.district,data.state,data.city, 2)"(keyup.enter)="getPinCodeList(data.district,data.state,data.city, 2)" value="{{city}}">{{city}}</mat-option>
+              </mat-select>
+            </mat-form-field>          
+            <!-- <div class="alert alert-danger" *ngIf="!city.valid && update_basic.submitted">
+              City is required....
+            </div> -->
+          </div>
+          <div class="col s3"  >
+            <mat-form-field class="cs-input"  appearance="outline">
+              <mat-label>Pincode</mat-label>
+              <mat-select name="pincode" placeholder="Type Here ..." #pincode="ngModel"[(ngModel)]="data.pincode">
+                <mat-option disabled="">Select Pincode</mat-option>
+                <mat-option *ngFor="let pincode of pinCode_list"value="{{pincode}}">{{pincode}}</mat-option>
+              </mat-select>
+            </mat-form-field>                
+            <!-- <div class="alert alert-danger" *ngIf="!pincode.valid && update_basic.submitted">
+              Pincode is required....
+            </div> -->
+          </div>
+        </div>
+      </div>
+    </div>
+    <div mat-dialog-actions>
+      <button mat-button color="warn" [mat-dialog-close]="false">Cancel</button>
+      <button mat-button color="accent" type="submit">Save</button>
+    </div>
+  </form>
+  
+</div>
+
+
+<div class="edit-modal"  *ngIf="data.type =='basic_details'">
+  <p class="heading">Update Basic Detail</p>
+  <form #update_basic="ngForm" name="update_basic" (ngSubmit)="(update_basic.valid && update_basic.submitted)?updatePlumber(data):''" validate>
+    <div mat-dialog-content>
+      <div class="cs-form">
+        <div class="row">
+          <div class="col s4">
+            <mat-form-field class="cs-input"  appearance="outline">
+              <mat-label>Plumber Name</mat-label>
+              <input matInput placeholder="" name="plumber_name" #plumber_name="ngModel" value={{data.plumber_name}} [(ngModel)]="data.plumber_name" name="plumber_name" required>
+            </mat-form-field>
+            <div class="alert alert-danger" *ngIf="!plumber_name.valid && update_basic.submitted">
+              Plumber Name is required...
+            </div>
+          </div>
+          <div class="col s4">
+            <mat-form-field class="cs-input"  appearance="outline">
+              <mat-label>Mobile Number</mat-label>
+              <input  type="tel" maxlength="10" minlength="10" matInput placeholder="Type Here ..." [ngClass]="{'has-error' : mobile.invalid } " name="mobile" #mobile="ngModel" (keypress)="MobileNumber($event)" value={{data.mobile}} [(ngModel)]="data.mobile" required>
+            </mat-form-field>
+            <div class="alert alert-danger" *ngIf="!mobile.valid && update_basic.submitted">
+              Mobile no. must be 10 digits...
+            </div>
+          </div>
+          <div class="col s4">
+            <mat-form-field class="cs-input"  appearance="outline">
+              <mat-label>Whatsapp No.</mat-label>
+              <input type="tel"  minlength="10" maxlength="10" matInput placeholder="Type Here ..." name="whatsapp_no" #whatsapp_no="ngModel" value={{data.whatsapp_no}} [(ngModel)]="data.whatsapp_no" (keypress)="MobileNumber($event)" [ngClass]="{'has-error' : whatsapp_no.invalid } ">
+            </mat-form-field>
+            <div class="alert alert-danger" *ngIf="!whatsapp_no.valid && whatsapp_no.touched">
+              Whatsapp No. must be 10 digits...
+            </div>
+          </div>
+        </div>
+        
+        <div class="row">
+          <div class="col s4">
+            <mat-form-field class="cs-input"  appearance="outline">
+              <mat-label>Email</mat-label>
+              <input type="email"  minlength="6" matInput placeholder="Type Here ..." name="email" #email="ngModel" value={{data.email}} [(ngModel)]="data.email" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$" [ngClass]="{'has-error' : email.invalid } " >
+            </mat-form-field>
+            <div class="alert alert-danger" *ngIf="!email.valid && update_basic.submitted">
+              Email is Invalid...
+            </div>
+          </div>
+          
+          <div class="col s4">
+            <mat-form-field class="cs-input"  appearance="outline">
+              <mat-label>D.O.B</mat-label>
+              <input  matInput [matDatepicker]="picker" placeholder="Select Date" name="dob" #dob="ngModel" value={{data.dob}} [(ngModel)]="data.dob">
+              <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+              <mat-datepicker #picker></mat-datepicker>
+            </mat-form-field>
+            <!-- <div class="alert alert-danger" *ngIf="!dob.valid && update_basic.submitted">
+              Landline is Invalid...
+            </div> -->
+          </div>
+          <div class="col s4">
+            <mat-form-field class="cs-input"  appearance="outline">
+              <mat-label>D.O.A</mat-label>
+              <input  matInput [matDatepicker]="pickerone" placeholder="Select Date" name="doa" #doa="ngModel" value={{data.doa}} [(ngModel)]="data.doa"  >
+              <mat-datepicker-toggle matSuffix [for]="pickerone"></mat-datepicker-toggle>
+              <mat-datepicker #pickerone></mat-datepicker>
+            </mat-form-field>
+            <!-- <div class="alert alert-danger" *ngIf="!email.valid && update_basic.submitted">
+              Email is Invalid...
+            </div> -->
+          </div>
+        </div>
+        
+        <div class="row">
+          <div class="col s4">
+            <mat-form-field class="cs-input"  appearance="outline">
+              <mat-label>Dealer Name</mat-label>
+              <input matInput placeholder="Type Here ..."  name="dealer_name" #dealer_name="ngModel" value={{data.dealer_name}} [(ngModel)]="data.dealer_name" >
+            </mat-form-field>
+            <!-- <div class="alert alert-danger" *ngIf="!dealer_name.valid && update_basic.submitted">
+              Name is required...
+            </div> -->
+          </div>
+          <div class="col s4">
+            <mat-form-field class="cs-input"  appearance="outline">
+              <mat-label>Dealer Mobile No.</mat-label>
+              <input type="tel"  minlength="10" maxlength="10" matInput placeholder="Type Here" name="dealer_mobile" #dealer_mobile="ngModel" value={{data.dealer_mobile}} [(ngModel)]="data.dealer_mobile" (keypress)="MobileNumber($event)" [ngClass]="{'has-error' : dealer_mobile.invalid } ">
+            </mat-form-field>
+            <div class="alert alert-danger" *ngIf="!dealer_mobile.valid && update_basic.submitted">
+              Mobile No. is must be 10 digits...
+            </div>
+          </div>
+          
+          <div class="col s4">
+            <mat-form-field class="cs-input"  appearance="outline">
+              <mat-label>Status</mat-label>
+              <mat-select name="status" [(ngModel)]="data.status" #status="ngModel" [ngClass]="{'has-error' : status.invalid }" >
+                <mat-option>Select Option</mat-option>
+                <mat-option value="Approved">Approved</mat-option>
+                <mat-option value="Pending">Pending</mat-option>
+                <mat-option value="Reject">Reject</mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+          
+      
+          
+        </div>   
+        <div class="row" *ngIf="data.status == 'Reject'">
+          <div class="col s12">
+            <div class="control-field">
+              <mat-form-field class="cs-input"  appearance="outline">
+                <mat-label>Reject Reason</mat-label>
+                <textarea class="h100" type="text" matInput placeholder="Type Here" name="reject_reason" #reject_reason="ngModel" [(ngModel)]="data.reject_reason" [ngClass]="{'has-error' : reject_reason.invalid } " required></textarea>
+              </mat-form-field>
+              <div class="alert alert-danger" *ngIf="!dealer_mobile.valid && update_basic.submitted">
+                Enter Reject Reason...
+              </div>
+            </div>
+          </div>
+        </div>         
+      </div>
+    </div>
+    <div mat-dialog-actions>
+      <button mat-button color="warn" [mat-dialog-close]="false">Cancel</button>
+      <button mat-button color="accent" type="submit">Save</button>
+    </div>
+  </form>
+  
+</div>

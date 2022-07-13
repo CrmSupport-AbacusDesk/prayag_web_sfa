@@ -1,0 +1,174 @@
+<div class="main-container" >
+  <div class="middle-container">
+    <div class="page-heading">
+      <!-- <img src="assets/img/leads_icon.svg" class="h-icon"> -->
+      <div class="back-btn">
+        <a mat-button routerLink="/live_track" routerLinkActive="active"><i class="material-icons" style="transform: rotate(180deg);">west</i></a>
+      </div>
+      <div class="heading-text">
+        <h2>{{attendancelist[0].name}}</h2>
+      </div>
+    </div>
+    <div class="filter-container" >
+      <div class="filter-btn" *ngIf="filter==false" >
+        <button mat-button class="filter"  (click)="Filter()"><img src="assets/img/filter.svg" alt="">FILTER</button>
+      </div>
+      <div class="filter-btn" *ngIf="filter==true" >
+        <button mat-button class="mr15 link-clr" (click)="clear()">CLEAR FILTER</button>
+        <button mat-button class="green-clr" (click)="close()">CLOSE FILTER</button>
+      </div>
+    </div>
+    <!-- <div class="top-search wp20">
+      <input type="text" placeholder="SEARCH. . .">
+      <i class="material-icons">search</i>
+    </div> -->
+    <!-- <div class="top-pagination">
+      <ul>
+        <li class="refresh-area">
+          <a class="refresh-btn" mat-raised-button  matTooltip="Refresh" (click)="refresh()"><i class="material-icons"> refresh</i></a>
+        </li>
+        <li><p>Pages {{pagenumber}} Of {{total_page}}</p></li>
+        <li>
+          <button mat-button class="left-btn" (click)="start=start-page_limit; getProductList()" [disabled]="pagenumber == 1">
+            <i class="material-icons">keyboard_arrow_left</i></button>
+          </li>
+          <li>
+            <input type="text" placeholder="GO TO" name="pagenumber" (keyup.enter)="start=(pagenumber*page_limit)-page_limit; getProductList()" [(ngModel)]="pagenumber"  min="1" max={{total_page}}>
+          </li>
+          
+          <li>
+            <button mat-button class="right-btn"  (click)="start=start+page_limit; getProductList()" [disabled]="pagenumber == total_page">
+              <i class="material-icons">keyboard_arrow_right</i>
+            </button>
+          </li>
+        </ul>
+      </div> -->
+      <!-- <pagination-controls class="myPagination" (pageChange)=" p = $event "></pagination-controls> -->
+    </div>
+    <div class="container-outer">
+      
+      <div *ngIf="loader">
+        <mat-spinner class="loader">
+          <div><p>Loading....</p></div>
+        </mat-spinner>
+      </div>
+      <div class="container tab-container" >
+        <div class="row">
+          <div class="col s12">
+            <div class="cs-table left-right-20">
+              <div class="table-head">
+                <table>
+                  <tr>
+                    <!-- <th class="w110">Brand</th> -->
+                    <th class="w110">Date & Time</th>
+                    <!-- <th class="w110">Name</th>  -->
+                    <!-- <th class="w300">Lat</th>
+                      <th class="w170">Lng</th> -->
+                      <th class="w170">Location</th>
+                      <!-- <th class="w130">Unit of Mes.</th> -->
+                    </tr>
+                  </table>
+                </div>
+                <!-- <div class="table-head">
+                  <table class="sno-border">
+                    <tr>
+                      <th class="w40 text-center">&nbsp;</th>
+                      <th class="w200">
+                        <div class="control-field col-4" >
+                          <mat-form-field class="example-full-width cs-input picker-icon"  >
+                            <input matInput [matDatepicker]="picker" placeholder="Date" (dateChange)="filter_checkins(data)" name="date_created" [(ngModel)]="data.date_created">
+                            
+                            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                            
+                            <mat-datepicker #picker></mat-datepicker>
+                          </mat-form-field>
+                        </div>
+                      </th>
+                      <th class="w300">
+                        <div class="th-search-acmt">
+                          <mat-form-field class="example-full-width cs-input select-input">
+                            <input matInput placeholder="Enter Name...."  (input)="filter_checkins(data)" name="name" #name="ngModel" [(ngModel)]="data.user_name">
+                          </mat-form-field>
+                        </div>
+                      </th>
+                      !-- <th class="w150">Type</th>
+                      <th class="w230">Contact Person & Mobile No.</th>
+                      <th>Address</th>
+                      <th class="w150 text-right">Target</th> --  
+                      <th  class="w250" >
+                        
+                      </th>
+                      <th class="w100 text-center"></th>
+                      <th class="w100 text-center"></th>
+                      <th class="w100 text-center"></th>
+                    </tr>
+                  </table>
+                </div> -->
+                <!-- <div class="table-head bdrt" >
+                  <table>
+                    <tr>
+                      
+                      <th class="w110">
+                        !-- <mat-form-field class="example-full-width cs-input select-input">
+                          <input matInput [matDatepicker]="myDatepicker"  (input)="filter_attendance(data)" name="date" #date="ngModel" [(ngModel)]="data.date">
+                        </mat-form-field> --
+                        <mat-form-field>
+                          <input matInput [matDatepicker]="myDatepicker">
+                          <mat-datepicker-toggle matSuffix [for]="myDatepicker" (input)="filter_attendance(data)" name="date" #date="ngModel" [(ngModel)]="data.date"></mat-datepicker-toggle>
+                          <mat-datepicker #myDatepicker></mat-datepicker>
+                        </mat-form-field>
+                      </th>
+                      <th class="w110">
+                        <div class="th-search-acmt">
+                          <mat-form-field class="example-full-width cs-input select-input">
+                            <input matInput placeholder="Enter Name...."  (input)="filter_attendance(data)" name="name" #name="ngModel" [(ngModel)]="data.name">
+                          </mat-form-field>
+                        </div>
+                      </th>    
+                      <th>
+                      </th>   
+                      <th >
+                        
+                      </th>
+                      <th>
+                        
+                      </th> 
+                      <th>
+                        <button (click)="filter_attendance(data)"></button>
+                      </th>   
+                      <!-- <th>
+                        
+                      </th>                     --
+                      <!-- <th class="w130">&nbsp;</th> --
+                      </tr>
+                    </table>
+                  </div> -->
+                  <div class="table-container">
+                    <div class="table-content">
+                      <table>
+                        
+                        <tr [hidden]="!p.address" *ngFor="let p of attendancelist">
+                          
+                          <td class="w110">{{p.date_created  | date : 'MMMM dd, y h:mm a'}}</td>
+                          <!-- <td class="w110">{{p.name}}</td>     -->
+                          
+                          <td class="w170">{{p.address}}</td> 
+                          
+                        </tr>
+                      </table>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="no-data" *ngIf="data_not_found==true">
+              <img src="assets/img/no-data.gif" alt="">
+              <p>Data not <span>available !</span></p>
+            </div>
+          </div>
+        </div>
+        <div>
+          <!-- <pagination-controls class="myPagination" (pageChange)=" p = $event "></pagination-controls> -->
+        </div>
+      </div>
+      

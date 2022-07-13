@@ -1,0 +1,9 @@
+{
+    "version": 3,
+    "mappings": "",
+    "sources": [
+        "plumber-detail.component.scss"
+    ],
+    "names": [],
+    "file": "plumber-detail.component.css"
+}

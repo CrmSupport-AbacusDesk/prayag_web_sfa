@@ -1,0 +1,847 @@
+<div class="main-container ">
+
+    <div *ngIf="loader">
+        <mat-spinner class="loader">
+            <div>
+                <p>Loading....</p>
+            </div>
+        </mat-spinner>
+    </div>
+    <div class="middle-container">
+        <div class="page-heading" >
+            <div class="heading-text bc-space">
+                <div class="back-btn" (click)="back()">
+                    <a mat-button ><i class="material-icons">west</i></a>
+                </div>
+                <h2>Quotation Details</h2>
+            </div>
+        </div>
+
+        <div class="left-auto" >
+            <div class="action-menu">
+                <!-- <button mat-raised-button  class="h35 cs-btn" (click)="sendmail()">
+                    <i class="material-icons mr16">forward_to_inbox</i>
+                    Send Email
+                </button> -->
+                <!-- <button mat-raised-button color="primary"class="ml10" color="primary" (click)="onPrintPage()">
+                    Print
+                </button> -->
+
+                <button mat-raised-button color="primary"class="ml10" color="primary" (click)="onPrintPage()">
+                        Print
+                    </button>
+
+                </div>
+            </div>
+        </div>
+
+        <div class="container-outer">
+            <div class="container">
+                <div class="row">
+                    <!-- --------Basic Information---------->
+
+                    <div class="col s12">
+                        <div class="details-info">
+                            <div class="basic-details">
+                                <div class="cs-heading">
+                                    <h2>Basic Information</h2>
+                                </div>
+                                <div class="cs-figure">
+                                    <ul>
+                                        <li>
+                                            <div class="outer">
+                                                <div class="inner">
+                                                    <span> Date</span>
+                                                    <p>{{quotationDetailList.date_created | date :' dd/MMM/yyyy'}}</p>
+
+                                                </div>
+                                            </div>
+                                        </li>
+                                        <li>
+                                            <div class="outer">
+                                                <div class="inner">
+                                                    <span>Customer Name</span>
+                                                    <p>{{quotationDetailList.dr_name | titlecase }}</p>
+                                                </div>
+                                            </div>
+                                        </li>
+                                        <li>
+                                            <div class="outer">
+                                                <div class="inner">
+                                                    <span>Coustmer Type</span>
+                                                    <p>{{quotationDetailList.type}}</p>
+                                                </div>
+                                            </div>
+                                        </li>
+
+
+                                        <li>
+                                            <div class="outer">
+                                                <div class="inner">
+                                                    <span>Quotation ID</span>
+                                                    <p>#QUOT ID-{{quotationDetailList.id}}</p>
+                                                </div>
+                                            </div>
+                                        </li>
+
+                                        <li>
+                                            <div class="cs-box pl0">
+                                                <span>Status</span>
+                                                <p *ngIf="showEdit">{{quotationStatus}}</p>
+
+                                                <div *ngIf="quotationStatus == 'Pending' && showSave"
+                                                class="cs-select mr30">
+                                                <mat-select name="status"
+                                                [(ngModel)]="quotationDetailList.quotation_status"
+                                                (ngModelChange)="rejectCondition(quotationDetailList.quotation_status)">
+                                                <mat-option value="Pending">Pending</mat-option>
+                                                <mat-option value="Approved">Approved</mat-option>
+                                                <mat-option value="Reject">Reject</mat-option>
+                                                <mat-option value="Hold">Hold</mat-option>
+                                            </mat-select>
+                                        </div>
+
+
+                                        <a *ngIf="quotationStatus == 'Pending' && showEdit" class="edit-box"
+                                        mat-button matTooltip="Edit Status" (click)="editStatus()" mat-button><i
+                                        class="material-icons">create</i></a>
+                                        <a *ngIf="quotationStatus == 'Pending' && showSave" class="edit-box"
+                                        mat-button matTooltip="Save Status"
+                                        (click)="saveStatus(quotationDetailList.quotation_status,quotationDetailList.reason_reject,quotationDetailList.valid_upto)"
+                                        mat-button><i class="material-icons green-clr">save</i></a>
+                                    </div>
+                                </li>
+                              </ul>
+                            <ul>
+                                <li *ngIf="quotationStatus == 'Reject'">
+                                    <div class="outer">
+                                        <div class="inner">
+                                            <span> Reason</span>
+                                            <p>{{quotationDetailList.reason_reject}}</p>
+
+                                        </div>
+                                    </div>
+                                </li>
+                                <li *ngIf="quotationStatus == 'Approved'">
+                                    <div class="outer">
+                                        <div class="inner">
+                                            <span> Valid Upto</span>
+                                            <p>{{quotationDetailList.valid_upto}}</p>
+
+                                        </div>
+                                    </div>
+                                </li>
+                            </ul>
+
+
+
+                            <div class="cs-form mt10">
+                                <div class="from-fields">
+                                    <div class="row">
+                                        <!-- <div class="col s3">
+                                            <mat-form-field class="cs-input white-bg" appearance="outline" >
+                                                <mat-label>Billing Address</mat-label>
+                                                <mat-select name="paraflexBillingAddr" placeholder="Billing Address" #paraflexBillingAddr="ngModel"  [(ngModel)]="selectedparaflexBillingAddressID" [ngClass]="{'has-error' : paraflexBillingAddr.invalid}" [disabled]="quotationStatus != 'Pending'" required>
+                                                    <mat-option *ngIf='!noparaflexBillingAddress' disabled="">Select Billing Address</mat-option>
+                                                    <mat-option *ngIf='noparaflexBillingAddress' disabled="">No data Found</mat-option>
+                                                    <mat-option *ngFor="let billingData of paraflexBillingAddress" (click)="selectedparaflexBillingAddressDetail = billingData.address" value="{{billingData.id}}">{{billingData.unit}}</mat-option>
+                                                </mat-select>
+                                            </mat-form-field>
+                                        </div> -->
+                                        <!-- <div class="col s5" >
+                                            <mat-form-field class="cs-input white-bg"  appearance="outline">
+                                                <mat-label>paraflex Biling Address Detail</mat-label>
+                                                <input matInput placeholder="Type Here ..." name="paraflexBillingAddrDetail" [(ngModel)]="selectedparaflexBillingAddressDetail" [disabled]="quotationStatus != 'Pending'" readonly required>
+                                            </mat-form-field>
+                                        </div> -->
+                                        <div class="col s3"  *ngIf="quotationDetailList.quotation_status=='Approved'">
+                                            <mat-form-field class="cs-input" appearance="outline">
+                                                <input matInput [matDatepicker]="picker" placeholder="Date" name="valid_upto" [(ngModel)]="quotationDetailList.valid_upto" (dateChange)="onDate($event)" readonly>
+                                                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                                                <mat-datepicker #picker></mat-datepicker>
+                                              </mat-form-field>
+
+                                        </div>
+
+
+                                        <div class="col s4"  *ngIf="quotationDetailList.quotation_status=='Reject' && showReason">
+                                            <mat-form-field class="cs-input white-bg" appearance="outline">
+                                                <mat-label>Remark</mat-label>
+                                                <textarea matInput placeholder="Enter Reason ..." name="reason_reject"
+                                                #reason_reject="ngModel" [(ngModel)]="quotationDetailList.reason_reject"
+                                                [ngClass]="{'has-error' : reason_reject.invalid } " required></textarea>
+                                            </mat-form-field>
+
+                                            <div class="alert alert-danger" *ngIf="rejectReason"> Reason is required...
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row mb0">
+                                        <div class="col s6">
+                                            <mat-form-field class="cs-input"  appearance="outline">
+                                                <mat-label>Customer Shipping Address Detail</mat-label>
+                                                <textarea matInput placeholder="Type Here ..." class="h80" name="CSAD" [(ngModel)]="c_shipping_addr" [disabled]="quotationStatus != 'Pending'" required></textarea>
+                                            </mat-form-field>
+                                        </div>
+                                        <div class="col s6">
+                                            <mat-form-field class="cs-input"  appearance="outline">
+                                                <mat-label>Customer Biling Address Detail</mat-label>
+                                                <textarea matInput placeholder="Type Here ..." class="h80" name="CBAD" [(ngModel)]="c_billing_addr" [disabled]="quotationStatus != 'Pending'" required></textarea>
+                                            </mat-form-field>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- --------Add Item---------->
+    <div class="row" *ngIf="quotationStatus == 'Pending' ||quotationStatus == 'Approved' ">
+        <div class="col s12">
+            <div class="sprate-box cs-form">
+                <div class="cs-heading">
+                    <h2>Add Product</h2>
+                </div>
+
+                <mat-divider class="left-right-15 mt10 mb10"></mat-divider>
+                <div class="from-fields">
+                <div class="row">
+                        <div class="col s2">
+
+                        <div class="wp100">
+                            <mat-form-field class="cs-input" appearance="outline">
+                              <mat-label>Category</mat-label>
+                              <mat-select name="category" #category="ngModel" [(ngModel)]="data.category" [ngClass]="{'has-error' : category.invalid } " required>
+                                <mat-option *ngFor="let productData of category_list" (click)="getProduct()"value="{{productData.category}}">{{productData.category}}</mat-option>
+                              </mat-select>
+                            </mat-form-field>
+                         </div>
+                         </div>
+                        <div class="col s2">
+                          <div class="wp200">
+                            <mat-form-field class="cs-input" appearance="outline">
+                                <mat-label>Product</mat-label>
+                                <mat-select name="product" placeholder="" #product="ngModel" [(ngModel)]="data.product" >
+                                <mat-option disabled="">Select Product</mat-option>
+                                <mat-option *ngFor="let item of product_list" value="{{item.id}}" (click)="data.product_name=item.product_name;data.product_id=item.id;data.product_code=item.product_code; data.gstPercentage = conInt(item.gst) ;data.qty = '0';data.price= item.mrp" >{{item.product_name}}</mat-option>
+                                <!-- <mat-option *ngFor="let item of product_list" value="{{item.id}}" (click)="details(item) ; data.gstPercentage = conInt(item.gst)">{{item.product_name}}</mat-option> -->
+                            </mat-select>
+                        </mat-form-field>
+                        </div>
+                    </div>
+                    <div class="col s1">
+                        <mat-form-field class="cs-input" appearance="outline">
+                          <mat-label>Type</mat-label>
+                          <mat-select name="Product" #product_type="ngModel" [(ngModel)]="data.product_type"  required>
+                            <!-- <mat-option *ngIf='!noProduct' disabled="">Select Product</mat-option> -->
+
+                            <mat-option  value="cartoon">CARTOON</mat-option>
+                    <mat-option  value="coil">COIL</mat-option>
+                    <mat-option  value="mtr">MTR</mat-option>
+                    <mat-option  value="drum">DRUM</mat-option>
+                    <mat-option  value="drumlength">DRUM LENGTH</mat-option>
+                          </mat-select>
+                        </mat-form-field>
+
+                      </div>
+                    <div class="col s1">
+                        <mat-form-field class="cs-input"  appearance="outline">
+                          <mat-label>Quantity</mat-label>
+                          <input matInput type="text" onkeypress="return event.charCode>=48 && event.charCode<=57" placeholder="Type Here ..." name="qty" #qty="ngModel" [(ngModel)]="data.qty" (ngModelChange)="data.amount=(data.qty)*(data.price);" required>
+                        </mat-form-field>
+                   </div>
+                    <div class="col s1">
+                        <mat-form-field class="cs-input"  appearance="outline">
+                            <mat-label>Price</mat-label>
+                            <input matInput type="text" onkeypress="return event.charCode>=48 && event.charCode<=57" placeholder="Type Here ..." name="price" #price="ngModel" [(ngModel)]="data.price"  required>
+                          </mat-form-field>
+                    </div>
+
+                    <div class="col s1">
+                        <mat-form-field class="cs-input"  appearance="outline">
+                            <mat-label>Amount</mat-label>
+                            <input matInput type="text" onkeypress="return event.charCode>=48 && event.charCode<=57 " placeholder="Type Here ..." name="amount" #amount="ngModel" [(ngModel)]="data.amount" required readonly>
+                          </mat-form-field>
+                    </div>
+                  </div>
+
+                  <div class="row">
+                    <div class="col s2">
+                      <div class="df">
+                        <div class="wp100">
+                          <mat-form-field class="cs-input"  appearance="outline">
+                            <mat-label> Basic Discount Percent</mat-label>
+                            <input matInput type="text" placeholder="Type Here ..." name="basic_discount_percent" #basic_discount_percent="ngModel" [(ngModel)]="data.basic_discount_percent">
+                          </mat-form-field>
+
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col s2">
+                      <div class="df">
+                        <div class="wp100">
+                          <mat-form-field class="cs-input"  appearance="outline">
+                            <mat-label> Sd Discount Percent</mat-label>
+                            <input matInput type="text" placeholder="Type Here ..." name="sd_discount_percent" #sd_discount_percent="ngModel" [(ngModel)]="data.sd_discount_percent" >
+                          </mat-form-field>
+
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col s2">
+                      <div class="df">
+                        <div class="wp100">
+                          <mat-form-field class="cs-input"  appearance="outline">
+                            <mat-label> Cd Discount Percent</mat-label>
+                            <input matInput type="text"  placeholder="Type Here ..." name="cd_discount_percent" #cd_discount_percent="ngModel" [(ngModel)]="data.cd_discount_percent" >
+                          </mat-form-field>
+
+                        </div>
+                      </div>
+                    </div>
+                  <div class="col s2">
+                    <div class="df">
+                      <div class="wp100">
+                        <mat-form-field class="cs-input"  appearance="outline">
+                          <mat-label> Other Discount Percent</mat-label>
+                          <input matInput type="text" placeholder="Type Here ..." name="other_discount_percent" #other_discount_percent="ngModel" [(ngModel)]="data.other_discount_percent" >
+                        </mat-form-field>
+
+                      </div>
+
+                    </div>
+                  </div>
+
+                </div>
+
+
+            <div class="cs-btn text-right" *ngIf="quotationStatus == 'Pending'||quotationStatus == 'Approved' && data.product">
+                <div class="in-btn mt20">
+                    <button mat-raised-button color="accent" (click)="addItemList()">Add To List</button>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+  <!-- <div class="col s12 mt15" *ngIf="data.product">
+                        <mat-form-field appearance="outline" class="cs-input">
+                            <mat-label>Product Code</mat-label>
+                            <input matInput placeholder="Type Here ..." name="productcode"
+                            [(ngModel)]="data.productcode" readonly>
+                        </mat-form-field>
+                    </div> -->
+
+                <!-- <div class="col s8 no-padding">
+                    <div class="col s12">
+                        <div class="cs-table border1" *ngIf="data.product">
+                            <div class="table-head border-bottom">
+                                <table>
+                                    <tr>
+                                        <th class="w50 text-center"></th>
+
+                                        <th class="w100 text-center">Qty</th>
+                                        <th class="w100 text-right">Price</th>
+                                        <th class="w100 text-right">Amount</th>
+                                    </tr>
+                                </table>
+                            </div>
+
+                            <div class="table-container">
+                                <div class="table-content none-shadow">
+                                    <table>
+                                        <tr *ngFor="let size of productSize; let i = index;">
+                                            <td class="w50 text-center">{{i+1}}</td>
+                                            <td class="w100">
+                                                <div class="td-input">
+                                                    <input
+                                                    onkeypress="return event.charCode >= 48 && event.charCode <= 57"
+                                                    type="text" name="qty" #qty="ngModel"
+                                                    [(ngModel)]="size.qty" class="text-center">
+                                                </div>
+                                            </td>
+                                            <td class="w100 text-center">
+                                                <div class="td-input">
+                                                    <input class="text-right"
+                                                    onkeypress="return event.charCode >= 48 && event.charCode <= 57"
+                                                    type="text" name="price" #price="ngModel"
+                                                    [(ngModel)]="size.price">
+                                                </div>
+                                            </td>
+                                            <td class="w100 text-right">&#x20B9; {{(size.qty && size.price)?(size.qty *
+                                                size.price):'0'}}
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div> -->
+<!-- --------Item Detail---------->
+ <div class="row">
+    <div class="col s12">
+        <div class="heading-bg left-right-15 mb0">
+            <h2>Item Detail</h2>
+        </div>
+        <div class="cs-table left-right-15">
+            <div class="table-head border-top border-bottom">
+                <table class="sno-border">
+                    <tr>
+                        <th class="w40 text-center">S. No</th>
+                        <th>Product Name</th>
+                        <th class="w200">Product Code</th>
+                        <th class="w100 text-right">Price</th>
+
+                        <th class="w80">QTY</th>
+                        <th class="w100 text-right">Price</th>
+                        <th class="w120 text-right">Sub Total</th>
+                        <th class="w120 text-right">Discount Amount</th>
+                        <th class="w140 text-right">Gst Amount</th>
+                        <th class="w120 text-right">Total Amount</th>
+                        <th class="w50" *ngIf="quotationStatus == 'Pending'"></th>
+
+                    </tr>
+                </table>
+            </div>
+
+            <div class="table-container">
+                <div class="table-content">
+                    <table class="sno-border">
+                        <tr *ngFor="let q_item of quotationItem; let i=index;">
+                            <td class="w40 text-center">{{i+1}}</td>
+                            <td>{{q_item.product_name}}</td>
+                            <td class="w200">{{q_item.product_code}}</td>
+                            <td class="w100 text-right"> {{q_item.product_type}}</td>
+                            <td class="w80">{{q_item.qty}}</td>
+
+                            <td class="w100 text-right">&#8377; {{q_item.rate}}/-</td>
+                            <td class="w120 text-right">&#8377; {{q_item.amount}}/-</td>
+                            <td class="w120 text-right">&#8377; {{q_item.discount_amount}} ({{q_item.discount_percent+' %'}})</td>
+                            <td class="w140 text-right">&#8377; {{q_item.gst_amount}} ({{q_item.gst_percent+' %'}} )</td>
+                            <td class="w120 text-right">&#8377; {{q_item.total_amount}}/-</td>
+                            <td class="w50 text-center" *ngIf="quotationStatus == 'Pending' ">
+                                <button mat-button class="delete-mat"
+                                (click)="deleteItem(q_item.id,q_item.qty,q_item.amount,q_item.gst_amount,q_item.discount_amount )"><i
+                                class="material-icons red-clr">delete_sweep</i></button>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col s8">
+        <div class="details-info">
+            <div class="basic-details">
+                <div class="cs-heading mb5">
+                    <h2>Terms & Conditions</h2>
+                    <a *ngIf="quotationStatus == 'Pending'" mat-button class="edit-item" matTooltip="EDIT"
+                    color="accent" (click)="quotationDialog()"><i class="material-icons">edit</i></a>
+                </div>
+
+                <div class="cs-text border0 pt0">
+                    <div [innerHtml]="quotationDetailList.term_condition"></div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <div class="col s4">
+        <div class="summary">
+            <table>
+                <tr>
+                    <td>Total Qty</td>
+                    <td class="text-center"><strong>:</strong></td>
+                    <td class="text-right"><strong>{{totalQty}}</strong></td>
+                </tr>
+                <tr>
+                    <td>Total Gst Amount</td>
+                    <td class="text-center"><strong>:</strong></td>
+                    <td class="text-right"><strong>&#x20B9; {{quotationDetailList.gst_amount}}/-</strong></td>
+                </tr>
+                <tr>
+                    <td>Sub Total</td>
+                    <td class="text-center"><strong>:</strong></td>
+                    <td class="text-right"><strong>&#x20B9; {{quotationDetailList.item_total}}/-</strong></td>
+                </tr>
+
+                <tr>
+                    <td>Grand Total</td>
+                    <td class="text-center"><strong>:</strong></td>
+                    <td class="text-right"><strong>&#x20B9; {{quotationDetailList.grand_total}}/-</strong></td>
+                </tr>
+            </table>
+
+        </div>
+    </div>
+    <div class="col s3"*ngIf="quotationDetailList.quotation_status=='Approved'&&quotationDetailList.valid_upto">
+        <div class="cs-btn fixedd mt32 text-right">
+          <div class="in-btn">
+            <button mat-raised-button color="accent" type="button" (click)="validupdate()">Update</button>
+          </div>
+        </div>
+      </div>
+</div>
+</div>
+</div>
+
+
+
+<!DOCTYPE html>
+
+<!-- <html id="printData" style="display:none" lang="en">
+
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Document</title>
+    </head>
+
+    <body>
+
+        <div style="width: 1024px; margin: 0 auto; font-family: Arial, Helvetica, sans-serif;">
+            <table
+            style="width: 1024px; table-layout: fixed; box-sizing: border-box; table-layout: fixed; border-collapse: collapse;"
+            border="1">
+            <tr>
+                <td style="vertical-align: top; padding: 5px; text-align: center;">
+                    <div>
+
+                        <img src="assets/img/logo.png" alt="Logo" style="height: 70px;">
+                    </div>
+                </td>
+                <td style="vertical-align: top; padding: 5px; text-align: right;" colspan="2">
+                    <div>
+                        <p style="font-size: 12px; line-height: 20px; margin: 0px;"><strong>Address:-</strong> 2320, Sant Nagar, Raja Park, Pitam Pura, New Delhi, Delhi 110034</p>
+                        <p style="font-size: 12px; line-height: 20px; margin: 0px;"><strong>Contact Us:-</strong>1800-1200-620</p>
+                        <p style="font-size: 12px; line-height: 20px; margin: 0px;"><strong>E-Mail
+                            Address:-</strong>info@paraflexproducts.com</p>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="vertical-align: top; padding: 5px;">
+                        <h2 style="font-size: 14px; line-height: 20px; margin: 0px 0px 10px 0px; ">
+                            Quotation Details:</h2>
+                            <p style="font-size: 12px; line-height: 20px; margin: 0px;"><strong>Date:-</strong>
+                                {{quotationDetailList.date_created | date :' dd/MM/yyyy'}}</p>
+                                <p style="font-size: 12px; line-height: 20px; margin: 0px;"><strong>Quotation
+                                    ID:-</strong>{{quotationDetailList.id}}</p>
+                                    <p style="font-size: 12px; line-height: 20px; margin: 0px;"><strong>Status:-</strong>{{quotationStatus}}</p>
+
+
+                                </td>
+                                <td style="vertical-align: top; padding: 5px;" colspan="2">
+                                    <h2 style="font-size: 14px; line-height: 20px; margin: 0px 0px 10px 0px;">
+                                        Customer Details</h2>
+                                        <p style="font-size: 12px; line-height: 20px; margin: 0px;"><strong>Customer Name:-</strong>
+                                            {{quotationDetailList.dr_name}}
+                                        </p>
+                                        <p style="font-size: 12px; line-height: 20px; margin: 0px;"><strong>Customer Type:-</strong>
+                                            {{quotationDetailList.type}}
+                                        </p>
+
+                                    </td>
+
+                                </tr>
+                                <tr>
+                                    <td colspan="3" style="padding:10px; background: #cccccc; font-size: 14px; font-weight: 600;">Items Details
+                                        Detail</td>
+                                    </tr>
+                                </table>
+                                <table
+                                style="width: 1024px; table-layout: fixed; box-sizing: border-box; table-layout: fixed; border-collapse: collapse;"
+                                border="1">
+
+                                <tr>
+                                    <th style="font-size: 12px; background: #f9f9f9; padding: 5px; text-align: left;">Product Description
+                                    </th>
+                                    <th style="font-size: 12px; background: #f9f9f9; padding: 5px; width: 100px;">Size</th>
+                                    <th style="font-size: 12px; background: #f9f9f9; padding: 5px; width: 100px;"> QTY.</th>
+                                    <th style="font-size: 12px; background: #f9f9f9; padding: 5px; text-align: right; width: 100px;">Rate
+                                    </th>
+
+                                    <th style="font-size: 12px; background: #f9f9f9; padding: 5px; text-align: right; width: 110px;">Amount
+                                    </th>
+                                </tr>
+
+                                <tr *ngFor="let q_item of quotationItem; let i=index">
+
+                                    <td style="font-size: 12px; padding: 5px; text-align: left;">
+                                        {{q_item.product_name}} ({{q_item.product_code}})</td>
+
+                                        <td style="font-size: 12px; padding: 5px; text-align: right; width: 100px;">{{q_item.product_size}}</td>
+
+                                        <td style="font-size: 12px; padding: 5px; text-align: right; width: 100px;">{{q_item.qty}}</td>
+                                        <td style="font-size: 12px; padding: 5px; text-align: right; width: 100px;">{{q_item.rate}}</td>
+
+
+                                        <td style="font-size: 12px; padding: 5px; text-align: right; width: 110px;">{{q_item.amount}}
+                                        </td>
+                                    </tr>
+
+                                </table>
+
+                                <table
+                                style="width: 1024px; table-layout: fixed; box-sizing: border-box; table-layout: fixed; border-collapse: collapse;">
+                                <tr>
+                                    <td style="font-size: 12px; padding: 10px; text-align: right; border-left: 1px solid #000000;">Total Qty
+                                    </td>
+                                    <td
+                                    style="font-size: 12px; padding: 10px; text-align: right; width: 150px; border-right: 1px solid #000000;">
+                                    {{totalQty}}</td>
+                                </tr>
+
+                                <tr>
+                                    <td style="font-size: 12px; padding: 10px; text-align: right; border-left: 1px solid #000000;">Total
+                                        Amount
+                                    </td>
+                                    <td
+                                    style="font-size: 12px; padding: 10px; text-align: right; width: 150px; border-right: 1px solid #000000;">
+                                    {{totalAmount}}</td>
+                                </tr>
+
+                            </table>
+
+
+
+                            <table
+                            style="width: 1024px; table-layout: fixed; box-sizing: border-box; table-layout: fixed; border-collapse: collapse;"
+                            border="1">
+
+                            <tr>
+
+                                <td style=" padding: 10px;">
+
+
+                                    <span style="margin: 2px; font-size: 14px; font-weight: 700; line-height: 28px;">
+                                        <b>Terms &amp; Conditions for Sale Order:</b></span>
+                                        <div class="cs-text border0 pt0">
+                                            <div [innerHtml]="quotationDetailList.term_condition"></div>
+                                        </div>
+                                    </td>
+                                </tr>
+
+                            </table>
+                            <table style="width: 1024px; table-layout: fixed; box-sizing: border-box; table-layout: fixed; border-collapse: collapse;" border="1" >
+
+                                <tr>
+
+                                    <td style="text-align: right; padding: 10px;">
+
+
+                                        <span style="margin: 2px; font-size: 14px; font-weight: 700; line-height: 28px;" >
+                                            <b>  Authorised Signatory
+
+
+
+
+                                            </b></span>
+
+                                        </td>
+                                    </tr>
+
+                                </table>
+
+
+
+                            </div>
+
+                        </body>
+
+                        </html> -->
+
+
+
+
+                        <html id="printData" style="display:none" lang="en">
+                        <head>
+                            <meta charset="UTF-8">
+                            <meta http-equiv="X-UA-Compatible" content="IE=edge">
+                            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+                            <title>paraflex</title>
+                        </head>
+                        <body style="margin: 0px;">
+                            <table style="width: 1024px; margin: 0 auto; font-family: Arial, Helvetica, sans-serif; background-color: #ffffff; table-layout: fixed; box-sizing: border-box; border-collapse: collapse;">
+                                <tr>
+                                    <td>
+                                        <table style="width: 1024px; border-collapse: collapse; background: url('{{serve.myurl}}assets/img/Pattern.png'); background-size: cover;">
+                                            <tr>
+                                                <td style="width: 500px;"><img src="assets/imgs/logo.png" alt="logo" style="height: 180px;"></td>
+                                                <td style="width: 524px;">
+                                                    <h2 style="margin: 0px; text-align: right; text-transform: uppercase; color: #e7502b; padding-bottom: 5px; border-bottom:1px solid #000;">paraflex wall care products pvt ltd.</h2>
+                                                    <div style="padding-left: 20px;">
+                                                        <p style="margin:10px 0px; font-size: 16px; line-height: 20px;; text-align: right;">
+                                                            <b style="color: #e7502b;">Works:</b> H1-742/743, Matsya Industrial Area, Alwar, Rajasthan-301030
+                                                            <br>
+                                                            G-1/ 322, I.G.C, Khara, Bikaner, Rajasthan - 334601 India
+                                                        </p>
+                                                        <p style="margin: 0px; font-size: 16px; line-height: 20px; text-align: right;">
+                                                            <b style="color: #e7502b;">Head Office:</b> 177/178, Vardhman Market Plaza, Plot No.30, Rani Bagh, Pitampura, New Delhi - 110034
+                                                        </p>
+
+                                                        <p style="margin:5px 0px; font-size: 13px; text-align: right;">
+                                                            <span style="display: inline-flex; align-items: center; margin-right: 10px;"><img src="{{serve.myurl}}assets/img/call.png" style="margin-right:5px; height: 20px;"> 011-45556144</span>
+                                                            <span style="display: inline-flex; align-items: center; margin-right: 10px;"><img src="{{serve.myurl}}assets/img/mail.png" style="margin-right:5px; height: 20px;">info@paraflexproducts.com</span>
+                                                            <span style="display: inline-flex; align-items: center;"><img src="{{serve.myurl}}assets/img/web.png" style="margin-right:5px; height: 20px;">www.paraflexproducts.com</span>
+                                                        </p>
+                                                    </div>
+                                                    <p style="font-size:22px; margin: 0px 0px 16px 0px; text-align: right;"><b style="color: #e7502b; ">Toll Free:</b> 1800 1200 620</p>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td colspan="2" style="background: #e7502b; padding: 5px; text-align: center; font-size: 26px; color: #fff; font-weight: 700;">
+                                                    Quotation
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td colspan="2" style="padding: 24px 0px 32px 0px; background: #fff;">
+                                                    <p style="font-size: 16px; margin: 0px 0px 5px 0px;">Quote No.: <b>{{quotationDetailList.id}}</b></p>
+                                                    <p style="font-size: 16px; margin: 0px;">Quote Date: <b>{{quotationDetailList.date_created | date :' dd/MM/yyyy'}}</b></p>
+
+                                                </td>
+                                            </tr>
+                                        </table>
+                                        <table style="width: 1024px; border-collapse: collapse; box-sizing: content-box; table-layout: fixed;">
+                                            <tr>
+                                                <th style="background: #f4cc07; padding: 4px; border: 1px solid #000; font-size: 16px; text-align: left;">Our Billing Address</th>
+                                                <th style="width: 200px; background: #f4cc07; padding: 4px; border: 1px solid #000; font-size: 16px; text-align: left;">Customer Billing <br> Address</th>
+                                                <th style="width: 200px; background: #f4cc07; padding: 4px; border: 1px solid #000; font-size: 16px; text-align: left;">Customer Shipping Address</th>
+                                                <th style="width: 200px; background: #f4cc07; padding: 4px; border: 1px solid #000; font-size: 16px; text-align: left;">Quote To</th>
+                                            </tr>
+                                            <tr>
+                                                <td style="padding: 4px; border: 1px solid #000; font-size: 16px; text-align: left; vertical-align: top;">
+                                                    <p style="font-size: 16px; margin: 5px 0px;">paraflex Wall Care Products Pvt Ltd</p>
+                                                    <p style="font-size: 16px; margin: 5px 0px;">{{quotationDetailList.address}}
+                                                        <p style="font-size: 16px; margin: 5px 0px;"><b>GST Number: {{quotationDetailList.gst_no}}</b></p>
+                                                        <p style="font-size: 16px; margin: 5px 0px;"><b>PAN Number-AAHCT2917P</b></p>
+                                                    </td>
+                                                    <td style="width: 200px; padding: 4px; border: 1px solid #000; text-align: left; vertical-align: top;">
+                                                        <p style="font-size: 16px; margin: 5px 0px;"> {{quotationDetailList.customer_billing}}</p>
+                                                        <!-- <p style="font-size: 16px; margin: 5px 0px;"><b>City:</b>{{quotationDetailList.city}}</p>
+                                                            <p style="font-size: 16px; margin: 5px 0px;"><b>State:</b>{{quotationDetailList.state}}</p> -->
+                                                            <p style="font-size: 16px; margin: 5px 0px;"><b>Country:</b>India</p>
+                                                            <!-- <p style="font-size: 16px; margin: 5px 0px;"><b>Pincode:</b>{{quotationDetailList.pincode}}</p> -->
+                                                        </td>
+                                                        <td style="width: 200px; padding: 4px; border: 1px solid #000; text-align: left; vertical-align: top;">
+                                                            <p style="font-size: 16px; margin: 5px 0px;"> {{quotationDetailList.customer_shipping}}</p>
+                                                            <!-- <p style="font-size: 16px; margin: 5px 0px;"><b>City:</b>{{quotationDetailList.city}}</p>
+                                                                <p style="font-size: 16px; margin: 5px 0px;"><b>State:</b>{{quotationDetailList.state}}</p> -->
+                                                                <p style="font-size: 16px; margin: 5px 0px;"><b>Country:</b>India</p>
+                                                                <!-- <p style="font-size: 16px; margin: 5px 0px;"><b>Pincode:</b>{{quotationDetailList.pincode}}</p> -->
+                                                            </td>
+                                                            <td style="width: 200px; padding: 4px; border: 1px solid #000;text-align: left; vertical-align: top;">
+                                                                <p style="font-size: 16px; margin: 5px 0px;"><b><i>{{quotationDetailList.name}}</i></b></p>
+                                                                <p style="font-size: 16px; margin: 5px 0px;"><b>{{quotationDetailList.dr_name}}</b></p>
+                                                                <p style="font-size: 16px; margin: 5px 0px;"><b>Contact No.:</b>{{quotationDetailList.mobile}}</p>
+                                                                <p style="font-size: 16px; margin: 5px 0px;">{{quotationDetailList.email?'Email: '+quotationDetailList.email:''}}</p>
+                                                            </td>
+                                                        </tr>
+                                                    </table>
+                                                    <table style="width: 1024px; border-collapse: collapse; box-sizing: border-box; table-layout: fixed; border-right: 1px solid #000;">
+                                                        <tr>
+                                                            <th style="width:30px; background: #f4cc07; padding: 4px; border: 1px solid #000; font-size: 16px; text-align: left;">Pos</th>
+                                                            <th style="width:90px; background: #f4cc07; padding: 4px; border: 1px solid #000; font-size: 16px; text-align: center;">Image</th>
+                                                            <th style="background: #f4cc07; padding: 4px; border: 1px solid #000; font-size: 16px; text-align: center;">Product</th>
+                                                            <th style="width: 90px; background: #f4cc07; padding: 4px; border: 1px solid #000; font-size: 16px; text-align: left;">HSN Code</th>
+                                                            <th style="width: 90px; background: #f4cc07; padding: 4px; border: 1px solid #000; font-size: 16px; text-align: left;">Qty.</th>
+                                                            <th style="width: 50px; background: #f4cc07; padding: 4px; border: 1px solid #000; font-size: 16px; text-align: left;">Price</th>
+                                                            <th style="width: 100px; background: #f4cc07; padding: 4px; border: 1px solid #000; font-size: 16px; text-align: left;">Packing</th>
+                                                            <th style="width: 80px; background: #f4cc07; padding: 4px; border: 1px solid #000; font-size: 16px; text-align: left;">Sub Total</th>
+                                                            <th style="width: 50px; background: #f4cc07; padding: 4px; border: 1px solid #000; font-size: 16px; text-align: center;">GST <br>(%)</th>
+                                                            <th style="width: 80px; background: #f4cc07; padding: 4px; border: 1px solid #000; font-size: 16px; text-align: left;">GST (INR)</th>
+                                                            <th style="width: 90px; background: #f4cc07; padding: 4px; border: 1px solid #000; font-size: 16px; text-align: center;">Total</th>
+                                                        </tr>
+                                                        <tr *ngFor="let q_item of quotationItem; let i=index">
+                                                            <td style="width:30px; padding: 4px; border: 1px solid #000; font-size: 15px; text-align: left; vertical-align: top;">{{i+1}}</td>
+                                                            <td style="width:90px; padding: 4px; border: 1px solid #000; font-size: 15px; text-align: center; vertical-align: top;">
+                                                                <img src="{{serve.myurl}}api/uploads/Products/{{q_item.ItemImage}}" style="max-width: 100%;">
+                                                            </td>
+                                                            <td style="padding: 4px; border: 1px solid #000; font-size: 15px; text-align: center; vertical-align: top;">
+                                                                {{q_item.product_name}}
+                                                            </td>
+                                                            <td style="width: 90px; padding: 4px; border: 1px solid #000; font-size: 15px; text-align: left; vertical-align: top;">
+                                                                32141000
+                                                            </td>
+                                                            <td style="width: 90px; padding: 4px; border: 1px solid #000; font-size: 15px; text-align: left; vertical-align: top;">
+
+                                                                <div style="width: 50px; float: left;">{{q_item.qty}}</div>
+                                                                <div style="width: 40px; float: left;">Bags</div>
+                                                            </td>
+
+                                                            <td style="width: 50px; padding: 4px; border: 1px solid #000; font-size: 15px; text-align: left; vertical-align: top;">
+                                                                {{q_item.amount}}
+                                                            </td>
+                                                            <td style="width: 100px; padding: 4px; border: 1px solid #000; font-size: 15px; text-align: left; vertical-align: top;">
+                                                                {{q_item.product_size}}
+                                                            </td>
+                                                            <td style="width: 80px; padding: 4px; border: 1px solid #000; font-size: 15px; text-align: left; vertical-align: top;">
+                                                                {{q_item.amount}}
+                                                            </td>
+                                                            <td style="width: 50px; padding: 4px; border: 1px solid #000; font-size: 15px; text-align: center; vertical-align: top;">
+                                                                {{q_item.gst_percent+' %' }}
+                                                            </td>
+                                                            <td style="width: 80px; padding: 4px; border: 1px solid #000; font-size: 15px; text-align: left; vertical-align: top;">
+                                                                {{q_item.gst_amount}}
+                                                            </td>
+                                                            <td style="width: 90px; padding: 4px; border: 1px solid #000; font-size: 15px; text-align: center; vertical-align: top;">
+
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td colspan="7" style="padding: 4px; border: 1px solid #000; font-size: 15px; text-align: left; vertical-align: top;">Subtotals</td>
+                                                            <td style="width: 80px; padding: 4px; border: 1px solid #000; font-size: 15px; text-align: left; vertical-align: top;">{{quotationDetailList.item_total}}</td>
+                                                            <td style="width: 50px; padding: 4px; border: 1px solid #000; font-size: 15px; text-align: center; vertical-align: top;">&nbsp;</td>
+                                                            <td style="width: 80px; padding: 4px; border: 1px solid #000; font-size: 15px; text-align: left; vertical-align: top;">{{quotationDetailList.gst_amount}}</td>
+                                                            <td style="width: 90px; padding: 4px; border: 1px solid #000; font-size: 15px; text-align: center; vertical-align: top;">{{totalAmount}}</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td colspan="9" style="padding: 4px; border: 1px solid #000; font-size: 15px; text-align: left; vertical-align: top;"><b>Grand Total (INR)</b></td>
+
+                                                            <td colspan="2" style="width: 90px; padding: 4px; border: 1px solid #000; font-size: 15px; text-align: right; vertical-align: top;"><b>{{quotationDetailList.grand_total}}</b></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td colspan="6" style="padding: 0px; border: 1px solid #000; text-align: left; vertical-align: top;">
+                                                                <h2 style="background: #f4cc07; margin: 0px; font-size: 15px; padding: 4px;">Terms & Conditions</h2>
+                                                                <!-- <p style="font-size: 16px; padding: 2px 4px; margin: 0px;">Payment : 30 Days PDC after receiving Purchase Order (PO) </p>
+                                                                    <p style="font-size: 16px; padding: 2px 4px; margin: 0px;">Note : Freight included but unloading charges extra</p>
+                                                                    <p style="font-size: 16px; padding: 2px 4px; margin: 0px;">Note : <span>1.Minimum quantity of Gypsum Plaster (POP) should be 20 ton</span><br>
+                                                                        <span style="margin-left:36px;">2.Minimum quantity of AAC Block Joining Mortar should be 25 ton</span><br>
+                                                                        <span style="margin-left:36px;">3.Minimum quantity of Wall Putty should be 15 ton</span>
+                                                                    </p>
+                                                                    <p style="font-size: 16px; padding: 2px 4px; margin: 0px;">Note : Price upto Lucknow & Allahabad (Uttar Pradesh)</p> -->
+                                                                    <div class="cs-text border0 pt0">
+                                                                        <div [innerHtml]="quotationDetailList.term_condition"></div>
+                                                                    </div>
+                                                                </td>
+
+                                                                <td colspan="5" style="padding: 0px; border: 1px solid #000; text-align: left; vertical-align: top;">
+                                                                    <h2 style="background: #f4cc07; margin: 0px; font-size: 15px; padding: 4px;">Bank Details</h2>
+                                                                    <p style="font-size: 16px; padding: 2px 4px; margin: 0px;"><b>Name:</b> paraflex Wall Care Products Pvt Ltd</p>
+                                                                    <p style="font-size: 16px; padding: 2px 4px; margin: 0px;"><b>Bank:</b> Kotak Mahindra Bank Ltd</p>
+                                                                    <p style="font-size: 16px; padding: 2px 4px; margin: 0px;"><b>Branch:</b> Beechwal, Bikaner, Rajasthan</p>
+                                                                    <p style="font-size: 16px; padding: 2px 4px; margin: 0px;"><b>A/c Number:</b> 4513178560</p>
+                                                                    <p style="font-size: 16px; padding: 2px 4px; margin: 0px;"><b>IFSC Code:</b> KKBK0003723</p>
+                                                                </td>
+                                                            </tr>
+                                                        </table>
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </body>
+                                        </html>
+
+
+

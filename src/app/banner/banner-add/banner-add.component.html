@@ -1,0 +1,77 @@
+<div class="main-container">
+	<div class="middle-container mb0">
+		<div class="page-heading">
+			<img src="assets/img/person.svg" class="h-icon">
+			<div class="heading-text">
+				<h2 *ngIf="!banner_id">Banner Add</h2>
+				<h2 *ngIf="banner_id">Banner Detail</h2>
+				<!-- <p>Total Banner: {{count}}</p> -->
+			</div>
+		</div>
+		<div class="click-btn">
+			<button mat-button *ngIf="!banner_id" [disabled]="data.banner==''" (click)=submit_product()>Save</button>
+			<button mat-button *ngIf="banner_id"  (click)=update(banner_id)>Update</button>
+		</div>
+		
+		<!-- <div class="left-auto">
+			<div class="top-search">
+				<input type="text" placeholder="SEARCH. . ."  (input)="leadList()" #search="ngModel" [(ngModel)]="data.search">
+				<i class="material-icons">search</i>
+			</div>
+		</div> -->
+		<!-- <div class="click-btn">
+			<button mat-button routerLink="/banner-banner-add" routerLinkActive="active">Add Banner</button>
+		</div> -->
+	</div>
+	
+	<div class="container-outer">
+		<div *ngIf="loader">
+			<mat-spinner class="loader">
+				<div><p>Loading....</p></div>
+			</mat-spinner>
+		</div>
+		<div class="container" >
+			<div class="cv-detail">
+				<p>Banner</p>
+			</div>
+			<div class="upload-img" *ngIf="!banner_id">
+				<p>Upload Image</p>
+				<label>
+					<input type="file" (change)="fileChange($event)" placeholder="Upload file" accept=".png,.jpg,.jpeg">
+				</label>
+			</div>
+			<div class="img-1" *ngIf="banner_id">
+				<!-- <h1>test</h1> -->
+				<!-- <img src="urls"> -->
+				<img src="http://crm.pproducts.in/api/uploads/banner/{{banner_detail_data.banner_name}}">
+				
+			</div>
+			
+			<div class="cv-detail">
+				<p>Banner Asigned to:</p>
+			</div>
+			
+			<div class="in-drop">
+				<mat-form-field>
+					<mat-label>Assign Banner</mat-label>
+					<mat-select multiple [(ngModel)]="data.banner" name=banner>
+						<!-- <mat-option value='Channel Partner'>Channel Partner</mat-option>
+						<mat-option value='Dealer'>Dealer</mat-option>
+						<mat-option value='Plumbing Man'>Plumbing Man</mat-option>
+						<mat-option value='Consumer'>Consumer</mat-option> -->
+						<mat-option value='Employee Login'>Employee Login</mat-option>
+					</mat-select>
+				</mat-form-field>
+				
+				<button class="wt-hg" (click)=check_all() ><i class="material-icons">check_circle</i></button>
+				
+				<button class="wt-hg" (click)=uncheckall() ><i class="material-icons">indeterminate_check_box</i></button>
+			</div>
+		</div>
+		<!-- <div class="fix-btn">
+			(click)=submit_product()
+			<a class="bottom-btn" mat-raised-button routerLink="/add-lead" routerLinkActive="active"><i class="material-icons">add</i></a>
+		</div> -->
+	</div>
+	
+	

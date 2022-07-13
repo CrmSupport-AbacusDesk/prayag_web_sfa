@@ -1,0 +1,163 @@
+<div class="main-container" >
+  <div class="middle-container">
+    <div class="page-heading">
+      <div class="heading-text bc-space">
+        <div class="back-btn">
+          <a mat-button routerLink="/sale-user-detail/{{user_id}}" routerLinkActive="active"><i class="material-icons">west</i></a>
+        </div>
+        <h2>{{value.name}}</h2>
+        <p class="light">Sales Executive</p>
+      </div>
+    </div>
+    <div class="tabs right-tab">
+      <ul>
+        <li><a routerLink="/sale-user-detail/{{user_id}}" routerLinkActive="active">DETAIL</a></li>
+        <li><a routerLink="/my-network/{{user_id}}" routerLinkActive="active">My Network</a></li>
+        <li><a>ORDERS</a></li>
+        <li><a routerLink="/user-lead-list/{{user_id}}" routerLinkActive="active">LEADS</a></li>
+        <!-- <li><a>FOLLOWUP</a></li> -->
+      </ul>
+    </div>
+  </div>
+  
+  
+  <div class="container-outer">
+  <div class="container" >
+    <div class="row">
+      <div class="col s12">
+        <div class="details-info">
+          <div class="img-box">
+            <img src="assets/img/user.png">
+          </div>
+          <div class="basic-details">
+            <div class="profile-info">
+              <ul>
+                <li class="col s4">
+                  <div class="cs-box">
+                    <img src="assets/img/gmail.svg" class="fix-img">
+                    <span>Email</span>
+                    <p class="link-clr">{{value.email}}</p>
+                   <a  class="edit-icon" color="accent" matRipple matTooltip="EDIT" ><i class="material-icons">create</i></a>
+                  </div>
+                </li>
+                <li  class="col s4">
+                  <div class="cs-box">
+                    <img src="assets/img/phone.svg" class="fix-img">
+                    <span>Contact no</span>
+                    <p>{{value.contact_01}}</p>
+                   <a class="edit-icon" color="accent" matRipple matTooltip="EDIT"><i class="material-icons">create</i></a>
+                  </div>
+                </li>
+                <!-- <li  class="col s4">
+                  <div class="cs-box">
+                    <img src="assets/img/map-location.svg" class="fix-img">
+                    <span>Assign Location</span>
+                    <p>Faridabad Golden</p>
+                    <a class="edit-icon" color="accent" matRipple matTooltip="EDIT"><i class="material-icons">create</i></a>
+                  </div>
+                </li> -->
+              </ul>
+            </div>
+            
+            <mat-divider class="mt15 mb15"></mat-divider>
+            
+            <!-- <div class="col s5 cs-figure">
+              <ul>
+                <li>
+                  <div class="outer">
+                    <div class="inner">
+                      <span>Assign Distributor</span>
+                      <p>{{distributorassign.length}}</p>
+                    </div>
+                  </div>
+                </li>
+                <li>
+                  <div class="outer">
+                    <div class="inner">
+                      <span>Assign Retailer</span>
+                      <p>{{drassign.length}}</p>
+                    </div>
+                  </div>
+                </li>
+              </ul>
+            </div> -->
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <div class="row mt15">
+      <div class="col s4">
+        <div class="territory-info">
+          <div class="head" [ngClass]="{'active':active.distributor==true}">
+            <h2>DISTRIBUTOR</h2>
+            <i class="material-icons search-icon right20" (click)="toggleterritory('distributor','open')"  matRipple>search</i>
+            <input type="text" placeholder="search..." (input)="getItem(search.search_data)" class="fix-search" name="search_data" #search_data="ngModel" [(ngModel)]="search.search_data">
+            <i class="material-icons close-icon" (click)="toggleterritory('distributor','close')" matRipple>clear</i>
+          </div>
+          <div class="cs-checkbox">
+            <div class="checkbox-outer">
+                <section class="checkbox-inner bodr0">
+                    <mat-checkbox class="check-list bg-none"  [checked]="list.check" (change)="assign_to_distributor(index,list.id,$event)" value="{{list.company_name}}" *ngFor="let list of distributorList;let index=index">
+                      <div class="name-outer">
+                        <div class="outer">
+                          <div class="inner">
+                            <div class="name-inner">
+                                {{list.company_name[0]}}
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="text-box">
+                        <h2>{{list.company_name}}</h2>
+                        <p>8860774322</p>
+                      </div>
+                    </mat-checkbox>
+                 </section>
+            </div>
+          </div>
+        </div>
+      </div> 
+      
+      
+      <div class="col s4">
+        <div class="territory-info">
+          <div class="head" [ngClass]="{'active':active.retailer==true}">
+            <h2>Leads</h2>
+            <i class="material-icons search-icon right20" (click)="toggleterritory('retailer','open')"  matRipple>search</i>
+            <input type="text" placeholder="search..." class="fix-search" (input)="getSearchItem(searchval.search_data)" class="fix-search" name="search_data" #search_data="ngModel" [(ngModel)]="searchval.search_data">
+            <i class="material-icons close-icon" (click)="toggleterritory('retailer','close')" matRipple>clear</i>
+          </div>
+          <div class="cs-checkbox">
+            <div class="checkbox-outer">
+                <section class="checkbox-inner bodr0" >
+                    <mat-checkbox class="check-list bg-none"  [checked]="list.check" (change)="assign_to_lead(index,list.id,$event)" value="{{list.company_name}}" *ngFor="let list of drList;let index=index">
+                      <div class="name-outer">
+                        <div class="outer">
+                          <div class="inner">
+                            <div class="name-inner">
+                                {{list.company_name[0]}}
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="text-box">
+                        <h2>{{list.company_name}}</h2>
+                        <p></p>
+                      </div>
+                    </mat-checkbox>
+                </section>
+            </div>
+          </div>
+        </div>
+      </div> 
+
+      <div class="col s4 empty"></div>
+    </div>
+  </div>
+  </div>
+
+</div>
+
+
+

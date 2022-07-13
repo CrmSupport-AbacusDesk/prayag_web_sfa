@@ -1,0 +1,224 @@
+<div class="main-container" >
+  <div class="middle-container">
+    <div class="page-heading">
+      <div class="heading-text">
+        <h2>Announcement / Notice</h2>
+        <p>Add New</p>
+      </div>
+    </div>
+  </div>
+
+
+  <div class="container-outer">
+    <div class="container tab-container" >
+
+      <form name="noticeform" #noticeform="ngForm" (ngSubmit)="submitAnnouncement()">
+        <div class="row">
+          <div class="col s12">
+            <div class="sprate-box cs-form">
+              <div class="cs-heading">
+                <h2>ANNOUNCEMENT / NOTICE</h2>
+
+                <span class="required">Indicates required fields ( <sup>*</sup> )</span>
+              </div>
+              <mat-divider class="left-right-15 mt10"></mat-divider>
+              <div class="row mt10">
+                <div class="col s6">
+                  <div class="row">
+                    <div class="col s12">
+                      <mat-form-field class="cs-input" appearance="outline" [ngClass]="{'has-error' : noticeform.submitted && subject?.invalid} ">
+                        <mat-label>Subject</mat-label>
+                        <input matInput placeholder="Type Here ..." name="subject" [(ngModel)]="announcementData.subject" #subject="ngModel" required>
+                      </mat-form-field>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col s12">
+                      <mat-form-field class="cs-input" appearance="outline" [ngClass]="{'has-error' : noticeform.submitted && message?.invalid} ">
+                        <mat-label>Message</mat-label>
+                        <textarea matInput placeholder="Type Here ..." class="h80" name="message" [(ngModel)]="announcementData.message" #message="ngModel" required></textarea>
+                      </mat-form-field>
+                    </div>
+                  </div>
+                  <!-- <div class="row">
+                    <div class="col s12">
+                      <mat-form-field class="cs-input" appearance="outline" >
+                        <mat-label>Email Message </mat-label>
+                        <textarea matInput placeholder="Type Here ..." class="h80"></textarea>
+                      </mat-form-field>
+                    </div>
+                  </div> -->
+                </div>
+
+                <!-- <div class="col s6">
+                  <div class="cs-file" >
+                    <p>Upload Image</p>
+                    <ul class="product-images">
+                      <li class="multi-images">
+                        <label class="cs-file-img" *ngFor="let val of urls; let i = index">
+                          <img height="75" width="75" [src]="val"  alt="">
+                          <span  class="cancel-icon">
+                            <a class="close" (click)="delete_img(i)"><i class="material-icons dp48">clear</i></a>
+                          </span>
+                        </label>
+
+                        <label class="cs-file-img default">
+                          <i class="material-icons">cloud_upload</i>
+                          <input type="file" (change)="insertImage($event)" name="image" placeholder="Upload file" accept=".png,.jpg,.jpeg" multiple style="display: none;">
+                        </label>
+                      </li>
+                    </ul>
+
+                  </div>
+                </div> -->
+                <div class="col s6">
+                  <div class="cs-file">
+                    <p>UPLOAD FILE</p>
+                    <ul>
+                      <li>
+                        <label>
+                          <i class="material-icons add-file-icon">add</i>
+                          <input multiple type="file" name ="file" required (change)="fileChange($event)" placeholder="Upload file"  accept=".png,.jpg,.jpeg,.pdf,.docx" style="display: none;">
+                        </label>
+
+                      </li>
+
+                      <li class="multi-images" >
+                        <label *ngFor="let imageType of selectedFile; let i = index">
+                          <img *ngIf ="imageType.type == 'image/jpeg' || imageType.type ==  'image/png'  "  height="75" width="75" [src]="imageType.path" src="assets/imgs/jpg.svg">
+                          <img *ngIf ="imageType.type == 'application/pdf'" height="75" width="75" src="assets/img/pdf1.svg">
+
+                          <!-- <img *ngIf ="imageType.type == 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'" height="75" width="75" src="assets/img/doc.png"> -->
+                          <img *ngIf ="imageType.type == 'application/vnd.openxmlformats-officedocument.wordprocessingml.document'" height="75" width="75" src="assets/img/doc.png">
+                          <img  *ngIf ="imageType.type == 'application/docx'" height="75" width="75" src="assets/img/doc.png">
+
+                          <a class="close" ><i class="material-icons dp48"  (click)="remove_image(i)">clear</i></a>
+                        </label>
+                      </li>
+                    </ul>
+
+                    <!-- <div class="col 12 mt15 text-right">
+                      <div class="click-btn ml15">
+                        <button mat-button (click)="submitAnnouncement()">UPLOAD</button>
+                      </div>
+                    </div> -->
+                  </div>
+                </div>
+              </div>
+
+              <mat-divider class="left-right-15 mt10 mb10 "></mat-divider>
+              <div class="cs-heading">
+                <h2>Filter Your Data</h2>
+              </div>
+              <mat-divider class="left-right-15 mt10"></mat-divider>
+
+              <div class="row mt10">
+                <div class="col s4">
+                  <mat-form-field class="cs-input" appearance="outline" >
+                    <mat-label>State</mat-label>
+                    <mat-select name="state" [(ngModel)]="announcementData.state">
+                      <mat-option *ngFor="let row of stateList" (click)="getDistrictList()" value="{{row.state_name}}">{{row.state_name}}</mat-option>
+                    </mat-select>
+                  </mat-form-field>
+                </div>
+                <div class="col s4">
+                  <div class="df">
+                    <mat-form-field class="cs-input" appearance="outline" >
+                      <mat-label>District</mat-label>
+                      <mat-select name="district" [(ngModel)]="announcementData.district">
+                        <mat-option *ngFor="let row of districtList" (click)="getCityList()"value="{{row.district_name}}">{{row.district_name}}</mat-option>
+                      </mat-select>
+                    </mat-form-field>
+                  </div>
+                </div>
+                <div class="col s4">
+                  <div class="df">
+                    <mat-form-field class="cs-input" appearance="outline" >
+                      <mat-label>City</mat-label>
+                      <mat-select name="city" [(ngModel)]="announcementData.city">
+                        <mat-option *ngFor="let row of cityList" value="{{row.city}}">{{row.city}}</mat-option>
+                      </mat-select>
+                    </mat-form-field>
+                    <a class="add-item ml10" *ngIf="announcementData.state" mat-raised-button (click)="getUserDrList()">Go</a>
+                  </div>
+                </div>
+              </div>
+
+              <div class="row">
+                <!-- <div class="col s3">
+                  <div class="selct-all">
+                    <mat-checkbox  [(ngModel)]="announcementData.all_dealers" name="all_dealers" (click)="selectAll('dealers')" [checked]="announcementData.dealers.length == dealertList.length && dealertList.length !=0 && announcementData.dealers.length >0 ">Select all dealers</mat-checkbox>
+
+                  </div>
+                  <mat-form-field class="cs-input" appearance="outline" >
+                    <mat-label>Dealers</mat-label>
+                    <mat-select multiple color="accent" name="dealers" #dealer="ngModel" [(ngModel)]="announcementData.dealers">
+                      <mat-option *ngFor="let row of dealertList" value="{{row.id}}" color="accent">{{row.company_name}}</mat-option>
+                    </mat-select>
+                  </mat-form-field>
+                </div>
+                <div class="col s3">
+                  <div class="selct-all">
+                    <mat-checkbox [(ngModel)]="announcementData.all_direct_dealer" name="all_direct_dealer" (click)="selectAll('direct_dealer')" [checked]="announcementData.direct_dealer.length == directDealerList.length && directDealerList.length !=0 && announcementData.direct_dealer.length > 0" >Select all direct dealers</mat-checkbox>
+
+                  </div>
+                  <mat-form-field class="cs-input" appearance="outline" >
+                    <mat-label>Direct Dealer</mat-label>
+                    <mat-select multiple name="direct_dealer" #directdealer="ngModel" [(ngModel)]="announcementData.direct_dealer">
+                      <mat-option *ngFor="let row of directDealerList" value="{{row.id}}" color="accent">{{row.company_name}}</mat-option>
+                    </mat-select>
+                  </mat-form-field>
+                </div>
+
+                <div class="col s3">
+                  <div class="selct-all">
+                    <mat-checkbox [(ngModel)]="announcementData.all_distributors" name="all_distributors" (click)="selectAll('distributors')" [checked]="announcementData.distributors.length == distributorList.length && distributorList.length !=0 && announcementData.distributors.length > 0">Select all distributor</mat-checkbox>
+                  </div>
+
+                  <mat-form-field class="cs-input" appearance="outline" >
+                    <mat-label >Distributor</mat-label>
+                    <mat-select multiple name="distributors" #distributors="ngModel" [(ngModel)]="announcementData.distributors" (ngModelChange)="test()">
+                      <mat-option *ngFor="let row of distributorList" value="{{row.id}}" color="accent">{{row.company_name}}</mat-option>
+                    </mat-select>
+                  </mat-form-field>
+                </div> -->
+                <div class="col s4">
+                  <div class="selct-all">
+                    <mat-checkbox [(ngModel)]="announcementData.all_users" name="all_users" (click)="selectAll('users')" [checked]="announcementData.users.length == salesUserList.length && salesUserList.length !=0 && announcementData.users.length > 0">Select all sales executive</mat-checkbox>
+                  </div>
+                  <div class="df">
+                    <mat-form-field class="cs-input" appearance="outline" >
+                      <mat-label>Sales Executive</mat-label>
+                      <mat-select multiple name="users" #user="ngModel" [(ngModel)]="announcementData.users">
+                        <div class="drop-down-search">
+                          <input type="text" placeholder="search..." name="search" class="fix-search" (keyup)="getUserDrList()" #search="ngModel" [(ngModel)]="announcementData.search">
+                        </div>
+                        <mat-option *ngFor="let row of salesUserList" value="{{row.id}}" color="accent">{{row.name}}</mat-option>
+                      </mat-select>
+                    </mat-form-field>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <div class="col s12">
+          <div class="cs-btn fixedd mt32 text-right">
+            <div class="in-btn">
+              <button mat-raised-button color="accent" type="submit" [disabled]="submit">Save</button>
+            </div>
+          </div>
+        </div>
+        <!-- </div> -->
+
+        <div *ngIf="loader">
+          <mat-spinner class="loader">
+            <div><p>Loading....</p></div>
+          </mat-spinner>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

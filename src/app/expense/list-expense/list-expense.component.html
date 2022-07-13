@@ -1,0 +1,309 @@
+<div class="main-container" >
+  <div class="middle-container mb0">
+    <div class="page-heading">
+      <div *ngIf="backButton" class="heading-text bc-space">
+        <div class="back-btn" (click)="back()">
+          <a mat-button ><i class="material-icons">west</i></a>
+        </div>
+        <h2>Expense</h2>
+      </div>
+
+      <div *ngIf="!backButton" class="heading-text">
+        <h2>Expense</h2>
+      </div>
+    </div>
+
+
+    <div class="uppr-one m-right-data">
+      <div class="top-pagination">
+
+        <ul>
+
+            <li>
+                <p>Pages {{pagenumber}} Of {{total_page}}</p>
+            </li>
+            <li>
+                <button mat-button class="left-btn" (click)="start=start-page_limit; expenseList()" [disabled]="pagenumber == 1">
+        <i class="material-icons">keyboard_arrow_left</i></button>
+            </li>
+            <li>
+                <input type="text" placeholder="GO TO" name="pagenumber" (keyup.enter)="start=(pagenumber*page_limit)-page_limit; expenseList()" [(ngModel)]="pagenumber" min="1" max={{total_page}}>
+            </li>
+
+            <li>
+                <button mat-button class="right-btn" (click)="start=start+page_limit; expenseList()" [disabled]="pagenumber == total_page">
+          <i class="material-icons">keyboard_arrow_right</i>
+        </button>
+            </li>
+
+        </ul>
+
+
+    </div>
+      <!-- <div class="cs-btn">
+        <div class="in-btn">
+            <button *ngIf="view_edit" mat-raised-button color="accent" (click)="exporttestAsXLSX()">Download excel</button>
+        </div>
+    </div> -->
+
+      <ul>
+        <li class="refresh-area mr0 after-none">
+          <a class="refresh-btn" mat-raised-button (click)="refresh() "  matTooltip="Refresh" ><i class="material-icons"> refresh</i></a>
+          <!-- <a class="refresh-btn" mat-raised-button  matTooltip="Refresh" ><i class="material-icons"> refresh</i></a> -->
+        </li>
+      </ul>
+
+      <div class="cs-form date-filter">
+        <mat-form-field appearance="outline" class="cs-input w150" >
+          <mat-label>Date From</mat-label>
+          <input matInput [matDatepicker]="date_from" placeholder="From Date" [(ngModel)]="search.date_from" (ngModelChange)="expenseList()" readonly>
+          <mat-datepicker-toggle matSuffix [for]="date_from"></mat-datepicker-toggle>
+          <mat-datepicker #date_from></mat-datepicker>
+        </mat-form-field>
+
+        <div class="df">
+          <mat-form-field appearance="outline" class="cs-input w150">
+            <mat-label>Date To</mat-label>
+            <input matInput [matDatepicker]="date_to" placeholder="To Date" [(ngModel)]="search.date_to" (ngModelChange)="expenseList()" readonly>
+            <mat-datepicker-toggle matSuffix [for]="date_to"></mat-datepicker-toggle>
+            <mat-datepicker #date_to></mat-datepicker>
+          </mat-form-field>
+          <!-- <a class="add-item ml10" mat-raised-button  (click)="(search.date_from && search.date_to)?followUpList():''" [disabled]="!(search.date_from && search.date_to)" >Go</a> -->
+        </div>
+      </div>
+
+
+
+      <div class="tabs ml15">
+        <ul>
+          <li><a class="" [ngClass]="active_tab == 'Pending' ? 'active' : ''" (click)="active_tab = 'Pending';expenseList();">Pending <span class="counter">{{count_list.Pending}}</span></a></li>
+          <li><a class="" [ngClass]="active_tab == 'Approved' ? 'active' : ''" (click)="active_tab = 'Approved';expenseList();">Approved <span class="counter">{{count_list.Approved}}</span></a></li>
+          <li><a class="" [ngClass]="active_tab == 'Reject' ? 'active' : ''" (click)="active_tab = 'Reject';expenseList();">Reject <span class="counter">{{count_list.Reject}}</span></a></li>
+          <!-- <li><a class="" [ngClass]="active_tab == 'Cancel' ? 'active' : ''" (click)="active_tab = 'Cancel';expenseList();">Cancel</a></li> -->
+        </ul>
+      </div>
+    </div>
+
+    <!-- <div class="left-auto">
+      <div class="cs-form date-filter">
+        <mat-form-field appearance="outline" class="cs-input w150" >
+          <mat-label>Date From</mat-label>
+          <input matInput [matDatepicker]="date_from" placeholder="From Date" [(ngModel)]="search.date_from">
+          <mat-datepicker-toggle matSuffix [for]="date_from"></mat-datepicker-toggle>
+          <mat-datepicker #date_from></mat-datepicker>
+        </mat-form-field>
+
+        <div class="df">
+          <mat-form-field appearance="outline" class="cs-input w150">
+            <mat-label>Date To</mat-label>
+            <input matInput [matDatepicker]="date_to" placeholder="To Date" [(ngModel)]="search.date_to">
+            <mat-datepicker-toggle matSuffix [for]="date_to"></mat-datepicker-toggle>
+            <mat-datepicker #date_to></mat-datepicker>
+          </mat-form-field>
+          <a class="add-item ml10" mat-raised-button (click)="expenseList()" [disabled]="!search.date_from || !search.date_to">Go</a>
+        </div>
+      </div>
+    </div> -->
+  </div>
+
+  <div class="container-outer padding0">
+    <div class="container tab-container" >
+      <div class="cs-table">
+        <div class="sticky-head">
+          <div class="table-head">
+            <table>
+              <tr>
+                <!-- <th class="w180">Category</th> -->
+                <th class="w110">Date</th>
+                <th>User Name</th>
+                <th class="w100">Ref. Expense ID</th>
+                <th class="w130">Designation</th>
+                <th class="w130">Expense Type</th>
+                <th class="w100 text-right">Amount</th>
+                <th *ngIf="active_tab == 'Approved'" class="w100 text-right">Approved Amount</th>
+                <th class="w100">Senior Status</th>
+                <th class="w100">A/C Status</th>
+                <!-- <th class="w100">Ref ID</th> -->
+              </tr>
+            </table>
+          </div>
+
+          <div class="table-head bdrt">
+            <table>
+              <tr>
+                <th class="w110 pt0 pb0">
+                  <div class="th-search-acmt">
+                    <mat-form-field class="example-full-width cs-input">
+                      <input matInput [matDatepicker]="picker" placeholder="DATE" name="dateCreated" [(ngModel)]="search.dateCreated" (dateChange)="expenseList()" readonly>
+                      <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                      <mat-datepicker #picker [(ngModel)]="search.dateCreated" ngDefaultControl></mat-datepicker>
+                    </mat-form-field>
+                  </div>
+                </th>
+
+
+                <th class>
+                  <div class="th-search-acmt">
+                    <mat-form-field class="example-full-width cs-input">
+                      <input matInput placeholder="Search" name="userName" [(ngModel)]="search.userName" (keyup.enter)="expenseList()">
+                    </mat-form-field>
+                  </div>
+                </th>
+                <th class="w100"></th>
+
+                <th class="w130"></th>
+                <th class="w130">
+                  <div class="th-search-acmt">
+                    <mat-form-field class="example-full-width cs-input">
+                      <input matInput placeholder="Search" name="expenseType" [(ngModel)]="search.expenseType" (keyup.enter)="expenseList()">
+                    </mat-form-field>
+                  </div>
+                </th>
+                <th class="w100 text-right"></th>
+                <th *ngIf="active_tab == 'Approved'" class="w100 text-right"></th>
+                <th class="w100"></th>
+                <th class="w100"></th>
+
+              </tr>
+            </table>
+          </div>
+        </div>
+
+        <div class="table-container">
+          <div class="table-content">
+            <table>
+              <tr *ngFor="let list of expense_list;let i=index">
+                <td class="w110">{{list.dateCreated |date : 'd MMM y'}}</td>
+                <td>{{list.userName}}</td>
+                <td class="w100"><a *ngIf="view_edit" class="link-btn" mat-button  routerLink="/expense-detail/{{list.id}}" routerLinkActive="active">#CLM-{{list.id}}</a></td>
+
+                <td class="w130">{{list.userType}}</td>
+                <td class="w130">{{list.expenseType}}</td>
+                <td class="w100 text-right">&#x20B9; {{list.totalAmt}}</td>
+                <td *ngIf="active_tab == 'Approved'"  class="w100 text-right">&#x20B9; {{list.totalApprovedAmount ? list.totalApprovedAmount : '0'}}</td>
+
+                <td class="w100">
+                  <!-- <strong class="yellow-clr">{{list.acStatus}}</strong> -->
+                  <strong class="yellow-clr" *ngIf="list.seniorStatus=='Pending'">{{list.seniorStatus}}</strong>
+                  <strong class="green-clr" *ngIf="list.seniorStatus=='Approved'">{{list.seniorStatus}}</strong>
+                  <strong class="red-clr" *ngIf="list.seniorStatus=='Reject'">{{list.seniorStatus}}</strong>
+
+                  <a *ngIf="list.seniorStatus=='Pending' && view_edit" class="edit-column" mat-button matTooltip="Edit Seniorstatus" (click)="expModal('seniorStatus',list.id)"><i class="material-icons">create</i></a>
+
+                </td>
+
+                <td class="w100">
+                  <strong class="yellow-clr" *ngIf="list.acStatus=='Pending'">{{list.acStatus}}</strong>
+                  <strong class="green-clr" *ngIf="list.acStatus=='Approved'">{{list.acStatus}}</strong>
+                  <strong class="red-clr" *ngIf="list.acStatus=='Reject'">{{list.acStatus}}</strong>
+                  <a *ngIf="list.seniorStatus=='Approved' && list.acStatus=='Pending' && view_edit" class="edit-column" mat-button matTooltip="Edit a/c status" (click)="expModal('acStatus',list.id)"><i class="material-icons">create</i></a>
+                </td>
+                <!-- <td class="w100">---</td> -->
+              </tr>
+              <ng-container *ngFor="let lead of skelton">
+                <tr class="sk-loading"  *ngIf="loader">
+                  <td class="w110"><div>&nbsp;</div></td>
+                  <td ><div>&nbsp;</div></td>
+                  <td class="w130"><div>&nbsp;</div></td>
+                  <td class="w130"><div>&nbsp;</div></td>
+                  <td class="w100"><div>&nbsp;</div></td>
+                  <td class="w100"><div>&nbsp;</div></td>
+                  <td class="w100"><div>&nbsp;</div></td>
+                </tr>
+              </ng-container>
+            </table>
+          </div>
+        </div>
+      </div>
+      <div class="no-data" *ngIf="data_not_found==true">
+        <img src="assets/img/no-data.gif" alt="">
+        <p>Data not <span>available !</span></p>
+      </div>
+    </div>
+  </div>
+  <div #table class="excel-table" style="display: none;">
+
+    <table  hidden>
+
+      <tr>
+        <th class="w40">S.no.</th>
+
+        <th class="w80">DATE CREATED</th>
+        <th class="w100"> CREATED BY</th>
+
+
+        <th class="w80">EXPENSE TYPE</th>
+        <th class="w130"> DATE FROM</th>
+        <th class="w130"> DATE TO</th>
+
+        <th class="w80">DATE</th>
+
+        <th class="w100">DEPARTURE STATION</th>
+        <th class="w100">ARRIVAL STATION</th>
+
+        <th class="w100 text-right">MODE OF TRANSPORT</th>
+        <th class="w80">LOCAL CONVEYANCE AMOUNT</th>
+        <th class="w80">OUTSTATION TRAVEL AMOUNT</th>
+        <th class="w80">FOOD  AMOUNT</th>
+
+        <th class="w80"> HOTEL AMOUNT</th>
+
+        <th class="w80">MISC EXPENSE AMOUNT</th>
+
+
+      </tr>
+
+      <tr  *ngFor="let list of list1;let i=index">
+        <td class="w40">{{i+1}}</td>
+        <td class="w80">{{list.dateCreated |date : 'd MMM y'}}</td>
+        <td class="w100">{{list.createdByName }}</td>
+
+
+        <td class="w80">{{list.type}}</td>
+        <td class="w130">{{list.dateFrom |date : 'd MMM y'}}</td>
+        <td class="w130">{{list.dateto |date : 'd MMM y'}}</td>
+
+        <td class="w80">{{list.date |date : 'd MMM y'}}</td>
+        <td class="w100">{{list.depatureStation}}</td>
+        <td class="w100">{{list.arrivalStation}}</td>
+        <td class="w100 text-right"> {{list.modeOfTravel}}-{{list.travelClass}}</td>
+        <td class="w80 text-right"> {{list.amount}}</td>
+        <td class="w80 text-right"> {{list.arrivalAmount}}</td>
+        <td class="w80 text-right"> {{list.amount}}</td>
+        <td class="w80 text-right"> {{list.amount}}</td>
+        <td class="w80 text-right"> {{list.amount}}</td>
+      </tr>
+      <tr>
+        <td class="w40">&nbsp;</td>
+        <td class="w80">&nbsp;</td>
+
+        <td class="w80">&nbsp;</td>
+        <td class="w130">&nbsp;</td>
+        <td class="w130">&nbsp;</td>
+
+        <td class="w80">&nbsp;</td>
+        <td class="w130">&nbsp;</td>
+        <td class="w130">Total</td>
+        <td class="w100 text-right"> &nbsp;</td>
+        <td class="w100 text-right"> &nbsp;</td>
+
+        <td class="w80 text-right"> {{local}}</td>
+        <td class="w80 text-right"> {{out}}</td>
+        <td class="w80 text-right"> {{food}}</td>
+        <td class="w80 text-right"> {{hotel}}</td>
+        <td class="w80 text-right"> {{misc}}</td>
+      </tr>
+      <tr></tr>
+      <tr>
+        <th>Grand Total -{{total}}</th>
+
+      </tr>
+    </table>
+  </div>
+
+  <div class="fix-btn">
+    <a class="bottom-btn ecxel-btn" matTooltip="Download Excel" matTooltipPosition="above" mat-raised-button (click)="exportAsXLSX()"><img src="assets/img/excel.svg"></a>
+  </div>
+
+</div>
+

@@ -1,0 +1,55 @@
+<div class="edit-modal">
+    <div *ngIf="loader">
+        <mat-spinner class="loader">
+            <div><p>Loading....</p></div>
+        </mat-spinner>
+    </div>
+    <p class="heading">Manage Dealer Discount</p>
+    <div mat-dialog-content style="padding: 0px 15px;">
+        <div class="row">
+            <div class="col s12">
+                <div class="cs-table left-right-20">
+                    <div class="table-head">
+                        <table>
+                            <tr>
+                                <th class="w50">&nbsp;</th>
+                                <th>Category Name</th>
+                                <th class="w200">Discount</th> 
+                            </tr>
+                        </table>
+                    </div>
+                    <!-- <div class="sticky-head">
+                    </div> -->
+                    
+                    <div class="table-container">
+                        <div class="table-content">
+                            <table>
+                                <tr *ngFor="let row of discountArray;let i=index">
+                                    <td class="w50">{{i+1}}</td>
+                                    <td>{{row.category}}</td>
+                                    <td class="w200">
+                                        <div class="td-input">
+                                            <input class="input-bdr" type="number" value="{{row.discount}}" (keypress)="MobileNumber($event)" [(ngModel)]="row.discount" maxlength="5" minlength="1"   [readonly]="active[i]?.editDiscount != '1'" class="input-bdr">
+                                            <div class="edit">
+                                                <a class="edit-icon edit" *ngIf="active[i]?.editDiscount != '1'" (click)="edit_discount(i)">
+                                                    <i class="material-icons">create</i>
+                                                </a>
+                                                <a class="edit-icon save" *ngIf="active[i]?.editDiscount == '1'">
+                                                    <i class="material-icons" (click)="update_discount(row.category,row.id,row.discount)">save</i>
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div mat-dialog-actions>
+        <button mat-button color="warn" [mat-dialog-close]="false">Close</button>
+        <!-- <button mat-raised-button color="accent" type="submit">Save</button> -->
+    </div>
+</div>

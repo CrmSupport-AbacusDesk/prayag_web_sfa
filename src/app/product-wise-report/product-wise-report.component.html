@@ -1,0 +1,120 @@
+<div class="main-container">
+  <div class="middle-container mb0">
+    <div class="page-heading">
+      <img src="assets/img/report.svg" class="h-icon h20">
+      <div class="heading-text">
+        <h2>Product & Category Wise Sales Report</h2>
+      </div>
+    </div>
+    <div class="left-auto">
+      <div class="from-fields cs-flex">
+
+        <select class="select-filter" name="order_type" [(ngModel)]="data.order_type">
+          <option selected disabled value="">Select Order Type</option>
+          <option value="Primary">Primary</option>
+          <option value="Secondary">Secondary</option>
+        </select>
+
+        <select class="select-filter" name="user_id" [(ngModel)]="data.user_id">
+          <option selected disabled value="">Select Channel Partner</option>
+          <option *ngFor="let val of channel_partner_list" value="{{val.id}}">{{val.name}}</option>
+        </select>
+
+        <div class="control-field mr15">
+          <mat-form-field class="cs-input date-column infix-bodr">
+            <input matInput [matDatepicker]="picker" placeholder="From" name="start_date" [(ngModel)]="data.start_date">
+            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
+          </mat-form-field>
+        </div>
+        
+        <div class="control-field mr15">
+          <mat-form-field class="cs-input date-column infix-bodr">
+            <input matInput [matDatepicker]="pickers" placeholder="To" name="end_date" [(ngModel)]="data.end_date">
+            <mat-datepicker-toggle matSuffix [for]="pickers"></mat-datepicker-toggle>
+            <mat-datepicker #pickers></mat-datepicker>
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="cs-btn mt5">
+        <div class="in-btn">
+          <button mat-raised-button color="accent" (click)="submit()">Go</button>
+        </div>
+      </div>
+    </div>
+    
+  </div>
+  
+  <div class="container-outer pdding0">
+    <mat-spinner class="loader" *ngIf="loader">
+      <div><p>Loading....</p></div>
+    </mat-spinner>
+    <div class="container mb60">
+      <div class="cs-table" *ngIf="product_data.length != '0'">
+        <div class="sticky-head" style="top: 145px;">
+          <div class="table-head">
+            <table>
+              <tr>
+                <th class="w60">S. No</th>
+                <th>Product Code</th>
+                <th class="w200">Category</th>
+                <th class="w200">Total Qty</th>
+                <th class="w200">Amount</th>
+              </tr>
+            </table>
+          </div>
+
+          <div class="table-head bdrt">
+            <table>
+              <tr>
+                <th  class="w60">&nbsp;</th>
+                <th>
+                  <div class="th-search-acmt">
+                    <mat-form-field class="wp100 example-full-width cs-input select-input">
+                      <input matInput placeholder="Enter Product Code...." (keyup.enter)="submit()" name="cat_no" [(ngModel)]="data.cat_no">
+                    </mat-form-field>
+                  </div>
+                </th>
+                <th class="w200">
+                  <div class="th-search">
+                    <select  placeholder="Select Category" (change)="submit()" name="category_name" [(ngModel)]="data.category_name">
+                      <option value="">Select an Option</option>
+                      <option *ngFor="let val of category_list">{{val.category}}</option>
+                    </select>
+                  </div>
+                </th>
+                <th class="w200">&nbsp;</th>
+                <th  class="w200">&nbsp;</th>
+              </tr>
+            </table>
+          </div>
+        </div>
+        
+        <div class="table-container">
+          <div class="table-content">
+            <table>
+              <tr *ngFor="let row of product_data;let i=index">
+                <td class="w60" >{{i+1}}</td>
+                <td>{{row.cat_no}}</td>
+                <td class="w200">{{row.category}}</td>
+                <td class="w200">{{row.total_qty}}</td>
+                <td class="w200">&#8377; {{row.total_amount}}</td>
+              </tr>
+            </table>
+          </div>
+        </div>
+        
+      </div>
+
+      <div class="no-data" *ngIf="data_not_found==true">
+        <img src="assets/img/no-data.gif" alt="">
+        <p>Data not <span>available !</span></p>
+      </div>
+    </div>
+
+  </div>
+
+</div>
+<div class="fix-btn" *ngIf="product_data.length!='0'">
+  <a class="bottom-btn ecxel-btn" matTooltip="Download Excel" matTooltipPosition="above" mat-raised-button (click)="exportAsXLSX()"><img src="assets/img/excel.svg"></a>
+</div>

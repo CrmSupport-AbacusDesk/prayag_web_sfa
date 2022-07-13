@@ -1,0 +1,190 @@
+<div class="main-container">
+  <div class="middle-container mb0">
+    <div class="page-heading">
+      <img src="assets/img/report.svg" class="h-icon h20">
+      <div class="heading-text">
+        <h2>Daily Work Report</h2>
+      </div>
+    </div>
+    <div class="left-auto">
+      <div class="from-fields">
+        <div class="control-field mr15">
+          <mat-form-field class="cs-input date-column infix-bodr">
+            <input matInput [matDatepicker]="picker" placeholder="Date" name="date" [(ngModel)]="date" readonly>
+            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="cs-btn mt5">
+        <div class="in-btn">
+          <button mat-raised-button color="accent"  (click)="get_report_data()">Go</button>
+        </div>
+      </div>
+    </div>
+    
+  </div>
+  
+  <div class="container-outer">
+    <mat-spinner class="loader" *ngIf="loader">
+      <div><p>Loading....</p></div>
+    </mat-spinner>
+    <div class="container" *ngIf="report_data.length > 0">
+      <div class="row">
+        <div class="col s12">
+          <div class="cs-table left-right-20">
+            <div class="sticky-head" style="top: 145px;">
+              <div class="table-head">
+                <table>
+                  <tr>
+                    <th class="w60">S. No</th>
+                    <th>Sales Executive</th>
+                    <th>Reporting Manager</th>
+                    <th class="w180 padding0">
+                      <p>Attendance</p>
+                      <table>
+                        <tr>
+                          <th class="text-center">Start Time</th>
+                          <th class="text-center">Stop Time</th>
+                        </tr>
+                      </table>
+                    </th>
+                    <th class="padding0 w310">
+                      <p>Check in</p>
+                      <table>
+                        <tr>
+                          <th class="text-center w70">Delar</th>
+                          <th class="text-center w110">Direct Delar</th>
+                          <th class="text-center">Channel Partner</th>
+                        </tr>
+                      </table>
+                    </th>
+                    <th class="w100">Primery Order</th>
+                    <th class="w120">Secondary Order</th>
+                    <th class="w100">New Lead</th>
+                  </tr>
+                </table>
+              </div>
+              <div class="table-head bdrt" >
+                <table class="sno-border">
+                  <tr>
+                    <th class="w60"></th>
+                    <th>
+                      <div class="th-search-acmt">
+                        <mat-form-field class="example-full-width cs-input select-input">
+                          <input matInput placeholder="Sales Executive. . ." name="user_name" [(ngModel)]="search_val.user_name" (keyup.enter)="get_report_data()">
+                        </mat-form-field>
+                      </div>
+                    </th>
+                    <th>
+                      <div class="th-search-acmt">
+                        <mat-form-field class="example-full-width cs-input select-input">
+                          <input matInput placeholder="Reporting Manager. . ." name="reporting_manager" [(ngModel)]="search_val.reporting_manager" (keyup.enter)="get_report_data()">
+                        </mat-form-field>
+                      </div>
+                    </th>
+                    <th class="w180"></th>    
+                    <th class="w310"></th>   
+                    <th class="w100"></th>   
+                    <th class="w120"></th> 
+                    <th class="w100"></th>
+                  </tr>
+                </table>
+              </div>
+            </div>
+            
+            <div class="table-container">
+              <div class="table-content">
+                <table>
+                  <tr *ngFor="let row of report_data; let i=index;">
+                    <td class="w60" >{{(i+1)}}</td>
+                    <td>{{row.name}}</td>
+                    <td>{{row.reporting_manager}}</td>
+                    <td *ngIf="row.attendance" class="w180 padding0">
+                      <table>
+                        <tr>
+                          <td class="text-center">{{row.attendance.start_time}}</td>
+                          <td class="text-center">{{row.attendance.stop_time}}</td>
+                        </tr>
+                      </table>
+                    </td>
+                    <td *ngIf="!row.attendance" class="w180 text-center">N A</td>
+                    <td *ngIf="row.activity" class="padding0 w310">
+                      <table>
+                        <tr>
+                          <td class="text-center w70">{{row.activity.total_dealer}}</td>
+                          <td class="text-center w110">{{row.activity.total_direct_dealer}}</td>
+                          <td class="text-center">{{row.activity.total_channel_partner}}</td>
+                        </tr>
+                      </table>
+                    </td>
+                    <td *ngIf="!row.activity" class="text-center w310">N A</td>
+                    <td class="w100">{{row.order ? row.order.total_primary_order_amount : 'N A'}}</td>
+                    <td class="w120">{{row.order ? row.order.total_secondary_order_amount : 'N A'}}</td>
+                    <td class="w100">{{row.dr ? row.dr.total_dr : 'N A'}}</td>
+                  </tr>
+                  
+                  <ng-container *ngFor="let lead of skelton">
+                    <tr class="sk-loading"  *ngIf="loader">
+                      <td class="w60"><div>&nbsp;</div></td>
+                      <td><div>&nbsp;</div></td>
+                      <td class="w180"><div>&nbsp;</div></td>
+                      <td class="w310"><div>&nbsp;</div></td>
+                      <td class="w100"><div>&nbsp;</div></td>
+                      <td class="w120"><div>&nbsp;</div></td>
+                      <td class="w100"><div>&nbsp;</div></td>
+                    </tr>
+                  </ng-container>
+                </table>
+              </div>
+
+              <div class="table-content mt15" *ngIf="search_val.reporting_manager">
+                <table>
+                  <tr>
+                    <td class="w60 bdr0" >&nbsp;</td>
+                    <td class="bdr0">&nbsp;</td>
+                    <td class="bdr0">&nbsp;</td>
+                    <td class="w180 text-center">Total</td>
+                    <td class="padding0 w310">
+                      <table>
+                        <tr>
+                          <td class="text-center w70">{{total_data.total_dealer}}</td>
+                          <td class="text-center w110">{{total_data.total_direct_dealer}}</td>
+                          <td class="text-center">{{total_data.total_cp}}</td>
+                        </tr>
+                      </table>
+                    </td>
+                    <td class="w100">{{total_data.total_primary_order_amt}}</td>
+                    <td class="w120">{{total_data.total_secondary_order_amt}}</td>
+                    <td class="w100">{{total_data.total_new_lead}}</td>
+                  </tr>
+                  
+                  <ng-container *ngFor="let lead of skelton">
+                    <tr class="sk-loading"  *ngIf="loader">
+                      <td class="w60"><div>&nbsp;</div></td>
+                      <td><div>&nbsp;</div></td>
+                      <td class="w180"><div>&nbsp;</div></td>
+                      <td class="w310"><div>&nbsp;</div></td>
+                      <td class="w100"><div>&nbsp;</div></td>
+                      <td class="w120"><div>&nbsp;</div></td>
+                      <td class="w100"><div>&nbsp;</div></td>
+                    </tr>
+                  </ng-container>
+                </table>
+              </div>
+
+            </div>
+            
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="suggestion-box" *ngIf="report_data.length == 0">
+      <img src="assets/img/click-here1.jpg">
+    </div>
+  </div>
+</div>
+<div class="fix-btn" *ngIf="report_data.length > 0">
+  <a class="bottom-btn ecxel-btn" matTooltip="Download Excel" matTooltipPosition="above" mat-raised-button (click)="exportAsXLSX()"><img src="assets/img/excel.svg"></a>
+</div>

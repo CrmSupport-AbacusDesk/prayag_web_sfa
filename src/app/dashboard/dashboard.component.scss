@@ -1,0 +1,359 @@
+@keyframes skeleton-loading{0%{background-position:200% 0}to{background-position:-200% 0}}
+
+
+.Skeleton{ width: 20%; height:15px; color:transparent;background-image:linear-gradient(270deg,rgba(0,0,0,.1),rgba(0,0,0,.05),rgba(0,0,0,.05),rgba(0,0,0,.1));background-size:400% 100%;animation:skeleton-loading 8s ease-in-out infinite}
+
+
+
+.Skeleton *{visibility:hidden}.Skeleton--text{-webkit-clip-path:inset(4px 0 4px 0 round 3px 3px 3px 3px);clip-path:inset(4px 0 4px 0 round 3px 3px 3px 3px)}
+
+.listing
+{
+    width: 100% !important;
+    border-radius: 10px ;
+    border: 1px dashed #64104B !important;
+    /* height: 462px; */
+    display: flex;
+    align-items: center;
+}
+
+.repeat
+{
+    padding: 18px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-right: 1px dashed #64104B;
+}
+
+
+.listing a:last-child .repeat
+{
+    border-bottom: 0px;
+    border-right: 0px;
+}
+
+.repeat .list-both
+{
+    display: flex;
+    align-items: center;
+}
+
+.repeat .list-both .img
+{
+    width: 40px;
+    min-width: 40px;
+    height: 40px;
+    border-radius: 40px;
+    box-shadow: 0px 3px 6px 0px #ccc;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 11px;
+    overflow: hidden;
+}
+
+.repeat .list-both .img img
+{
+    height: 100%;
+}
+
+.repeat .list-both .ds-cont
+{
+    padding-left: 15px;
+}
+
+.repeat .list-both .ds-cont h1
+{
+    font-size: 14px;
+    font-weight: 600;
+    color: #000;
+    margin-bottom: 2px;
+    
+}
+
+.repeat .list-both .ds-cont p
+{
+    font-size: 11px;
+    color: #8a8a8a;
+}
+
+.repeat .errow i
+{
+    color: #64104B;
+}
+
+.custom-dashboad .dash-counter
+{
+    width: 100%;
+}
+.custom-dashboad .dash-counter ul
+{
+    list-style: none;
+    display: flex;
+    align-items: center;
+    width: 100%;
+}
+
+.custom-dashboad .dash-counter ul li
+{
+    margin-right: 15px;
+    background: #f76307;
+    padding: 15px;
+    border-radius: 6px;
+    border:1px solid #fff;
+    box-shadow: 0px 3px 6px 0px #ccc;
+    width: 100%;
+}
+
+.green
+{
+    background: #e94452 !important;
+}
+.blue
+{
+    background: #3949AB !important;
+}
+.pink
+{
+    background: #F50057 !important;
+}
+.skyblue
+{
+    background: #00B1FF !important;
+}
+
+.purple
+{
+    background: #b423ef !important;
+}
+.yellow
+{
+    background: #FFBB00 !important;
+}
+
+.orange
+{
+    background: #FE622E !important;
+}
+
+.br-orange
+{
+    border:1px solid #FE622E !important;
+}
+
+.chery
+{
+    background: #60C3A1 !important;
+}
+
+.br-chery
+{
+    border:1px solid #60C3A1 !important;
+}
+
+.dash-scroll
+{
+    overflow: hidden;
+    overflow-y: scroll;
+    height:310px;
+}
+.dash-sticky
+{
+    position: sticky;
+    top: 0px;
+    
+}
+.custom-dashboad .dash-counter ul li:last-child
+{
+    margin-right: 0px;
+}
+
+.custom-dashboad .dash-counter ul li .upper
+{
+    display: flex;
+    align-items: center;
+    margin-bottom: 16px;
+    
+}
+
+.custom-dashboad .dash-counter ul li .circle
+{
+    background: #fff;
+    width: 40px;
+    height: 40px;
+    border-radius: 40px;
+    padding: 12px;
+    display: flex;
+    color: j;
+    justify-content: center;
+    align-items: center;
+}
+
+.custom-dashboad .dash-counter ul li img
+{
+    height: 22px;
+}
+
+.custom-dashboad .dash-counter ul li .upper .dash-value
+{
+    display: flex;
+    align-items: flex-end;
+    /*min-width: 120px;*/
+    width: 100%;
+    justify-content: flex-end;
+}
+
+.custom-dashboad .dash-counter ul li .upper .dash-value .tags
+{
+    padding:0px 10px;
+    position: relative;
+}
+
+.custom-dashboad .dash-counter ul li .upper .dash-value .tags:after
+{
+    border-right: 2px solid rgba(0, 0, 0, 0.4);
+    content: "";
+    height: 70%;
+    width: 2px;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    right: 0px;
+}
+
+.custom-dashboad .dash-counter ul li .upper .dash-value .tags:last-child
+{
+    padding-right: 0px;
+}
+
+.custom-dashboad .dash-counter ul li .upper .dash-value .tags:last-child:after
+{
+    display: none;
+}
+.custom-dashboad .dash-counter ul li .upper .dash-value .tags h1
+{
+    font-size: 15px;
+    font-weight: 500;
+    color: #fff;
+    text-align: right;
+}
+
+.custom-dashboad .dash-counter ul li .upper .dash-value .tags p
+{
+    color: #fff;
+    font-size: 12px;
+    
+}
+
+.custom-dashboad .dash-counter ul li .lower
+{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+.custom-dashboad .dash-counter ul li .lower p
+{
+    font-size: 13px;
+    color: #fff;
+    font-weight: 500;
+}
+
+.custom-dashboad .dash-counter ul li .lower h1
+{
+    font-size: 13px;
+    color: #fff;
+    font-weight: bold;
+}
+
+// <div class="Skeleton"></div>
+
+// .is-error 
+// .Skeleton{display:none}
+
+.counter-box {
+    width: 100%;
+    background: #ccc;
+    padding: 10px;
+    box-shadow: 0px 3px 6px 0px rgba(0, 0, 0, 0.3);
+    position: relative;
+    overflow: hidden;
+    border-radius: 6px;
+}
+
+.counter-box .top-secation {
+    border-bottom: 2px solid rgba(0, 0, 0, 0.2);
+    position: relative;
+    z-index: 1;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-bottom: 10px;
+}
+
+.counter-box .top-secation h2 {
+    font-size: 14px;
+    font-weight: 500;
+    opacity: 0.8;
+}
+
+.counter-box .top-secation .cs-icon {
+    width: auto;
+    min-width: 30px;
+    height: 30px;
+    padding: 2px;
+    background: #ffffff;
+    border-radius: 30px;
+    font-size: 12px;
+    font-weight: 600;
+    text-align: center;
+    line-height: 24px;
+    box-shadow: 0px 3px 6px 0px rgba(255, 255, 255, 0.5), 0px -3px 6px 0px rgba(255, 255, 255, 0.5);
+}
+
+.counter-box .bottom-secation {
+    padding-top: 10px;
+    display: flex;
+    align-items: center;
+    position: relative;
+    z-index: 1;
+}
+
+.counter-box .bottom-secation .cs-count:first-child {
+    padding-left: 0px;
+}
+.counter-box .bottom-secation .cs-count {
+    width: 100%;
+    position: relative;
+    padding-left: 10px;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+}
+
+.counter-box .bottom-secation .cs-count p {
+    font-size: 11px;
+    line-height: 16px;
+    font-weight: 500;
+    color: #ffffff;
+}
+
+.counter-box .bottom-secation .cs-count span {
+    font-size: 10px;
+    line-height: 8px;
+    opacity: 0.6;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+}
+
+.counter-box .bottom-secation .cs-count:after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    right: 00;
+    width: 1px;
+    height: 70%;
+    background: rgba(0, 0, 0, 0.4);
+    transform: translateY(-50%);
+}

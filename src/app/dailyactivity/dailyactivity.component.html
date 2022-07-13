@@ -1,0 +1,131 @@
+<div class="edit-modal">
+  <div mat-dialog-content>
+    <p class="heading">Checkins Activity</p>
+    <!-- ////////////////////////////// -->
+    <div class="col s12">
+      <div class="cs-figure mb15">
+        <ul>
+            <li>
+                <div class="outer">
+                    <div class="inner">
+                        <span> Company Name</span>
+                        <p>{{data.list.company_name}}</p>
+                        
+                    </div>
+                </div>
+            </li>
+            <li>
+              <div class="outer">
+                  <div class="inner">
+                      <span> Mobile No.</span>
+                      <p>{{data.list.mobile}}</p>
+                      
+                  </div>
+              </div>
+          </li>
+            <li>
+                <div class="outer">
+                    <div class="inner">
+                        <span>Executive  Name</span>
+                        <p>{{data.list.exec_name }}</p>
+                    </div>
+                </div>
+            </li>
+            
+
+            <li>
+              <div class="outer">
+                  <div class="inner">
+                      <span>Visit Start Date</span>
+                      <p>{{data.list.visit_start | date : 'd MMM y'}}</p>
+                  </div>
+              </div>
+          </li>
+          <li>
+            <div class="outer">
+                <div class="inner">
+                    <span>End Start Date</span>
+                    <p>{{data.list.visit_start | date : 'd MMM y'}}</p>
+                </div>
+            </div>
+        </li>
+        <li>
+          <div class="outer">
+              <div class="inner">
+                  <span>Order Value</span>
+                  <p> &#x20B9;{{data.list.order_grand_total?data.list.order_grand_total:'--'}}</p>
+              </div>
+          </div>
+      </li>
+            
+</ul>
+<ul>
+  <li>
+    <div class="outer">
+        <div class="inner">
+            <span>Start Address</span>
+            <p>{{data.list.start_address}}</p>
+        </div>
+    </div>
+</li>
+
+
+<li>
+    <div class="outer">
+        <div class="inner">
+            <span>End Address</span>
+            <p>{{data.list.address}}</p>
+        </div>
+    </div>
+</li>
+</ul>
+
+
+</div>
+</div>
+    <!-- //////////////////////////// -->
+    <div class="checkin-table">
+    
+      <!-- <h4>Company Name</h4>
+      <span >{{data.list.company_name}} </span>
+      <h4>Executive Name</h4>
+      <span >{{data.list.exec_name}} </span>
+      <h4>Start Address</h4>
+      <span >{{data.list.start_address}} </span>
+      <h4>End Address</h4>
+      <span >{{data.list.address}} </span>
+      <h4>Visit Start Date</h4>
+      <span >{{data.list.visit_start | date : 'd MMM y'}} </span>
+      <h4>End Start Date</h4>
+      <span >{{data.list.visit_start | date : 'd MMM y'}} </span>
+        <h4>Order Value</h4>
+      <span> &#x20B9;{{data.list.order_total?data.list.order_total:'--'}} </span> -->
+      
+      <table>
+        <tr>
+          <th>Followups</th>
+          <td>
+            <span class="material-icons" *ngIf="(data.list.followup_flag=='1')"> verified</span>
+            <span  class="material-icons"  *ngIf="(data.list.followup_flag=='0')">cancel</span>
+          </td>
+         
+        </tr>
+     
+     
+     
+        <tr>
+          <th>Remarks:</th>
+          <td  colspan="3">
+            <ng-container  *ngIf="data.list.description">{{data.list.description}}</ng-container>
+            <ng-container  *ngIf="!data.list.description">---</ng-container>
+          </td>
+        </tr>
+        
+      </table>
+    </div>
+    
+    <div mat-dialog-actions>
+      <button mat-button color="warn" [mat-dialog-close]="false">Cancel</button>
+    </div>
+  </div>
+  

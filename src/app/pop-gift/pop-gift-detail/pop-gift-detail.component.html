@@ -1,0 +1,240 @@
+<div class="main-container">
+    <div class="middle-container">
+        <div class="page-heading">
+            <div class="heading-text bc-space">
+                <div class="back-btn">
+                    <a mat-button routerLink="/pop-gift-list" routerLinkActive="active"><i class="material-icons">west</i></a>
+                </div>
+                <h2>Pop Gift Detail</h2>
+                <!-- <p>Total Announcement " 25 "</p> -->
+            </div>
+        </div>
+        <!-- <div class="left-auto">
+            <div class="cs-btn">
+                <div class="in-btn">
+                    <button mat-raised-button color="accent">Add Stock</button>
+                </div>
+            </div>
+        </div> -->
+    </div>
+
+    <div class="container-outer">
+        <div class="container mb70">
+            <div class="row">
+                <div class="col s12">
+                    <div class="details-info">
+                        <div class="basic-details">
+                            <div class="cs-heading">
+                                <h2>Basic Detail</h2>
+                            </div>
+                            <div class="profile-info">
+                                <ul class="ais">
+                                    <li>
+                                        <div class="cs-box">
+                                            <img src="../paraflex/assets/img/people.svg" class="fix-img">
+                                            <span>Name</span>
+                                            <p>{{popData.data.item_name?popData.data.item_name:"N/A"}}</p>
+                                        </div>
+                                    </li>
+                                    <li >
+                                        <div class="cs-box">
+                                            <img src="../paraflex/assets/img/stock.svg" class="fix-img">
+                                            <span>Qty Stock</span>
+                                            <p>{{popData.data.qty_stock?popData.data.qty_stock:"N/A"}}</p>
+                                        </div>
+                                    </li>
+                                    <li >
+                                        <div class="cs-box">
+                                            <img src="../paraflex/assets/img/stock.svg" class="fix-img">
+                                            <span>Executive Stock</span>
+                                            <p>{{popData.data.assigned_stock?popData.data.assigned_stock:'N/A'}}</p>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div class="cs-box">
+                                            <img src="../paraflex/assets/img/description.svg" class="fix-img">
+                                            <span>Description</span>
+                                            <p>{{popData.data.description? popData.data.description:'N/A'}}</p>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col s6">
+                    <div class="details-info flat pb0">
+                        <div class="basic-details">
+                            <div class="cs-heading mb0">
+                                <h2>Pop Gift Incoming</h2>
+                            </div>
+                            <div class="cs-table left-right-10">
+                                <div class="table-head border-bottom">
+                                    <table class="sno-border">
+                                        <tr>
+                                            <th class="w140">Name</th>
+                                            <th class="w80 text-center">Qty</th>
+                                            <th>Vendor Name</th>
+                                            <th class="w85">Receive Date</th>
+                                        </tr>
+                                    </table>
+                                </div>
+
+                                <div class="table-container">
+                                    <div class="table-content table-scroll" *ngIf=" popData.incoming.length != 0">
+                                        <table class="sno-border">
+                                            <tr *ngFor="let in of popData.incoming">
+                                                <td class="w140">{{in. item_name}}</td>
+                                                <td class="w80 text-center">{{in.qty}}</td>
+                                                <td>{{in.vendor_name}}</td>
+                                                <td class="w85">{{in.receiving_date| date : 'd MMM y'}}</td>
+                                            </tr>
+                                            <ng-container *ngFor="let lead of skelton">
+                                                <tr class="sk-loading" *ngIf="loader">
+                                                    <td class="w140">
+                                                        <div>&nbsp;</div>
+                                                    </td>
+                                                    <td class="w60">
+                                                        <div>&nbsp;</div>
+                                                    </td>
+                                                    <td>
+                                                        <div>&nbsp;</div>
+                                                    </td>
+                                                    <td class="w85">
+                                                        <div>&nbsp;</div>
+                                                    </td>
+                                                </tr>
+                                            </ng-container>
+                                        </table>
+                                    </div>
+
+
+
+                                    <div class="no-data" *ngIf="incoming_data_not_found==true">
+                                        <img src="assets/img/no-data.gif" alt="" class="h200 mb30">
+                                        <p>Data not <span>available !</span></p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col s6">
+                    <div class="details-info flat pb0">
+                        <div class="basic-details">
+                            <div class="cs-heading mb0">
+                                <h2>Executive Stock Details</h2>
+                            </div>
+                            <div class="cs-table left-right-10">
+                                <div class="table-head border-bottom">
+                                    <table class="sno-border">
+                                        <tr>
+                                            <th>Name</th>
+                                            <th>Stock Qty</th>
+                                        </tr>
+                                    </table>
+                                </div>
+                                <div class="table-container">
+                                    <div class="table-content table-scroll">
+                                        <table class="sno-border">
+                                            <tr *ngFor="let exec_data of popData.excutive_stock_detail">
+                                                <td>{{exec_data.exeutive_name}}</td>
+                                                <td>{{exec_data.stock_qty}}</td>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col s12">
+                    <div class="details-info flat pb0">
+                        <div class="basic-details">
+                            <div class="cs-heading mb0">
+                                <h2>Pop Gift Outgoing</h2>
+                            </div>
+                            <div class="cs-table left-right-10">
+                                    <div class="table-head border-bottom">
+                                        <table class="sno-border">
+                                            <tr>
+                                                <th class="w90">Date Created</th>
+                                                <th class="w130">Created By</th>
+                                                <th class="w130">Item Name</th>
+                                                <th class="w60 text-center">Qty</th>
+                                                <th class="w100">Type</th>
+                                                <th class="w140">Name</th>psales
+                                                <!-- <th class="w70">Status</th> -->
+                                                <th>Delivery Note</th>
+                                            </tr>
+                                        </table>
+                                    </div>
+
+                                <div class="table-container">
+                                    <div class="table-content table-scroll" *ngIf=" popData.outgoing.length != 0">
+                                        <table class="sno-border">
+                                            <tr *ngFor="let outgoing of popData.outgoing">
+                                                <td class="w90">{{outgoing.date_created| date : 'd MMM y'}}</td>
+                                                <td class="w130">{{outgoing.created_by_name}}</td>
+                                                <td class="w130">{{outgoing.item_name}}</td>
+                                                <td class="w60 text-center">{{outgoing.qty}}</td>
+                                                <td class="w100">{{outgoing.user_type=='1'?'Distributor':outgoing.user_type=='3'?"Dealer":outgoing.user_type=='7'?"Direct Dealer":outgoing.user_type}}</td>
+                                                <td class="w140">{{outgoing.name}}</td>
+                                                <td>{{outgoing.delivery_note}}</td>
+                                            </tr>
+                                            <ng-container *ngFor="let lead of skelton">
+                                                <tr class="sk-loading" *ngIf="loader">
+                                                    <td class="w90">
+                                                        <div>&nbsp;</div>
+                                                    </td>
+                                                    <td class="w130">
+                                                        <div>&nbsp;</div>
+                                                    </td>
+                                                    <td class="w130">
+                                                        <div>&nbsp;</div>
+                                                    </td>
+                                                    <td class="w60">
+                                                        <div>&nbsp;</div>
+                                                    </td>
+                                                    <td class="w100">
+                                                        <div>&nbsp;</div>
+                                                    </td>
+                                                    <td class="w100">
+                                                        <div>&nbsp;</div>
+                                                    </td>
+                                                    <td class="w140">
+                                                        <div>&nbsp;</div>
+                                                    </td>
+                                                    <td>
+                                                        <div>&nbsp;</div>
+                                                    </td>
+                                                </tr>
+                                            </ng-container>
+                                        </table>
+                                    </div>
+
+                                    <div class="no-data" *ngIf="data_not_found==true">
+                                        <img src="assets/img/no-data.gif" alt="" class="h270 mb30">
+                                        <p>Data not <span>available !</span></p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+</div>
+
+<div class="fix-btn">
+
+    <a class="bottom-btn" matTooltip="Add New" matTooltipPosition="above" mat-raised-button  (click)="popModal('Update_stock')"><i class="material-icons">add</i></a>
+</div>
